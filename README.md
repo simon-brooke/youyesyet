@@ -34,6 +34,10 @@ You'll also need to create your own local copy of *profiles.clj*, which should c
 
 Where *username* is the username required to access the database, and *thisisnotsecure* is the password which authenticates that username.
 
+## Further Reading
+
+If you're thinking of joining in development on this I'd strongly recommend you get hold of a copy of [Dmitry Sotnikov](https://github.com/yogthos)'s [Web Development with Clojure, Second Edition](https://pragprog.com/book/dswdcloj2/web-development-with-clojure-second-edition).
+
 ## Running
 
 To start a web server for the application, run:
