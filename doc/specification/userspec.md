@@ -130,6 +130,25 @@ The *Followup Request* form is a simple form which allows the canvasser to recor
     |                                                |
     +------------------------------------------------+
 
+## How Street Canvassers will use the system
+
+Street Canvassers will typically use the system by
+
+1. Arriving in an area, often with a group of other canvassers;
+2. Logging into the system;
+3. Looking at the map view and choosing an uncanvassed dwelling to canvas;
+4. Opening the Electors View for that dwelling;
+5. Chapping the door;
+6. Asking the person who answers about voting intentions, and recording these be selecting the appropriate option buttons;
+7. Addressing any issues the elector raises directly, if possible;
+8. If there are more detailed issues the elector wants to address, raising a followup request;
+9. Making a polite goodbye;
+10. Returning to the map view and choosing the next dwelling to canvas.
+
+## Telephone canvassing
+
+We also need a workflow for telephone canvassing, but I have not yet given thought to how that would work.
+
 ## Followup Requests view
 
 This view is available only to Issue Experts, and is the first view and Issue Expert sees after aelecting *Issue Expert* from the roles menu.
@@ -157,3 +176,15 @@ Below this on the page is a *Wiki section* which contains links to resources whi
 As specified above, the *Followup Action* view contains a section which functions as a Wiki page. This may incorporate links to further Wiki pages, or to resources out on the wider Internet. Issue Experts are entitled to edit Wiki pages within the system.
 
 Note that the *Issue View* in the Canvassers' user interface is a special Wiki page, which can also be edited by the relevant issue experts.
+
+## Gamification and 'Scores'
+
+Reading up on Bernie Saunders' campaign's canvassing app, it apparently contained gamification features which were seen as significantly motivational for younger canvassers. Canvassers should be able to see a screen which shows
+
+1. Total time logged in;
+2. Total visits made;
+3. Total voting intentions recorded;
+4. Number of visits made per hour logged in;
+5. Number of voting intentions recorded per hour logged in.
+
+I'd like a way for local canvassing teams to be able to see one another's scores, so as to encourage friendly competition, but I haven't yet defined a mechanism for how that might be done. I think a national high-score table would probably be a bad thing, because it might encourage people to create fictional records without actually talking to the electors.
