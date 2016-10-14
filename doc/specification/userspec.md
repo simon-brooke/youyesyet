@@ -2,7 +2,7 @@
 
 ## Overview
 
-YouYesYet is a web-app intended to simplify the collection of canvas data from voters, specifically for the upcoming Scottish Independence referendum; it is intended that it should later be adaptable for other canvassing campaigns, but that is a much lower priority.
+YouYesYet is a proposed web-app intended to simplify the collection of canvas data from voters, specifically for the upcoming Scottish Independence referendum; it is intended that it should later be adaptable for other canvassing campaigns, but that is a much lower priority.
 
 ## General Principles
 

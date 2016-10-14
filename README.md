@@ -38,6 +38,8 @@ Where *username* is the username required to access the database, and *thisisnot
 
 If you're thinking of joining in development on this I'd strongly recommend you get hold of a copy of [Dmitry Sotnikov](https://github.com/yogthos)'s [Web Development with Clojure, Second Edition](https://pragprog.com/book/dswdcloj2/web-development-with-clojure-second-edition).
 
+You should also read the [User-Oriented Specification](doc/specification/userspec.md) and any other documentation which appears under the *doc/specification* hierarchy.
+
 ## Running
 
 To start a web server for the application, run:
