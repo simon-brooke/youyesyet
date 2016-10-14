@@ -135,6 +135,22 @@
   (kc/has-one address))
 
 
+;;; Lifecycle of the canvasser record goes like this, I think:
+;;; A canvasser record is created when an existing canvasser issues an invitation to a friend.
+;;; The invitation takes the form of an automatically generated email with a magic token in it.
+;;; At this point the record has only an email address, the introduced_by and the magic token,
+;;; which is itself probably a hash of the email address. Therefore, having the username as the
+;;; primary key won't work.
+;;;
+;;; The invited person clicks on the link in the email and completes the sign-up form, adding
+;;; their full name, and their phone number. If the username they have chosen is unique, they
+;;; are then sent a second email with a new magic token, possibly a hash of email address +
+;;; full name. When they click on the link in this second email, their 'authorised' flag is
+;;; set to 'true'.
+;;;
+;;; Administrators can also create canvasser records directly.aw
+;;; TODO: Do we actually need a username at all? Wouldn't the email address do?
+
 (defn create-canvassers-table!
   "Create a table to hold data on canvassers (including authentication data)."
   []
@@ -143,7 +159,8 @@
     (sql/create-table-ddl
       :canvassers
       ;; id is the username the canvasser logs in as.
-      [:id "varchar(32) not null primary key"]
+      [:id "serial primary key"]
+      [:username "varchar(32) unique"]
       [:fullname "varchar(64) not null"]
       ;; most canvassers will be electors, we should link them:
       [:elector_id "integer references electors(id) on delete no action"]
@@ -154,6 +171,7 @@
       ;; with which authority do we authenticate this canvasser? I do not want to hold even
       ;; encrypted passwords locally
       [:authority_id "varchar(32) not null references authorities(id) on delete no action"]
+      [:introduced_by "integer references canvassers(id)"]
       ;; true if the canvasser is authorised to use the app; else false. This allows us to
       ;; block canvassers we suspect of misbehaving.
       [:authorised :boolean])))
@@ -166,6 +184,7 @@
   (kc/entity-fields :id :fullname :phone :email :authorised)
   (kc/has-one elector)
   (kc/has-one address)
+  (kc/has-one canvasser {:fk :introduced_by})
   (kc/has-one authority))
 
 
@@ -178,7 +197,7 @@
       :visits
       [:id "serial not null primary key"]
       [:address_id "integer not null references addresses(id)"]
-      [:canvasser_id "varchar(32) references canvassers(id) not null"]
+      [:canvasser_id "integer not null references canvassers(id)"]
       [:date "timestamp with time zone not null default now()"])))
 
 
@@ -230,25 +249,25 @@
 ;; I think we don't need an entity for optionsdistricts, because it's just a link table.
 
 
-(defn create-opinion-table!
-  "Create a table to record the opinion of an elector as solicited by a canvasser during a visit.
+(defn create-intention-table!
+  "Create a table to record the intention of an elector as solicited by a canvasser during a visit.
   TODO: decide whether to insert a record in this table for 'don't knows'."
   []
   (sql/db-do-commands
     yyydb/*db*
     (sql/create-table-ddl
-      :opinions
+      :intentions
       [:id "serial primary key"]
-      ;; the elector who gave this opinion
+      ;; the elector who gave this intention
       [:elector_id "integer not null references electors(id)"]
       ;; the option the elector said they were planning to vote for
       [:option_id "varchar(32) not null references options(option)"]
       [:visit_id "integer not null references visits(id)"])))
 
 
-(kc/defentity opinion
+(kc/defentity intention
   (kc/pk :id)
-  (kc/table :opinions)
+  (kc/table :intentions)
   (kc/database yyydb/*db*)
   (kc/entity-fields :id)
   (kc/has-one elector)
@@ -271,6 +290,13 @@
       [:url "varchar(256)"])))
 
 
+      ;; across Scotland. Otherwise we need a separate id field. TODO: check.
+      [:id "integer primary key"]
+      [:name "varchar(64) not null"]
+      [:address_id "integer not null references addresses(id)" ]
+      [:phone "varchar(16)"]
+      ;; we'll probably only capture email data on electors if they request a followup
+      ;; on a particular issue by email.
 (kc/defentity issue
   (kc/pk :id)
   (kc/table :issues)
@@ -305,7 +331,7 @@
     (sql/create-table-ddl
       :issueexpertise
       ;; the expert canvasser
-      [:canvasser_id "varchar(32) not null references canvassers(id)"]
+      [:canvasser_id "integer not null references canvassers(id)"]
       ;; the issue they have expertise in
       [:issue_id "varchar(32) not null references issues(id)"]
       ;; the method by which this expert can respond to electors on this issue
@@ -359,7 +385,7 @@
       :followupactions
       [:id "serial primary key"]
       [:request_id "integer not null references followuprequests(id)"]
-      [:actor "varchar(32) not null references canvassers(id)"]
+      [:actor "integer not null references canvassers(id)"]
       [:date "timestamp with time zone not null default now()"]
       [:notes "text"]
       ;; true if this action closes the request
