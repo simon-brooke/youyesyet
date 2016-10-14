@@ -172,6 +172,7 @@
       ;; encrypted passwords locally
       [:authority_id "varchar(32) not null references authorities(id) on delete no action"]
       [:introduced_by "integer references canvassers(id)"]
+      [:is_admin :boolean]
       ;; true if the canvasser is authorised to use the app; else false. This allows us to
       ;; block canvassers we suspect of misbehaving.
       [:authorised :boolean])))
@@ -181,7 +182,7 @@
   (kc/pk :id)
   (kc/table :canvassers)
   (kc/database yyydb/*db*)
-  (kc/entity-fields :id :fullname :phone :email :authorised)
+  (kc/entity-fields :id :fullname :phone :email :is_admin :authorised)
   (kc/has-one elector)
   (kc/has-one address)
   (kc/has-one canvasser {:fk :introduced_by})
