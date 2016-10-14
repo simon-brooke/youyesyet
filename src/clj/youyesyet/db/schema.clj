@@ -291,13 +291,6 @@
       [:url "varchar(256)"])))
 
 
-      ;; across Scotland. Otherwise we need a separate id field. TODO: check.
-      [:id "integer primary key"]
-      [:name "varchar(64) not null"]
-      [:address_id "integer not null references addresses(id)" ]
-      [:phone "varchar(16)"]
-      ;; we'll probably only capture email data on electors if they request a followup
-      ;; on a particular issue by email.
 (kc/defentity issue
   (kc/pk :id)
   (kc/table :issues)
