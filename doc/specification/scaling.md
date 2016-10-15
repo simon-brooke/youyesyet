@@ -18,9 +18,13 @@ So in aggregate minimum zero, maximum about eleven records, typical probably one
 
 Database reads are probably more infrequent. Each client will obviously need to download the data for each dwelling visited, but it will download these in geograhic blocks of probably around 100 dwellings, and will download a new block only when the user goes outside the area of previously downloaded blocks. However, there ideally should be frequent updates so that the canvasser can see which dwellings other members of the team have already visited, in order that the same dwelling is not visited repeatedly. So there's probably on average one database read per visit.
 
+### Reliability of network links
+
+Mobile phones typically can have intermittent network access. The client must be able to buffer a queue of records to be stored, and must not prevent the user from moving on to the next doorstep just because the data from the last visit has not yet been stored. There should probably be some on-screen indication of when there is unsent buffered data.
+
 ### Pattern of canvassing
 
-Canvassing takes place typically between 6:30pm and 9:00pm on a weekday evening. There will be some canvassing outside this period, but not enough to create significant load. Canvassing will be higher on dry nights than on wet ones,
+Canvassing takes place typically between 6:30pm and 9:00pm on a weekday evening. There will be some canvassing outside this period, but not enough to create significant load. Canvassing will be higher on dry nights than on wet ones, and will probably ramp up through the campaign.
 
 ### Total number of volunteers
 
