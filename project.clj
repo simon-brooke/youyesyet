@@ -52,7 +52,13 @@
             [migratus-lein "0.4.2"]
             [org.clojars.punkisdead/lein-cucumber "1.0.5"]
             [lein-cljsbuild "1.1.4"]
-            [lein-uberwar "0.2.0"]]
+            [lein-uberwar "0.2.0"]
+            [lein-bower "0.5.1"]]
+
+  :bower-dependencies [[bootstrap "2.3.1"]
+                       [font-awesome "3.2.1"]
+                       [leaflet "0.7.3"]]
+
   :cucumber-feature-paths ["test/clj/features"]
 
   :uberwar
