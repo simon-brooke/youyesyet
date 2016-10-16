@@ -22,7 +22,7 @@
 ;;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
 ;;;; USA.
 ;;;;
-;;;; Copyright (C) 2016 Simon Brooke
+;;;; Copyright (C) 2016 Simon Brooke for Radical Independence Campaign
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -30,8 +30,9 @@
 ;;; Note that this is the (old) Korma way of doing things;
 ;;;  it may not play well with migrations, nor with the HugSQL way of doing things recommended
 ;;;  in Web Development with Clojure, Second Ed. So this may be temporary 'get us started' code,
-;;;  which later gets thrown away.
-
+;;;  which later gets thrown away. The 'create-x-table!' functions in this file may be
+;;;  redundant, and if they are the namespace probably needs to be renamed to 'entities'.
+;;;  See also resources/migrations/20161014170335-basic-setup.up.sql
 
 (defn create-districts-table!
   "Create a table to hold the electoral districts in which electors are registered.

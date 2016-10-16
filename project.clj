@@ -30,6 +30,7 @@
                  [mount "0.1.10"]
                  [cprop "0.1.9"]
                  [org.clojure/tools.cli "0.3.5"]
+                 [migratus "0.8.31"]
                  [luminus-nrepl "0.1.4"]
                  [luminus-migrations "0.2.7"]
                  [conman "0.6.1"]
