@@ -33,7 +33,17 @@
 ;;; See https://github.com/simon-brooke/youyesyet/blob/master/doc/specification/userspec.md#map-view
 
 
-(defn panel
-  "Generate the map panel."
+;;; Cribbed heavily from
+;;;   https://github.com/reagent-project/reagent-cookbook/tree/master/recipes/leaflet
+;;; but using OSM data because we can't afford commercial, so also cribbed from
+;;;   https://switch2osm.org/using-tiles/getting-started-with-leaflet/
+
+(defn map-div
+  "Generate the actual div containing the map."
   []
-  [])
+  [:div#map {:style {:height "360px"}}])
+
+(defn panel
+  "Generate the map panel"
+  []
+  [div-map])

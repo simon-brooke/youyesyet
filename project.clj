@@ -54,13 +54,16 @@
             [org.clojars.punkisdead/lein-cucumber "1.0.5"]
             [lein-cljsbuild "1.1.4"]
             [lein-uberwar "0.2.0"]
-            [lein-bower "0.5.1"]]
+            [lein-bower "0.5.1"]
+            [lein-less "1.7.5"]]
 
   :bower-dependencies [[bootstrap "2.3.1"]
                        [font-awesome "3.2.1"]
                        [leaflet "0.7.3"]]
 
   :cucumber-feature-paths ["test/clj/features"]
+
+  :hooks [leiningen.less]
 
   :uberwar
   {:handler youyesyet.handler/app
@@ -70,12 +73,14 @@
 
   :clean-targets ^{:protect false}
   [:target-path [:cljsbuild :builds :app :compiler :output-dir] [:cljsbuild :builds :app :compiler :output-to]]
+
   :figwheel
   {:http-server-root "public"
    :nrepl-port 7002
    :css-dirs ["resources/public/css"]
    :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
 
+  :externs ["externs.js"]
 
   :profiles
   {:uberjar {:omit-source true
@@ -86,7 +91,7 @@
                {:source-paths ["src/cljc" "src/cljs" "env/prod/cljs"]
                 :compiler
                 {:output-to "target/cljsbuild/public/js/app.js"
-                 :externs ["react/externs/react.js"]
+                 :externs ["react/externs/react.js" "externs.js"]
                  :optimizations :advanced
                  :pretty-print false
                  :closure-warnings
