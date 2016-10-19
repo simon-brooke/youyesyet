@@ -8,7 +8,8 @@
             [ajax.core :refer [GET POST]]
             [youyesyet.ajax :refer [load-interceptors!]]
             [youyesyet.handlers]
-            [youyesyet.subscriptions])
+            [youyesyet.subscriptions]
+            [youyesyet.views.map :as maps])
   (:import goog.History))
 
 (defn nav-link [uri title page collapsed?]
@@ -49,8 +50,12 @@
        [:div {:dangerouslySetInnerHTML
               {:__html (md->html docs)}}]]])])
 
+(defn map-page []
+  (maps/map-div))
+
 (def pages
   {:home #'home-page
+   :map #'map-page
    :about #'about-page})
 
 (defn page []

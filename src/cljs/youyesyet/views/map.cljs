@@ -1,5 +1,6 @@
 (ns youyesyet.views.map
-  (:require [re-frame.core :refer [reg-sub]]))
+  (:require [re-frame.core :refer [reg-sub]]
+            [reagent.core :as reagent]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
@@ -37,13 +38,53 @@
 ;;;   https://github.com/reagent-project/reagent-cookbook/tree/master/recipes/leaflet
 ;;; but using OSM data because we can't afford commercial, so also cribbed from
 ;;;   https://switch2osm.org/using-tiles/getting-started-with-leaflet/
+;;; Note that this is raw reagent stylee; it should be refactoed into re-frame stylee
+;;; when I understand it better.
 
-(defn map-div
-  "Generate the actual div containing the map."
+;; which provider to use
+(def *map-provider* :osm)
+
+
+(defn map-did-mount-mapbox
+    "Did-mount function loading map tile data from MapBox (proprietary)."
+  []
+  (let [map (.setView (.map js/L "map") #js [55.86 -4.25] 13)]
+    ;; NEED TO REPLACE FIXME with your mapID!
+    (.addTo (.tileLayer js/L "http://{s}.tiles.mapbox.com/v3/FIXME/{z}/{x}/{y}.png"
+                        (clj->js {:attribution "Map data &copy; [...]"
+                                  :maxZoom 18}))
+            map)))
+
+
+(defn map-did-mount-osm
+  "Did-mount function loading map tile data from Open Street Map (open)."
+  []
+  (let [map (.setView (.map js/L "map") #js [55.86 -4.25] 13)]
+    (.addTo (.tileLayer js/L "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        (clj->js {:attribution "Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors"
+                                  :maxZoom 18}))
+            map)))
+
+
+(defn map-did-mount
+  "Select the actual map provider to use."
+  []
+  (case *map-provider*
+    :mapbox (map-did-mount-mapbox)
+    :osm (map-did-mount-osm))
+  ;; potentially others
+  )
+
+
+(defn map-render
+  "Render the actual div containing the map."
   []
   [:div#map {:style {:height "360px"}}])
 
-(defn panel
-  "Generate the map panel"
+
+(defn map-div
+  "A reagent class for the map object."
   []
-  [div-map])
+  (reagent/create-class {:reagent-render map-render
+                         :component-did-mount map-did-mount}))
+
