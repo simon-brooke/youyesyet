@@ -30,6 +30,7 @@
       [:a.navbar-brand {:href "#/"} "youyesyet"]
       [:ul.nav.navbar-nav
        [nav-link "#/" "Home" :home collapsed?]
+       [nav-link "#/map" "Map" :home collapsed?]
        [nav-link "#/about" "About" :about collapsed?]]]]))
 
 (defn about-page []

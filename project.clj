@@ -57,9 +57,12 @@
             [lein-bower "0.5.1"]
             [lein-less "1.7.5"]]
 
-  :bower-dependencies [[bootstrap "2.3.1"]
-                       [font-awesome "3.2.1"]
-                       [leaflet "0.7.3"]]
+  :bower-dependencies [
+                        ;; Problem with using boostrap and font-awsome from Bower: neither
+                        ;; of the distributed packages compile cleanly with less :-(
+                        ;; [bootstrap "2.3.1"]
+                        ;; [font-awesome "3.2.1"]
+                        [leaflet "0.7.3"]]
 
   :cucumber-feature-paths ["test/clj/features"]
 
