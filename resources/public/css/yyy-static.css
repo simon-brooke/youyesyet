@@ -1,0 +1,188 @@
+/**
+ * Static CSS for basic YouYesYet pages to establish look-and-feel. Something
+ * more dynamic, designed by someone more skilled than me, will replace it
+ * later.
+ */
+
+/* Probably have to find Helvetica Neue as a web font */
+
+body {
+  font-family: "Helvetica Neue", "Sans Bold", "Arial Black", sans-serif;
+  background-color: rgb( 50, 109, 177);
+  color: white;
+}
+
+/* footer of the document */
+footer {
+  clear: both;
+  font-size: smaller;
+  padding: 0 2em;
+  text-align: center;
+  color: white;
+  background-color: rgba(16, 58, 106, 0.95);
+  width: 100%;
+  margin: 0;
+  bottom:0;
+  position:fixed;
+  z-index:150;
+  _position:absolute;
+  _top:expression(eval(document.documentElement.scrollTop+
+        (document.documentElement.clientHeight-this.offsetHeight)));
+}
+
+header {
+  width:100%;
+  padding: 2em 0 0.25em 0;
+  background-color: rgb(16, 58, 106);
+  color: white;
+}
+
+
+/* ids generally in document order */
+/* Overall container div, holds all content of page. Yes, I know it shouldn't have fixed width */
+#nav{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  position: fixed;
+  z-index: 149;
+}
+
+#nav:hover #nav-menu {
+	display: inline;
+}
+
+
+#nav-icon {
+  padding: 0.25em;
+}
+
+#nav-menu {
+  display: none;
+}
+
+#nav ul li {
+  padding: 0;
+  margin: 0;
+  display: inline;
+}
+
+#nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.1em 0.75em;
+  margin: 0;
+}
+
+#nav ul li.active a { background-color: silver;}
+li.nav-item a:hover { background-color: rgb( 240, 240, 240) }
+li.nav-item a:active { background-color: gray; color: white; }
+
+#main-container{
+  clear: both;
+  width:100%;
+}
+
+.big-link {
+  min-width: 8em;
+  padding: 0.25em 1em;
+  background-color: rgb(16, 58, 106);
+  color: white;
+  text-decoration: none;
+}
+
+.big-link:hover {
+  text-decoration: none;
+}
+
+.big-link:hover::after {
+  content: " >";
+}
+
+.big-link-container {
+  font-size: 300%;
+  padding: 0.5em 0;
+  text-align: right;
+}
+
+.dummy {
+  font-family: sans-serif;
+  font-size: 80%;
+  font-weight: normal;
+}
+
+.error {
+    background-color: red;
+    color: white;
+}
+
+.widget {
+	background-color: silver;
+ 	border: thin solid white;
+ 	margin-top: 0;
+ 	margin-bottom: 0;
+}
+
+.world {
+	font-size: 8pt;
+}
+
+div.error {
+  width: 100%;
+}
+
+form {
+  border: thin solid silver;
+}
+
+h1 {
+  font-size: 300%;
+}
+
+div.content, form, p, pre, ul, ol, dl, menu, h1, h2, h3, h4, h5 {
+  padding: 0.25em 10%;
+}
+
+input {
+  background-color: white;
+}
+
+input.submit {
+  background-color: green;
+}
+
+input.required:after {
+  content: " \*";
+  color: red;
+}
+
+label {
+  width: 30em;
+  min-width: 20em;
+  border-right: thin solid gray;
+}
+
+menu li {
+  display: inline;
+}
+
+menu li::before {
+  content: "|| ";
+}
+
+div.world table, div.world table tr td {
+	padding: 0;
+	margin: 0;
+	border-collapse: collapse;
+	border: none;
+}
+
+table.music-ruled tr:nth-child(odd) {
+	background-color: silver;
+}
+
+th, td {
+	text-align: left;
+	padding: 0 0.25em;
+}
