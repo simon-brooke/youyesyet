@@ -16,6 +16,10 @@ generated using Luminus version "2.9.11.05"
 
 To understand what I'm aiming for, read [this essay](http://blog.journeyman.cc/2016/10/preparing-for-next-independence.html). Design documentation, such as there is of it yet, is in the *dummy* sub-directory. Also look at [src/clj/youyesyet/db/schema.clj](https://github.com/simon-brooke/youyesyet/blob/master/src/clj/youyesyet/db/schema.clj).
 
+### Dummy website
+
+I've put a [dummy site](http://www.journeyman.cc/~simon/tmp/yyy-dummy/index.html) up for people to play with. Obviously it's intended to work with mobile phones.
+
 ## Prerequisites
 
 You will need [Leiningen][1] 2.0 or above installed. The database required must be [Postgres][2].
