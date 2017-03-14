@@ -4,20 +4,21 @@
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" type="text/css" href="css/yyy-static.css" />
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black" rel="stylesheet">
     <title>Login with Facebook</title>
   </head>
   <body>
     <header>
       <div id="nav">
         <img id="nav-icon" src="img/threelines.png" alt="Menu"/>
-        <ul id="nav-menu" class="nav">
+        <menu id="nav-menu" class="nav">
           <li class=""><a href="index.html">Home</a></li>
-          <li class=""><a href="/microworld/params">Parameters</a></li>
-          <li class=""><a href="/microworld/rules">Rules</a></li>
-          <li class=""><a href="/microworld/world">World</a></li>
-          <li class=""><a href="/microworld/about">About</a></li>
-          <li class=""><a href="/microworld/docs">Documentation</a></li>
-        </ul>
+          <li class=""><a href="/library.html">Library</a></li>
+          <li class=""><a href="/register.html">Register</a></li>
+          <li class=""><a href="/login.html">Login</a></li>
+          <li class=""><a href="/about.html">About</a></li>
+        </menu>
       </div>
 
       <h1>
@@ -29,8 +30,11 @@
         The actual login page is provided by the 0-auth provider chosen by the user. We don't
         handle login ourselves, and we don't store <em>any</em> passwords.
       </p>
+      <div id="back-link-container">
+        <a href="javascript:history.back()" id="back-link">Back</a>
+      </div>
       <div class="big-link-container">
-        <a href="app.html" class="big-link" id="app-link">Login</a>
+        <a href="mapview.html" class="big-link" id="app-link">Login</a>
       </div>
     </div>
     <footer>

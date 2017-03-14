@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/yyy-static.css" />
     <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Archivo+Black" rel="stylesheet">
-    <title>Login with Google</title>
+    <title>Please call me!</title>
   </head>
   <body>
     <header>
@@ -22,20 +22,41 @@
       </div>
 
       <h1>
-        Login with Google
+        Please call me!
       </h1>
     </header>
     <div id="main-container" class="container">
       <p>
-        The actual login page is provided by the 0-auth provider chosen by the user. We don't
-        handle login ourselves, and we don't store <em>any</em> passwords.
+        Use this form to request someone to phone you to discuss your concerns about independence.
       </p>
-      <div id="back-link-container">
-        <a href="javascript:history.back()" id="back-link">Back</a>
-      </div>
-      <div class="big-link-container">
-        <a href="mapview.html" class="big-link" id="app-link">Login</a>
-      </div>
+      <form action="" method="post">
+        <p class="widget">
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name"/>
+        </p>
+        <p class="widget">
+          <label for="postcode">Your post-code</label>
+          <input type="text" id="postcode" name="postcode"/>
+        </p>
+        <p class="widget">
+          <label for="phone">Your phone number</label>
+          <input type="text" id="phone" name="phone"/>
+        </p>
+        <p class="widget">
+          <label for="concern">Your concerns</label>
+          <select name="concern" id="concern">
+            <option>Currency</option>
+            <option>EU Membership</option>
+            <option>Can we afford it?</option>
+            <option>The Queen</option>
+            <option>Defence/NATO</option>
+          </select>
+        </p>
+        <p class="widget">
+          <label for="submit">&nbsp;</label>
+          <input name="submit" id="submit" type="submit" class="action" value="Call me!"/>
+        </p>
+      </form>
     </div>
     <footer>
       <div class="dummy">

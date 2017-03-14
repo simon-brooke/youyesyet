@@ -1,7 +1,7 @@
 (defproject youyesyet "0.1.0-SNAPSHOT"
 
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "Canvassing tool for referenda"
+  :url "https://github.com/simon-brooke/youyesyet"
 
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.229" :scope "provided"]
