@@ -1,5 +1,7 @@
 drop table teammemberships;
 
+drop table teamorganiserships;
+
 drop index ix_teams_name;
 
 drop table teams;

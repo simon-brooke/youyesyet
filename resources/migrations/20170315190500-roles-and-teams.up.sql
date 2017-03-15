@@ -25,6 +25,10 @@ create table if not exists teammemberships (
   canvasser_id integer not null references canvassers(id)
 );
 
+create table if not exists teamorganiserships (
+  team_id integer not null references teams(id),
+  canvasser_id integer not null references canvassers(id)
+);
 
 alter table roles owner to youyesyet;
 
