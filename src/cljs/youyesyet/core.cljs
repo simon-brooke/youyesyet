@@ -49,7 +49,6 @@
 (defn about-page []
   [:div.container {:id "main-container"}
    (back-link)
-   (big-link "Map" "#/map")
    [:div.row
     [:div.col-md-12
      "this is the story of youyesyet... work in progress"]]])
@@ -57,18 +56,16 @@
 
 (defn home-page []
   [:div.container {:id "main-container"}
-   (back-link)
-   (big-link "Map" "#/map")
    (big-link "About" "#/about")
    [:div.jumbotron
     [:h1 "Welcome to youyesyet"]
     [:p "Time to start building your site!"]
     [:p [:a.btn.btn-primary.btn-lg {:href "http://luminusweb.net"} "Learn more »"]]]])
-;;    (when-let [docs @(rf/subscribe [:docs])]
-;;      [:div.row
-;;       [:div.col-md-12
-;;        [:div {:dangerouslySetInnerHTML
-;;               {:__html (md->html docs)}}]]])])
+   (when-let [docs @(rf/subscribe [:docs])]
+     [:div.row
+      [:div.col-md-12
+       [:div {:dangerouslySetInnerHTML
+              {:__html (md->html docs)}}]]])
 
 (defn map-page []
   (maps/map-div))
@@ -113,7 +110,8 @@
 ;; -------------------------
 ;; Initialize app
 (defn fetch-docs! []
-  (GET (str js/context "/docs") {:handler #(rf/dispatch [:set-docs %])}))
+  (GET (str js/context "/docs")
+       {:handler #(rf/dispatch [:set-docs %])}))
 
 (defn mount-components []
   (r/render [#'page] (.getElementById js/document "app")))
