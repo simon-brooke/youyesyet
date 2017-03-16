@@ -18,3 +18,4 @@ pom.xml.asc
 /node_modules/
 .DS_Store
 *-init.clj
+profiles\.clj
