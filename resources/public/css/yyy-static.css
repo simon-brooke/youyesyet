@@ -160,7 +160,7 @@ th {
 #main-container{
 }
 
-#back-link {
+#back-link, .back-link {
   min-width: 8em;
   padding: 0.25em 1em;
   background-color: gray;
@@ -170,7 +170,7 @@ th {
   border-bottom-right-radius: 0.5em;
 }
 
-#back-link:hover, #back-link:active {
+#back-link:hover, #back-link:active, .back-link:hover, .back-link:active, {
   text-decoration: none;
   background-color: rgb(160, 160, 160);
 }

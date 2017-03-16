@@ -27,29 +27,43 @@
       {:on-click #(swap! collapsed? not)} "☰"]
      [:div.collapse.navbar-toggleable-xs
       (when-not @collapsed? {:class "in"})
-      [:a.navbar-brand {:href "#/"} "youyesyet"]
+      [:a.navbar-brand {:href "#/"} "You yes yet?"]
       [:ul.nav.navbar-nav
        [nav-link "#/" "Home" :home collapsed?]
        [nav-link "#/map" "Map" :home collapsed?]
        [nav-link "#/about" "About" :about collapsed?]]]]))
 
+
+(defn back-link []
+  [:div.back-link-container {:id ":div.back-link-container"}
+   [:a {:href "javascript:history.back()" :id "back-link"} "Back"]])
+
+(defn big-link [text target]
+  [:div.big-link-container
+   [:a.big-link {:href target} text]])
+
 (defn about-page []
-  [:div.container
+  [:div.container {:id "main-container"}
+   (back-link)
+   (big-link "Map" "#/map")
    [:div.row
     [:div.col-md-12
      "this is the story of youyesyet... work in progress"]]])
 
 (defn home-page []
-  [:div.container
+  [:div.container {:id "main-container"}
+   (back-link)
+   (big-link "Map" "#/map")
+   (big-link "About" "#/about")
    [:div.jumbotron
     [:h1 "Welcome to youyesyet"]
     [:p "Time to start building your site!"]
-    [:p [:a.btn.btn-primary.btn-lg {:href "http://luminusweb.net"} "Learn more »"]]]
-   (when-let [docs @(rf/subscribe [:docs])]
-     [:div.row
-      [:div.col-md-12
-       [:div {:dangerouslySetInnerHTML
-              {:__html (md->html docs)}}]]])])
+    [:p [:a.btn.btn-primary.btn-lg {:href "http://luminusweb.net"} "Learn more »"]]]])
+;;    (when-let [docs @(rf/subscribe [:docs])]
+;;      [:div.row
+;;       [:div.col-md-12
+;;        [:div {:dangerouslySetInnerHTML
+;;               {:__html (md->html docs)}}]]])])
 
 (defn map-page []
   (maps/map-div))
