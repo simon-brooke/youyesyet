@@ -28,7 +28,7 @@
      [:img {:id "nav-icon"
             :src "img/threelines.png"
             :on-click #(swap! collapsed? not)}]
-     [:menu.nav (merge {:id "nav-menu"} (when @collapsed? {:class "fred"}))
+     [:menu.nav {:id "nav-menu" :class (if @collapsed? "hidden" "shown")}
       (nav-link "#/" "Home" :home collapsed?)
       (nav-link "#/library" "Library" :library collapsed?)
       (nav-link "#/register" "Register" :register collapsed?)

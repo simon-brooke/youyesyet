@@ -471,6 +471,14 @@ th {
     text-align: right;
   }
 
+  .hidden {
+    display: none;
+  }
+
+  .shown {
+    display: block;
+  }
+
   /* content of the current in the Wiki - editable, provided by users. Within main-container */
   #content {
     border: thin solid silver;
@@ -504,18 +512,12 @@ th {
     font-weight: bold;
   }
 
-  #nav:hover #nav-menu, #nav:hover #phone-side-bar {
-    display: block;
-    list-style-type: none;
-    width: 100%;
-  }
-
   #nav-icon {
     padding: 0;
   }
 
-  #nav-menu, #phone-side-bar {
-    display: none;
+  #nav-menu {
+    list-style-type: none;
   }
 
   #nav menu li {
