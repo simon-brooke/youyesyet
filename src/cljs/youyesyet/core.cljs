@@ -12,6 +12,7 @@
             [youyesyet.views.map :as maps])
   (:import goog.History))
 
+
 (defn nav-link [uri title page collapsed?]
   (let [selected-page (rf/subscribe [:page])]
     [:li.nav-item
@@ -20,27 +21,30 @@
       {:href uri
        :on-click #(reset! collapsed? true)} title]]))
 
+
 (defn navbar []
   (r/with-let [collapsed? (r/atom true)]
-    [:nav.navbar.navbar-light.bg-faded
-     [:button.navbar-toggler.hidden-sm-up
-      {:on-click #(swap! collapsed? not)} "☰"]
-     [:div.collapse.navbar-toggleable-xs
-      (when-not @collapsed? {:class "in"})
-      [:a.navbar-brand {:href "#/"} "You yes yet?"]
-      [:ul.nav.navbar-nav
-       [nav-link "#/" "Home" :home collapsed?]
-       [nav-link "#/map" "Map" :home collapsed?]
-       [nav-link "#/about" "About" :about collapsed?]]]]))
+    [:div {:id "nav"}
+     [:img {:id "nav-icon"
+            :src "img/threelines.png"
+            :on-click #(swap! collapsed? not)}]
+     [:menu.nav (merge {:id "nav-menu"} (when @collapsed? {:class "fred"}))
+      (nav-link "#/" "Home" :home collapsed?)
+      (nav-link "#/library" "Library" :library collapsed?)
+      (nav-link "#/register" "Register" :register collapsed?)
+      (nav-link "#/login" "Login" :login collapsed?)
+      (nav-link "#/about" "About" :about collapsed?)]]))
 
 
 (defn back-link []
-  [:div.back-link-container {:id ":div.back-link-container"}
+  [:div.back-link-container {:id "back-link-container"}
    [:a {:href "javascript:history.back()" :id "back-link"} "Back"]])
+
 
 (defn big-link [text target]
   [:div.big-link-container
    [:a.big-link {:href target} text]])
+
 
 (defn about-page []
   [:div.container {:id "main-container"}
@@ -49,6 +53,7 @@
    [:div.row
     [:div.col-md-12
      "this is the story of youyesyet... work in progress"]]])
+
 
 (defn home-page []
   [:div.container {:id "main-container"}
@@ -75,7 +80,9 @@
 
 (defn page []
   [:div
+  [:header
    [navbar]
+    [:h1 "You yes yet?"]]
    [(pages @(rf/subscribe [:page]))]])
 
 ;; -------------------------
@@ -87,6 +94,10 @@
 
 (secretary/defroute "/about" []
   (rf/dispatch [:set-active-page :about]))
+
+
+(secretary/defroute "/map" []
+  (rf/dispatch [:set-active-page :map]))
 
 ;; -------------------------
 ;; History

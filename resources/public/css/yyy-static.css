@@ -23,6 +23,14 @@
  * ## html elements generally in alphabetic order
  */
 
+a {
+  color: silver;
+}
+
+a:hover, a:active {
+  color: white;
+}
+
 body {
   font-family: "Archivo Narrow", "Helvetica", "Sans", sans-serif;
   background-color: rgb( 50, 109, 177);
@@ -430,7 +438,7 @@ th {
   }
 
   #nav menu li {
-    padding: 0.5em;
+    padding: 0.5em 2em 0.5em 0.5em;
     margin: 0.5 em;
     font-size: 150%;
   }
@@ -511,7 +519,7 @@ th {
   }
 
   #nav menu li {
-    padding: 0.5em;
+    padding: 0.5em 2em 0.5em 0.5em;
     margin: 0.5 em;
     font-size: 150%;
   }
