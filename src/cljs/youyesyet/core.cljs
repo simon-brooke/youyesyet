@@ -12,6 +12,7 @@
             [youyesyet.views.map :as maps])
   (:import goog.History))
 
+
 (defn nav-link [uri title page collapsed?]
   (let [selected-page (rf/subscribe [:page])]
     [:li.nav-item
@@ -20,36 +21,51 @@
       {:href uri
        :on-click #(reset! collapsed? true)} title]]))
 
+
 (defn navbar []
   (r/with-let [collapsed? (r/atom true)]
-    [:nav.navbar.navbar-light.bg-faded
-     [:button.navbar-toggler.hidden-sm-up
-      {:on-click #(swap! collapsed? not)} "☰"]
-     [:div.collapse.navbar-toggleable-xs
-      (when-not @collapsed? {:class "in"})
-      [:a.navbar-brand {:href "#/"} "youyesyet"]
-      [:ul.nav.navbar-nav
-       [nav-link "#/" "Home" :home collapsed?]
-       [nav-link "#/map" "Map" :home collapsed?]
-       [nav-link "#/about" "About" :about collapsed?]]]]))
+    [:div {:id "nav"}
+     [:img {:id "nav-icon"
+            :src "img/threelines.png"
+            :on-click #(swap! collapsed? not)}]
+     [:menu.nav {:id "nav-menu" :class (if @collapsed? "hidden" "shown")}
+      (nav-link "#/" "Home" :home collapsed?)
+      (nav-link "#/library" "Library" :library collapsed?)
+      (nav-link "#/register" "Register" :register collapsed?)
+      (nav-link "#/login" "Login" :login collapsed?)
+      (nav-link "#/about" "About" :about collapsed?)]]))
+
+
+(defn back-link []
+  [:div.back-link-container {:id "back-link-container"}
+   [:a {:href "javascript:history.back()" :id "back-link"} "Back"]])
+
+
+(defn big-link [text target]
+  [:div.big-link-container
+   [:a.big-link {:href target} text]])
+
 
 (defn about-page []
-  [:div.container
+  [:div.container {:id "main-container"}
+   (back-link)
    [:div.row
     [:div.col-md-12
      "this is the story of youyesyet... work in progress"]]])
 
+
 (defn home-page []
-  [:div.container
+  [:div.container {:id "main-container"}
+   (big-link "About" "#/about")
    [:div.jumbotron
     [:h1 "Welcome to youyesyet"]
     [:p "Time to start building your site!"]
-    [:p [:a.btn.btn-primary.btn-lg {:href "http://luminusweb.net"} "Learn more »"]]]
+    [:p [:a.btn.btn-primary.btn-lg {:href "http://luminusweb.net"} "Learn more »"]]]])
    (when-let [docs @(rf/subscribe [:docs])]
      [:div.row
       [:div.col-md-12
        [:div {:dangerouslySetInnerHTML
-              {:__html (md->html docs)}}]]])])
+              {:__html (md->html docs)}}]]])
 
 (defn map-page []
   (maps/map-div))
@@ -61,7 +77,9 @@
 
 (defn page []
   [:div
+  [:header
    [navbar]
+    [:h1 "You yes yet?"]]
    [(pages @(rf/subscribe [:page]))]])
 
 ;; -------------------------
@@ -73,6 +91,10 @@
 
 (secretary/defroute "/about" []
   (rf/dispatch [:set-active-page :about]))
+
+
+(secretary/defroute "/map" []
+  (rf/dispatch [:set-active-page :map]))
 
 ;; -------------------------
 ;; History
@@ -88,7 +110,8 @@
 ;; -------------------------
 ;; Initialize app
 (defn fetch-docs! []
-  (GET (str js/context "/docs") {:handler #(rf/dispatch [:set-docs %])}))
+  (GET (str js/context "/docs")
+       {:handler #(rf/dispatch [:set-docs %])}))
 
 (defn mount-components []
   (r/render [#'page] (.getElementById js/document "app")))
