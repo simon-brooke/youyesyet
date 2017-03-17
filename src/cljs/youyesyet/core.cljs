@@ -57,6 +57,7 @@
 (defn home-page []
   [:div.container {:id "main-container"}
    (big-link "About" "#/about")
+   (big-link "Map" "#/map")
    [:div.jumbotron
     [:h1 "Welcome to youyesyet"]
     [:p "Time to start building your site!"]
