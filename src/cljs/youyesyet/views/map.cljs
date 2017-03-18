@@ -86,7 +86,7 @@
   [:div#map {:style {:height "500px"}}])
 
 
-(defn map-div
+(defn panel
   "A reagent class for the map object."
   []
   (reagent/create-class {:reagent-render map-render

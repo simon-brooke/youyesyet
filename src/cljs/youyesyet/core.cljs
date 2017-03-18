@@ -9,6 +9,7 @@
             [youyesyet.ajax :refer [load-interceptors!]]
             [youyesyet.handlers]
             [youyesyet.subscriptions]
+            [youyesyet.ui-utils :as ui]
             [youyesyet.views.map :as maps])
   (:import goog.History))
 
@@ -36,19 +37,9 @@
       (nav-link "#/about" "About" :about collapsed?)]]))
 
 
-(defn back-link []
-  [:div.back-link-container {:id "back-link-container"}
-   [:a {:href "javascript:history.back()" :id "back-link"} "Back"]])
-
-
-(defn big-link [text target]
-  [:div.big-link-container
-   [:a.big-link {:href target} text]])
-
-
 (defn about-page []
   [:div.container {:id "main-container"}
-   (back-link)
+   (ui.back-link)
    [:div.row
     [:div.col-md-12
      "this is the story of youyesyet... work in progress"]]])
