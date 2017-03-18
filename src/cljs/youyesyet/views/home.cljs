@@ -1,5 +1,6 @@
 (ns youyesyet.views.home
-  (:require [re-frame.core :refer [reg-sub]]
+  (:require [re-frame.core :as rf]
+            [markdown.core :refer [md->html]]
             [youyesyet.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
