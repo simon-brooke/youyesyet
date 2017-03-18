@@ -10,57 +10,22 @@
             [youyesyet.handlers]
             [youyesyet.subscriptions]
             [youyesyet.ui-utils :as ui]
+            [youyesyet.views.about :as about]
+            [youyesyet.views.home :as home]
             [youyesyet.views.map :as maps])
   (:import goog.History))
 
 
-(defn nav-link [uri title page collapsed?]
-  (let [selected-page (rf/subscribe [:page])]
-    [:li.nav-item
-     {:class (when (= page @selected-page) "active")}
-     [:a.nav-link
-      {:href uri
-       :on-click #(reset! collapsed? true)} title]]))
-
-
-(defn navbar []
-  (r/with-let [collapsed? (r/atom true)]
-    [:div {:id "nav"}
-     [:img {:id "nav-icon"
-            :src "img/threelines.png"
-            :on-click #(swap! collapsed? not)}]
-     [:menu.nav {:id "nav-menu" :class (if @collapsed? "hidden" "shown")}
-      (nav-link "#/" "Home" :home collapsed?)
-      (nav-link "#/library" "Library" :library collapsed?)
-      (nav-link "#/register" "Register" :register collapsed?)
-      (nav-link "#/login" "Login" :login collapsed?)
-      (nav-link "#/about" "About" :about collapsed?)]]))
-
-
 (defn about-page []
-  [:div.container {:id "main-container"}
-   (ui.back-link)
-   [:div.row
-    [:div.col-md-12
-     "this is the story of youyesyet... work in progress"]]])
+  (about/panel))
 
 
 (defn home-page []
-  [:div.container {:id "main-container"}
-   (big-link "About" "#/about")
-   (big-link "Map" "#/map")
-   [:div.jumbotron
-    [:h1 "Welcome to youyesyet"]
-    [:p "Time to start building your site!"]
-    [:p [:a.btn.btn-primary.btn-lg {:href "http://luminusweb.net"} "Learn more »"]]]])
-   (when-let [docs @(rf/subscribe [:docs])]
-     [:div.row
-      [:div.col-md-12
-       [:div {:dangerouslySetInnerHTML
-              {:__html (md->html docs)}}]]])
+  (home/panel))
+
 
 (defn map-page []
-  (maps/map-div))
+  (maps/panel))
 
 (def pages
   {:home #'home-page
@@ -70,7 +35,7 @@
 (defn page []
   [:div
   [:header
-   [navbar]
+   [ui/navbar]
     [:h1 "You yes yet?"]]
    [(pages @(rf/subscribe [:page]))]])
 
@@ -83,7 +48,6 @@
 
 (secretary/defroute "/about" []
   (rf/dispatch [:set-active-page :about]))
-
 
 (secretary/defroute "/map" []
   (rf/dispatch [:set-active-page :map]))

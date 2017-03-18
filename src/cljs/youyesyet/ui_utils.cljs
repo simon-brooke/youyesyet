@@ -1,8 +1,10 @@
-(ns youyesyet.ui-utils)
+(ns youyesyet.ui-utils
+  (:require [reagent.core :as r]
+            [re-frame.core :as rf]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.views.electors: electors view for youyesyet.
+;;;; youyesyet.ui-utils: User interface stuff common to many views.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -23,8 +25,6 @@
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; User interface stuff common to many views
-
 
 (defn back-link []
   [:div.back-link-container {:id "back-link-container"}
@@ -34,3 +34,26 @@
 (defn big-link [text target]
   [:div.big-link-container
    [:a.big-link {:href target} text]])
+
+
+(defn nav-link [uri title page collapsed?]
+  (let [selected-page (rf/subscribe [:page])]
+    [:li.nav-item
+     {:class (when (= page @selected-page) "active")}
+     [:a.nav-link
+      {:href uri
+       :on-click #(reset! collapsed? true)} title]]))
+
+
+(defn navbar []
+  (r/with-let [collapsed? (r/atom true)]
+    [:div {:id "nav"}
+     [:img {:id "nav-icon"
+            :src "img/threelines.png"
+            :on-click #(swap! collapsed? not)}]
+     [:menu.nav {:id "nav-menu" :class (if @collapsed? "hidden" "shown")}
+      (nav-link "#/" "Home" :home collapsed?)
+      (nav-link "#/library" "Library" :library collapsed?)
+      (nav-link "#/register" "Register" :register collapsed?)
+      (nav-link "#/login" "Login" :login collapsed?)
+      (nav-link "#/about" "About" :about collapsed?)]]))
