@@ -126,7 +126,7 @@
                                  [directory-naming/naming-java "0.8"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.14.0"]
                                  [lein-doo "0.1.7"]
-                                 [lein-figwheel "0.5.8"]
+                                 [lein-figwheel "0.5.9"]
                                  [org.clojure/clojurescript "1.9.229"]]
                   :cljsbuild
                   {:builds
