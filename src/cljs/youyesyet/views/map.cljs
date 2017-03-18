@@ -44,7 +44,11 @@
 ;; which provider to use
 (def *map-provider* :osm)
 
+(def osm-url "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
+(def osm-attrib "Map data &copy; <a href='http://openstreetmap.org'>OpenStreetMap</a> contributors")
 
+
+;; My gods mapbox is user-hostile!
 (defn map-did-mount-mapbox
     "Did-mount function loading map tile data from MapBox (proprietary)."
   []
@@ -60,8 +64,8 @@
   "Did-mount function loading map tile data from Open Street Map (open)."
   []
   (let [map (.setView (.map js/L "map") #js [55.86 -4.25] 13)]
-    (.addTo (.tileLayer js/L "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        (clj->js {:attribution "Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors"
+    (.addTo (.tileLayer js/L osm-url
+                        (clj->js {:attribution osm-attrib
                                   :maxZoom 18}))
             map)))
 
@@ -79,7 +83,7 @@
 (defn map-render
   "Render the actual div containing the map."
   []
-  [:div#map {:style {:height "360px"}}])
+  [:div#map {:style {:height "500px"}}])
 
 
 (defn map-div
