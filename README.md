@@ -22,7 +22,7 @@ I've put a [dummy site](http://www.journeyman.cc/~simon/tmp/yyy-dummy/index.html
 
 ## Prerequisites
 
-You will need [Leiningen][1] 2.0 or above installed. The database required must be [Postgres][2].
+You will need [Leiningen][1] 2.0 or above installed. The database required must be [Postgres][2] 9.3 or above.
 
 [1]: https://github.com/technomancy/leiningen
 [2]: https://www.postgresql.org/
@@ -38,11 +38,26 @@ You'll also need to create your own local copy of *profiles.clj*, which should c
 
 Where *username* is the username required to access the database, and *thisisnotsecure* is the password which authenticates that username.
 
+It will be helpful for you to have the [Zenhub](https://www.zenhub.com/) plugin in your browser, either Firefox or Chrome, as I'm using it for project planning.
+
 ## Further Reading
 
 If you're thinking of joining in development on this I'd strongly recommend you get hold of a copy of [Dmitry Sotnikov](https://github.com/yogthos)'s [Web Development with Clojure, Second Edition](https://pragprog.com/book/dswdcloj2/web-development-with-clojure-second-edition).
 
 You should also read the [User-Oriented Specification](doc/specification/userspec.md) and any other documentation which appears under the *doc/specification* hierarchy.
+
+
+## Getting the database up
+
+Do get the database initialised, run
+
+    createdb youyesyet_dev
+
+followed by
+
+    lein migratus migrate
+
+**NOTE THAT** in the namespace *youyesyet.db.schema*, there are a series of functions *create-xxx-table!*. These are a snare and a delusion; they are how I originally bootstrapped the database, but are no longer used (and should probably be deleted). The database is now constructed using [migratus](https://github.com/yogthos/migratus).
 
 ## Running
 
