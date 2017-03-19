@@ -35,23 +35,23 @@
   []
   [:div.container {:id "main-container"}
    [:h2 "Pre-alpha/proof of concept"]
-   [:p {:class "centre"}
+   [:p
     [:img {:src "img/ric-logo.png" :width "24" :height "24"}]
     " A project of the "
     [:a {:href "https://radical.scot/"} "Radical Independence Campaign"]]
-   [:p {:class "centre"}
+   [:p
     [:img {:src "img/luminus-logo.png" :alt "Luminus" :height "24" :width "24"}]
     " Built with "
     [:a {:href "http://www.luminusweb.net/"} "Luminus Web"]]
-   [:p {:class "centre"}
+   [:p
     [:img {:src "img/clojure-icon.gif" :alt "Clojure" :height "24" :width "24"}]
     " Powered by "
     [:a {:href "http://clojure.org"} "Clojure"]]
-   [:p {:class "centre"}
+   [:p
     [:img {:src "img/github-logo-transparent.png" :alt "GitHub" :height "24" :width "24"}]
     " Find me/fork me on "
     [:a {:href "https://github.com/simon-brooke/youyesyet"} "GitHub"]]
-   [:p {:class "centre"}
+   [:p
     [:img {:src "img/gnu.small.png" :alt "Free Software Foundation" :height "24" :width "24"}]
     " Licensed under the "
     [:a {:href "http://www.gnu.org/licenses/gpl-2.0.html"}

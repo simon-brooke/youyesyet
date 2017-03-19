@@ -8,11 +8,25 @@
 (defn app-page []
   (layout/render "app.html"))
 
+(defn call-me-page [request]
+  (if
+    request
+    ;; do something to store it in the database
+    (layout/render "call-me-accepted.html" (:params request))
+    (layout/render "call-me.html"
+                   {:title "Please call me!"
+                    ;; TODO: Concerns need to be fetched from the database
+                    :concerns nil})))
+
 (defn home-page []
   (layout/render "home.html" {:title "You Yes Yet?"}))
 
 (defroutes home-routes
   (GET "/" [] (home-page))
   (GET "/app" [] (app-page))
-  (GET "/docs" [] (-> (response/ok (-> "docs/docs.md" io/resource slurp))
-                      (response/header "Content-Type" "text/plain; charset=utf-8"))))
+  (GET "/call-me" [] (call-me-page))
+  (POST "/call-me" request (call-me-page request))
+  (GET "/notyet" [] (layout/render "notyet.html"
+                                      {:title "Can we persuade you?"}))
+  (GET "/supporter" [] (layout/render "supporter.html"
+                                      {:title "Have you signed up as a canvasser yet?"})))
