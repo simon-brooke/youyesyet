@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/yyy-static.css" />
+    <link rel="stylesheet" type="text/css" href="css/spinner.css" />
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
+    <title>{{title}}</title>
+  </head>
+  <body>
+    <header>
+      <div id="nav">
+        <img id="nav-icon" src="img/threelines.png" alt="Menu"/>
+        <menu id="nav-menu" class="nav">
+          <li class=""><a href="index.html">Home</a></li>
+          <li class=""><a href="library.html">Library</a></li>
+          <li class=""><a href="register.html">Register</a></li>
+          <li class=""><a href="login.html">Login</a></li>
+          <li class=""><a href="about.html">About</a></li>
+        </menu>
+      </div>
+
+      <h1>
+        {{title}}
+      </h1>
+    </header>
+
+    <div id="main-container" class="container">
+      <div id="big-links">
+        {% block big-links %}
+        {% endblock %}
+      </div>
+      <div if="#content">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </body>
+</html>
