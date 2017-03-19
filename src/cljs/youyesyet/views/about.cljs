@@ -40,6 +40,10 @@
     " A project of the "
     [:a {:href "https://radical.scot/"} "Radical Independence Campaign"]]
    [:p {:class "centre"}
+    [:img {:src "img/luminus-logo.png" :alt "Luminus" :height "24" :width "24"}]
+    " Built with "
+    [:a {:href "http://www.luminusweb.net/"} "Luminus Web"]]
+   [:p {:class "centre"}
     [:img {:src "img/clojure-icon.gif" :alt "Clojure" :height "24" :width "24"}]
     " Powered by "
     [:a {:href "http://clojure.org"} "Clojure"]]
