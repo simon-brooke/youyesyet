@@ -34,6 +34,26 @@
 ;;;  redundant, and if they are the namespace probably needs to be renamed to 'entities'.
 ;;;  See also resources/migrations/20161014170335-basic-setup.up.sql
 
+(defn create-districts-table!
+  "Create a table to hold the electoral districts in which electors are registered.
+  Note that, as this app is being developed for the independence referendum in which
+  polling is across the whole of Scotland, this part of the design isn't fully thought
+  through; if later adapted to general or local elections, some breakdown or hierarchy
+  of polling districts into constituencies will be required."
+  []
+  (sql/db-do-commands
+    yyydb/*db*
+    (sql/create-table-ddl
+      :districts
+      ;; it may be necessary to have a serial abstract primary key but I suspect
+      ;; polling districts already have numbers assigned by the Electoral Commission and
+      ;; it would be sensible to use those. TODO: check.
+      [:id "integer not null primary key"]
+      [:name "varchar(64) not null"]
+      ;; TODO: it would make sense to hold polygon data for polling districts so we can reflect
+      ;; them on the map, but I haven't thought through how to do that yet.
+      )))
+
 
 (kc/defentity district
   (kc/pk :id)

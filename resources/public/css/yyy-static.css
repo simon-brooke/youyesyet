@@ -23,6 +23,14 @@
  * ## html elements generally in alphabetic order
  */
 
+a {
+  color: silver;
+}
+
+a:hover, a:active {
+  color: white;
+}
+
 body {
   font-family: "Archivo Narrow", "Helvetica", "Sans", sans-serif;
   background-color: rgb( 50, 109, 177);
@@ -160,7 +168,7 @@ th {
 #main-container{
 }
 
-#back-link {
+#back-link, .back-link {
   min-width: 8em;
   padding: 0.25em 1em;
   background-color: gray;
@@ -170,7 +178,7 @@ th {
   border-bottom-right-radius: 0.5em;
 }
 
-#back-link:hover, #back-link:active {
+#back-link:hover, #back-link:active, .back-link:hover, .back-link:active, {
   text-decoration: none;
   background-color: rgb(160, 160, 160);
 }
@@ -308,6 +316,9 @@ th {
   color: white;
 }
 
+.splash-screen {
+}
+
 .warn {
   color: maroon;
 }
@@ -430,7 +441,7 @@ th {
   }
 
   #nav menu li {
-    padding: 0.5em;
+    padding: 0.5em 2em 0.5em 0.5em;
     margin: 0.5 em;
     font-size: 150%;
   }
@@ -461,6 +472,14 @@ th {
     padding: 0.25em 5%;
     padding-left: 100px;
     text-align: right;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .shown {
+    display: block;
   }
 
   /* content of the current in the Wiki - editable, provided by users. Within main-container */
@@ -496,22 +515,16 @@ th {
     font-weight: bold;
   }
 
-  #nav:hover #nav-menu, #nav:hover #phone-side-bar {
-    display: block;
-    list-style-type: none;
-    width: 100%;
-  }
-
   #nav-icon {
     padding: 0;
   }
 
-  #nav-menu, #phone-side-bar {
-    display: none;
+  #nav-menu {
+    list-style-type: none;
   }
 
   #nav menu li {
-    padding: 0.5em;
+    padding: 0.5em 2em 0.5em 0.5em;
     margin: 0.5 em;
     font-size: 150%;
   }
