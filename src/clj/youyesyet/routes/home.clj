@@ -1,7 +1,7 @@
 (ns youyesyet.routes.home
   (:require [youyesyet.layout :as layout]
             [youyesyet.db.core :as db-core]
-            [compojure.core :refer [defroutes GET]]
+            [compojure.core :refer [defroutes GET POST]]
             [ring.util.http-response :as response]
             [clojure.java.io :as io]))
 
@@ -24,7 +24,7 @@
 (defroutes home-routes
   (GET "/" [] (home-page))
   (GET "/app" [] (app-page))
-  (GET "/call-me" [] (call-me-page))
+  (GET "/call-me" [] (call-me-page nil))
   (POST "/call-me" request (call-me-page request))
   (GET "/notyet" [] (layout/render "notyet.html"
                                       {:title "Can we persuade you?"}))
