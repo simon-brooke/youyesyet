@@ -23,12 +23,18 @@
 (defn home-page []
   (home/panel))
 
+(defn issues-page []
+  (issues/panel))
 
 (defn map-page []
   (maps/panel))
 
+(defn request-page []
+  (request/panel))
+
 (def pages
   {:home #'home-page
+   :issues #'issues-page
    :map #'map-page
    :about #'about-page})
 

@@ -6,6 +6,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.229" :scope "provided"]
                  [ring/ring-servlet "1.5.1"]
+                 [lib-noir "0.9.9" :exclusions [org.clojure/tools.reader]]
                  [clj-oauth "1.5.5"]
                  [ch.qos.logback/logback-classic "1.2.2"]
                  [re-frame "0.9.2"]

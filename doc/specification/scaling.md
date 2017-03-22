@@ -42,6 +42,22 @@ This means that the maximum number of transactions per second across Scotland is
 
 ## Spreading the load
 
+### Caching and memoizing
+
+People typically go out canvassing in teams; each member of the team will need the same elector data.
+
+Glasgow has a population density of about 3,260 per Km^2; that means each half kilometer square has a maximum population of not much more than 1,000. Downloading 1,000 elector records at startup time is not infeasible. If we normalise data requests to a 100 metre square grid and serve records in 500 metre square chunks, all the members of the same team will request the same chunk of data. Also, elector data is not volatile. Therefore it makes sense to memoize requests for elector data. The app should only request fresh elector data when the device moves within 100 metres of the edge of the current 500 metre cell.
+
+Intention data is volatile: we'll want to update canvassers with fresh intention data frequently, because the other members of their team will be recording intention data as they work, and it's by seeing that intention data that the canvassers know which doors are still unchapped. So we don't want to cache intention data for very long. But nevertheless it still makes sense to deliver it in normalised 500 metre square chunks, because that means we can temporarily cache it server side and do not actually have to hit the database with many requests for the same data.
+
+Finally, issue data is not volatile over the course of a canvassing session, although it may change over a period of days. So issue data - all the current issues - should be fetched once at app startup time, and not periodically refreshed during a canvassing session. Also, of course, every canvasser will require exactly the same issue data (unless we start thinking of local or regional issues...?), so it absolutely makes sense to memoise requests for issue data.
+
+All this normalisation and memoisation reduces the number of read requests on the database.
+
+Note that [clojure.core.memoize](https://github.com/clojure/core.memoize) provides us with functions to create both size-limited, least-recently-used caches and duration limited, time-to-live caches.
+
+At 56 degrees north there are 111,341 metres per degree of latitude, 62,392 metres per degree of longitude. So a 100 metre box is about 0.0016 degrees east-west and .0009 degrees north-south. If we simplify that slightly (and we don't need square boxes, we need units of area covering a group of people working together) then we can take .001 of a degree in either direction which is computationally cheap.
+
 ### Geographic sharding
 
 Volunteers canvassing simultaneously in the same street or the same locality need to see in near real time which dwellings have been canvassed by other volunteers, otherwise we'll get the same households canvassed repeatedly, which wastes volunteer time and annoys voters. So they all need to be sending updates to, and receiving updates from, the same server. But volunteers canvassing in Aberdeen don't need to see in near real time what is happening in Edinburgh.
