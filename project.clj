@@ -119,7 +119,7 @@
                                  [org.clojure/core.cache "0.6.5"]
                                  [org.apache.httpcomponents/httpcore "4.4.6"]
                                  [clj-webdriver/clj-webdriver "0.7.2"]
-                                 [org.seleniumhq.selenium/selenium-server "3.3.1"]
+                                 [org.seleniumhq.selenium/selenium-server "3.3.1" :exclusions [org.seleniumhq.selenium/selenium-support]]
                                  [doo "0.1.7"]
                                  [binaryage/devtools "0.9.2"]
                                  [figwheel-sidecar "0.5.9"]
