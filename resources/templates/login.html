@@ -9,10 +9,11 @@
         We're not going to do login in the long term; we're going to use oauth.
         This is a temporary login form.
       </p>
-      <form action="login" method="post">
+      <form action="auth" method="post">
+        {% csrf-field %}
         <p class="widget">
-          <label for="name">Username</label>
-          <input type="text" id="name" name="name"/>
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username"/>
         </p>
         <p class="widget">
           <label for="password">Your post-code</label>

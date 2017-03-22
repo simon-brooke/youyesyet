@@ -1,5 +1,7 @@
 (ns youyesyet.routes.home
-  (:require [noir.util.route :as route]
+  (:require [clojure.walk :refer [keywordize-keys]]
+            [noir.response :as nresponse]
+            [noir.util.route :as route]
             [youyesyet.layout :as layout]
             [youyesyet.db.core :as db-core]
             [compojure.core :refer [defroutes GET POST]]
@@ -27,15 +29,16 @@
   "This is very temporary. We're going to do authentication by oauth."
   [request]
   (let [params (keywordize-keys (:form-params request))
+        session (:session request)
         username (:username params)
         password (:password params)
         redirect-to (or (:redirect-to params) "app")]
     (if
-     (and (= username "test" (= password "test"))
+     (and (= username "test") (= password "test"))
      (do
-       (session/put! :user username)
-       (response/redirect redirect-to))
-     (layout/render "login.html" {:title "Please log in" :redirect-to redirect-to})))))
+       (assoc (response/found redirect-to) :session (assoc session :user username)))
+     (layout/render "login.html" {:title "Please log in" :redirect-to redirect-to}))))
+
 
 (defroutes home-routes
   (GET "/" [] (home-page))

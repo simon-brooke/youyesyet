@@ -1,9 +1,11 @@
-(ns youyesyet.views.followup-action
-  (:require [re-frame.core :refer [reg-sub]]))
+(ns youyesyet.views.issue
+  (:require [re-frame.core :refer [reg-sub]]
+            [youyesyet.ui-utils :as ui]
+            [youyesyet.views.issues :as issues]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.views.followup-action: followup-action view for youyesyet.
+;;;; youyesyet.views.issues: issues view for youyesyet.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -28,11 +30,4 @@
 ;;; The pattern from the re-com demo (https://github.com/Day8/re-com) is to have
 ;;; one source file/namespace per view. Each namespace contains a function 'panel'
 ;;; whose output is an enlive-style specification of the view to be redered.
-;;; I propose to follow this pattern. This file will (eventually) provide the followup-action view.
-
-;;; See https://github.com/simon-brooke/youyesyet/blob/master/doc/specification/userspec.md#followup-action-view
-
-(defn panel
-  "Generate the followup-action panel."
-  []
-  [])
+;;; I propose to follow this pattern. This file will (eventually) provide the single issue view.

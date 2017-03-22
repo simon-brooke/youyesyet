@@ -33,11 +33,6 @@
 
 ;;; See https://github.com/simon-brooke/youyesyet/blob/master/doc/specification/userspec.md#issues-view
 
-;;; The same panel, using re-frame, will display both the list of issues and the prompt
-;;; text on a single issue. All the issues will be fetched once as a map at client load
-;;; time
-
-
 (def *issues*
   ;;; this is a dummy for the map fetched at load-time
   {"Currency" "Lorem ipsum dolar sit amet"
@@ -60,5 +55,4 @@
      (ui/back-link)
      [:div {:id "issue-list"}
       ]
-     (map (fn [k] (ui/big-link k k)) (keys (get-issues)))
-])
+     (map (fn [k] (ui/big-link k (str "#/issue/" k))) (keys (get-issues)))])

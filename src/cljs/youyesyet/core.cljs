@@ -11,14 +11,16 @@
             [youyesyet.subscriptions]
             [youyesyet.ui-utils :as ui]
             [youyesyet.views.about :as about]
+            [youyesyet.views.electors :as electors]
             [youyesyet.views.home :as home]
-            [youyesyet.views.map :as maps])
+            [youyesyet.views.issues :as issues]
+            [youyesyet.views.map :as maps]
+            [youyesyet.views.followup-request :as request])
   (:import goog.History))
 
 
 (defn about-page []
   (about/panel))
-
 
 (defn home-page []
   (home/panel))
@@ -50,10 +52,13 @@
 (secretary/set-config! :prefix "#")
 
 (secretary/defroute "/" []
-  (rf/dispatch [:set-active-page :home]))
+  (rf/dispatch [:set-active-page :map]))
 
 (secretary/defroute "/about" []
   (rf/dispatch [:set-active-page :about]))
+
+(secretary/defroute "/issues" []
+  (rf/dispatch [:set-active-page :issues]))
 
 (secretary/defroute "/map" []
   (rf/dispatch [:set-active-page :map]))

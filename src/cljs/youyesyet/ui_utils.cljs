@@ -52,8 +52,6 @@
             :src "img/threelines.png"
             :on-click #(swap! collapsed? not)}]
      [:menu.nav {:id "nav-menu" :class (if @collapsed? "hidden" "shown")}
-      (nav-link "#/" "Home" :home collapsed?)
-      (nav-link "#/library" "Library" :library collapsed?)
-      (nav-link "#/register" "Register" :register collapsed?)
-      (nav-link "#/login" "Login" :login collapsed?)
+      (nav-link "#/map" "Map" :map collapsed?)
+      (nav-link "#/issues" "Issues" :issues collapsed?)
       (nav-link "#/about" "About" :about collapsed?)]]))
