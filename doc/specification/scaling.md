@@ -72,6 +72,28 @@ The geographic sharding strategy is scalable. We could start with a single serve
 
 But having considerable numbers of database servers will have cost implications.
 
+### Geographic sharding by DNS
+
+When I first thought of geographic sharding, I intended sharding by electoral district, but actually that makes no sense because electoral districts are complex polygons, which makes point-within-polygon computationally expensive. 4 degrees west falls just west of Stirling, and divides the country in half north-south. 56 degrees north runs north of Edinburgh and Glasgow, but just south of Falkirk. It divides the country in half east to west. Very few towns (and no large towns) straddle either line. Thus we can divide Scotland neatly into four, and it is computationally extremely cheap to compute which shard each data item should be despatched to.
+
+We can then set up in DNS four addresses:
+
+    +----------------------+-----------+-----------+
+    | Address              | longitude | latitude  |
+    +----------------------+-----------+-----------+
+    | nw.data.yyy.scot     | < -4      | >= 56     |
+    +----------------------+-----------+-----------+
+    | ne.data.yyy.scot     | >= -4     | >= 56     |
+    +----------------------+-----------+-----------+
+    | sw.data.yyy.scot     | < -4      | < 56      |
+    +----------------------+-----------+-----------+
+    | se.data.yyy.scot     | >= -4     | < 56      |
+    +----------------------+-----------+-----------+
+
+giving us an incredibly simple dispatch table. Furthermore, initially all four addresses can point to the same server. This is an incredibly simple scheme, and I'm confident it's good enough.
+
+Data that's inserted from the canvassing app - that is to say, voter intention data and followup request data - should have an additional field 'shard' (char(2)) which should hold the digraph representing the shard to which it was dispatched, and that field should form part of the primary key, allowing the data from all servers to be integrated. Data that isn't from the canvassing app should probably be directed to the 'nw' shard (which will be lightest loaded), or to a separate master server, and then all servers should be synced overnight.
+
 ### Read servers and write servers
 
 It's a common practice in architecting busy web systems to have one master database server to which all write operations are directed, surrounded by a ring of slave databases which replicate from the master and serve all read requests. This works because for the majority of web systems there are many more reads than writes.
@@ -92,15 +114,13 @@ From the above I think the scaling problem should be addressed as follows:
 4. When the initial cluster of three database servers becomes overloaded, shard into two identical groups ('east' and 'west');
 5. When any shard becomes overloaded, split it into two further shards.
 
-If we have prepared for sharding, all that is required is to duplicate the database and then set geographic polygons to address database requests from clients within a given polygon to the database server for that polygon.
-
-This means that essentially we should set up one polygon for each electoral district from the launch of the app, but initially requests from all of these polygons should be directed to the same database server group. As shards are added, the map of polygons to database server groups should be updated.
+If we have prepared for sharding, all that is required is to duplicate the database.
 
 Obviously, once we have split the database into multiple shards, there is a task to integrate the data from the multiple shards in order to create an 'across Scotland' overview of the canvas data; however, again if we have prepared for it in advance, merging the databases should not be difficult, and can be done either in the wee sma' oors or alternatively during the working day, as the system will be relatively lighty loaded during these periods.
 
 ## Preparing for sharding
 
-We should prepare a Docker image for the app server and a Docker image for the database server. We should prepare, as part of the app (i.e. not in the database but as a Clojure or Json data file) a datastructure which maps polygons representing each of Scotland's electoral districts to database URLs. For security reasons this datastructure should live server-side and should not be part of the single-page app sent to the client.
+We should prepare a Docker image for the app server and an image or setup script for the database server.
 
 ## Further reading on optimising Postgres performance
 
