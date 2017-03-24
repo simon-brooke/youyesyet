@@ -32,6 +32,14 @@
 
 ;;; See https://github.com/simon-brooke/youyesyet/blob/master/doc/specification/userspec.md#electors-view
 
+;;; The design for this panel is one column per elector within the address.
+;;; Each column contains
+;;; 1. a stick figure identifying gender (for recognition);
+;;; 2. the elector's name;
+;;; 3. one icon for each option on the ballot;
+;;; 4. an 'issues' icon.
+;;; The mechanics of how this panel is laid out don't matter.
+
 (defn panel
   "Generate the electors panel."
   []

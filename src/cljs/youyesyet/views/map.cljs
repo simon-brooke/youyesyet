@@ -41,6 +41,11 @@
 ;;; Note that this is raw reagent stylee; it should be refactoed into re-frame stylee
 ;;; when I understand it better.
 
+;;; There should be one flag on the map for each address record currently in frame.
+;;; Clicking the flag sets that address as the current address in the app state,
+;;; and redirects to the electors view. How we handle blocks of flats needs further
+;;; thought.
+
 ;; which provider to use
 (def *map-provider* :osm)
 

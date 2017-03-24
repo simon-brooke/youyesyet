@@ -19,9 +19,18 @@
  * USA.
  */
 
+h1 {
+  width:100%;
+  background-color: rgb(7, 57, 106);
+  color: white;
+  font-family: "Archivo Black", "Sans Bold", "Arial Black", sans-serif;
+  font-weight: normal;
+  margin-top: 0;
+}
 
 /* desktops and laptops, primarily. Adapted to mouse; targets may be small */
 @media all and (min-device-width: 1025px) {
+
   /* top-of-page navigation, not editable, provided by Smeagol */
   #nav{
     margin: 0;

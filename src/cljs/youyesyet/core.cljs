@@ -12,7 +12,7 @@
             [youyesyet.ui-utils :as ui]
             [youyesyet.views.about :as about]
             [youyesyet.views.electors :as electors]
-            [youyesyet.views.home :as home]
+            [youyesyet.views.issue :as issue]
             [youyesyet.views.issues :as issues]
             [youyesyet.views.map :as maps]
             [youyesyet.views.followup-request :as request])
@@ -22,11 +22,11 @@
 (defn about-page []
   (about/panel))
 
-(defn home-page []
-  (home/panel))
-
 (defn issues-page []
   (issues/panel))
+
+(defn issue-page []
+  (issue/panel))
 
 (defn map-page []
   (maps/panel))
@@ -35,16 +35,16 @@
   (request/panel))
 
 (def pages
-  {:home #'home-page
+  {:about #'about-page
    :issues #'issues-page
+   :issue #'issue-page
    :map #'map-page
-   :about #'about-page})
+   })
 
 (defn page []
   [:div
   [:header
-   [ui/navbar]
-    [:h1 "You yes yet?"]]
+   [ui/navbar]]
    [(pages @(rf/subscribe [:page]))]])
 
 ;; -------------------------
@@ -59,6 +59,9 @@
 
 (secretary/defroute "/issues" []
   (rf/dispatch [:set-active-page :issues]))
+
+(secretary/defroute "/issue/:issue" {issue :issue}
+  (rf/dispatch [:set-issue issue]))
 
 (secretary/defroute "/map" []
   (rf/dispatch [:set-active-page :map]))
@@ -76,9 +79,6 @@
 
 ;; -------------------------
 ;; Initialize app
-(defn fetch-docs! []
-  (GET (str js/context "/docs")
-       {:handler #(rf/dispatch [:set-docs %])}))
 
 (defn mount-components []
   (r/render [#'page] (.getElementById js/document "app")))
@@ -86,6 +86,5 @@
 (defn init! []
   (rf/dispatch-sync [:initialize-db])
   (load-interceptors!)
-  (fetch-docs!)
   (hook-browser-navigation!)
   (mount-components))

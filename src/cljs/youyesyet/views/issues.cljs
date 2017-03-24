@@ -1,5 +1,5 @@
 (ns youyesyet.views.issues
-  (:require [re-frame.core :refer [reg-sub]]
+  (:require [re-frame.core :refer [reg-sub subscribe]]
             [youyesyet.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -33,26 +33,14 @@
 
 ;;; See https://github.com/simon-brooke/youyesyet/blob/master/doc/specification/userspec.md#issues-view
 
-(def *issues*
-  ;;; this is a dummy for the map fetched at load-time
-  {"Currency" "Lorem ipsum dolar sit amet"
-   "Head of state" "Lorem ipsum dolar sit amet"
-   "NATO and defence" "Lorem ipsum dolar sit amet"})
-
-(defn get-issues-fn
-  "This is a temporary dummy for the function which will pull the issues from
-  the server."
-  []
-  *issues*)
-
-;;; By memoising the function we arange that it is called only once
-(def get-issues (memoize get-issues-fn))
-
+;;; Simple list of the issues of the day.
 (defn panel
   "Generate the issues panel."
   []
-    [:div.container {:id "main-container"}
-     (ui/back-link)
-     [:div {:id "issue-list"}
-      ]
-     (map (fn [k] (ui/big-link k (str "#/issue/" k))) (keys (get-issues)))])
+  (let [issues @(subscribe [:issues])]
+    [:div
+     [:h1 "Issues"]
+     [:div.container {:id "main-container"}
+      (ui/back-link)
+      [:div {:id "issue-list"}
+       (map (fn [k] (ui/big-link k (str "#/issue/" k))) (keys issues))]]]))

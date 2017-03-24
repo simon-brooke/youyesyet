@@ -7,6 +7,11 @@
     (:page db)))
 
 (reg-sub
-  :docs
+  :issues
   (fn [db _]
-    (:docs db)))
+    (:issues db)))
+
+(reg-sub
+  :issue
+  (fn [db _]
+    (:issue db)))

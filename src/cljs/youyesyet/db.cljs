@@ -30,4 +30,22 @@
 ;;; 'client-state'.
 
 (def default-db
-  {:page :home})
+  ;;; the currently displayed 'page' within the app.
+  {:page :home
+   ;;; the currently selected address, if any.
+   :address {:address "13 Imaginary Terrace, IM1 3TE"}
+   ;;; a list of the addresses in the current location at which there
+   ;;; are electors registered.
+   :addresses []
+   ;;; electors at the currently selected address
+   :electors [{:name "Alan Anderson" :gender :male :intention :no}
+              {:name "Ann Anderson" :gender :female}
+              {:name "Alex Anderson" :gender :fluid :intention :yes}
+              {:name "Andy Anderson" :intention :yes}]
+   ;;; the issues selected for the issues page on this day.
+   :issues {"Currency" "Scotland could keep the Pound, or use the Euro. But we could also set up a new currency of our own. Yada yada yada"
+            "Monarchy" "Scotland could keep the Queen. This is an issue to be decided after independence. Yada yada yada"
+            "Defence" "Scotland will not have nuclear weapons, and will probably not choose to engage in far-off wars. But we could remain members of NATO"}
+   ;;; the issue from among those issues which is currently selected.
+   :issue "Currency"
+   })

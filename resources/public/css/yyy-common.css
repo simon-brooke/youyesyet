@@ -373,8 +373,7 @@ th {
   h1 {
     /* I wouldn't normally use a px value, but the menu icon is 49px wide */
     padding: 0.25em 5%;
-    padding-left: 100px;
-    text-align: right;
+    padding-left: 75px;
   }
 
   .hidden {

@@ -1,5 +1,5 @@
 (ns youyesyet.views.issue
-  (:require [re-frame.core :refer [reg-sub]]
+  (:require [re-frame.core :refer [reg-sub subscribe]]
             [youyesyet.ui-utils :as ui]
             [youyesyet.views.issues :as issues]))
 
@@ -31,3 +31,16 @@
 ;;; one source file/namespace per view. Each namespace contains a function 'panel'
 ;;; whose output is an enlive-style specification of the view to be redered.
 ;;; I propose to follow this pattern. This file will (eventually) provide the single issue view.
+
+(defn panel
+  "Generate the issue panel."
+  []
+  (let [issue @(subscribe [:issue])
+        issues @(subscribe [:issues])]
+    [:div
+     [:h1 issue]
+     [:div.container {:id "main-container"}
+      (ui/back-link)
+      [:div {:id "issue"}
+       [:div {:id "issue-text"}
+        (issues issue)]]]]))

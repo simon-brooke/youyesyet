@@ -13,6 +13,7 @@
     (assoc db :page page)))
 
 (reg-event-db
-  :set-docs
-  (fn [db [_ docs]]
-    (assoc db :docs docs)))
+  :set-issue
+  (fn [db [_ issue]]
+    (assoc (assoc db :issue issue) :page :issue)))
+
