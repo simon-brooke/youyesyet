@@ -18,9 +18,37 @@
             [youyesyet.views.followup-request :as request])
   (:import goog.History))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; youyesyet.core: core of the app.
+;;;;
+;;;; This program is free software; you can redistribute it and/or
+;;;; modify it under the terms of the GNU General Public License
+;;;; as published by the Free Software Foundation; either version 2
+;;;; of the License, or (at your option) any later version.
+;;;;
+;;;; This program is distributed in the hope that it will be useful,
+;;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;;; GNU General Public License for more details.
+;;;;
+;;;; You should have received a copy of the GNU General Public License
+;;;; along with this program; if not, write to the Free Software
+;;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+;;;; USA.
+;;;;
+;;;; Copyright (C) 2016 Simon Brooke for Radical Independence Campaign
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; So that we can do debug logging!
+(enable-console-print!)
 
 (defn about-page []
   (about/panel))
+
+(defn electors-page []
+  (electors/panel))
 
 (defn issues-page []
   (issues/panel))
@@ -36,6 +64,7 @@
 
 (def pages
   {:about #'about-page
+   :electors #'electors-page
    :issues #'issues-page
    :issue #'issue-page
    :map #'map-page
@@ -57,8 +86,14 @@
 (secretary/defroute "/about" []
   (rf/dispatch [:set-active-page :about]))
 
+(secretary/defroute "/electors" []
+  (rf/dispatch [:set-active-page :electors]))
+
 (secretary/defroute "/issues" []
   (rf/dispatch [:set-active-page :issues]))
+
+(secretary/defroute "/issues/:elector" {elector :elector}
+  (rf/dispatch (list [:set-elector elector] [:set-active-page :issues])))
 
 (secretary/defroute "/issue/:issue" {issue :issue}
   (rf/dispatch [:set-issue issue]))

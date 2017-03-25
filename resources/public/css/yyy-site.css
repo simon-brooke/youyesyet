@@ -141,12 +141,19 @@
     font-weight: bold;
   }
 
+  #nav:hover #nav-menu {
+    display: block;
+    list-style-type: none;
+    width: 100%;
+  }
+
   #nav-icon {
     padding: 0;
   }
 
   #nav-menu {
     list-style-type: none;
+    display: none;
   }
 
   #nav menu li {

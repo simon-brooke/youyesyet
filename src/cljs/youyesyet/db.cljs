@@ -2,7 +2,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.views.electors: electors view for youyesyet.
+;;;; youyesyet.db: the state of the app.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -30,22 +30,30 @@
 ;;; 'client-state'.
 
 (def default-db
-  ;;; the currently displayed 'page' within the app.
-  {:page :home
-   ;;; the currently selected address, if any.
-   :address {:address "13 Imaginary Terrace, IM1 3TE"}
-   ;;; a list of the addresses in the current location at which there
-   ;;; are electors registered.
-   :addresses []
-   ;;; electors at the currently selected address
-   :electors [{:name "Alan Anderson" :gender :male :intention :no}
-              {:name "Ann Anderson" :gender :female}
-              {:name "Alex Anderson" :gender :fluid :intention :yes}
-              {:name "Andy Anderson" :intention :yes}]
-   ;;; the issues selected for the issues page on this day.
-   :issues {"Currency" "Scotland could keep the Pound, or use the Euro. But we could also set up a new currency of our own. Yada yada yada"
-            "Monarchy" "Scotland could keep the Queen. This is an issue to be decided after independence. Yada yada yada"
-            "Defence" "Scotland will not have nuclear weapons, and will probably not choose to engage in far-off wars. But we could remain members of NATO"}
-   ;;; the issue from among those issues which is currently selected.
-   :issue "Currency"
-   })
+  {;;; the currently selected address, if any.
+    :address {:id 1 :address "13 Imaginary Terrace, IM1 3TE" :latitude 55.8253043 :longitude -4.2590944}
+    ;;; a list of the addresses in the current location at which there
+    ;;; are electors registered.
+    :addresses [{:id 1 :address "13 Imaginary Terrace, IM1 3TE" :latitude 55.8253043 :longitude -4.2590944
+                 :electors [{:id 1 :name "Alan Anderson" :gender :male :intention :no}
+                            {:id 2 :name "Ann Anderson" :gender :female}
+                            {:id 3 :name "Alex Anderson" :gender :fluid :intention :yes}
+                            {:id 4 :name "Andy Anderson" :intention :yes}]}]
+    ;;; electors at the currently selected address
+    :electors [{:id 1 :name "Alan Anderson" :gender :male :intention :no}
+               {:id 2 :name "Ann Anderson" :gender :female}
+               {:id 3 :name "Alex Anderson" :gender :fluid :intention :yes}
+               {:id 4 :name "Andy Anderson" :intention :yes}]
+    ;;; the issue from among the issues which is currently selected.
+    :issue "Currency"
+    ;;; the issues selected for the issues page on this day.
+    :issues {"Currency" "Scotland could keep the Pound, or use the Euro. But we could also set up a new currency of our own. Yada yada yada"
+             "Monarchy" "Scotland could keep the Queen. This is an issue to be decided after independence. Yada yada yada"
+             "Defence" "Scotland will not have nuclear weapons, and will probably not choose to engage in far-off wars. But we could remain members of NATO"}
+    ;;; message of the day
+    :motd "This is a test version only. There is no real data."
+    ;;; the options from among which electors can select.
+    :options [{:id :yes :description "Yes"} {:id :no :description "No"}]
+    ;;; the currently displayed 'page' within the app.
+    :page :home
+    })

@@ -1,5 +1,6 @@
 (ns youyesyet.views.about
-  (:require [re-frame.core :refer [reg-sub]]
+  (:require [re-frame.core :refer [reg-sub subscribe]]
+            [markdown.core :refer [md->html]]
             [youyesyet.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -33,10 +34,13 @@
 (defn panel
   "Generate the about panel."
   []
+  (let [motd @(subscribe [:motd])]
   [:div
    [:h1 "You Yes Yet?"]
    [:div.container {:id "main-container"}
     [:h2 "Pre-alpha/proof of concept"]
+    [:p.motd {:dangerouslySetInnerHTML
+              {:__html (md->html motd)}}]
     [:p
      [:img {:src "img/ric-logo.png" :width "24" :height "24"}]
      " A project of the "
@@ -57,4 +61,4 @@
      [:img {:src "img/gnu.small.png" :alt "Free Software Foundation" :height "24" :width "24"}]
      " Licensed under the "
      [:a {:href "http://www.gnu.org/licenses/gpl-2.0.html"}
-      "GNU General Public License v2.0"]]]])
+      "GNU General Public License v2.0"]]]]))

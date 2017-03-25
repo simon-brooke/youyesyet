@@ -59,19 +59,15 @@
             [lein-bower "0.5.1"]
             [lein-less "1.7.5"]]
 
-  :bower-dependencies [
-                        ;; Problem with using boostrap and font-awsome from Bower: neither
-                        ;; of the distributed packages compile cleanly with less :-(
-                        ;; [bootstrap "2.3.1"]
-                        ;; [font-awesome "3.2.1"]
-                        [leaflet "0.7.3"]]
+  :bower-dependencies [[leaflet "0.7.3"]]
 
   :cucumber-feature-paths ["test/clj/features"]
 
   :hooks [leiningen.less]
 
   :uberwar
-  {:handler youyesyet.handler/app
+  {:prep-tasks ["compile" "bower" ["cljsbuild" "once" "min"]]
+   :handler youyesyet.handler/app
    :init youyesyet.handler/init
    :destroy youyesyet.handler/destroy
    :name "youyesyet.war"}
@@ -89,7 +85,7 @@
 
   :profiles
   {:uberjar {:omit-source true
-             :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
+             :prep-tasks ["compile" "bower" ["cljsbuild" "once" "min"]]
              :cljsbuild
              {:builds
               {:min
@@ -136,6 +132,7 @@
                      :compiler
                      {:main "youyesyet.app"
                       :asset-path "/js/out"
+                      :externs ["react/externs/react.js" "externs.js"]
                       :output-to "target/cljsbuild/public/js/app.js"
                       :output-dir "target/cljsbuild/public/js/out"
                       :source-map true
@@ -157,6 +154,7 @@
                     {:source-paths ["src/cljc" "src/cljs" "test/cljs"]
                      :compiler
                      {:output-to "target/test.js"
+                      :externs ["react/externs/react.js" "externs.js"]
                       :main "youyesyet.doo-runner"
                       :optimizations :whitespace
                       :pretty-print true}}}}

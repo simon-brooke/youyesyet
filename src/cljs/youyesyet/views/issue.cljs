@@ -40,7 +40,7 @@
     [:div
      [:h1 issue]
      [:div.container {:id "main-container"}
-      (ui/back-link)
       [:div {:id "issue"}
        [:div {:id "issue-text"}
-        (issues issue)]]]]))
+        (issues issue)]]
+      (ui/back-link)]]))

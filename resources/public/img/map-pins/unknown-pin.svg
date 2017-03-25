@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<!-- Icon created for SceneHere (c) 2010 Simon Brooke $Revision: 1.2 $ -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="240.5"
+   height="317.00851"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="basic_map_pin.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/simon/workspace/scenehere/src/war/images/icons/basic_map_pin.png"
+   inkscape:export-xdpi="11.98"
+   inkscape:export-ydpi="11.98"
+   version="1.1">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3155">
+      <stop
+         style="stop-color:#ffff67;stop-opacity:1;"
+         offset="0"
+         id="stop3157" />
+      <stop
+         id="stop3163"
+         offset="1"
+         style="stop-color:#ffd200;stop-opacity:0.74789917;" />
+      <stop
+         style="stop-color:#ffff67;stop-opacity:0;"
+         offset="1"
+         id="stop3159" />
+    </linearGradient>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3155"
+       id="radialGradient3161"
+       cx="77.050865"
+       cy="429.06537"
+       fx="77.050865"
+       fy="429.06537"
+       r="155.491"
+       gradientTransform="matrix(1,0,0,1.0302596,0,-12.983332)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="-144.01361"
+     inkscape:cy="86.04423"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1031"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2383"
+       originx="-384.75"
+       originy="-548.24148" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Basic pin for SceneHere</dc:title>
+        <dc:date>20100801</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Simon Brooke</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Copyright (c) 2010 Simon Brooke</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:identifier>basic_map_pin.svg</dc:identifier>
+        <dc:description>
+		Basic default map pin
+		$Revision: 1.2 $
+	</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-384.75,-187.11218)">
+    <path
+       style="fill:#dddddc;fill-opacity:0.70403586;fill-rule:evenodd;stroke:#4f4f4f;stroke-width:10.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 430,192.36218 150,0 c 20,1e-5 40,20.00001 40,40 l 0,150 c 0,20.00001 -20,40.00001 -40,40 l -40,0 c -20,0 -20,46.66667 -30,70 -13.33333,-23.33333 -20,-70 -40,-70 l -40,0 c -20,10e-6 -40,-19.99999 -40,-40 l 0,-150 c 0,-19.99999 20,-39.99999 40,-40 z"
+       id="path2387"
+       sodipodi:nodetypes="cccccccccccc"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:type="star"
+       style="fill:url(#radialGradient3161);fill-opacity:1;stroke:#f4f3f3;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path3153"
+       sodipodi:sides="5"
+       sodipodi:cx="90"
+       sodipodi:cy="432.36218"
+       sodipodi:r1="168.77766"
+       sodipodi:r2="56.68261"
+       sodipodi:arg1="0.69157251"
+       sodipodi:arg2="1.2771074"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 220,540 106.40877,486.61778 27.802561,589.26144 43.470446,464.73376 -78.440131,421.69344 44.83438,398.11331 48.095713,268.86928 108.61567,378.82364 232.54186,341.98675 146.67073,433.52241 Z"
+       transform="matrix(0.6026863,0.1441863,-0.1441863,0.6026863,509.16002,39.357112)" />
+  </g>
+</svg>

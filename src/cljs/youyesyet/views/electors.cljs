@@ -1,5 +1,6 @@
 (ns youyesyet.views.electors
-  (:require [re-frame.core :refer [reg-sub]]))
+  (:require [re-frame.core :refer [reg-sub subscribe]]
+            [youyesyet.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
@@ -40,7 +41,76 @@
 ;;; 4. an 'issues' icon.
 ;;; The mechanics of how this panel is laid out don't matter.
 
+(defn gender-cell
+  [elector]
+  (let [gender (:gender elector)
+        image (if gender (name gender) "unknown")]
+    [:td {:key (:id elector)} (if gender [:img {:src (str "img/gender/" image ".png") :alt image}])]))
+
+(defn genders-row
+  [electors]
+  [:tr
+   (map
+     #(gender-cell %) electors)])
+
+(defn name-cell
+  [elector]
+  [:td {:key (str "name-" (:id elector))} (:name elector)])
+
+(defn names-row
+  [electors]
+  [:tr
+   (map
+     #(name-cell %) electors)])
+
+(defn options-row
+  [electors option]
+  (let [optid (:id option)
+        optname (name optid)]
+    [:tr {:key (str "options-" optid)}
+     (map
+       #(let [selected (= optid (:intention %))
+              image (if selected (str "img/option/" optname "-selected.png")
+                      (str "img/option/" optname "-unselected.png"))]
+          [:td  {:key (str "option-" optid "-" (:id %))}
+           [:a {:href (str "#/set-intention/" (:id %) "/" optid)}
+            [:img {:src image :alt optname}]]])
+       electors)]))
+
+(defn issue-cell
+  "Create an issue cell for a particular elector"
+  [elector]
+  [:td {:key (:id elector)}
+   [:a {:href (str "#/issues/" (:id elector))}
+    [:img {:src "/img/issues.png" :alt "Issues"}]]])
+
+(defn issues-row
+  [electors]
+  [:tr
+   (map
+     #(issue-cell %)
+     electors)])
+
 (defn panel
   "Generate the electors panel."
   []
-  [])
+  (let [address @(subscribe [:address])
+        electors @(subscribe [:electors])
+        options @(subscribe [:options])]
+    [:div
+     [:h1 (:address address) (count electors) " electors"]
+     [:div.container {:id "main-container"}
+      [:table
+       ;; genders row
+       (genders-row electors)
+       ;; names row
+       (names-row electors)
+       ;; options rows
+       (map
+         #(options-row electors %)
+         options)
+       ;; issues row
+       (issues-row electors)]
+      (ui/back-link)]]))
+
+

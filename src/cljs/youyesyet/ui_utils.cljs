@@ -32,7 +32,7 @@
 
 
 (defn big-link [text target]
-  [:div.big-link-container
+  [:div.big-link-container {:key target}
    [:a.big-link {:href target} text]])
 
 
@@ -53,5 +53,6 @@
             :on-click #(swap! collapsed? not)}]
      [:menu.nav {:id "nav-menu" :class (if @collapsed? "hidden" "shown")}
       (nav-link "#/map" "Map" :map collapsed?)
+      (nav-link "#/electors" "Electors" :electors collapsed?)
       (nav-link "#/issues" "Issues" :issues collapsed?)
       (nav-link "#/about" "About" :about collapsed?)]]))

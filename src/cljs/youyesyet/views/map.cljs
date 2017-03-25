@@ -1,5 +1,5 @@
 (ns youyesyet.views.map
-  (:require [re-frame.core :refer [reg-sub]]
+  (:require [re-frame.core :refer [reg-sub subscribe]]
             [reagent.core :as reagent]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -52,27 +52,51 @@
 (def osm-url "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
 (def osm-attrib "Map data &copy; <a href='http://openstreetmap.org'>OpenStreetMap</a> contributors")
 
+(defn pin-image
+  "select the name of a suitable pin image for this address"
+  [address]
+  "yes-pin")
+
+(defn add-map-pin
+  "Add a map-pin with this pin-image at this latitude and longitude
+  in this map view"
+  [latitude longitude pin-image view]
+  (let [pin
+        (.Icon js/L
+               {:iconUrl (str "img/map-pins/" pin-image ".png")
+                :shadorUrl "img/map-pins/shadow_pin.png"
+                :iconSize [32 42]
+                :shadowSize [57 24]
+                :iconAnchor [16 41]
+                :shadowAnchor [16 23]}
+               )]
+    (.addTp (.marker js/L [latitude longitude] {:icon pin})) view))
+
+
+
 
 ;; My gods mapbox is user-hostile!
 (defn map-did-mount-mapbox
-    "Did-mount function loading map tile data from MapBox (proprietary)."
+  "Did-mount function loading map tile data from MapBox (proprietary)."
   []
-  (let [map (.setView (.map js/L "map") #js [55.86 -4.25] 13)]
+  (let [view (.setView (.map js/L "map") #js [55.82 -4.25] 13)]
     ;; NEED TO REPLACE FIXME with your mapID!
     (.addTo (.tileLayer js/L "http://{s}.tiles.mapbox.com/v3/FIXME/{z}/{x}/{y}.png"
                         (clj->js {:attribution "Map data &copy; [...]"
                                   :maxZoom 18}))
-            map)))
+            view)))
 
 
 (defn map-did-mount-osm
   "Did-mount function loading map tile data from Open Street Map (open)."
   []
-  (let [map (.setView (.map js/L "map") #js [55.86 -4.25] 13)]
+  (let [view (.setView (.map js/L "map") #js [55.86 -4.25] 13)
+        addresses @(subscribe [:addresses])]
     (.addTo (.tileLayer js/L osm-url
                         (clj->js {:attribution osm-attrib
                                   :maxZoom 18}))
-            map)))
+            view)
+    (map #(add-map-pin (:latitude %) (:longitude %) (pin-image %) view) addresses)))
 
 
 (defn map-did-mount
@@ -96,4 +120,3 @@
   []
   (reagent/create-class {:reagent-render map-render
                          :component-did-mount map-did-mount}))
-

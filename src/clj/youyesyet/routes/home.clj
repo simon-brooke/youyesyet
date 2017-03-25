@@ -11,6 +11,9 @@
 (defn app-page []
   (layout/render "app.html"))
 
+(defn about-page []
+  (layout/render "about.html"))
+
 (defn call-me-page [request]
   (if
     request
@@ -42,6 +45,8 @@
 
 (defroutes home-routes
   (GET "/" [] (home-page))
+  (GET "/home" [] (home-page))
+  (GET "/about" [] (about-page))
   (GET "/app" [] (route/restricted (app-page)))
   (GET "/call-me" [] (call-me-page nil))
   (POST "/call-me" request (call-me-page request))
