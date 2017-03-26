@@ -68,7 +68,7 @@ SET default_with_oids = false;
 -- Name: addresses; Type: TABLE; Schema: public; Owner: youyesyet; Tablespace:
 --
 
-CREATE TABLE addresses (
+CREATE TABLE IF NOT EXISTS addresses (
     id integer NOT NULL,
     address character varying(256) NOT NULL,
     postcode character varying(16),
@@ -106,7 +106,7 @@ ALTER SEQUENCE addresses_id_seq OWNED BY addresses.id;
 -- Name: authorities; Type: TABLE; Schema: public; Owner: youyesyet; Tablespace:
 --
 
-CREATE TABLE authorities (
+CREATE TABLE IF NOT EXISTS authorities (
     id character varying(32) NOT NULL
 );
 --;;
@@ -117,8 +117,9 @@ ALTER TABLE public.authorities OWNER TO youyesyet;
 -- Name: canvassers; Type: TABLE; Schema: public; Owner: youyesyet; Tablespace:
 --
 
-CREATE TABLE canvassers (
-    id character varying(32) NOT NULL,
+CREATE TABLE IF NOT EXISTS canvassers (
+    id serial,
+    username character varying(32) NOT NULL,
     fullname character varying(64) NOT NULL,
     elector_id integer,
     address_id integer NOT NULL,
@@ -135,7 +136,7 @@ ALTER TABLE public.canvassers OWNER TO youyesyet;
 -- Name: districts; Type: TABLE; Schema: public; Owner: youyesyet; Tablespace:
 --
 
-CREATE TABLE districts (
+CREATE TABLE IF NOT EXISTS districts (
     id integer NOT NULL,
     name character varying(64) NOT NULL
 );
@@ -147,7 +148,7 @@ ALTER TABLE public.districts OWNER TO youyesyet;
 -- Name: electors; Type: TABLE; Schema: public; Owner: youyesyet; Tablespace:
 --
 
-CREATE TABLE electors (
+CREATE TABLE IF NOT EXISTS electors (
     id integer NOT NULL,
     name character varying(64) NOT NULL,
     address_id integer NOT NULL,
@@ -162,10 +163,10 @@ ALTER TABLE public.electors OWNER TO youyesyet;
 -- Name: followupactions; Type: TABLE; Schema: public; Owner: youyesyet; Tablespace:
 --
 
-CREATE TABLE followupactions (
+CREATE TABLE IF NOT EXISTS followupactions (
     id integer NOT NULL,
     request_id integer NOT NULL,
-    actor character varying(32) NOT NULL,
+    actor integer NOT NULL,
     date timestamp with time zone DEFAULT now() NOT NULL,
     notes text,
     closed boolean
@@ -199,7 +200,7 @@ ALTER SEQUENCE followupactions_id_seq OWNED BY followupactions.id;
 -- Name: followupmethods; Type: TABLE; Schema: public; Owner: youyesyet; Tablespace:
 --
 
-CREATE TABLE followupmethods (
+CREATE TABLE IF NOT EXISTS followupmethods (
     id character varying(32) NOT NULL
 );
 --;;
@@ -218,7 +219,7 @@ insert into followupmethods values ('Post');
 --;;
 
 
-CREATE TABLE followuprequests (
+CREATE TABLE IF NOT EXISTS followuprequests (
     id integer NOT NULL,
     elector_id integer NOT NULL,
     visit_id integer NOT NULL,
@@ -258,8 +259,8 @@ ALTER SEQUENCE followuprequests_id_seq OWNED BY followuprequests.id;
 -- Name: issueexpertise; Type: TABLE; Schema: public; Owner: youyesyet; Tablespace:
 --
 
-CREATE TABLE issueexpertise (
-    canvasser_id character varying(32) NOT NULL,
+CREATE TABLE IF NOT EXISTS issueexpertise (
+    canvasser_id integer NOT NULL,
     issue_id character varying(32) NOT NULL,
     method_id character varying(32) NOT NULL
 );
@@ -273,7 +274,7 @@ ALTER TABLE public.issueexpertise OWNER TO youyesyet;
 -- Name: issues; Type: TABLE; Schema: public; Owner: youyesyet; Tablespace:
 --
 
-CREATE TABLE issues (
+CREATE TABLE IF NOT EXISTS issues (
     id character varying(32) NOT NULL,
     url character varying(256)
 );
@@ -287,7 +288,7 @@ ALTER TABLE public.issues OWNER TO youyesyet;
 -- Name: options; Type: TABLE; Schema: public; Owner: youyesyet; Tablespace:
 --
 
-CREATE TABLE options (
+CREATE TABLE IF NOT EXISTS options (
     id character varying(32) NOT NULL
 );
 --;;
@@ -300,7 +301,7 @@ ALTER TABLE public.options OWNER TO youyesyet;
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: youyesyet; Tablespace:
 --
 
-CREATE TABLE schema_migrations (
+CREATE TABLE IF NOT EXISTS schema_migrations (
     id bigint NOT NULL
 );
 --;;
@@ -313,10 +314,10 @@ ALTER TABLE public.schema_migrations OWNER TO youyesyet;
 -- Name: visits; Type: TABLE; Schema: public; Owner: youyesyet; Tablespace:
 --
 
-CREATE TABLE visits (
+CREATE TABLE IF NOT EXISTS visits (
     id integer NOT NULL,
     address_id integer NOT NULL,
-    canvasser_id character varying(32) NOT NULL,
+    canvasser_id integer NOT NULL,
     date timestamp with time zone DEFAULT now() NOT NULL
 );
 --;;
@@ -484,8 +485,8 @@ ALTER TABLE ONLY options
 -- Name: schema_migrations_id_key; Type: CONSTRAINT; Schema: public; Owner: youyesyet; Tablespace:
 --
 
-ALTER TABLE ONLY schema_migrations
-    ADD CONSTRAINT schema_migrations_id_key UNIQUE (id);
+--ALTER TABLE ONLY schema_migrations
+--    ADD CONSTRAINT schema_migrations_id_key UNIQUE (id);
 --;;
 
 

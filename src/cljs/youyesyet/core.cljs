@@ -9,59 +9,72 @@
             [youyesyet.ajax :refer [load-interceptors!]]
             [youyesyet.handlers]
             [youyesyet.subscriptions]
+            [youyesyet.ui-utils :as ui]
+            [youyesyet.views.about :as about]
+            [youyesyet.views.electors :as electors]
+            [youyesyet.views.followup :as followup]
+            [youyesyet.views.issue :as issue]
+            [youyesyet.views.issues :as issues]
             [youyesyet.views.map :as maps])
   (:import goog.History))
 
-(defn nav-link [uri title page collapsed?]
-  (let [selected-page (rf/subscribe [:page])]
-    [:li.nav-item
-     {:class (when (= page @selected-page) "active")}
-     [:a.nav-link
-      {:href uri
-       :on-click #(reset! collapsed? true)} title]]))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; youyesyet.core: core of the app.
+;;;;
+;;;; This program is free software; you can redistribute it and/or
+;;;; modify it under the terms of the GNU General Public License
+;;;; as published by the Free Software Foundation; either version 2
+;;;; of the License, or (at your option) any later version.
+;;;;
+;;;; This program is distributed in the hope that it will be useful,
+;;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;;; GNU General Public License for more details.
+;;;;
+;;;; You should have received a copy of the GNU General Public License
+;;;; along with this program; if not, write to the Free Software
+;;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+;;;; USA.
+;;;;
+;;;; Copyright (C) 2016 Simon Brooke for Radical Independence Campaign
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn navbar []
-  (r/with-let [collapsed? (r/atom true)]
-    [:nav.navbar.navbar-light.bg-faded
-     [:button.navbar-toggler.hidden-sm-up
-      {:on-click #(swap! collapsed? not)} "☰"]
-     [:div.collapse.navbar-toggleable-xs
-      (when-not @collapsed? {:class "in"})
-      [:a.navbar-brand {:href "#/"} "youyesyet"]
-      [:ul.nav.navbar-nav
-       [nav-link "#/" "Home" :home collapsed?]
-       [nav-link "#/map" "Map" :home collapsed?]
-       [nav-link "#/about" "About" :about collapsed?]]]]))
+;;; So that we can do debug logging!
+(enable-console-print!)
 
 (defn about-page []
-  [:div.container
-   [:div.row
-    [:div.col-md-12
-     "this is the story of youyesyet... work in progress"]]])
+  (about/panel))
 
-(defn home-page []
-  [:div.container
-   [:div.jumbotron
-    [:h1 "Welcome to youyesyet"]
-    [:p "Time to start building your site!"]
-    [:p [:a.btn.btn-primary.btn-lg {:href "http://luminusweb.net"} "Learn more »"]]]
-   (when-let [docs @(rf/subscribe [:docs])]
-     [:div.row
-      [:div.col-md-12
-       [:div {:dangerouslySetInnerHTML
-              {:__html (md->html docs)}}]]])])
+(defn electors-page []
+  (electors/panel))
+
+(defn followup-page []
+  (followup/panel))
+
+(defn issues-page []
+  (issues/panel))
+
+(defn issue-page []
+  (issue/panel))
 
 (defn map-page []
-  (maps/map-div))
+  (maps/panel))
 
 (def pages
-  {:home #'home-page
+  {:about #'about-page
+   :electors #'electors-page
+   :followup #'followup-page
+   :issues #'issues-page
+   :issue #'issue-page
    :map #'map-page
-   :about #'about-page})
+   })
 
 (defn page []
   [:div
-   [navbar]
+  [:header
+   [ui/navbar]]
    [(pages @(rf/subscribe [:page]))]])
 
 ;; -------------------------
@@ -69,10 +82,31 @@
 (secretary/set-config! :prefix "#")
 
 (secretary/defroute "/" []
-  (rf/dispatch [:set-active-page :home]))
+  (rf/dispatch [:set-active-page :map]))
 
 (secretary/defroute "/about" []
   (rf/dispatch [:set-active-page :about]))
+
+(secretary/defroute "/electors" []
+  (rf/dispatch [:set-active-page :electors]))
+
+(secretary/defroute "/followup" []
+  (rf/dispatch [:set-active-page :followup]))
+
+(secretary/defroute "/issues" []
+  (rf/dispatch [:set-active-page :issues]))
+
+(secretary/defroute "/issues/:elector" {elector-id :elector}
+  (rf/dispatch [:set-elector-and-page {:elector-id elector-id :page :issues}]))
+
+(secretary/defroute "/issue/:issue" {issue :issue}
+  (rf/dispatch [:set-issue issue]))
+
+(secretary/defroute "/map" []
+  (rf/dispatch [:set-active-page :map]))
+
+(secretary/defroute "/set-intention/:elector/:intention" {elector-id :elector intention :intention}
+  (rf/dispatch [:set-intention {:elector-id elector-id :intention intention}]))
 
 ;; -------------------------
 ;; History
@@ -87,8 +121,6 @@
 
 ;; -------------------------
 ;; Initialize app
-(defn fetch-docs! []
-  (GET (str js/context "/docs") {:handler #(rf/dispatch [:set-docs %])}))
 
 (defn mount-components []
   (r/render [#'page] (.getElementById js/document "app")))
@@ -96,6 +128,5 @@
 (defn init! []
   (rf/dispatch-sync [:initialize-db])
   (load-interceptors!)
-  (fetch-docs!)
   (hook-browser-navigation!)
   (mount-components))

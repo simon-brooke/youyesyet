@@ -1,5 +1,5 @@
 (ns youyesyet.views.map
-  (:require [re-frame.core :refer [reg-sub]]
+  (:require [re-frame.core :refer [reg-sub subscribe dispatch]]
             [reagent.core :as reagent]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -33,7 +33,6 @@
 
 ;;; See https://github.com/simon-brooke/youyesyet/blob/master/doc/specification/userspec.md#map-view
 
-
 ;;; Cribbed heavily from
 ;;;   https://github.com/reagent-project/reagent-cookbook/tree/master/recipes/leaflet
 ;;; but using OSM data because we can't afford commercial, so also cribbed from
@@ -41,29 +40,79 @@
 ;;; Note that this is raw reagent stylee; it should be refactoed into re-frame stylee
 ;;; when I understand it better.
 
+;;; There should be one flag on the map for each address record currently in frame.
+;;; Clicking the flag sets that address as the current address in the app state,
+;;; and redirects to the electors view. How we handle blocks of flats needs further
+;;; thought.
+
 ;; which provider to use
 (def *map-provider* :osm)
 
+(def osm-url "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
+(def osm-attrib "Map data &copy; <a href='http://openstreetmap.org'>OpenStreetMap</a> contributors")
 
+
+(defn pin-image
+  "select the name of a suitable pin image for this address"
+  [address]
+  (let [intentions (set (remove nil? (map #(:intention %) (:electors address))))]
+    (case (count intentions)
+      0 "unknown-pin"
+      1 (str (name (first intentions)) "-pin")
+      "mixed-pin")))
+
+
+(defn click-handler
+  [id]
+  (js/console.log (str "Click handler for address #" id))
+  (dispatch [:set-address id]))
+
+
+(defn add-map-pin
+  "Add a map-pin at this address in this map view"
+  [address view]
+  (let [lat (:latitude address)
+        lng (:longitude address)
+        pin (.icon js/L
+                   (clj->js
+                    {:iconUrl (str "img/map-pins/" (pin-image address) ".png")
+                     :shadowUrl "img/map-pins/shadow_pin.png"
+                     :iconSize [32 42]
+                     :shadowSize [57 24]
+                     :iconAnchor [16 41]
+                     :shadowAnchor [16 23]}))
+        marker (.marker js/L
+                        (.latLng js/L lat lng)
+                        (clj->js {:icon pin :title (:address address)}))
+        ]
+    (.on marker "click" #(fn [] (click-handler (:id address))))
+    (.addTo marker view)))
+
+
+;; My gods mapbox is user-hostile!
 (defn map-did-mount-mapbox
-    "Did-mount function loading map tile data from MapBox (proprietary)."
+  "Did-mount function loading map tile data from MapBox (proprietary)."
   []
-  (let [map (.setView (.map js/L "map") #js [55.86 -4.25] 13)]
+  (let [view (.setView (.map js/L "map" (clj->js {:zoomControl "false"})) #js [55.82 -4.25] 40)]
     ;; NEED TO REPLACE FIXME with your mapID!
     (.addTo (.tileLayer js/L "http://{s}.tiles.mapbox.com/v3/FIXME/{z}/{x}/{y}.png"
                         (clj->js {:attribution "Map data &copy; [...]"
                                   :maxZoom 18}))
-            map)))
+            view)))
 
 
 (defn map-did-mount-osm
-  "Did-mount function loading map tile data from Open Street Map (open)."
+  "Did-mount function loading map tile data from Open Street Map."
   []
-  (let [map (.setView (.map js/L "map") #js [55.86 -4.25] 13)]
-    (.addTo (.tileLayer js/L "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        (clj->js {:attribution "Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors"
+  (let [view (.setView (.map js/L "map" (clj->js {:zoomControl false})) #js [55.82 -4.25] 13)
+        addresses @(subscribe [:addresses])]
+    (js/console.log (str "Adding " (count addresses) " pins"))
+    (doall (map #(add-map-pin % view) addresses))
+    (.addTo (.tileLayer js/L osm-url
+                        (clj->js {:attribution osm-attrib
                                   :maxZoom 18}))
-            map)))
+            view)
+    ))
 
 
 (defn map-did-mount
@@ -79,12 +128,11 @@
 (defn map-render
   "Render the actual div containing the map."
   []
-  [:div#map {:style {:height "360px"}}])
+  [:div#map {:style {:height "500px"}}])
 
 
-(defn map-div
+(defn panel
   "A reagent class for the map object."
   []
   (reagent/create-class {:reagent-render map-render
                          :component-did-mount map-did-mount}))
-

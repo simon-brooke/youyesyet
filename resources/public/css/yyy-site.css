@@ -1,0 +1,177 @@
+/**
+ * Additional CSS for the app. Navigation works differently between
+ * app and the main site; in the app it's driven by React, while in
+ * the main site it's CSS.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
+ * USA.
+ *
+ * # The Stylesheet
+ *
+ * ## html elements generally in alphabetic order
+ */
+
+
+/* desktops and laptops, primarily. Adapted to mouse; targets may be small */
+@media all and (min-device-width: 1025px) {
+  /* top-of-page navigation, not editable, provided by Smeagol */
+  #nav{
+    margin: 0;
+    padding: 0;
+    top: 0;
+    width: 100%;
+    _position: absolute;
+    _top: expression(document.documentElement.scrollTop);
+    z-index: 149;
+    background:rgba(7,27,51,0.8);
+  }
+
+  /* only needed for fly-out menu effect on tablet and phone stylesheets */
+  #nav-icon {
+    display: none;
+  }
+
+  #nav-menu {
+    margin: 0;
+    padding: 0;
+  }
+
+  #nav menu li {
+    padding: 0;
+    margin: 0;
+    display: inline;
+  }
+
+  #nav menu li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.1em 0.75em;
+    margin: 0;
+  }
+
+  #nav menu li.active a { background: gray;}
+  li.nav-item a:hover { background: rgb( 240, 240, 240) }
+  li.nav-item a:active { background: gray; color: white; }
+
+  #nav menu li#user {
+    padding: 0 1em;
+    float: right;
+  }
+}
+
+/* tablets, primarily. Adapted to touch; targets are larger */
+@media all and (min-device-width: 769px) and (max-device-width: 1024px) {
+  #nav{
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    z-index: 149;
+    color: silver;
+    background:rgba(40,40,40,0.9);
+  }
+
+  #nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  #nav:hover #nav-menu {
+    display: block;
+    list-style-type: none;
+    width: 100%;
+  }
+
+  #nav-icon {
+    padding: 0;
+  }
+
+  #nav-menu, #phone-side-bar {
+    display: none;
+  }
+
+  #nav menu li {
+    padding: 0.5em 2em 0.5em 0.5em;
+    margin: 0.5 em;
+    font-size: 150%;
+  }
+
+  #nav menu li a {
+  }
+
+  #nav ul li.active a { background: silver;}
+  li.nav-item a:hover { background: rgb( 240, 240, 240) }
+  li.nav-item a:active { background: gray; color: white; }
+
+  #nav menu #user {
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0;
+  }
+}
+
+/* phones, and, indeed, smaller phones. Adapted to touch; display radically
+ * decluttered */
+@media all and (max-device-width: 768px) {
+  #nav{
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    z-index: 149;
+    color: silver;
+    background:rgba(40,40,40,0.9);
+  }
+
+  #nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  #nav:hover #nav-menu {
+    display: block;
+    list-style-type: none;
+    width: 100%;
+  }
+
+  #nav-icon {
+    padding: 0;
+  }
+
+  #nav-menu {
+    list-style-type: none;
+    display: none;
+  }
+
+  #nav menu li {
+    padding: 0.5em 2em 0.5em 0.5em;
+    margin: 0.5 em;
+    font-size: 150%;
+  }
+
+  #nav menu li a {
+  }
+
+  #nav ul li.active a { background: silver;}
+  li.nav-item a:hover { background: rgb( 240, 240, 240) }
+  li.nav-item a:active { background: gray; color: white; }
+
+  #nav menu #user {
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0;
+  }
+}

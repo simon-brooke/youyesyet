@@ -42,6 +42,22 @@ This means that the maximum number of transactions per second across Scotland is
 
 ## Spreading the load
 
+### Caching and memoizing
+
+People typically go out canvassing in teams; each member of the team will need the same elector data.
+
+Glasgow has a population density of about 3,260 per Km^2; that means each half kilometer square has a maximum population of not much more than 1,000. Downloading 1,000 elector records at startup time is not infeasible. If we normalise data requests to a 100 metre square grid and serve records in 500 metre square chunks, all the members of the same team will request the same chunk of data. Also, elector data is not volatile. Therefore it makes sense to memoize requests for elector data. The app should only request fresh elector data when the device moves within 100 metres of the edge of the current 500 metre cell.
+
+Intention data is volatile: we'll want to update canvassers with fresh intention data frequently, because the other members of their team will be recording intention data as they work, and it's by seeing that intention data that the canvassers know which doors are still unchapped. So we don't want to cache intention data for very long. But nevertheless it still makes sense to deliver it in normalised 500 metre square chunks, because that means we can temporarily cache it server side and do not actually have to hit the database with many requests for the same data.
+
+Finally, issue data is not volatile over the course of a canvassing session, although it may change over a period of days. So issue data - all the current issues - should be fetched once at app startup time, and not periodically refreshed during a canvassing session. Also, of course, every canvasser will require exactly the same issue data (unless we start thinking of local or regional issues...?), so it absolutely makes sense to memoise requests for issue data.
+
+All this normalisation and memoisation reduces the number of read requests on the database.
+
+Note that [clojure.core.memoize](https://github.com/clojure/core.memoize) provides us with functions to create both size-limited, least-recently-used caches and duration limited, time-to-live caches.
+
+At 56 degrees north there are 111,341 metres per degree of latitude, 62,392 metres per degree of longitude. So a 100 metre box is about 0.0016 degrees east-west and .0009 degrees north-south. If we simplify that slightly (and we don't need square boxes, we need units of area covering a group of people working together) then we can take .001 of a degree in either direction which is computationally cheap.
+
 ### Geographic sharding
 
 Volunteers canvassing simultaneously in the same street or the same locality need to see in near real time which dwellings have been canvassed by other volunteers, otherwise we'll get the same households canvassed repeatedly, which wastes volunteer time and annoys voters. So they all need to be sending updates to, and receiving updates from, the same server. But volunteers canvassing in Aberdeen don't need to see in near real time what is happening in Edinburgh.
@@ -55,6 +71,28 @@ Data from many 'front-line' database servers each serving a restricted geographi
 The geographic sharding strategy is scalable. We could start with a single server, split it into a 'west server' and an 'east server' when that gets overloaded, and further subdivide as needed through the campaign. But we can only do this effectively if we have prepared and tested the strategy in advance.
 
 But having considerable numbers of database servers will have cost implications.
+
+### Geographic sharding by DNS
+
+When I first thought of geographic sharding, I intended sharding by electoral district, but actually that makes no sense because electoral districts are complex polygons, which makes point-within-polygon computationally expensive. 4 degrees west falls just west of Stirling, and divides the country in half north-south. 56 degrees north runs north of Edinburgh and Glasgow, but just south of Falkirk. It divides the country in half east to west. Very few towns (and no large towns) straddle either line. Thus we can divide Scotland neatly into four, and it is computationally extremely cheap to compute which shard each data item should be despatched to.
+
+We can then set up in DNS four addresses:
+
+    +----------------------+-----------+-----------+
+    | Address              | longitude | latitude  |
+    +----------------------+-----------+-----------+
+    | nw.data.yyy.scot     | < -4      | >= 56     |
+    +----------------------+-----------+-----------+
+    | ne.data.yyy.scot     | >= -4     | >= 56     |
+    +----------------------+-----------+-----------+
+    | sw.data.yyy.scot     | < -4      | < 56      |
+    +----------------------+-----------+-----------+
+    | se.data.yyy.scot     | >= -4     | < 56      |
+    +----------------------+-----------+-----------+
+
+giving us an incredibly simple dispatch table. Furthermore, initially all four addresses can point to the same server. This is an incredibly simple scheme, and I'm confident it's good enough.
+
+Data that's inserted from the canvassing app - that is to say, voter intention data and followup request data - should have an additional field 'shard' (char(2)) which should hold the digraph representing the shard to which it was dispatched, and that field should form part of the primary key, allowing the data from all servers to be integrated. Data that isn't from the canvassing app should probably be directed to the 'nw' shard (which will be lightest loaded), or to a separate master server, and then all servers should be synced overnight.
 
 ### Read servers and write servers
 
@@ -76,15 +114,13 @@ From the above I think the scaling problem should be addressed as follows:
 4. When the initial cluster of three database servers becomes overloaded, shard into two identical groups ('east' and 'west');
 5. When any shard becomes overloaded, split it into two further shards.
 
-If we have prepared for sharding, all that is required is to duplicate the database and then set geographic polygons to address database requests from clients within a given polygon to the database server for that polygon.
-
-This means that essentially we should set up one polygon for each electoral district from the launch of the app, but initially requests from all of these polygons should be directed to the same database server group. As shards are added, the map of polygons to database server groups should be updated.
+If we have prepared for sharding, all that is required is to duplicate the database.
 
 Obviously, once we have split the database into multiple shards, there is a task to integrate the data from the multiple shards in order to create an 'across Scotland' overview of the canvas data; however, again if we have prepared for it in advance, merging the databases should not be difficult, and can be done either in the wee sma' oors or alternatively during the working day, as the system will be relatively lighty loaded during these periods.
 
 ## Preparing for sharding
 
-We should prepare a Docker image for the app server and a Docker image for the database server. We should prepare, as part of the app (i.e. not in the database but as a Clojure or Json data file) a datastructure which maps polygons representing each of Scotland's electoral districts to database URLs. For security reasons this datastructure should live server-side and should not be part of the single-page app sent to the client.
+We should prepare a Docker image for the app server and an image or setup script for the database server.
 
 ## Further reading on optimising Postgres performance
 

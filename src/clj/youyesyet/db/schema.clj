@@ -186,7 +186,7 @@
   (kc/entity-fields :id :fullname :phone :email :is_admin :authorised)
   (kc/has-one elector)
   (kc/has-one address)
-  (kc/has-one canvasser {:fk :introduced_by})
+;;  (kc/has-one canvasser {:fk :introduced_by})
   (kc/has-one authority))
 
 
@@ -244,7 +244,7 @@
     yyydb/*db*
     (sql/create-table-ddl
       :optionsdistricts
-      [:option_id"varchar(32) not null references options(option)"]
+      [:option_id "varchar(32) not null references options(option)"]
       [:district_id "integer not null references districts(id)"])))
 
 
@@ -395,6 +395,73 @@
   (kc/has-one canvasser {:fk :actor}))
 
 
+
+(defn create-role-table!
+  "Create a table to record roles. I'm not even yet certain that this is strictly necessary,
+  but it allows us to record the fact that different users (canvassers) have different roles
+  in the system."
+  []
+  (sql/db-do-commands
+    yyydb/*db*
+    (sql/create-table-ddl
+      :roles
+      [:id "serial primary key"]
+      [:name "varchar(64) not null"])))
+
+
+(defn create-role-membership-table!
+  "Create a link table to record membership of roles."
+  []
+  (sql/db-do-commands
+    yyydb/*db*
+    (sql/create-table-ddl
+      :rolememberships
+      [:role_id "integer not null references role(id)"]
+      [:canvasser_id "integer not null references canvasser(id)"])))
+
+
+(kc/defentity role
+  (kc/table :roles)
+  (kc/database yyydb/*db*)
+  (kc/entity-fields :id :name)
+  (kc/many-to-many canvasser :rolememberships))
+
+
+(defn create-team-table!
+  "Create a table to record teams."
+  []
+  (sql/db-do-commands
+    yyydb/*db*
+    (sql/create-table-ddl
+      :teams
+      [:id "serial primary key"]
+      [:name "varchar(64) not null"]
+      ;; the electoral district within which this address exists
+      [:district_id "integer references districts(id)"]
+      ;; nominal home location of this team
+      [:latitude :real]
+      [:longitude :real])))
+
+
+(defn create-team-membership-table!
+  "Create a link table to record membership of team."
+  []
+  (sql/db-do-commands
+    yyydb/*db*
+    (sql/create-table-ddl
+      :teammemberships
+      [:team_id "integer not null references team(id)"]
+      [:canvasser_id "integer not null references canvasser(id)"])))
+
+
+(kc/defentity team
+  (kc/table :teams)
+  (kc/database yyydb/*db*)
+  (kc/entity-fields :id :name :latitude :longitude)
+  (kc/has-one district)
+  (kc/many-to-many canvasser :teammemberships))
+
+
 (defn init-db! []
   "Initialised the whole database."
   (create-districts-table!)
@@ -409,4 +476,8 @@
   (create-issue-expertise-table!)
   (create-followup-requests-table!)
   (create-followup-actions-table!)
+  (create-role-table!)
+  (create-role-membership-table!)
+  (create-team-table!)
+  (create-team-membership-table!)
   )

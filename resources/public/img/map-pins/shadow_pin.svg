@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<!-- Icon created for SceneHere (c) 2010 Simon Brooke $Revision: 1.2 $ -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="393.64932"
+   height="234.32486"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="shadow_pin.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/simon/workspace/scenehere/src/war/images/icons/shadow_pin.png"
+   inkscape:export-xdpi="11.98"
+   inkscape:export-ydpi="11.98"
+   version="1.1">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+    <inkscape:perspective
+       id="perspective2470"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <filter
+       inkscape:collect="always"
+       id="filter3286"
+       x="-0.097085193"
+       width="1.1941704"
+       y="-0.18284883"
+       height="1.3656976">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="13.632102"
+         id="feGaussianBlur3288" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="139.64551"
+     inkscape:cy="107.26322"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="949"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-maximized="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2383"
+       originx="-309.93331"
+       originy="-527.02249" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Shadow pin for SceneHere</dc:title>
+        <dc:date>20100801</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Simon Brooke</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Copyright (c) 2010 Simon Brooke</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:identifier>shadow_pin.svg</dc:identifier>
+        <dc:description>$Revision: 1.2 $</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-309.93331,-291.01483)">
+    <path
+       style="opacity:0.66115699;fill:#373434;fill-opacity:0.52017942;fill-rule:evenodd;stroke:#4f4f4f;stroke-width:7.35060501;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter3286)"
+       d="m 529.41369,322.3882 128.012,0.5673 c 17.06824,0.0757 19.06491,11.56969 3.99332,22.98808 l -113.037,85.63797 c -15.0716,11.4184 -47.21146,22.76115 -64.27972,22.68551 l -34.13654,-0.15128 c -17.06826,-0.0756 -52.23533,26.56729 -78.35299,39.85092 6.20469,-13.37188 35.68233,-40.04002 18.61406,-40.11566 l -34.13653,-0.15128 c -17.06826,-0.0756 -19.06494,-11.56967 -3.99332,-22.98807 l 113.03699,-85.63798 c 15.07158,-11.41838 47.21147,-22.76114 64.27973,-22.68551 z"
+       id="path2387"
+       sodipodi:nodetypes="cccccccccccc"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>
