@@ -9,6 +9,7 @@ pom.xml.asc
 /checkouts/
 /resources/public/content/.git
 /resources/public/vendor
+/bower_components/
 .lein-deps-sum
 .lein-repl-history
 .lein-plugins/

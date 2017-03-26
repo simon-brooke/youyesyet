@@ -6,6 +6,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.229" :scope "provided"]
                  [ring/ring-servlet "1.5.1"]
+                 [lib-noir "0.9.9" :exclusions [org.clojure/tools.reader]]
                  [clj-oauth "1.5.5"]
                  [ch.qos.logback/logback-classic "1.2.2"]
                  [re-frame "0.9.2"]
@@ -58,19 +59,15 @@
             [lein-bower "0.5.1"]
             [lein-less "1.7.5"]]
 
-  :bower-dependencies [
-                        ;; Problem with using boostrap and font-awsome from Bower: neither
-                        ;; of the distributed packages compile cleanly with less :-(
-                        ;; [bootstrap "2.3.1"]
-                        ;; [font-awesome "3.2.1"]
-                        [leaflet "0.7.3"]]
+  :bower-dependencies [[leaflet "0.7.3"]]
 
   :cucumber-feature-paths ["test/clj/features"]
 
   :hooks [leiningen.less]
 
   :uberwar
-  {:handler youyesyet.handler/app
+  {:prep-tasks ["compile" "bower" ["cljsbuild" "once" "min"]]
+   :handler youyesyet.handler/app
    :init youyesyet.handler/init
    :destroy youyesyet.handler/destroy
    :name "youyesyet.war"}
@@ -88,20 +85,14 @@
 
   :profiles
   {:uberjar {:omit-source true
-             :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
+             :prep-tasks ["compile" ["bower" "install"] ["cljsbuild" "once" "min"]]
              :cljsbuild
              {:builds
               {:min
                {:source-paths ["src/cljc" "src/cljs" "env/prod/cljs"]
                 :compiler
-                {:output-to "target/cljsbuild/public/js/app.js"
-                 :externs ["react/externs/react.js" "externs.js"]
-                 :optimizations :advanced
-                 :pretty-print false
-                 :closure-warnings
-                 {:externs-validation :off :non-standard-jsdoc :off}}}}}
-
-
+                {:optimizations :advanced
+                 :pretty-print false}}}}
              :aot :all
              :uberjar-name "youyesyet.jar"
              :source-paths ["env/prod/clj"]
@@ -118,7 +109,7 @@
                                  [org.clojure/core.cache "0.6.5"]
                                  [org.apache.httpcomponents/httpcore "4.4.6"]
                                  [clj-webdriver/clj-webdriver "0.7.2"]
-                                 [org.seleniumhq.selenium/selenium-server "3.3.1"]
+                                 [org.seleniumhq.selenium/selenium-server "3.3.1" :exclusions [org.seleniumhq.selenium/selenium-support]]
                                  [doo "0.1.7"]
                                  [binaryage/devtools "0.9.2"]
                                  [figwheel-sidecar "0.5.9"]
@@ -135,6 +126,7 @@
                      :compiler
                      {:main "youyesyet.app"
                       :asset-path "/js/out"
+                      :externs ["react/externs/react.js" "externs.js"]
                       :output-to "target/cljsbuild/public/js/app.js"
                       :output-dir "target/cljsbuild/public/js/out"
                       :source-map true
@@ -156,6 +148,7 @@
                     {:source-paths ["src/cljc" "src/cljs" "test/cljs"]
                      :compiler
                      {:output-to "target/test.js"
+                      :externs ["react/externs/react.js" "externs.js"]
                       :main "youyesyet.doo-runner"
                       :optimizations :whitespace
                       :pretty-print true}}}}

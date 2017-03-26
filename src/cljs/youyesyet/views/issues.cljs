@@ -1,5 +1,6 @@
 (ns youyesyet.views.issues
-  (:require [re-frame.core :refer [reg-sub]]))
+  (:require [re-frame.core :refer [reg-sub subscribe]]
+            [youyesyet.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
@@ -32,7 +33,16 @@
 
 ;;; See https://github.com/simon-brooke/youyesyet/blob/master/doc/specification/userspec.md#issues-view
 
+;;; Simple list of the issues of the day.
 (defn panel
   "Generate the issues panel."
   []
-  [])
+  (let [issues @(subscribe [:issues])]
+    (if issues
+      [:div
+       [:h1 "Issues"]
+       [:div.container {:id "main-container"}
+        (ui/back-link)
+        [:div {:id "issue-list"}
+         (map (fn [k] (ui/big-link k (str "#/issue/" k))) (keys issues))]]]
+      (ui/error-panel "No issues loaded"))))

@@ -32,7 +32,7 @@
 
 
 (defn big-link [text target]
-  [:div.big-link-container
+  [:div.big-link-container {:key target}
    [:a.big-link {:href target} text]])
 
 
@@ -45,6 +45,14 @@
        :on-click #(reset! collapsed? true)} title]]))
 
 
+(defn error-panel
+  [message]
+  [:div
+   [:h1.error message]
+   [:div.container {:id "main-container"}
+    (back-link)]])
+
+
 (defn navbar []
   (r/with-let [collapsed? (r/atom true)]
     [:div {:id "nav"}
@@ -52,8 +60,7 @@
             :src "img/threelines.png"
             :on-click #(swap! collapsed? not)}]
      [:menu.nav {:id "nav-menu" :class (if @collapsed? "hidden" "shown")}
-      (nav-link "#/" "Home" :home collapsed?)
-      (nav-link "#/library" "Library" :library collapsed?)
-      (nav-link "#/register" "Register" :register collapsed?)
-      (nav-link "#/login" "Login" :login collapsed?)
+      (nav-link "#/map" "Map" :map collapsed?)
+      (nav-link "#/electors" "Electors" :electors collapsed?)
+      (nav-link "#/issues" "Issues" :issues collapsed?)
       (nav-link "#/about" "About" :about collapsed?)]]))
