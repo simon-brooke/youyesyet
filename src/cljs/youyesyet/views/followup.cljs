@@ -40,6 +40,7 @@
         issues @(subscribe [:issues])
         elector @(subscribe [:elector])
         address @(subscribe [:address])]
+    (js/console.log (str "Issue is " issue "; elector is " elector))
     (cond
      (nil? address)
      (ui/error-panel "No address selected")
@@ -55,15 +56,18 @@
          [:select {:id "elector" :name "elector"}
           (map
            #(let [selkey (if (= (:id elector) (:id %)) :selected :not-selected)]
-              [:option {:value (:id %) selkey "true"} (:name %)]) (:electors address))]]
+              [:option {:value (:id %) :key (:id %) selkey "true"} (:name %)]) (:electors address))]]
         [:p.widget
          [:label {:for "issue"} "Issue"]
          [:select {:id "issue" :name "issue"}
           (map
-           #(let [selkey (if (= (:id issue) (:id %)) :selected :not-selected)]
-              [:option {selkey "true"} %]) (keys issues))]]
+           #(let [selkey (if (= issue %) :selected :not-selected)]
+              [:option {selkey "true" :key %} %]) (keys issues))]]
         [:p.widget
-         [:label {:for "submit"} "&nbsp;"]
-         [:input {:id "submit" :name "submit" :type "submit" :value "Request Call"}]]
+         [:label {:for "telephone"} "Telephone number"]
+         [:input {:type "text" :id "telephone" :name "telephone"}]]
+        [:p.widget
+         [:label {:for "submit"} "To request a call"]
+         [:input {:id "submit" :name "submit" :type "submit" :value "Send this!"}]]
         ]
        (ui/back-link)]])))

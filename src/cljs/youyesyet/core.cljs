@@ -97,7 +97,7 @@
   (rf/dispatch [:set-active-page :issues]))
 
 (secretary/defroute "/issues/:elector" {elector-id :elector}
-  (rf/dispatch [:set-elector-and-page elector-id :issues]))
+  (rf/dispatch [:set-elector-and-page {:elector-id elector-id :page :issues}]))
 
 (secretary/defroute "/issue/:issue" {issue :issue}
   (rf/dispatch [:set-issue issue]))

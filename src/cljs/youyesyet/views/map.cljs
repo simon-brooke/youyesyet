@@ -33,7 +33,6 @@
 
 ;;; See https://github.com/simon-brooke/youyesyet/blob/master/doc/specification/userspec.md#map-view
 
-
 ;;; Cribbed heavily from
 ;;;   https://github.com/reagent-project/reagent-cookbook/tree/master/recipes/leaflet
 ;;; but using OSM data because we can't afford commercial, so also cribbed from
@@ -52,10 +51,12 @@
 (def osm-url "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
 (def osm-attrib "Map data &copy; <a href='http://openstreetmap.org'>OpenStreetMap</a> contributors")
 
+
 (defn pin-image
   "select the name of a suitable pin image for this address"
   [address]
   "yes-pin")
+
 
 (defn add-map-pin
   "Add a map-pin with this pin-image at this latitude and longitude

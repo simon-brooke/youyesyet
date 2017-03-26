@@ -99,7 +99,7 @@
         options @(subscribe [:options])]
     (if address
       [:div
-       [:h1 (:address address) (count electors) " electors"]
+       [:h1 (:address address)]
        [:div.container {:id "main-container"}
         [:table
          [:tbody

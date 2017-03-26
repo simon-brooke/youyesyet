@@ -50,7 +50,7 @@
   [:div
    [:h1.error message]
    [:div.container {:id "main-container"}
-    (ui/back-link)]])
+    (back-link)]])
 
 
 (defn navbar []

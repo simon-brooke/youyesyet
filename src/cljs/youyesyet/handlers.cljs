@@ -1,6 +1,8 @@
 (ns youyesyet.handlers
-  (:require [youyesyet.db :as db]
-            [re-frame.core :refer [dispatch reg-event-db]]))
+  (:require [cljs.reader :refer [read-string]]
+            [re-frame.core :refer [dispatch reg-event-db]]
+            [youyesyet.db :as db]
+            ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
@@ -30,22 +32,32 @@
   (fn [_ _]
     db/default-db))
 
+
 (reg-event-db
   :set-active-page
   (fn [db [_ page]]
     (assoc db :page page)))
 
-(reg-event-db
- :set-elector-and-page
- (fn [db [_ [elector-id page]]]
-   (let [elector
-         (remove nil?
-                 (map
-                  #(if (= elector-id (:id %)) %)
-                  (:electors (:address db))))]
-     (merge db {:elector elector :page page}))))
 
 (reg-event-db
-  :set-issue
-  (fn [db [_ issue]]
-    (assoc (assoc db :issue issue) :page :issue)))
+ :set-elector-and-page
+ (fn [db [_ args]]
+   (let [page (:page args)
+         elector-id (read-string (:elector-id args))
+         elector
+         (first
+          (remove nil?
+                 (map
+                  #(if (= elector-id (:id %)) %)
+                  (:electors (:address db)))))]
+     (js/console.log (str "Setting page to " page ", elector to " elector))
+     (assoc (assoc db :elector elector) :page page))))
+
+
+(reg-event-db
+ :set-issue
+ (fn [db [_ issue]]
+   (js/console.log (str "Setting page to :issue, issue to " issue))
+   (assoc (assoc db :issue issue) :page :issue)))
+
+
