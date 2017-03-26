@@ -63,9 +63,29 @@
 
 
 (reg-event-db
+  :set-intention
+  (fn [db [_ args]]
+    (let [intention (:intention args)
+          elector-id (read-string (:elector-id args))
+          elector
+          (first
+            (remove nil?
+                    (map
+                      #(if (= elector-id (:id %)) %)
+                      (:electors (:address db)))))
+          old-address (:address db)
+          new-address (assoc old-address :electors (cons (assoc elector :intention intention) (remove #(= % elector) (:electors old-address))))]
+      (cond
+        (nil? elector)(do (js/console.log "No elector found; not setting intention") db)
+        (= intention (:intention elector)) (do (js/console.log "Elector's intention hasn't changed; not setting intention") db)
+        true
+        (do
+          (js/console.log (str "Setting intention of elector " elector " to " intention))
+          (assoc db :addresses (cons new-address (remove old-address (:addresses db)))))))))
+
+
+(reg-event-db
  :set-issue
  (fn [db [_ issue]]
    (js/console.log (str "Setting page to :issue, issue to " issue))
    (assoc (assoc db :issue issue) :page :issue)))
-
-

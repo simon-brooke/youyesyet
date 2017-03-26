@@ -85,20 +85,14 @@
 
   :profiles
   {:uberjar {:omit-source true
-             :prep-tasks ["compile" "bower" ["cljsbuild" "once" "min"]]
+             :prep-tasks ["compile" ["bower" "install"] ["cljsbuild" "once" "min"]]
              :cljsbuild
              {:builds
               {:min
                {:source-paths ["src/cljc" "src/cljs" "env/prod/cljs"]
                 :compiler
-                {:output-to "target/cljsbuild/public/js/app.js"
-                 :externs ["react/externs/react.js" "externs.js"]
-                 :optimizations :advanced
-                 :pretty-print false
-                 :closure-warnings
-                 {:externs-validation :off :non-standard-jsdoc :off}}}}}
-
-
+                {:optimizations :advanced
+                 :pretty-print false}}}}
              :aot :all
              :uberjar-name "youyesyet.jar"
              :source-paths ["env/prod/clj"]

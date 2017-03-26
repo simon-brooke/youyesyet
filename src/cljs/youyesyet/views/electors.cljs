@@ -45,7 +45,7 @@
   [elector]
   (let [gender (:gender elector)
         image (if gender (name gender) "unknown")]
-    [:td {:key (:id elector)} (if gender [:img {:src (str "img/gender/" image ".png") :alt image}])]))
+    [:td {:key (:id elector)} [:img {:src (str "img/gender/" image ".png") :alt image}]]))
 
 (defn genders-row
   [electors]
@@ -84,6 +84,7 @@
    [:a {:href (str "#/issues/" (:id elector))}
     [:img {:src "/img/issues.png" :alt "Issues"}]]])
 
+
 (defn issues-row
   [electors]
   [:tr
@@ -95,6 +96,7 @@
   "Generate the electors panel."
   []
   (let [address @(subscribe [:address])
+        addresses @(subscribe [:addresses])
         electors (:electors address)
         options @(subscribe [:options])]
     (if address

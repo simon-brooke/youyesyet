@@ -61,4 +61,5 @@
      [:img {:src "img/gnu.small.png" :alt "Free Software Foundation" :height "24" :width "24"}]
      " Licensed under the "
      [:a {:href "http://www.gnu.org/licenses/gpl-2.0.html"}
-      "GNU General Public License v2.0"]]]]))
+      "GNU General Public License v2.0"]]
+    (ui/back-link)]]))

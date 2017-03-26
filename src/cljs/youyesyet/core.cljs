@@ -105,6 +105,9 @@
 (secretary/defroute "/map" []
   (rf/dispatch [:set-active-page :map]))
 
+(secretary/defroute "/set-intention/:elector/:intention" {elector-id :elector intention :intention}
+  (rf/dispatch [:set-intention {:elector-id elector-id :intention intention}]))
+
 ;; -------------------------
 ;; History
 ;; must be called after routes have been defined

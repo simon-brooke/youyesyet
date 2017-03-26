@@ -64,6 +64,7 @@
 
 (defn click-handler
   [id]
+  (js/console.log (str "Click handler for address #" id))
   (dispatch [:set-address id]))
 
 
@@ -71,7 +72,7 @@
   "Add a map-pin at this address in this map view"
   [address view]
   (let [lat (:latitude address)
-        lon (:longitude address)
+        lng (:longitude address)
         pin (.icon js/L
                    (clj->js
                     {:iconUrl (str "img/map-pins/" (pin-image address) ".png")
@@ -81,7 +82,7 @@
                      :iconAnchor [16 41]
                      :shadowAnchor [16 23]}))
         marker (.marker js/L
-                        (.latLng js/L 55.82 -4.25)
+                        (.latLng js/L lat lng)
                         (clj->js {:icon pin :title (:address address)}))
         ]
     (.on marker "click" #(fn [] (click-handler (:id address))))
@@ -92,7 +93,7 @@
 (defn map-did-mount-mapbox
   "Did-mount function loading map tile data from MapBox (proprietary)."
   []
-  (let [view (.setView (.map js/L "map" (clj->js {:zoomControl "false"})) #js [55.82 -4.25] 13)]
+  (let [view (.setView (.map js/L "map" (clj->js {:zoomControl "false"})) #js [55.82 -4.25] 40)]
     ;; NEED TO REPLACE FIXME with your mapID!
     (.addTo (.tileLayer js/L "http://{s}.tiles.mapbox.com/v3/FIXME/{z}/{x}/{y}.png"
                         (clj->js {:attribution "Map data &copy; [...]"
