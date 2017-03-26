@@ -1,5 +1,6 @@
 (ns youyesyet.views.issue
   (:require [re-frame.core :refer [reg-sub subscribe]]
+            [markdown.core :refer [md->html]]
             [youyesyet.ui-utils :as ui]
             [youyesyet.views.issues :as issues]))
 
@@ -41,7 +42,8 @@
      [:h1 issue]
      [:div.container {:id "main-container"}
       [:div {:id "issue"}
-       [:div {:id "issue-text"}
-        (issues issue)]]
+       [:div {:id "issue-text"
+              :dangerouslySetInnerHTML
+              {:__html (md->html (issues issue))}}]]
       (ui/big-link "Request call" "#/followup")
       (ui/back-link)]]))
