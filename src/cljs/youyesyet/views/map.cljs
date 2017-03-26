@@ -1,5 +1,5 @@
 (ns youyesyet.views.map
-  (:require [re-frame.core :refer [reg-sub subscribe]]
+  (:require [re-frame.core :refer [reg-sub subscribe dispatch]]
             [reagent.core :as reagent]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -55,17 +55,26 @@
 (defn pin-image
   "select the name of a suitable pin image for this address"
   [address]
-  "yes-pin")
+  (let [intentions (set (remove nil? (map #(:intention %) (:electors address))))]
+    (case (count intentions)
+      0 "unknown-pin"
+      1 (str (name (first intentions)) "-pin")
+      "mixed-pin")))
+
+
+(defn click-handler
+  [id]
+  (dispatch [:set-address id]))
 
 
 (defn add-map-pin
-  "Add a map-pin with this pin-image at this latitude and longitude
-  in this map view"
-  [latitude longitude pin-image view]
-  (js/console.log (str "Adding pin " pin-image " at " latitude "," longitude))
-  (let [pin (.icon js/L
+  "Add a map-pin at this address in this map view"
+  [address view]
+  (let [lat (:latitude address)
+        lon (:longitude address)
+        pin (.icon js/L
                    (clj->js
-                    {:iconUrl (str "img/map-pins/" pin-image ".png")
+                    {:iconUrl (str "img/map-pins/" (pin-image address) ".png")
                      :shadowUrl "img/map-pins/shadow_pin.png"
                      :iconSize [32 42]
                      :shadowSize [57 24]
@@ -73,8 +82,9 @@
                      :shadowAnchor [16 23]}))
         marker (.marker js/L
                         (.latLng js/L 55.82 -4.25)
-                        (clj->js {:icon pin}))
+                        (clj->js {:icon pin :title (:address address)}))
         ]
+    (.on marker "click" #(fn [] (click-handler (:id address))))
     (.addTo marker view)))
 
 
@@ -96,7 +106,7 @@
   (let [view (.setView (.map js/L "map" (clj->js {:zoomControl false})) #js [55.82 -4.25] 13)
         addresses @(subscribe [:addresses])]
     (js/console.log (str "Adding " (count addresses) " pins"))
-    (doall (map #(add-map-pin (:latitude %) (:longitude %) (pin-image %) view) addresses))
+    (doall (map #(add-map-pin % view) addresses))
     (.addTo (.tileLayer js/L osm-url
                         (clj->js {:attribution osm-attrib
                                   :maxZoom 18}))

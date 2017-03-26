@@ -40,6 +40,14 @@
 
 
 (reg-event-db
+ :set-address
+ (fn [db [_ address-id]]
+   (let [id (read-string address-id)
+         address (first (remove nil? (map #(if (= id (:id %)) %) (:addresses db))))]
+     (assoc (assoc db :address address) :page :electors))))
+
+
+(reg-event-db
  :set-elector-and-page
  (fn [db [_ args]]
    (let [page (:page args)
