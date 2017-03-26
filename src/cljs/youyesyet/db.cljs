@@ -31,7 +31,11 @@
 
 (def default-db
   {;;; the currently selected address, if any.
-    :address {:id 1 :address "13 Imaginary Terrace, IM1 3TE" :latitude 55.8253043 :longitude -4.2590944}
+    :address {:id 1 :address "13 Imaginary Terrace, IM1 3TE" :latitude 55.8253043 :longitude -4.2590944
+                 :electors [{:id 1 :name "Alan Anderson" :gender :male :intention :no}
+                            {:id 2 :name "Ann Anderson" :gender :female}
+                            {:id 3 :name "Alex Anderson" :gender :fluid :intention :yes}
+                            {:id 4 :name "Andy Anderson" :intention :yes}]}
     ;;; a list of the addresses in the current location at which there
     ;;; are electors registered.
     :addresses [{:id 1 :address "13 Imaginary Terrace, IM1 3TE" :latitude 55.8253043 :longitude -4.2590944
@@ -40,10 +44,7 @@
                             {:id 3 :name "Alex Anderson" :gender :fluid :intention :yes}
                             {:id 4 :name "Andy Anderson" :intention :yes}]}]
     ;;; electors at the currently selected address
-    :electors [{:id 1 :name "Alan Anderson" :gender :male :intention :no}
-               {:id 2 :name "Ann Anderson" :gender :female}
-               {:id 3 :name "Alex Anderson" :gender :fluid :intention :yes}
-               {:id 4 :name "Andy Anderson" :intention :yes}]
+    :elector {:id 1 :name "Alan Anderson" :gender :male :intention :no}
     ;;; the issue from among the issues which is currently selected.
     :issue "Currency"
     ;;; the issues selected for the issues page on this day.

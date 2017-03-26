@@ -95,22 +95,25 @@
   "Generate the electors panel."
   []
   (let [address @(subscribe [:address])
-        electors @(subscribe [:electors])
+        electors (:electors address)
         options @(subscribe [:options])]
-    [:div
-     [:h1 (:address address) (count electors) " electors"]
-     [:div.container {:id "main-container"}
-      [:table
-       ;; genders row
-       (genders-row electors)
-       ;; names row
-       (names-row electors)
-       ;; options rows
-       (map
-         #(options-row electors %)
-         options)
-       ;; issues row
-       (issues-row electors)]
-      (ui/back-link)]]))
+    (if address
+      [:div
+       [:h1 (:address address) (count electors) " electors"]
+       [:div.container {:id "main-container"}
+        [:table
+         [:tbody
+          ;; genders row
+          (genders-row electors)
+          ;; names row
+          (names-row electors)
+          ;; options rows
+          (map
+           #(options-row electors %)
+           options)
+          ;; issues row
+          (issues-row electors)]]
+        (ui/back-link)]]
+      (ui/error-panel "No address selected"))))
 
 

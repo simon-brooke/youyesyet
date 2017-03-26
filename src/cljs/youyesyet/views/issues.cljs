@@ -38,9 +38,11 @@
   "Generate the issues panel."
   []
   (let [issues @(subscribe [:issues])]
-    [:div
-     [:h1 "Issues"]
-     [:div.container {:id "main-container"}
-      (ui/back-link)
-      [:div {:id "issue-list"}
-       (map (fn [k] (ui/big-link k (str "#/issue/" k))) (keys issues))]]]))
+    (if issues
+      [:div
+       [:h1 "Issues"]
+       [:div.container {:id "main-container"}
+        (ui/back-link)
+        [:div {:id "issue-list"}
+         (map (fn [k] (ui/big-link k (str "#/issue/" k))) (keys issues))]]]
+      (ui/error-panel "No issues loaded"))))

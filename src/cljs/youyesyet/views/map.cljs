@@ -73,8 +73,6 @@
     (.addTp (.marker js/L [latitude longitude] {:icon pin})) view))
 
 
-
-
 ;; My gods mapbox is user-hostile!
 (defn map-did-mount-mapbox
   "Did-mount function loading map tile data from MapBox (proprietary)."
@@ -96,7 +94,8 @@
                         (clj->js {:attribution osm-attrib
                                   :maxZoom 18}))
             view)
-    (map #(add-map-pin (:latitude %) (:longitude %) (pin-image %) view) addresses)))
+;;     (map #(add-map-pin (:latitude %) (:longitude %) (pin-image %) view) addresses)
+    ))
 
 
 (defn map-did-mount

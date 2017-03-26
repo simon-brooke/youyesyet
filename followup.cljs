@@ -1,9 +1,16 @@
-(ns youyesyet.views.followup-request
-  (:require [re-frame.core :refer [reg-sub]]))
+(ns youyesyet.views.followup
+  (:require [reagent.core :as r]
+            [re-frame.core :refer [reg-sub subscribe]]
+;;             [re-frame-forms.core :as form]
+;;             [re-frame-forms.input :as input]
+;;             [re-com.core     :refer [h-box v-box box gap single-dropdown input-text checkbox label title hyperlink-href p]]
+;;             [re-com.dropdown :refer [filter-choices-by-keyword single-dropdown-args-desc]]
+            [youyesyet.ui-utils :as ui]
+))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.views.followup-request: followup-request view for youyesyet.
+;;;; youyesyet.views.followup: followup-request view for youyesyet.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -35,4 +42,31 @@
 (defn panel
   "Generate the followup-request panel."
   []
-  [])
+  (js/console.log (str "Rendering follow-up form"))
+
+  (let [issue @(subscribe [:issue])
+        issues @(subscribe [:issues])
+        elector @(subscribe [:elector])
+        address @(subscribe [:address])
+        form (form/make-form {:elector (:id elector)
+                              :issue (:id issue)})]
+    [:div
+     [:h1 "Followup Request"]
+     (let [selected-elector-id (r/atom (:id elector))
+           selected-issue (r/atom (:id issue))]
+       [:form {}
+        [:p.widget
+         [:label {:for "elector"} "Elector"]
+         [single-dropdown
+          :id elector
+          :choices (:electors address)
+          :model selected-elector-id
+          :label-fn #(:name %)]]
+        [:p.widget
+         [:label {:for "issue"} "Issue"]
+         [single-dropdown
+          :id issue
+          :choices (map #({:id % :label %}) (keys issues))
+          :model issue]]
+
+        ])]))

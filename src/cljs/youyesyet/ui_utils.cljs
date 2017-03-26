@@ -45,6 +45,14 @@
        :on-click #(reset! collapsed? true)} title]]))
 
 
+(defn error-panel
+  [message]
+  [:div
+   [:h1.error message]
+   [:div.container {:id "main-container"}
+    (ui/back-link)]])
+
+
 (defn navbar []
   (r/with-let [collapsed? (r/atom true)]
     [:div {:id "nav"}

@@ -40,9 +40,9 @@
     (:addresses db)))
 
 (reg-sub
-  :electors
+  :elector
   (fn [db _]
-    (:electors db)))
+    (:elector db)))
 
 (reg-sub
   :issue

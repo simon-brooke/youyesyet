@@ -43,4 +43,5 @@
       [:div {:id "issue"}
        [:div {:id "issue-text"}
         (issues issue)]]
+      (ui/big-link "Request call" "#/followup")
       (ui/back-link)]]))

@@ -36,6 +36,16 @@
     (assoc db :page page)))
 
 (reg-event-db
+ :set-elector-and-page
+ (fn [db [_ [elector-id page]]]
+   (let [elector
+         (remove nil?
+                 (map
+                  #(if (= elector-id (:id %)) %)
+                  (:electors (:address db))))]
+     (merge db {:elector elector :page page}))))
+
+(reg-event-db
   :set-issue
   (fn [db [_ issue]]
     (assoc (assoc db :issue issue) :page :issue)))

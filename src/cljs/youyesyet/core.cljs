@@ -12,10 +12,10 @@
             [youyesyet.ui-utils :as ui]
             [youyesyet.views.about :as about]
             [youyesyet.views.electors :as electors]
+            [youyesyet.views.followup :as followup]
             [youyesyet.views.issue :as issue]
             [youyesyet.views.issues :as issues]
-            [youyesyet.views.map :as maps]
-            [youyesyet.views.followup-request :as request])
+            [youyesyet.views.map :as maps])
   (:import goog.History))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -50,6 +50,9 @@
 (defn electors-page []
   (electors/panel))
 
+(defn followup-page []
+  (followup/panel))
+
 (defn issues-page []
   (issues/panel))
 
@@ -59,12 +62,10 @@
 (defn map-page []
   (maps/panel))
 
-(defn request-page []
-  (request/panel))
-
 (def pages
   {:about #'about-page
    :electors #'electors-page
+   :followup #'followup-page
    :issues #'issues-page
    :issue #'issue-page
    :map #'map-page
@@ -89,11 +90,14 @@
 (secretary/defroute "/electors" []
   (rf/dispatch [:set-active-page :electors]))
 
+(secretary/defroute "/followup" []
+  (rf/dispatch [:set-active-page :followup]))
+
 (secretary/defroute "/issues" []
   (rf/dispatch [:set-active-page :issues]))
 
-(secretary/defroute "/issues/:elector" {elector :elector}
-  (rf/dispatch (list [:set-elector elector] [:set-active-page :issues])))
+(secretary/defroute "/issues/:elector" {elector-id :elector}
+  (rf/dispatch [:set-elector-and-page elector-id :issues]))
 
 (secretary/defroute "/issue/:issue" {issue :issue}
   (rf/dispatch [:set-issue issue]))
