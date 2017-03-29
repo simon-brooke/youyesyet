@@ -10,15 +10,11 @@ generated using Luminus version "2.9.11.05"
 
 ## Status
 
-**Nothing works yet**. This is very early development code, a long way pre-alpha.
+Very early pre-alpha; user interface mostly works (enough to demonstrate), back end is hardly started.
 
 ## What is it supposed to do?
 
 To understand what I'm aiming for, read [this essay](http://blog.journeyman.cc/2016/10/preparing-for-next-independence.html). Design documentation, such as there is of it yet, is in the *dummy* sub-directory. Also look at [src/clj/youyesyet/db/schema.clj](https://github.com/simon-brooke/youyesyet/blob/master/src/clj/youyesyet/db/schema.clj).
-
-### Dummy website
-
-I've put a [dummy site](http://www.journeyman.cc/~simon/tmp/yyy-dummy/index.html) up for people to play with. Obviously it's intended to work with mobile phones.
 
 ## Prerequisites
 
@@ -49,6 +45,16 @@ You should also read the [User-Oriented Specification](doc/specification/userspe
 
 ## Getting the database up
 
+You'll need a file *profiles.clj*, with content similar to the following; it's not in the repository because it contains passwords.
+
+    ;; WARNING
+    ;; The profiles.clj file is used for local environment variables, such as database credentials.
+    ;; This file is listed in .gitignore and will be excluded from version control by Git.
+
+    {:profiles/dev  {:env {:database-url "jdbc:postgresql://127.0.0.1/youyesyet_dev?user=youyesyet&password=yourverysecurepassword"}}
+     :profiles/test {:env {:database-url "jdbc:postgresql://127.0.0.1/youyesyet_test?user=youyesyet&password=yourverysecurepassword"}}}
+
+
 Do get the database initialised, run
 
     createdb youyesyet_dev
@@ -59,9 +65,11 @@ followed by
 
 **NOTE THAT** in the namespace *youyesyet.db.schema*, there are a series of functions *create-xxx-table!*. These are a snare and a delusion; they are how I originally bootstrapped the database, but are no longer used (and should probably be deleted). The database is now constructed using [migratus](https://github.com/yogthos/migratus).
 
-## Running
+## Running in a dev environment
 
-To start a web server for the application, run:
+To run in a dev environment, checkout the *develop* branch
+
+To start a development web server for the application, run:
 
     lein run
 
@@ -72,6 +80,10 @@ If you're wanting to work on cljs development, you need two terminal sessions. I
 as above; in the other, run
 
     lein figwheel
+
+## Running in a production environment
+
+Doesn't really work yet; if you want to try it, see [Bug #36](https://github.com/simon-brooke/youyesyet/issues/36) and check out the associated feature branch.
 
 ## Working on this project
 
