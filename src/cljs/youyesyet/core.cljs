@@ -71,11 +71,16 @@
    :map #'map-page
    })
 
-(defn page []
+(defn page
+  "Render the single page of the app, taking the current panel from
+  the :page key in the state map."
+  []
   [:div
-  [:header
-   [ui/navbar]]
-   [(pages @(rf/subscribe [:page]))]])
+   [:header
+    [ui/navbar]]
+   (let [content (pages @(rf/subscribe [:page]))]
+     (if content [content]
+       [:div.error (str "No content in page " :page)]))])
 
 ;; -------------------------
 ;; Routes
