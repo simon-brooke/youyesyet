@@ -82,7 +82,7 @@
   [elector]
   [:td {:key (:id elector)}
    [:a {:href (str "#/issues/" (:id elector))}
-    [:img {:src "/img/issues.png" :alt "Issues"}]]])
+    [:img {:src "img/issues.png" :alt "Issues"}]]])
 
 
 (defn issues-row
