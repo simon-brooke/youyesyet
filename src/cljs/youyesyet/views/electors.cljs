@@ -1,5 +1,6 @@
 (ns youyesyet.views.electors
-  (:require [re-frame.core :refer [reg-sub subscribe]]
+  (:require [reagent.core :refer [atom]]
+            [re-frame.core :refer [reg-sub subscribe]]
             [youyesyet.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -47,11 +48,13 @@
         image (if gender (name gender) "unknown")]
     [:td {:key (:id elector)} [:img {:src (str "img/gender/" image ".png") :alt image}]]))
 
+
 (defn genders-row
   [electors]
   [:tr
    (map
      #(gender-cell %) electors)])
+
 
 (defn name-cell
   [elector]
@@ -62,6 +65,7 @@
   [:tr
    (map
      #(name-cell %) electors)])
+
 
 (defn options-row
   [electors option]
@@ -76,6 +80,7 @@
            [:a {:href (str "#/set-intention/" (:id %) "/" optid)}
             [:img {:src image :alt optname}]]])
        electors)]))
+
 
 (defn issue-cell
   "Create an issue cell for a particular elector"
@@ -98,7 +103,8 @@
   (let [address @(subscribe [:address])
         addresses @(subscribe [:addresses])
         electors (:electors address)
-        options @(subscribe [:options])]
+        options @(subscribe [:options])
+        changes @(subscribe [:changes])]
     (if address
       [:div
        [:h1 (:address address)]

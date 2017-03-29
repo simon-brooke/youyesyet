@@ -58,6 +58,8 @@
     :motd "This is a test version only. There is no real data."
     ;;; the options from among which electors can select.
     :options [{:id :yes :description "Yes"} {:id :no :description "No"}]
+    ;;; the number of requests created by the user in the current session
+    :requests 0
     ;;; the currently displayed 'page' within the app.
     :page :home
     })
