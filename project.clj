@@ -8,6 +8,7 @@
                  [ring/ring-servlet "1.5.1"]
                  [lib-noir "0.9.9" :exclusions [org.clojure/tools.reader]]
                  [clj-oauth "1.5.5"]
+                 [cljsjs/react-leaflet "0.12.3-4"]
                  [ch.qos.logback/logback-classic "1.2.2"]
                  [re-frame "0.9.2"]
                  [cljs-ajax "0.5.8"]
@@ -76,23 +77,14 @@
                        {:min
                         {:source-paths ["src/cljc" "src/cljs" "env/prod/cljs"]
                          :compiler
-                         {:asset-path "/youyesyet/js/out"
-                          :externs "externs.js"
-                          :main "youyesyet.core"
+                         {:main "youyesyet.core"
                           :optimizations :advanced
-                          :output-dir "resources/public/js"
-                          :output-to "resources/public/js/app.js"
                           :pretty-print false
                           :verbose true}}}}
                       :aot :all
                       :uberjar-name "youyesyet.jar"
                       :source-paths ["env/prod/clj"]
                       :resource-paths ["env/prod/resources"]}}
-;;   {:prep-tasks ["compile" "bower" ["cljsbuild" "once" "min"]]
-;;    :handler youyesyet.handler/app
-;;    :init youyesyet.handler/init
-;;    :destroy youyesyet.handler/destroy
-;;    :name "youyesyet.war"}
 
   :clean-targets ^{:protect false}
   [:target-path [:cljsbuild :builds :app :compiler :output-dir] [:cljsbuild :builds :app :compiler :output-to]]

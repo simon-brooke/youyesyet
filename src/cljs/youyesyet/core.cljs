@@ -1,11 +1,12 @@
 (ns youyesyet.core
-  (:require [reagent.core :as r]
-            [re-frame.core :as rf]
-            [secretary.core :as secretary]
+  (:require cljsjs.react-leaflet
+            [ajax.core :refer [GET POST]]
             [goog.events :as events]
             [goog.history.EventType :as HistoryEventType]
             [markdown.core :refer [md->html]]
-            [ajax.core :refer [GET POST]]
+            [reagent.core :as r]
+            [re-frame.core :as rf]
+            [secretary.core :as secretary]
             [youyesyet.ajax :refer [load-interceptors!]]
             [youyesyet.handlers]
             [youyesyet.subscriptions]
