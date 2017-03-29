@@ -34,9 +34,10 @@
 
 
 (reg-event-db
-  :set-active-page
-  (fn [db [_ page]]
-    (assoc db :page page)))
+ :set-active-page
+ (fn [db [_ page]]
+   (if page
+     (assoc db :page page))))
 
 
 (reg-event-db
