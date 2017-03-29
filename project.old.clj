@@ -65,34 +65,11 @@
 
   :hooks [leiningen.less]
 
-  :uberwar {:handler youyesyet.handler/app
-            :init youyesyet.handler/init
-            :destroy youyesyet.handler/destroy
-            :name "youyesyet.war"
-            :uberjar {:omit-source true
-                      :prep-tasks ["compile" ["bower" "install"] ["cljsbuild" "once" "min"]]
-                      :cljsbuild
-                      {:builds
-                       {:min
-                        {:source-paths ["src/cljc" "src/cljs" "env/prod/cljs"]
-                         :compiler
-                         {:asset-path "/youyesyet/js/out"
-                          :externs "externs.js"
-                          :main "youyesyet.core"
-                          :optimizations :advanced
-                          :output-dir "resources/public/js"
-                          :output-to "resources/public/js/app.js"
-                          :pretty-print false
-                          :verbose true}}}}
-                      :aot :all
-                      :uberjar-name "youyesyet.jar"
-                      :source-paths ["env/prod/clj"]
-                      :resource-paths ["env/prod/resources"]}}
-;;   {:prep-tasks ["compile" "bower" ["cljsbuild" "once" "min"]]
-;;    :handler youyesyet.handler/app
-;;    :init youyesyet.handler/init
-;;    :destroy youyesyet.handler/destroy
-;;    :name "youyesyet.war"}
+  :uberwar
+  {:handler youyesyet.handler/app
+   :init youyesyet.handler/init
+   :destroy youyesyet.handler/destroy
+   :name "youyesyet.war"}
 
   :clean-targets ^{:protect false}
   [:target-path [:cljsbuild :builds :app :compiler :output-dir] [:cljsbuild :builds :app :compiler :output-to]]
@@ -113,8 +90,14 @@
               {:min
                {:source-paths ["src/cljc" "src/cljs" "env/prod/cljs"]
                 :compiler
-                {:optimizations :advanced
-                 :pretty-print false}}}}
+                {:asset-path "/youyesyet/js/out"
+                 :externs "externs.js"
+                 :main "youyesyet.core"
+                 :optimizations :advanced
+                 :output-dir "resources/public/js"
+                 :output-to "resources/public/js/app.js"
+                 :pretty-print false
+                 :verbose true}}}}
              :aot :all
              :uberjar-name "youyesyet.jar"
              :source-paths ["env/prod/clj"]
@@ -146,8 +129,8 @@
                    {:app
                     {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
                      :compiler
-                     {:main "youyesyet.app"
-                      :asset-path "/js/out"
+                     {:asset-path "/youyesyet/js/out"
+                      :main "youyesyet.app"
                       :externs ["react/externs/react.js" "externs.js"]
                       :output-to "target/cljsbuild/public/js/app.js"
                       :output-dir "target/cljsbuild/public/js/out"
