@@ -62,10 +62,17 @@
       "mixed-pin")))
 
 
-(defn click-handler
+(defn map-pin-click-handler
+  "On clicking on the pin, navigate to the electors at the address.
+  This way of doing it adds an antry in the browser location history,
+  so back links work."
   [id]
   (js/console.log (str "Click handler for address #" id))
-  (dispatch [:set-address id]))
+  (set! window.location.href (str "#electors/" id)))
+;; This way is probably more idiomatic React, but back links don't work:
+;; (defn map-pin-click-handler
+;;  [id]
+;;  (dispatch [:set-address id]))
 
 
 (defn add-map-pin
@@ -83,9 +90,10 @@
                      :shadowAnchor [16 23]}))
         marker (.marker js/L
                         (.latLng js/L lat lng)
-                        (clj->js {:icon pin :title (:address address)}))
+                        (clj->js {:icon pin
+                                  :title (:address address)}))
         ]
-    (.on marker "click" #(fn [] (click-handler (:id address))))
+    (.on marker "click" (fn [_] (map-pin-click-handler (str (:id address)))))
     (.addTo marker view)))
 
 
