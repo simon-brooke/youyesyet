@@ -96,6 +96,9 @@
 (secretary/defroute "/electors" []
   (rf/dispatch [:set-active-page :electors]))
 
+(secretary/defroute "/electors/:address" {address-id :address}
+  (rf/dispatch [:set-address address-id]))
+
 (secretary/defroute "/followup" []
   (rf/dispatch [:set-active-page :followup]))
 
