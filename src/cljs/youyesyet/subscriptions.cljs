@@ -40,6 +40,11 @@
     (:addresses db)))
 
 (reg-sub
+ :changes
+ (fn [db _]
+   (:changes db)))
+
+(reg-sub
   :elector
   (fn [db _]
     (:elector db)))
