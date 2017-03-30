@@ -79,7 +79,11 @@
   [:div
    [:header
     [ui/navbar]]
-   (let [content (pages @(rf/subscribe [:page]))]
+   (let [content (pages @(rf/subscribe [:page]))
+         error @(rf/subscribe [:error])
+         feedback @(rf/subscribe [:feedback])]
+     [:div.error {:style (str "display: " (if error "block" "none"))} (str error)]
+     [:div.feedback {:style (str "display: " (if feedback "block" "none"))} (str feedback)]
      (if content [content]
        [:div.error (str "No content in page " :page)]))])
 
@@ -109,7 +113,7 @@
   (rf/dispatch [:set-elector-and-page {:elector-id elector-id :page :issues}]))
 
 (secretary/defroute "/issue/:issue" {issue :issue}
-  (rf/dispatch [:set-issue issue]))
+  (rf/dispatch [:set-and-go-to-issue issue]))
 
 (secretary/defroute "/map" []
   (rf/dispatch [:set-active-page :map]))

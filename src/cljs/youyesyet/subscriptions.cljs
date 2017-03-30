@@ -50,6 +50,16 @@
     (:elector db)))
 
 (reg-sub
+ :error
+  (fn [db _]
+    (:error db)))
+
+(reg-sub
+ :feedback
+  (fn [db _]
+    (:feedback db)))
+
+(reg-sub
   :issue
   (fn [db _]
     (:issue db)))

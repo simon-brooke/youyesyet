@@ -1,5 +1,5 @@
 (ns youyesyet.views.followup
-  (:require [re-frame.core :refer [reg-sub subscribe]]
+  (:require [re-frame.core :refer [reg-sub subscribe dispatch]]
             [youyesyet.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -50,25 +50,28 @@
      [:div
       [:h1 "Followup Request"]
       [:div.container {:id "main-container"}
-       [:form {}
+       [:div {}
         [:p.widget
          [:label {:for "elector"} "Elector"]
-         [:select {:id "elector" :name "elector" :value (:id elector)}
+         [:select {:id "elector" :name "elector" :defaultValue (:id elector)
+                   :on-change #(dispatch [:set-elector (.-value (.-target %))])}
           (map
            #(let []
               [:option {:value (:id %) :key (:id %)} (:name %)]) (:electors address))]]
         [:p.widget
          [:label {:for "issue"} "Issue"]
-         [:select {:id "issue" :name "issue" :value issue}
+         ;; #(reset! val (-> % .-target .-value))
+         [:select {:id "issue" :name "issue" :defaultValue issue
+                   :on-change #(dispatch [:set-issue (.-value (.-target %))])}
           (map
            #(let []
               [:option {:key % :value %} %]) (keys issues))]]
         [:p.widget
          [:label {:for "telephone"} "Telephone number"]
-         [:input {:type "text" :id "telephone" :name "telephone"}]]
+         [:input {:type "text" :id "telephone" :name "telephone"
+                  :on-change #(dispatch [:set-telephone (.-value (.-target %))])}]]
         [:p.widget
-         [:label {:for "submit"} "To request a call"]
-         [:input {:id "submit" :name "submit" :type "submit" :value "Send this!"}]]
-        ]
+         [:label {:for "send"} "To request a call"]
+         [:button {:id "send" :on-click #(dispatch [:send-request])} "Send this!"]]]
        (ui/back-link)]])))
 

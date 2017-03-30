@@ -1,6 +1,6 @@
 (ns youyesyet.views.electors
   (:require [reagent.core :refer [atom]]
-            [re-frame.core :refer [reg-sub subscribe]]
+            [re-frame.core :refer [reg-sub subscribe dispatch]]
             [youyesyet.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -71,15 +71,20 @@
   [electors option]
   (let [optid (:id option)
         optname (name optid)]
-    [:tr {:key (str "options-" optid)}
+    [:tr {:key (str "options-" optname)}
      (map
-       #(let [selected (= optid (:intention %))
-              image (if selected (str "img/option/" optname "-selected.png")
-                      (str "img/option/" optname "-unselected.png"))]
-          [:td  {:key (str "option-" optid "-" (:id %))}
-           [:a {:href (str "#/set-intention/" (:id %) "/" optid)}
-            [:img {:src image :alt optname}]]])
-       electors)]))
+      (fn [elector] (let [selected (= optid (:intention elector))
+                          image (if selected (str "img/option/" optname "-selected.png")
+                                  (str "img/option/" optname "-unselected.png"))]
+                      [:td  {:key (str "option-" optid "-" (:id elector))}
+                       [:img
+                        {:src image
+                         :alt optname
+                         :on-click #(dispatch
+                                    [:set-intention {:elector-id (:id elector)
+                                                     :intention optid}])}]]))
+      ;; TODO: impose an ordering on electors - by name or by id
+      electors)]))
 
 
 (defn issue-cell
@@ -102,7 +107,7 @@
   []
   (let [address @(subscribe [:address])
         addresses @(subscribe [:addresses])
-        electors (:electors address)
+        electors (sort-by :id (:electors address))
         options @(subscribe [:options])
         changes @(subscribe [:changes])]
     (if address
