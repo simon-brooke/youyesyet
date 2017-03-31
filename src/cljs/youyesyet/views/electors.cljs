@@ -1,5 +1,6 @@
 (ns youyesyet.views.electors
-  (:require [re-frame.core :refer [reg-sub subscribe]]
+  (:require [reagent.core :refer [atom]]
+            [re-frame.core :refer [reg-sub subscribe dispatch]]
             [youyesyet.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -47,11 +48,13 @@
         image (if gender (name gender) "unknown")]
     [:td {:key (:id elector)} [:img {:src (str "img/gender/" image ".png") :alt image}]]))
 
+
 (defn genders-row
   [electors]
   [:tr
    (map
      #(gender-cell %) electors)])
+
 
 (defn name-cell
   [elector]
@@ -63,26 +66,33 @@
    (map
      #(name-cell %) electors)])
 
+
 (defn options-row
   [electors option]
   (let [optid (:id option)
         optname (name optid)]
-    [:tr {:key (str "options-" optid)}
+    [:tr {:key (str "options-" optname)}
      (map
-       #(let [selected (= optid (:intention %))
-              image (if selected (str "img/option/" optname "-selected.png")
-                      (str "img/option/" optname "-unselected.png"))]
-          [:td  {:key (str "option-" optid "-" (:id %))}
-           [:a {:href (str "#/set-intention/" (:id %) "/" optid)}
-            [:img {:src image :alt optname}]]])
-       electors)]))
+      (fn [elector] (let [selected (= optid (:intention elector))
+                          image (if selected (str "img/option/" optname "-selected.png")
+                                  (str "img/option/" optname "-unselected.png"))]
+                      [:td  {:key (str "option-" optid "-" (:id elector))}
+                       [:img
+                        {:src image
+                         :alt optname
+                         :on-click #(dispatch
+                                    [:send-intention {:elector-id (:id elector)
+                                                     :intention optid}])}]]))
+      ;; TODO: impose an ordering on electors - by name or by id
+      electors)]))
+
 
 (defn issue-cell
   "Create an issue cell for a particular elector"
   [elector]
   [:td {:key (:id elector)}
    [:a {:href (str "#/issues/" (:id elector))}
-    [:img {:src "/img/issues.png" :alt "Issues"}]]])
+    [:img {:src "img/issues.png" :alt "Issues"}]]])
 
 
 (defn issues-row
@@ -97,8 +107,9 @@
   []
   (let [address @(subscribe [:address])
         addresses @(subscribe [:addresses])
-        electors (:electors address)
-        options @(subscribe [:options])]
+        electors (sort-by :id (:electors address))
+        options @(subscribe [:options])
+        changes @(subscribe [:changes])]
     (if address
       [:div
        [:h1 (:address address)]

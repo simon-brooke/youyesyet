@@ -69,7 +69,7 @@
   [id]
   (js/console.log (str "Click handler for address #" id))
   (set! window.location.href (str "#electors/" id)))
-;; This way is probably more idiomatic React, but back links don't work:
+;; This way is probably more idiomatic React, but history doesn't work:
 ;; (defn map-pin-click-handler
 ;;  [id]
 ;;  (dispatch [:set-address id]))

@@ -60,13 +60,9 @@ footer {
   width: 100%;
   margin: 0;
   padding: 0.25em 0;
-  bottom:0;
-  position:fixed;
-  vertical-align: top;
+  bottom: 0;
+  position: fixed;
   z-index:150;
-  _position:absolute;
-  _top:expression(eval(document.documentElement.scrollTop+
-        (document.documentElement.clientHeight-this.offsetHeight)));
 }
 
 footer div {
@@ -365,22 +361,18 @@ th {
 /* phones, and, indeed, smaller phones. Adapted to touch; display radically
  * decluttered */
 @media all and (max-device-width: 768px) {
-  footer {
-    display: none;
+  button, input, select {
+    background-color: rgb( 50, 109, 177);
+    color: white;
+    font-size: 1.1em;
+    padding: 0.25em 1em;
+    border-radius: 0.5em;
   }
 
   h1 {
     /* I wouldn't normally use a px value, but the menu icon is 49px wide */
     padding: 0.25em 5%;
     padding-left: 75px;
-  }
-
-  input, select {
-    background-color: rgb( 50, 109, 177);
-    color: white;
-    font-size: 1.1em;
-    padding: 0.25em 1em;
-    border-radius: 0.5em;
   }
 
   .hidden {

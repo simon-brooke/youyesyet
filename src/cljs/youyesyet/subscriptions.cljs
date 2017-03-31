@@ -40,9 +40,24 @@
     (:addresses db)))
 
 (reg-sub
+ :changes
+ (fn [db _]
+   (:changes db)))
+
+(reg-sub
   :elector
   (fn [db _]
     (:elector db)))
+
+(reg-sub
+ :error
+  (fn [db _]
+    (:error db)))
+
+(reg-sub
+ :feedback
+  (fn [db _]
+    (:feedback db)))
 
 (reg-sub
   :issue
@@ -63,3 +78,9 @@
   :options
   (fn [db _]
     (:options db)))
+
+(reg-sub
+ :outqueue
+ (fn [db _]
+   (:outqueue db)))
+

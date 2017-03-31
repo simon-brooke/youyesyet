@@ -1,11 +1,12 @@
 (ns youyesyet.core
-  (:require [reagent.core :as r]
-            [re-frame.core :as rf]
-            [secretary.core :as secretary]
+  (:require cljsjs.react-leaflet
+            [ajax.core :refer [GET POST]]
             [goog.events :as events]
             [goog.history.EventType :as HistoryEventType]
             [markdown.core :refer [md->html]]
-            [ajax.core :refer [GET POST]]
+            [reagent.core :as r]
+            [re-frame.core :as rf]
+            [secretary.core :as secretary]
             [youyesyet.ajax :refer [load-interceptors!]]
             [youyesyet.handlers]
             [youyesyet.subscriptions]
@@ -71,16 +72,26 @@
    :map #'map-page
    })
 
+
 (defn page
   "Render the single page of the app, taking the current panel from
   the :page key in the state map."
   []
-  [:div
-   [:header
-    [ui/navbar]]
-   (let [content (pages @(rf/subscribe [:page]))]
+  (let [content (pages @(rf/subscribe [:page]))
+        error @(rf/subscribe [:error])
+        feedback @(rf/subscribe [:feedback])
+        outqueue @(rf/subscribe [:outqueue])]
+    [:div
+     [:header
+      [ui/navbar]]
      (if content [content]
-       [:div.error (str "No content in page " :page)]))])
+       [:div.error (str "No content in page " :page)])
+     [:footer
+      [:div.error {:style [:display (if error "block" "none")]} (str error)]
+      [:div.feedback {:style [:display (if feedback :block :none)]} (str feedback)]
+      [:div.queue (if
+                    (nil? outqueue) ""
+                    (str (count outqueue) " items queued to send"))]]]))
 
 ;; -------------------------
 ;; Routes
@@ -108,7 +119,7 @@
   (rf/dispatch [:set-elector-and-page {:elector-id elector-id :page :issues}]))
 
 (secretary/defroute "/issue/:issue" {issue :issue}
-  (rf/dispatch [:set-issue issue]))
+  (rf/dispatch [:set-and-go-to-issue issue]))
 
 (secretary/defroute "/map" []
   (rf/dispatch [:set-active-page :map]))
