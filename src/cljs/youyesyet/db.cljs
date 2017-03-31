@@ -72,7 +72,8 @@
    :motd "This is a test version only. There is no real data."
    ;;; the options from among which electors can select.
    :options [{:id :yes :description "Yes"} {:id :no :description "No"}]
-   ;;; the currently displayed 'page' within the app.
+   ;;; the queue of items waiting to be transmitted.
    :outqueue ()
+   ;;; the currently displayed page within the app.
    :page :home
    })

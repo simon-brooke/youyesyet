@@ -126,6 +126,10 @@
 /* phones, and, indeed, smaller phones. Adapted to touch; display radically
  * decluttered */
 @media all and (max-device-width: 768px) {
+  footer {
+    display: none;
+  }
+
   #nav{
     margin: 0;
     padding: 0;

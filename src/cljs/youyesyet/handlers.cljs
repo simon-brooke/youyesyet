@@ -79,6 +79,7 @@
          {:addresses
           (cons new-address (remove old-address (:addresses db)))
           :address new-address
+          :elector elector
           :outqueue (cons (assoc args :action :set-intention) (:outqueue db))}))))))
 
 
