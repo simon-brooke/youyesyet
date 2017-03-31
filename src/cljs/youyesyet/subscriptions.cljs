@@ -78,3 +78,9 @@
   :options
   (fn [db _]
     (:options db)))
+
+(reg-sub
+ :outqueue
+ (fn [db _]
+   (:outqueue db)))
+

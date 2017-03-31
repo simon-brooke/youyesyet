@@ -81,7 +81,7 @@
                         {:src image
                          :alt optname
                          :on-click #(dispatch
-                                    [:set-intention {:elector-id (:id elector)
+                                    [:send-intention {:elector-id (:id elector)
                                                      :intention optid}])}]]))
       ;; TODO: impose an ordering on electors - by name or by id
       electors)]))

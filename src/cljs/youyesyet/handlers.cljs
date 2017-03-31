@@ -54,6 +54,34 @@
     db/default-db))
 
 
+(reg-event-db
+ :send-intention
+ (fn [db [_ args]]
+   (let [intention (:intention args)
+         elector-id (:elector-id args)
+         elector
+         (first
+          (remove nil?
+                  (map
+                   #(if (= elector-id (:id %)) %)
+                   (:electors (:address db)))))
+         old-address (:address db)
+         new-address (assoc old-address :electors (cons (assoc elector :intention intention) (remove #(= % elector) (:electors old-address))))]
+     (cond
+      (nil? elector)
+      (assoc db :error "No elector found; not setting intention")
+      (= intention (:intention elector)) (do (js/console.log "Elector's intention hasn't changed; not setting intention") db)
+      true
+      (do
+        (js/console.log (str "Setting intention of elector " elector " to " intention))
+        (merge
+         (clear-messages db)
+         {:addresses
+          (cons new-address (remove old-address (:addresses db)))
+          :address new-address
+          :outqueue (cons (assoc args :action :set-intention) (:outqueue db))}))))))
+
+
  (reg-event-db
   :send-request
   (fn [db [_ _]]
@@ -110,34 +138,6 @@
 
 
 (reg-event-db
- :set-intention
- (fn [db [_ args]]
-   (let [intention (:intention args)
-         elector-id (:elector-id args)
-         elector
-         (first
-          (remove nil?
-                  (map
-                   #(if (= elector-id (:id %)) %)
-                   (:electors (:address db)))))
-         old-address (:address db)
-         new-address (assoc old-address :electors (cons (assoc elector :intention intention) (remove #(= % elector) (:electors old-address))))]
-     (cond
-      (nil? elector)
-      (assoc db :error "No elector found; not setting intention")
-      (= intention (:intention elector)) (do (js/console.log "Elector's intention hasn't changed; not setting intention") db)
-      true
-      (do
-        (js/console.log (str "Setting intention of elector " elector " to " intention))
-        (merge
-         (clear-messages db)
-         {:addresses
-          (cons new-address (remove old-address (:addresses db)))
-          :address new-address
-          :outqueue (cons (assoc args :action :set-intention) (:outqueue db))}))))))
-
-
-(reg-event-db
  :set-issue
  (fn [db [_ issue]]
    (js/console.log (str "Setting issue to " issue))
@@ -148,4 +148,4 @@
  :set-telephone
  (fn [db [_ telephone]]
    (js/console.log (str "Setting telephone to " telephone))
-   (assoc (clear-messages db) :issue telephone)))
+   (assoc (clear-messages db) :telephone telephone)))

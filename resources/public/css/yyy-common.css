@@ -60,13 +60,9 @@ footer {
   width: 100%;
   margin: 0;
   padding: 0.25em 0;
-  bottom:0;
-  position:fixed;
-  vertical-align: top;
+  bottom: 0;
+  position: fixed;
   z-index:150;
-  _position:absolute;
-  _top:expression(eval(document.documentElement.scrollTop+
-        (document.documentElement.clientHeight-this.offsetHeight)));
 }
 
 footer div {
@@ -371,10 +367,6 @@ th {
     font-size: 1.1em;
     padding: 0.25em 1em;
     border-radius: 0.5em;
-  }
-
-  footer {
-    display: none;
   }
 
   h1 {
