@@ -1,0 +1,403 @@
+/**
+ * Static CSS for basic YouYesYet pages to establish look-and-feel. Something
+ * more dynamic, designed by someone more skilled than me, will replace it
+ * later.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
+ * USA.
+ *
+ * # The Stylesheet
+ *
+ * ## html elements generally in alphabetic order
+ */
+
+a {
+  color: silver;
+}
+
+a:hover, a:active {
+  color: white;
+}
+
+body {
+  font-family: "Archivo Narrow", "Helvetica", "Sans", sans-serif;
+  background-color: rgb( 50, 109, 177);
+  color: white;
+}
+
+del {
+  color: red;
+}
+
+div.content, form, p, pre, h1, h2, h3, h4, h5 {
+  padding: 0.25em 5%;
+}
+
+dl, menu, ol, table, ul {
+  margin: 0.25em 5%;
+}
+
+/* footer of the page - not-editable, provided by Smeagol */
+footer {
+  border-top: thin solid gray;
+  clear: both;
+  font-size: smaller;
+  text-align: center;
+  color: silver;
+  background-color: rgb(7, 57, 106);
+  width: 100%;
+  margin: 0;
+  padding: 0.25em 0;
+  bottom: 0;
+  position: fixed;
+  z-index:150;
+}
+
+footer div {
+  padding: 0.1em;
+}
+
+form {
+  border: thin solid silver;
+}
+
+/* header for all pages in the Wiki - editable, provided by users. */
+header {
+  margin-top: 0;
+  width:100%;
+  max-width: 100%;
+  background-color: rgb(7, 57, 106);
+  color: white;
+}
+
+h1 {
+  font-family: "Archivo Black", "Sans Bold", "Arial Black", sans-serif;
+  font-weight: normal;
+  margin-top: 0;
+}
+
+img {
+  border: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+
+input {
+  color: rgb( 50, 109, 177);
+  background-color: white;
+}
+
+input, select {
+  padding: 0.25em 1.25em;
+}
+
+input.action {
+  color: white;
+  background-color: rgb( 50, 109, 177);
+  font-size: 125%;
+}
+
+input.action-dangerous {
+	color: white;
+	background-color: red;
+}
+
+input.required:after {
+  content: " \*";
+  color: red;
+}
+
+ins {
+  color: green;
+}
+
+label {
+  width: 20%;
+  min-width: 20em;
+  border-right: thin solid gray;
+  display: inline-block;
+}
+
+select {
+  color: white;
+  background-color: rgb( 50, 109, 177);
+  font-size: 125%;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table.music-ruled tr:nth-child(odd) {
+	background-color: silver;
+}
+
+th, td {
+	text-align: left;
+  vertical-align: top;
+	padding: 0.15em 1.5em;
+  border: 1px solid gray;
+}
+
+th {
+  background-color: silver;
+}
+
+/*
+ ## ids generally in document order
+ */
+
+/* Overall container div, holds all content of page. Yes, I know it shouldn't have fixed width */
+#main-container{
+}
+
+#back-link, .back-link {
+  min-width: 8em;
+  padding: 0.25em 1em;
+  background-color: gray;
+  color: white;
+  text-decoration: none;
+  border-top-right-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+}
+
+#back-link:hover, #back-link:active, .back-link:hover, .back-link:active, {
+  text-decoration: none;
+  background-color: rgb(160, 160, 160);
+}
+
+#back-link:hover::before, #back-link:active::before {
+  content: "< ";
+}
+
+#back-link-container {
+  float: left;
+  text-align: left;
+}
+
+#back-link-container, .big-link-container {
+  font-size: 200%;
+  padding: 0.5em 0;
+}
+
+#back-link-container > #back-link:hover::before, #back-link-container > #back-link:active::before {
+
+}
+
+#big-links {
+  width: 100%;
+  min-height: 3.5em;
+}
+
+#content {
+  clear: both;
+}
+
+/* cookies information box, fixed, in right margin, just above footer */
+#cookies {
+	width: 30%;
+	float: right;
+  position: fixed;
+  bottom: 3.5em;
+  right: 0;
+	z-index: 175;
+  background: transparent;
+}
+
+/* about-cookies box: permanently visible part of cookies information box */
+#about-cookies {
+  clear: right;
+  font-size: 66%;
+  float: right;
+  text-align: right;
+  padding: 0.25em 2em;
+  border-radius: 0.25em;
+	color: white;
+  background:rgba(40,40,40,0.8);
+}
+
+/* more-about-cookies box, normally hidden */
+#more-about-cookies {
+  display: none;
+	padding: 0.5em 2em;
+  border-radius: 0.5em;
+	color: white;
+  background:rgba(40,40,40,0.8);
+	border-bottom: thin solid white;
+}
+
+/* but magically appears on mouseover */
+#cookies:hover #more-about-cookies {
+	display: block;
+}
+
+.change {
+  background-color: rgb( 223, 223, 223);
+  border: thin solid silver;
+}
+
+.error {
+  width: 100%;
+  background-color: red;
+  color: white;
+  border: thin solid maroon;
+}
+
+.fill-container {
+  padding: 0;
+  border: 0;
+}
+
+.message {
+  color: darkgreen;
+  background-color: silver;
+  border: thin solid lime;
+}
+
+.big-link {
+  min-width: 8em;
+  padding: 0.25em 1em;
+  background-color: rgb(16, 58, 106);
+  color: white;
+  text-decoration: none;
+  border-top-left-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
+}
+
+.big-link:hover, .big-link:active {
+  text-decoration: none;
+}
+
+.big-link:hover::after, .big-link:active::after {
+  content: " >";
+}
+
+.big-link-container > .big-link:hover, .big-link-container > .big-link:active {
+  background-color: rgb(19, 77, 143);
+}
+
+.big-link-container {
+  text-align: right;
+}
+
+.minor-controls {
+  list-style: none;
+  float: right;
+  right: 0;
+  padding: 0.25em 2em;
+  border-radius: 0.25em;
+  color: white;
+  background:rgba(40,40,40,0.8);
+  font-size: 66%;
+}
+
+.minor-controls li {
+  display: inline;
+}
+
+.minor-controls a {
+  float: right;
+  padding: 0.25em 2em;
+  color: white;
+}
+
+.splash-screen {
+}
+
+.warn {
+  color: maroon;
+}
+
+.widget {
+  background-color: rgb(19, 77, 143);
+ 	border: thin solid white;
+ 	margin-top: 0;
+ 	margin-bottom: 0;
+  width: 90%;
+}
+
+.wiki {
+  margin: 0;
+}
+
+/* desktops and laptops, primarily. Adapted to mouse; targets may be small */
+@media all and (min-device-width: 1025px) {
+  #content {
+    width: 80%;
+    float: right;
+    padding-bottom: 5em;
+  }
+}
+
+/* tablets, primarily. Adapted to touch; targets are larger */
+@media all and (min-device-width: 769px) and (max-device-width: 1024px) {
+  h1 {
+    /* I wouldn't normally use a px value, but the menu icon is 49px wide */
+    padding: 0.25em 5%;
+    padding-left: 100px;
+  }
+
+  /* content of the current page in the Wiki - editable, provided by users. Within main-container */
+  #content {
+    border: thin solid silver;
+    width: 80%;
+    float: right;
+    padding-bottom: 5em;
+  }
+}
+
+/* phones, and, indeed, smaller phones. Adapted to touch; display radically
+ * decluttered */
+@media all and (max-device-width: 768px) {
+  button, input, select {
+    background-color: rgb( 50, 109, 177);
+    color: white;
+    font-size: 1.1em;
+    padding: 0.25em 1em;
+    border-radius: 0.5em;
+  }
+
+  h1 {
+    /* I wouldn't normally use a px value, but the menu icon is 49px wide */
+    padding: 0.25em 5%;
+    padding-left: 75px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .shown {
+    display: block;
+  }
+
+  /* content of the current in the Wiki - editable, provided by users. Within main-container */
+  #content {
+    border: thin solid silver;
+    width: 100%;
+    padding-bottom: 2em;
+  }
+
+  #main-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+
+  #cookies {
+    display: none;
+  }
+}

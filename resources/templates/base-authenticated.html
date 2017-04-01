@@ -6,13 +6,10 @@
     <link rel="stylesheet" type="text/css" href="css/yyy-static.css" />
     <link rel="stylesheet" type="text/css" href="css/spinner.css" />
     <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
-    <title>{% block title %}{% endblock %}{{title}}</title>
+    <title>{{title}}</title>
   </head>
   <body>
     <header>
-      <div id="canvasser">
-        You are logged in as {{username}}
-      </div>
       <div id="nav">
         <img id="nav-icon" src="img/threelines.png" alt="Menu"/>
         <menu id="nav-menu" class="nav">
@@ -25,47 +22,18 @@
       </div>
 
       <h1>
-        {% block title %}
-        {% endblock %}
         {{title}}
       </h1>
     </header>
 
     <div id="main-container" class="container">
       <div id="big-links">
-        {% block big-links %}
-        {% endblock %}
+        {{big-links}}
       </div>
       <div if="#content">
         {{content}}
       </div>
-      <div id="back-link-container">
-        <a href="javascript:history.back()" id="back-link">Back</a>
-      </div>
-      <div id="logout-link-container">
-        <a href="logout" id="back-link">Logout</a>
-      </div>
     </div>
-    <footer>
-      <div id="credits">
-        <div>
-          <img src="img/ric-logo.png" width="24" height="24"/>
-          A project of the
-          <a href="https://radical.scot/">Radical Independence Campaign</a> ||
-          Version {{version}}
-        </div>
-        <div>
-          <img height="16" width="16" alt="Clojure" src="img/luminus-logo.png"/>Built with <a href="http://www.luminusweb.net/">LuminusWeb</a> ||
-          <img height="16" width="16" alt="Clojure" src="img/clojure-icon.gif"/> Powered by <a href="http://clojure.org">Clojure</a> ||
-          <img height="16" width="16" alt="GitHub" src="img/github-logo-transparent.png"/>Find me/fork me on <a href="https://github.com/simon-brooke/smeagol">Github</a> ||
-          <img height="16" width="16" alt="Free Software Foundation" src="img/gnu.small.png"/>Licensed under the <a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License version 2.0</a>
-        </div>
-      </div>
-    </footer>
-    <script type="text/javascript">
-        var context = "{{servlet-context}}";
-        var csrfToken = "{{csrf-token}}";
-    </script>
   </body>
 </html>
 

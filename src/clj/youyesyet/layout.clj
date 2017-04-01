@@ -22,7 +22,8 @@
         (assoc params
           :page template
           :csrf-token *anti-forgery-token*
-          :servlet-context *app-context*)))
+          :servlet-context *app-context*
+          :version (System/getProperty "youyesyet.version"))))
     "text/html; charset=utf-8"))
 
 (defn error-page

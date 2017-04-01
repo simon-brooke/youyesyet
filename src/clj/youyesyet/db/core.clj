@@ -15,9 +15,6 @@
             Timestamp
             PreparedStatement]))
 
-;; TODO: I am CERTANLY misunderstanding something here. We ought to be getting
-;; the database connection string and credentials fomr profiles.clj
-;; (def ^:dynamic *db* {:name "java:comp/env/jdbc/EmployeeDB"})
 (defstate ^:dynamic *db*
             :start (conman/connect! {:jdbc-url (env :database-url)
                                      :driver-class-name "org.postgresql.Driver"})

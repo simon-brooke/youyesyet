@@ -1,0 +1,27 @@
+{% extends "base-unauthenticated.html" %}
+{% block big-links %}
+      <div id="back-link-container">
+        <a href="javascript:history.back()" id="back-link">Back</a>
+      </div>
+{% endblock %}
+{% block content %}
+      <p>
+        We're not going to do login in the long term; we're going to use oauth.
+        This is a temporary login form.
+      </p>
+      <form action="auth" method="post">
+        {% csrf-field %}
+        <p class="widget">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username"/>
+        </p>
+        <p class="widget">
+          <label for="password">Your password</label>
+          <input type="password" id="password" name="password"/>
+        </p>
+        <p class="widget">
+          <label for="submit">&nbsp;</label>
+          <input name="submit" id="submit" type="submit" class="action" value="Log in!"/>
+        </p>
+      </form>
+{% endblock %}

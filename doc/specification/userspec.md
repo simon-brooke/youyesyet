@@ -24,7 +24,7 @@ It's my hope that we'd have enough Issue Experts sitting in the comfort of their
 
 ### Analysts
 
-*Canvassers* are able to see voter canvas for the streets immediately around where they are working. They must be able to do so, because otherwise they cannot effectively canvas. But we must assume that sooner or later a hostile person will join the system as a canvasser, so canvassers should not have access to wider canvas data. Therefore we need a category of trusted user who can view wider maps of where canvas data has been collected, in order to be able to direct teams of canvassers to areas where it has not been collected. For want of a better word I'll call these *Analysts*.
+*Canvassers* are able to see voter canvas data for the streets immediately around where they are working. They must be able to do so, because otherwise they cannot effectively canvas. But we must assume that sooner or later a hostile person will join the system as a canvasser, so canvassers should not have access to wider canvas data. Therefore we need a category of trusted user who can view wider maps of where canvas data has been collected, in order to be able to direct teams of canvassers to areas where it has not been collected. For want of a better word I'll call these *Analysts*.
 
 ### Administrators
 
@@ -88,12 +88,14 @@ The *Electors View* shows a schematic of the registered electors in a dwelling:
 
 ![Electors View](https://raw.githubusercontent.com/simon-brooke/youyesyet/master/dummies/occupants_800.png)
 
-One figure is shown for each elector, labelled with their name. Below the figure are:
+One figure is shown for each elector, labelled with their name. In the dummy pages I've shown gendered stick figures, because I believe that in many casesthis will help the canvasser identify the person who has answered the door; but this may be seen as excluding electors with non-binary gender, and, in any case, I believe we don't actually get gender data (other than salutation) in the electoral roll data. So this may have to be reconsidered.
+
+Below the figure are:
 
 1. One clear 'voting intention' button for each option (e.g., 'Yes', 'No'), greyed unless selected;
 2. One issues button.
 
-Selecting an option icon records that the elector represented by the figure has expressed an opinion that they will vote for that option. Selecting the issues icon brings up and issues view.
+Selecting an option icon records that the elector represented by the figure has expressed an intention that they will vote for that option. Selecting the issues icon brings up and issues view.
 
 ## Issues View
 
