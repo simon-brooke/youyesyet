@@ -1,0 +1,13 @@
+{% extends "base-authenticated.html" %}
+{% block title %}
+{% endblock %}
+{% block big-links %}
+      <div class="big-link-container">
+        <a href="app" class="big-link" id="big-link">Canvasser</a>
+      </div>
+      {% for role in roles %}
+      <div class="big-link-container">
+        <a href="{{role}}" class="big-link" id="big-link">{{role}}</a>
+      </div>
+      {% endfor %}
+{% endblock %}

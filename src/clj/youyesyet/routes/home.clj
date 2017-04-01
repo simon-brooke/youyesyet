@@ -1,15 +1,81 @@
 (ns youyesyet.routes.home
-  (:require [youyesyet.layout :as layout]
+  (:require [clojure.walk :refer [keywordize-keys]]
+            [noir.response :as nresponse]
+            [noir.util.route :as route]
+            [youyesyet.layout :as layout]
             [youyesyet.db.core :as db-core]
-            [compojure.core :refer [defroutes GET]]
+            [compojure.core :refer [defroutes GET POST]]
             [ring.util.http-response :as response]
             [clojure.java.io :as io]))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; youyesyet.routes.home: routes and pages for unauthenticated users.
+;;;;
+;;;; This program is free software; you can redistribute it and/or
+;;;; modify it under the terms of the GNU General Public License
+;;;; as published by the Free Software Foundation; either version 2
+;;;; of the License, or (at your option) any later version.
+;;;;
+;;;; This program is distributed in the hope that it will be useful,
+;;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;;; GNU General Public License for more details.
+;;;;
+;;;; You should have received a copy of the GNU General Public License
+;;;; along with this program; if not, write to the Free Software
+;;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+;;;; USA.
+;;;;
+;;;; Copyright (C) 2016 Simon Brooke for Radical Independence Campaign
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn app-page []
+  (layout/render "app.html"))
+
+(defn about-page []
+  (layout/render "about.html"))
+
+(defn call-me-page [request]
+  (if
+    request
+    (do
+      ;; do something to store it in the database
+      (layout/render "call-me-accepted.html" (:params request)))
+    (layout/render "call-me.html"
+                   {:title "Please call me!"
+                    ;; TODO: Issues need to be fetched from the database
+                    :concerns nil})))
+
 (defn home-page []
-  (layout/render "home.html"))
+  (layout/render "home.html" {:title "You Yes Yet?"}))
+
+(defn login-page
+  "This is very temporary. We're going to do authentication by oauth."
+  [request]
+  (let [params (keywordize-keys (:form-params request))
+        session (:session request)
+        username (:username params)
+        password (:password params)
+        redirect-to (or (:redirect-to params) "app")]
+    (if
+     (and (= username "test") (= password "test"))
+     (do
+       (assoc (response/found redirect-to) :session (assoc session :user username)))
+     (layout/render "login.html" {:title "Please log in" :redirect-to redirect-to}))))
+
 
 (defroutes home-routes
   (GET "/" [] (home-page))
-  (GET "/docs" [] (-> (response/ok (-> "docs/docs.md" io/resource slurp))
-                      (response/header "Content-Type" "text/plain; charset=utf-8"))))
-
+  (GET "/home" [] (home-page))
+  (GET "/about" [] (about-page))
+  (GET "/app" [] (route/restricted (app-page)))
+  (GET "/call-me" [] (call-me-page nil))
+  (POST "/call-me" request (call-me-page request))
+  (GET "/auth" request (login-page request))
+  (POST "/auth" request (login-page request))
+  (GET "/notyet" [] (layout/render "notyet.html"
+                                      {:title "Can we persuade you?"}))
+  (GET "/supporter" [] (layout/render "supporter.html"
+                                      {:title "Have you signed up as a canvasser yet?"})))

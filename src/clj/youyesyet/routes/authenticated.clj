@@ -1,10 +1,16 @@
-(ns youyesyet.validation
-  (:require [bouncer.core :as b]
-            [bouncer.validators :as v]))
+(ns youyesyet.routes.authenticated
+  (:require [clojure.walk :refer [keywordize-keys]]
+            [noir.response :as nresponse]
+            [noir.util.route :as route]
+            [youyesyet.layout :as layout]
+            [youyesyet.db.core :as db-core]
+            [compojure.core :refer [defroutes GET POST]]
+            [ring.util.http-response :as response]
+            [clojure.java.io :as io]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.validation:
+;;;; youyesyet.routes.authenticated: routes and pages for authenticated users.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -24,3 +30,6 @@
 ;;;; Copyright (C) 2016 Simon Brooke for Radical Independence Campaign
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; (defn roles-page [request]
+;;   (if

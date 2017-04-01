@@ -19,3 +19,4 @@ WHERE id = :id
 -- :doc delete a user given the id
 DELETE FROM users
 WHERE id = :id
+
