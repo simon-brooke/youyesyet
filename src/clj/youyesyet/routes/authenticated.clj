@@ -1,12 +1,12 @@
 (ns youyesyet.routes.authenticated
-  (:require [clojure.walk :refer [keywordize-keys]]
+  (:require [clojure.java.io :as io]
+            [clojure.walk :refer [keywordize-keys]]
+            [compojure.core :refer [defroutes GET POST]]
             [noir.response :as nresponse]
             [noir.util.route :as route]
-            [youyesyet.layout :as layout]
-            [youyesyet.db.core :as db-core]
-            [compojure.core :refer [defroutes GET POST]]
             [ring.util.http-response :as response]
-            [clojure.java.io :as io]))
+            [youyesyet.layout :as layout]
+            [youyesyet.db.core :as db]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
@@ -31,5 +31,14 @@
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; (defn roles-page [request]
-;;   (if
+;;; This code adapted from http://www.luminusweb.net/docs#accessing_the_database
+
+(defn canvassers-page
+  [request]
+  (if
+    (:params request)
+    (let [params (:params request)]
+      (if (:id params)
+        (db/update-canvasser! params)
+        (db/create-canvasser! params)))))
+
