@@ -239,3 +239,37 @@ SELECT * FROM visits
 WHERE id = :id
 
 -- visits is audit data; we don't delete it.
+
+
+-- views are select only
+
+-- :name get-roles-by-canvasser :? :*
+-- :doc Get the role names for the canvasser with the specified id
+select name from roles_by_canvasser
+  where canvasser = :canvasser
+
+-- :name get-teams-by-canvasser :? :*
+-- :doc Get details of the teams which the canvasser with the specified id is member of.
+select * from teams_by_canvasser
+  where canvasser = :canvasser_id
+
+-- :name get-canvassers-by-team :? :*
+-- :doc Get details of all canvassers who are members of the team with the specified id
+select * from canvassers_by_team
+  where team = :team_id
+
+-- :name get-canvassers-by-team :? :*
+-- :doc Get details of all authorised canvassers who are members of this team.
+select * from canvassers_by_introducer
+  where introducer = :introducer_id
+
+-- :name get-teams_by_organiser :? :*
+-- :doc Get details of all the teams organised by the canvasser with the specified id
+select * from teams_by_organiser
+  where organiser = :organiser_id
+
+-- :name get-organisers-by-team :? :*
+-- :doc Get details of all organisers of the team with the specified id
+select * from organisers_by_team
+  where team = :team_id
+

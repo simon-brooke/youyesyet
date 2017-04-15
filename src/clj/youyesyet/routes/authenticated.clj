@@ -33,12 +33,22 @@
 
 ;;; This code adapted from http://www.luminusweb.net/docs#accessing_the_database
 
-(defn canvassers-page
+(defn canvasser-page
   [request]
   (if
     (:params request)
     (let [params (:params request)]
       (if (:id params)
         (db/update-canvasser! params)
-        (db/create-canvasser! params)))))
+        (db/create-canvasser! params))
+      )))
 
+(defn routing-page
+  "Render the routing page, which offers routes according to the user's roles"
+  []
+  (layout/render "routing.html"))
+
+(defroutes authenticated-routes
+  (GET "/edit-canvasser" request (canvasser-page request))
+  (POST "/edit-canvasser" request (canvasser-page request))
+  (GET "/routing" [] (routing-page)))

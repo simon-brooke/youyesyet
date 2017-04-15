@@ -1,6 +1,7 @@
 (ns youyesyet.handler
   (:require [compojure.core :refer [routes wrap-routes]]
             [youyesyet.layout :refer [error-page]]
+            [youyesyet.routes.authenticated :refer [authenticated-routes]]
             [youyesyet.routes.home :refer [home-routes]]
             [youyesyet.routes.oauth :refer [oauth-routes]]
             [compojure.route :as route]
@@ -61,6 +62,7 @@
         (wrap-routes middleware/wrap-csrf)
         (wrap-routes middleware/wrap-formats))
     #'oauth-routes
+    #'authenticated-routes
     (route/not-found
       (:body
         (error-page {:status 404

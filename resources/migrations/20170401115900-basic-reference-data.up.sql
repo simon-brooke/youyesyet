@@ -37,7 +37,7 @@ alter table issues add column content varchar(1024);
 -- from the system but kept because it may become current again later. Only
 -- current issues are shown in the app. Typically not fewer than three and not
 -- more than about seven issues should be current at any time.
-alter table issues add column current default false;
+alter table issues add column current boolean default false;
 
 insert into issues (id, content, current) values ('Currency',
                                         'Scotland could keep the Pound, or use the Euro. But we could also set up a new currency of our own.',
