@@ -66,6 +66,10 @@ WHERE id = :id
 SELECT * FROM authorities
 WHERE id = :id
 
+-- :name get-authorities :? :0
+-- :doc retrieve all authorities
+SELECT id FROM authorities
+
 -- :name delete-authority! :! :n
 -- :doc delete a authority given the id
 DELETE FROM authorities
@@ -88,6 +92,16 @@ WHERE id = :id
 -- :doc retrieve a canvasser given the id.
 SELECT * FROM canvassers
 WHERE id = :id
+
+-- :name get-canvasser-by-username :? :1
+-- :doc rerieve a canvasser given the username.
+SELECT * FROM canvassers
+WHERE username = :username
+
+-- :name get-canvasser-by-email :? :1
+-- :doc rerieve a canvasser given the email address.
+SELECT * FROM canvassers
+WHERE email = :email
 
 -- :name delete-canvasser! :! :n
 -- :doc delete a canvasser given the id

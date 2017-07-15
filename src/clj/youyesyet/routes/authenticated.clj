@@ -33,15 +33,34 @@
 
 ;;; This code adapted from http://www.luminusweb.net/docs#accessing_the_database
 
-(defn canvasser-page
+(defn post?
+  "Return true if the argument is a ring request which is a post request"
   [request]
-  (if
+  true)
+
+(defn canvasser-page
+  "Process this canvasser request, and render the canvasser page"
+  [request]
+  (let [canvasser (if
     (:params request)
     (let [params (:params request)]
       (if (:id params)
-        (db/update-canvasser! params)
-        (db/create-canvasser! params))
-      )))
+        (if (post? request)
+          (db/update-canvasser! params)
+          (db/create-canvasser! params))
+        (db/get-canvasser (:id params)))
+      ))]
+    (layout/render
+      "canvasser.html"
+      {:title (if canvasser
+                (str
+                  "Edit canvasser "
+                  (:fullname canvasser)
+                  " "
+                  (:email canvasser))
+                "Add new canvasser")
+       :canvasser canvasser
+       :address (if (:address_id canvasser) (db/get-address (:address_id canvasser)))})))
 
 (defn routing-page
   "Render the routing page, which offers routes according to the user's roles"
