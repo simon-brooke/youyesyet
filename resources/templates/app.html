@@ -1,16 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/yyy-common.css" />
-    <link rel="stylesheet" type="text/css" href="css/yyy-app.css" />
-    <link rel="stylesheet" type="text/css" href="css/spinner.css" />
-    <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
-    <title>You Yes Yet?</title>
-  </head>
-  <body>
-
+{% extends "base-authenticated.html" %}
+{% block whole-page %}
     <div id="app">
       <div class="splash-screen">
         <div class="sk-fading-circle">
@@ -33,21 +22,16 @@
         You must enable JavaScript to use the You Yes Yet app.
       </p>
     </div>
-
-    <!-- scripts and styles -->
-    <!-- ATTENTION \/ -->
-    <!-- Leaflet -->
-    <link rel="stylesheet" href="vendor/leaflet/dist/leaflet.css" />
-    <script src="vendor/leaflet/dist/leaflet.js"></script>
-    <!-- ATTENTION /\ -->
-
-    <script type="text/javascript">
-        var context = "{{servlet-context}}";
-        var csrfToken = "{{csrf-token}}";
-    </script>
-    {% script "/js/app.js" %}
-  </body>
-</html>
+{% endblock %}
+{% block extra-script %}
+<!-- scripts and styles -->
+<!-- ATTENTION \/ -->
+<!-- Leaflet -->
+<link rel="stylesheet" href="vendor/leaflet/dist/leaflet.css" />
+<script src="vendor/leaflet/dist/leaflet.js"></script>
+<!-- ATTENTION /\ -->
+{% script "/js/app.js" %}
+{% endblock %}
 
 
 

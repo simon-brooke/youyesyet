@@ -34,8 +34,10 @@
 (defn app-page []
   (layout/render "app.html"))
 
+
 (defn about-page []
   (layout/render "about.html"))
+
 
 (defn call-me-page [request]
   (if
@@ -57,8 +59,10 @@
      roles (if user (db-core/get-roles-by-canvasser db-core/*db* {:canvasser (:id user)}))]
     (cond
       roles (layout/render "roles.html"
-                           {:title (str "Welcome " (:fullname user))
+                           {:title (str "Welcome " (:fullname user) ", what do you want to do?")
+                            :user user
                             :roles roles})
+      (empty? roles)(response/found "/app")
       true (assoc (response/found "/login") :session (dissoc session :user))
       )))
 

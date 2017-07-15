@@ -1,5 +1,6 @@
 {% extends "base-authenticated.html" %}
 {% block title %}
+  {{ user }}
 {% endblock %}
 {% block big-links %}
       <div class="big-link-container">
@@ -7,7 +8,9 @@
       </div>
       {% for role in roles %}
       <div class="big-link-container">
-        <a href="{{role}}" class="big-link" id="big-link">{{role}}</a>
+        <a href="{{role.name|lower}}" class="big-link" id="big-link">{{role.name}}</a>
       </div>
       {% endfor %}
+{% endblock %}
+{% block content %}
 {% endblock %}
