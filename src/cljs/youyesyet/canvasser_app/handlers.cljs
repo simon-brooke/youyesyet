@@ -1,7 +1,9 @@
-(ns youyesyet.handlers
+(ns ^{:doc "Canvasser app event handlers."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.handlers
   (:require [cljs.reader :refer [read-string]]
             [re-frame.core :refer [dispatch reg-event-db]]
-            [youyesyet.db :as db]
+            [youyesyet.canvasser-app.state :as db]
             ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

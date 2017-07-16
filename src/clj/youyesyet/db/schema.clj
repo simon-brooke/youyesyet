@@ -1,4 +1,5 @@
-(ns youyesyet.db.schema
+(ns ^{:doc "Korma-flavour database setup, now obsolete but retained for documentation."
+      :author "Simon Brooke"} youyesyet.db.schema
   (:require [clojure.java.jdbc :as sql]
             [korma.core :as kc]
             [youyesyet.db.core :as yyydb]))

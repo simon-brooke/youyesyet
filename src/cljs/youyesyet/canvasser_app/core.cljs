@@ -1,4 +1,6 @@
-(ns youyesyet.core
+(ns ^{:doc "Canvasser app navigation and routing."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.core
   (:require cljsjs.react-leaflet
             [ajax.core :refer [GET POST]]
             [goog.events :as events]
@@ -7,21 +9,21 @@
             [reagent.core :as r]
             [re-frame.core :as rf]
             [secretary.core :as secretary]
-            [youyesyet.ajax :refer [load-interceptors!]]
-            [youyesyet.handlers]
-            [youyesyet.subscriptions]
-            [youyesyet.ui-utils :as ui]
-            [youyesyet.views.about :as about]
-            [youyesyet.views.electors :as electors]
-            [youyesyet.views.followup :as followup]
-            [youyesyet.views.issue :as issue]
-            [youyesyet.views.issues :as issues]
-            [youyesyet.views.map :as maps])
+            [youyesyet.canvasser-app.ajax :refer [load-interceptors!]]
+            [youyesyet.canvasser-app.handlers]
+            [youyesyet.canvasser-app.subscriptions]
+            [youyesyet.canvasser-app.ui-utils :as ui]
+            [youyesyet.canvasser-app.views.about :as about]
+            [youyesyet.canvasser-app.views.electors :as electors]
+            [youyesyet.canvasser-app.views.followup :as followup]
+            [youyesyet.canvasser-app.views.issue :as issue]
+            [youyesyet.canvasser-app.views.issues :as issues]
+            [youyesyet.canvasser-app.views.map :as maps])
   (:import goog.History))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.core: core of the app.
+;;;; youyesyet.canvasser-app.core: core of the app.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License

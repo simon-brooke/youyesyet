@@ -1,4 +1,6 @@
-(ns youyesyet.handler
+(ns ^{:doc "Handlers for starting and stopping the webapp."
+      :author "Simon Brooke"}
+  youyesyet.handler
   (:require [compojure.core :refer [routes wrap-routes]]
             [youyesyet.layout :refer [error-page]]
             [youyesyet.routes.authenticated :refer [authenticated-routes]]

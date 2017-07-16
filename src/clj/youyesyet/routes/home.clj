@@ -1,4 +1,5 @@
-(ns youyesyet.routes.home
+(ns ^{:doc "Routes/pages available to unauthenticated users."
+      :author "Simon Brooke"} youyesyet.routes.home
   (:require [clojure.walk :refer [keywordize-keys]]
             [noir.response :as nresponse]
             [noir.util.route :as route]

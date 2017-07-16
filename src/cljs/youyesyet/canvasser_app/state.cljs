@@ -1,8 +1,10 @@
-(ns youyesyet.db)
+(ns ^{:doc "Canvasser app client state."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.state)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.db: the state of the app.
+;;;; youyesyet.canvasser-app.state: the state of the app.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License

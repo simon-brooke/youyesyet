@@ -1,4 +1,6 @@
-(ns youyesyet.db.core
+(ns ^{:doc "Database access functions."
+      :author "Simon Brooke"}
+  youyesyet.db.core
   (:require
     [cheshire.core :refer [generate-string parse-string]]
     [clojure.java.jdbc :as jdbc]

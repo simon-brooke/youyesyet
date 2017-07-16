@@ -31,6 +31,7 @@
 INSERT INTO addresses
 (address, postcode, district_id, latitude, longitude)
 VALUES (:address, :postcode, :district, :latitude, :longitude)
+RETURNING id
 
 -- :name update-address! :! :n
 -- :doc update an existing address record
@@ -54,6 +55,7 @@ WHERE id = :id
 INSERT INTO authorities
 (id)
 VALUES (:id)
+RETURNING id
 
 -- :name update-authority! :! :n
 -- :doc update an existing authority record
@@ -81,6 +83,7 @@ WHERE id = :id
 INSERT INTO canvassers
 (username, fullname, elector_id, address_id, phone, email, authority_id, authorised)
 VALUES (:username, :fullname, :elector_id, :address_id, :phone, :email, :authority_id, :authorised)
+RETURNING id
 
 -- :name update-canvasser! :! :n
 -- :doc update an existing canvasser record
@@ -114,6 +117,7 @@ WHERE id = :id
 INSERT INTO districts
 (id, name)
 VALUES (:id, :name)
+RETURNING id
 
 -- :name update-district! :! :n
 -- :doc update an existing district record
@@ -137,6 +141,7 @@ WHERE id = :id
 INSERT INTO electors
 (name, address_id, phone, email)
 VALUES (:name, :address_id, :phone, :email)
+RETURNING id
 
 -- :name update-elector! :! :n
 -- :doc update an existing elector record
@@ -160,6 +165,7 @@ WHERE id = :id
 INSERT INTO followupactions
 (request_id, actor, date, notes, closed)
 VALUES (:request_id, :actor, :date, :notes, :closed)
+RETURNING id
 
 -- We don't update followup actions. They're permanent record.
 
@@ -179,6 +185,7 @@ WHERE id = :id
 INSERT INTO followuprequests
 (elector_id, visit_id, issue_id, method_id)
 VALUES (:elector_id, :visit_id, :issue_id, :method_id)
+RETURNING id
 
 -- We don't update followup requests. They're permanent record.
 
@@ -195,6 +202,7 @@ WHERE id = :id
 INSERT INTO issueexpertise
 (canvasser_id, issue_id, method_id)
 VALUES (:canvasser_id, :issue_id, :method_id)
+-- issueexertise is a link table, doesn't have an id field.
 
 -- :name update-issueexpertise! :! :n
 -- :doc update an existing issueexpertise record
@@ -219,6 +227,8 @@ WHERE id = :id
 INSERT INTO issues
 (id, url, content, current)
 VALUES (:id, :url, :content, :current)
+RETURNING id
+
 
 -- :name update-issue! :! :n
 -- :doc update an existing issue record
@@ -244,6 +254,7 @@ WHERE id = :id
 INSERT INTO visits
 (address_id, canvasser_id)
 VALUES (:address_id, :canvasser_id)
+RETURNING id
 
 -- visits is audit data; we don't update it.
 
@@ -276,6 +287,13 @@ select * from canvassers_by_team
 -- :doc Get details of all authorised canvassers who are members of this team.
 select * from canvassers_by_introducer
   where introducer = :introducer_id
+
+-- :name get-canvassers-by-search :? :*
+-- :doc Get details of all authorised canvassers whose details match this search string.
+select * from canvassers
+  where name like '%' || :search || '%'
+     or username like '%' || :search || '%'
+     or email like '%' || :search || '%'
 
 -- :name get-teams_by_organiser :? :*
 -- :doc Get details of all the teams organised by the canvasser with the specified id

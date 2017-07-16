@@ -1,4 +1,6 @@
-(ns youyesyet.routes.authenticated
+(ns ^{:doc "Routes/pages available to all authenticated users."
+      :author "Simon Brooke"}
+  youyesyet.routes.authenticated
   (:require [clojure.java.io :as io]
             [clojure.walk :refer [keywordize-keys]]
             [compojure.core :refer [defroutes GET POST]]

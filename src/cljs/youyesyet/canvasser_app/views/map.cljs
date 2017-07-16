@@ -1,10 +1,12 @@
-(ns youyesyet.views.map
+(ns ^{:doc "Canvasser app map view panel."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.views.map
   (:require [re-frame.core :refer [reg-sub subscribe dispatch]]
             [reagent.core :as reagent]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.views.map: map view for youyesyet.
+;;;; youyesyet.canvasser-app.views.map: map view for youyesyet.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
