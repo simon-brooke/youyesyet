@@ -62,9 +62,9 @@
           (remove
             nil?
             (map
-              #(:intention %)
-              (map :electors
-                   (:dwellings address)))))]
+              :intention
+              (mapcat :electors
+                      (:dwellings address)))))]
     (case (count intentions)
       0 "unknown-pin"
       1 (str (name (first intentions)) "-pin")

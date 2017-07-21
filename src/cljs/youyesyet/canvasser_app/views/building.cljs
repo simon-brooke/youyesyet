@@ -49,4 +49,6 @@
            (ui/big-link
              (:sub-address dwelling)
              (str "#/electors/" (:id dwelling))) )
-         (:dwellings address))]]]))
+         (sort
+           #(< (:sub-address %1) (:sub-address %2))
+           (:dwellings address)))]]]))

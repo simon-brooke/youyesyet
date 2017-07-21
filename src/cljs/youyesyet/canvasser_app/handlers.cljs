@@ -57,32 +57,56 @@
 
 
 (reg-event-db
- :send-intention
- (fn [db [_ args]]
-   (let [intention (:intention args)
-         elector-id (:elector-id args)
-         elector
-         (first
-          (remove nil?
-                  (map
-                   #(if (= elector-id (:id %)) %)
-                   (:electors (:address db)))))
-         old-address (:address db)
-         new-address (assoc old-address :electors (cons (assoc elector :intention intention) (remove #(= % elector) (:electors old-address))))]
-     (cond
-      (nil? elector)
-      (assoc db :error "No elector found; not setting intention")
-      (= intention (:intention elector)) (do (js/console.log "Elector's intention hasn't changed; not setting intention") db)
-      true
-      (do
-        (js/console.log (str "Setting intention of elector " elector " to " intention))
-        (merge
-         (clear-messages db)
-         {:addresses
-          (cons new-address (remove old-address (:addresses db)))
-          :address new-address
-          :elector elector
-          :outqueue (cons (assoc args :action :set-intention) (:outqueue db))}))))))
+  :send-intention
+  (fn [db [_ args]]
+    (let [intention (:intention args)
+          elector-id (:elector-id args)
+          old-elector (first
+                        (remove nil?
+                                (map
+                                  #(if (= elector-id (:id %)) %)
+                                  (:electors (:dwelling db)))))
+          new-elector (assoc old-elector :intention intention)
+          old-dwelling (:dwelling db)
+          new-dwelling (assoc
+                         old-dwelling
+                         :electors
+                         (cons
+                           new-elector
+                           (remove
+                             #(= % old-elector)
+                             (:electors old-dwelling))))
+          old-address (:address db)
+          new-address (assoc
+                        old-address
+                        :dwellings
+                        (cons
+                          new-dwelling
+                          (remove
+                            #(= % old-dwelling)
+                            (:dwellings old-address))))]
+      (cond
+        (nil? old-elector)
+        (assoc db :error "No elector found; not setting intention")
+        (= intention (:intention old-elector))
+        (do
+          (js/console.log "Elector's intention hasn't changed; not setting intention")
+          db)
+        true
+        (do
+          (js/console.log (str "Setting intention of elector " old-elector " to " intention))
+          (merge
+            (clear-messages db)
+            {:addresses
+             (cons
+               new-address
+               (remove #(= % old-address) (:addresses db)))
+             :address new-address
+             :dwelling new-dwelling
+             :elector new-elector
+             :outqueue (cons
+                         (assoc args :action :set-intention)
+                         (:outqueue db))}))))))
 
 
  (reg-event-db
