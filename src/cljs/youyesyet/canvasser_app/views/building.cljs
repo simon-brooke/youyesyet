@@ -1,7 +1,8 @@
 (ns ^{:doc "Canvasser app households in building panel."
       :author "Simon Brooke"}
   youyesyet.canvasser-app.views.building
-  (:require [re-frame.core :refer [reg-sub]]))
+  (:require [re-frame.core :refer [reg-sub subscribe]]
+            [youyesyet.canvasser-app.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
@@ -30,10 +31,22 @@
 ;;; The pattern from the re-com demo (https://github.com/Day8/re-com) is to have
 ;;; one source file/namespace per view. Each namespace contains a function 'panel'
 ;;; whose output is an enlive-style specification of the view to be redered.
-;;; I propose to follow this pattern. This file will (eventually) provide the building view.
-
+;;; I propose to follow this pattern. This file will provide the building view.
 
 (defn panel
   "Generate the building panel."
   []
-  [])
+  (let [address @(subscribe [:address])
+        dwellings (:dwellings address)]
+    [:div
+     [:h1 (str "Flats at " (:address address))]
+     [:div.container {:id "main-container"}
+      (ui/back-link)
+      [:div {:id "dwelling-list"}
+       (map
+         (fn
+           [dwelling]
+           (ui/big-link
+             (:sub-address dwelling)
+             (str "#/electors/" (:id dwelling))) )
+         (:dwellings address))]]]))

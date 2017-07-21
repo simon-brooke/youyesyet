@@ -47,6 +47,11 @@
    (:changes db)))
 
 (reg-sub
+  :dwelling
+  (fn [db _]
+    (:dwelling db)))
+
+(reg-sub
   :elector
   (fn [db _]
     (:elector db)))

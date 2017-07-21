@@ -14,6 +14,7 @@
             [youyesyet.canvasser-app.subscriptions]
             [youyesyet.canvasser-app.ui-utils :as ui]
             [youyesyet.canvasser-app.views.about :as about]
+            [youyesyet.canvasser-app.views.building :as building]
             [youyesyet.canvasser-app.views.electors :as electors]
             [youyesyet.canvasser-app.views.followup :as followup]
             [youyesyet.canvasser-app.views.issue :as issue]
@@ -50,6 +51,9 @@
 (defn about-page []
   (about/panel))
 
+(defn building-page []
+  (building/panel))
+
 (defn electors-page []
   (electors/panel))
 
@@ -67,6 +71,7 @@
 
 (def pages
   {:about #'about-page
+   :building #'building-page
    :electors #'electors-page
    :followup #'followup-page
    :issues #'issues-page
@@ -105,10 +110,10 @@
 (secretary/defroute "/about" []
   (rf/dispatch [:set-active-page :about]))
 
-(secretary/defroute "/electors" []
-  (rf/dispatch [:set-active-page :electors]))
+(secretary/defroute "/electors/:dwelling" {dwelling-id :dwelling}
+  (rf/dispatch [:set-dwelling dwelling-id]))
 
-(secretary/defroute "/electors/:address" {address-id :address}
+(secretary/defroute "/building/:address" {address-id :address}
   (rf/dispatch [:set-address address-id]))
 
 (secretary/defroute "/followup" []

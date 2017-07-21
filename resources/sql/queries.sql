@@ -83,14 +83,14 @@ WHERE id = :id
 -- :name create-canvasser! :! :n
 -- :doc creates a new canvasser record
 INSERT INTO canvassers
-(username, fullname, elector_id, address_id, phone, email, authority_id, authorised)
-VALUES (:username, :fullname, :elector_id, :address_id, :phone, :email, :authority_id, :authorised)
+(username, fullname, elector_id, dwelling_id, phone, email, authority_id, authorised)
+VALUES (:username, :fullname, :elector_id, :dwelling_id, :phone, :email, :authority_id, :authorised)
 RETURNING id
 
 -- :name update-canvasser! :! :n
 -- :doc update an existing canvasser record
 UPDATE canvassers
-SET username = :username, fullname = :fullname, elector_id = :elector_id, address_id = :address_id, phone = :phone, email = :email, authority_id = :authority_id, authorised = :authorised
+SET username = :username, fullname = :fullname, elector_id = :elector_id, dwelling_id = :dwelling_id, phone = :phone, email = :email, authority_id = :authority_id, authorised = :authorised
 WHERE id = :id
 
 -- :name get-canvasser :? :1
@@ -138,17 +138,52 @@ DELETE FROM districts
 WHERE id = :id
 
 
+-- :name get-dwelling :? :1
+-- :doc retrieve a dwelling given the id.
+SELECT * FROM dwellings
+WHERE id = :id
+
+-- :name delete-dwelling! :! :n
+-- :doc delete a dwelling given the id
+DELETE FROM dwellings
+WHERE id = :id
+
+-- :name create-dwelling! :! :n
+-- :doc creates a new dwelling record
+INSERT INTO dwellings
+(id, address_id, sub_address)
+VALUES (:id, :address_id, :sub_address)
+RETURNING id
+
+-- :name update-dwelling! :! :n
+-- :doc update an existing dwelling record
+UPDATE dwellings
+SET address_id = :address_id,
+  sub_address = :sub_address
+WHERE id = :id
+
+-- :name get-dwelling :? :1
+-- :doc retrieve a dwelling given the id.
+SELECT * FROM dwellings
+WHERE id = :id
+
+-- :name delete-dwelling! :! :n
+-- :doc delete a dwelling given the id
+DELETE FROM dwellings
+WHERE id = :id
+
+
 -- :name create-elector! :! :n
 -- :doc creates a new elector record
 INSERT INTO electors
-(name, address_id, phone, email)
-VALUES (:name, :address_id, :phone, :email)
+(name, dwelling_id, phone, email)
+VALUES (:name, :dwelling_id, :phone, :email)
 RETURNING id
 
 -- :name update-elector! :! :n
 -- :doc update an existing elector record
 UPDATE electors
-SET name = :name, address_id = :address_id, phone = :phone, email = :email
+SET name = :name, dwelling_id = :dwelling_id, phone = :phone, email = :email
 WHERE id = :id
 
 -- :name get-elector :? :1
@@ -254,8 +289,8 @@ WHERE id = :id
 -- :name create-visit! :! :n
 -- :doc creates a new visit record
 INSERT INTO visits
-(address_id, canvasser_id)
-VALUES (:address_id, :canvasser_id)
+(dwelling_id, canvasser_id)
+VALUES (:dwelling_id, :canvasser_id)
 RETURNING id
 
 -- visits is audit data; we don't update it.

@@ -31,7 +31,7 @@
 ;;; The pattern from the re-com demo (https://github.com/Day8/re-com) is to have
 ;;; one source file/namespace per view. Each namespace contains a function 'panel'
 ;;; whose output is an enlive-style specification of the view to be redered.
-;;; I propose to follow this pattern. This file will (eventually) provide the issues view.
+;;; I propose to follow this pattern. This file will provide the issues view.
 
 ;;; See https://github.com/simon-brooke/youyesyet/blob/master/doc/specification/userspec.md#issues-view
 
