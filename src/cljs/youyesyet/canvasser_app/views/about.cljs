@@ -1,11 +1,13 @@
-(ns youyesyet.views.about
+(ns ^{:doc "Canvasser app about panel."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.views.about
   (:require [re-frame.core :refer [reg-sub subscribe]]
             [markdown.core :refer [md->html]]
-            [youyesyet.ui-utils :as ui]))
+            [youyesyet.canvasser-app.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.views.about: about/credits view for youyesyet.
+;;;; youyesyet.canvasser-app.views.about: about/credits view for youyesyet.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License

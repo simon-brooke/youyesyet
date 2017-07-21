@@ -1,10 +1,12 @@
-(ns youyesyet.views.issues
+(ns ^{:doc "Canvasser app current issues list panel."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.views.issues
   (:require [re-frame.core :refer [reg-sub subscribe]]
-            [youyesyet.ui-utils :as ui]))
+            [youyesyet.canvasser-app.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.views.issues: issues view for youyesyet.
+;;;; youyesyet.canvasser-app.views.issues: issues view for youyesyet.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License

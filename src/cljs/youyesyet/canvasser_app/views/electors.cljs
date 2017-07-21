@@ -1,11 +1,13 @@
-(ns youyesyet.views.electors
+(ns ^{:doc "Canvasser app electors in household panel."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.views.electors
   (:require [reagent.core :refer [atom]]
             [re-frame.core :refer [reg-sub subscribe dispatch]]
-            [youyesyet.ui-utils :as ui]))
+            [youyesyet.canvasser-app.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.views.electors: electors view for youyesyet.
+;;;; youyesyet.canvasser-app.views.electors: electors view for youyesyet.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License

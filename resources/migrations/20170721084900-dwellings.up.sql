@@ -34,7 +34,7 @@
 
 CREATE TABLE IF NOT EXISTS dwellings (
     id serial NOT NULL primary key,
-    address_id integer NOT NULL,
+    address_id integer NOT NULL references addresses(id),
     sub_address varchar(16)
 );
 --;;
