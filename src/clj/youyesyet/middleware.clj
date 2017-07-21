@@ -1,4 +1,6 @@
-(ns youyesyet.middleware
+(ns ^{:doc "Plumbing, mainly boilerplate from Luminus."
+      :author "Simon Brooke"}
+  youyesyet.middleware
   (:require [youyesyet.env :refer [defaults]]
             [clojure.tools.logging :as log]
             [youyesyet.layout :refer [*app-context* error-page]]

@@ -1,10 +1,12 @@
-(ns youyesyet.views.map
+(ns ^{:doc "Canvasser app map view panel."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.views.map
   (:require [re-frame.core :refer [reg-sub subscribe dispatch]]
             [reagent.core :as reagent]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.views.map: map view for youyesyet.
+;;;; youyesyet.canvasser-app.views.map: map view for youyesyet.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -55,7 +57,14 @@
 (defn pin-image
   "select the name of a suitable pin image for this address"
   [address]
-  (let [intentions (set (remove nil? (map #(:intention %) (:electors address))))]
+  (let [intentions
+        (set
+          (remove
+            nil?
+            (map
+              #(:intention %)
+              (map :electors
+                   (:dwellings address)))))]
     (case (count intentions)
       0 "unknown-pin"
       1 (str (name (first intentions)) "-pin")
@@ -68,7 +77,7 @@
   so back links work."
   [id]
   (js/console.log (str "Click handler for address #" id))
-  (set! window.location.href (str "#electors/" id)))
+  (set! window.location.href (str "#building/" id)))
 ;; This way is probably more idiomatic React, but history doesn't work:
 ;; (defn map-pin-click-handler
 ;;  [id]

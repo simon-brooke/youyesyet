@@ -22,7 +22,7 @@ Database reads are probably more infrequent. Each client will obviously need to 
 
 Mobile phones typically can have intermittent network access. The client must be able to buffer a queue of records to be stored, and must not prevent the user from moving on to the next doorstep just because the data from the last visit has not yet been stored. There should probably be some on-screen indication of when there is unsent buffered data.
 
-### Pattern of canvassing
+### Pattern of canvassing
 
 Canvassing takes place typically between 6:30pm and 9:00pm on a weekday evening. There will be some canvassing outside this period, but not enough to create significant load. Canvassing will be higher on dry nights than on wet ones, and will probably ramp up through the campaign.
 
@@ -40,7 +40,7 @@ This means that the maximum number of transactions per second across Scotland is
 
 700 transactions per second is not a very large number. We should be able to support this level of load on a single server. But what if we can't?
 
-## Spreading the load
+## Spreading the load
 
 ### Caching and memoizing
 

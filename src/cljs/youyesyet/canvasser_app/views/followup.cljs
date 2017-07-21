@@ -1,10 +1,12 @@
-(ns youyesyet.views.followup
+(ns ^{:doc "Canvasser followup request form panel."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.views.followup
   (:require [re-frame.core :refer [reg-sub subscribe dispatch]]
-            [youyesyet.ui-utils :as ui]))
+            [youyesyet.canvasser-app.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.views.followup-request: followup-request view for youyesyet.
+;;;; youyesyet.canvasser-app.views.followup-request: followup-request view for youyesyet.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License

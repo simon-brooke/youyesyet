@@ -1,7 +1,9 @@
-(ns youyesyet.handlers
+(ns ^{:doc "Canvasser app event handlers."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.handlers
   (:require [cljs.reader :refer [read-string]]
             [re-frame.core :refer [dispatch reg-event-db]]
-            [youyesyet.db :as db]
+            [youyesyet.canvasser-app.state :as db]
             ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -110,7 +112,29 @@
  (fn [db [_ address-id]]
    (let [id (read-string address-id)
          address (first (remove nil? (map #(if (= id (:id %)) %) (:addresses db))))]
-     (assoc (clear-messages db) :address address :page :electors))))
+     (if
+       (= (count (:dwellings address)) 1)
+       (assoc (clear-messages db)
+         :address address
+         :dwelling (first (:dwellings address))
+         :page :electors)
+       (assoc (clear-messages db)
+         :address address
+         :dwelling nil
+         :page :building)))))
+
+
+(reg-event-db
+  :set-dwelling
+  (fn [db [_ dwelling-id]]
+    (let [id (read-string dwelling-id)
+          dwelling (first
+                     (remove
+                       nil?
+                       (map
+                         #(if (= id (:id %)) %)
+                         (mapcat :dwellings (:addresses db)))))]
+      (assoc (clear-messages db) :dwelling dwelling :page :electors))))
 
 
 (reg-event-db

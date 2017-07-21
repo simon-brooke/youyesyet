@@ -1,9 +1,14 @@
-(ns youyesyet.views.building
-  (:require [re-frame.core :refer [reg-sub]]))
+(ns ^{:doc "Canvasser app current issue detail panel."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.views.issue
+  (:require [re-frame.core :refer [reg-sub subscribe]]
+            [markdown.core :refer [md->html]]
+            [youyesyet.canvasser-app.ui-utils :as ui]
+            [youyesyet.canvasser-app.views.issues :as issues]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.views.building: building view for youyesyet.
+;;;; youyesyet.views.issues: issues view for youyesyet.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -28,10 +33,19 @@
 ;;; The pattern from the re-com demo (https://github.com/Day8/re-com) is to have
 ;;; one source file/namespace per view. Each namespace contains a function 'panel'
 ;;; whose output is an enlive-style specification of the view to be redered.
-;;; I propose to follow this pattern. This file will (eventually) provide the building view.
-
+;;; I propose to follow this pattern. This file will (eventually) provide the single issue view.
 
 (defn panel
-  "Generate the building panel."
+  "Generate the issue panel."
   []
-  [])
+  (let [issue @(subscribe [:issue])
+        issues @(subscribe [:issues])]
+    [:div
+     [:h1 issue]
+     [:div.container {:id "main-container"}
+      [:div {:id "issue"}
+       [:div {:id "issue-text"
+              :dangerouslySetInnerHTML
+              {:__html (md->html (issues issue))}}]]
+      (ui/big-link "Request call" "#/followup")
+      (ui/back-link)]]))
