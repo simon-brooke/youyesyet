@@ -1,8 +1,10 @@
-(ns youyesyet.db)
+(ns ^{:doc "Canvasser app client state."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.state)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.db: the state of the app.
+;;;; youyesyet.canvasser-app.state: the state of the app.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -31,24 +33,43 @@
 
 (def default-db
   {;;; the currently selected address, if any.
-    :address {:id 1 :address "13 Imaginary Terrace, IM1 3TE" :latitude 55.8253043 :longitude -4.2590944
-              :electors [{:id 1 :name "Alan Anderson" :gender :male :intention :no}
-                         {:id 2 :name "Ann Anderson" :gender :female}
-                         {:id 3 :name "Alex Anderson" :gender :fluid :intention :yes}
-                         {:id 4 :name "Andy Anderson" :intention :yes}]}
+    :address {:id 1 :address "13 Imaginary Terrace, IM1 3TE" :latitude 55.8253043 :longitude -4.2569057
+              :dwellings [{:id 1
+                           :electors [{:id 1 :name "Alan Anderson" :gender :male :intention :no}
+                                      {:id 2 :name "Ann Anderson" :gender :female}
+                                      {:id 3 :name "Alex Anderson" :gender :fluid :intention :yes}
+                                      {:id 4 :name "Andy Anderson" :intention :yes}]}]}
     ;;; a list of the addresses in the current location at which there
     ;;; are electors registered.
-    :addresses [{:id 1 :address "13 Imaginary Terrace, IM1 3TE" :latitude 55.8253043 :longitude -4.2590944
-                 :electors [{:id 1 :name "Alan Anderson" :gender :male :intention :no}
-                            {:id 2 :name "Ann Anderson" :gender :female}
-                            {:id 3 :name "Alex Anderson" :gender :fluid :intention :yes}
-                            {:id 4 :name "Andy Anderson" :intention :yes}]}]
-    ;;; electors at the currently selected address
+    :addresses [{:id 1 :address "13 Imaginary Terrace, IM1 3TE" :latitude 55.8253043 :longitude -4.2569057
+                 :dwellings [{:id 1
+                              :electors [{:id 1 :name "Alan Anderson" :gender :male :intention :no}
+                                         {:id 2 :name "Ann Anderson" :gender :female}
+                                         {:id 3 :name "Alex Anderson" :gender :fluid :intention :yes}
+                                         {:id 4 :name "Andy Anderson" :intention :yes}]}]}
+                {:id 2  :address "15 Imaginary Terrace, IM1 3TE" :latitude 55.8252354 :longitude -4.2569077
+                 :dwellings [{:id 2
+                              :electors [{:id 1 :name "Beryl Brown" :gender :female}
+                                         {:id 2 :name "Betty Black" :gender :female}]}]}
+
+                {:id 3 :address "17 Imaginary Terrace, IM1 3TE" :latitude 55.825166 :longitude -4.256926
+                 :dwellings [{:id 3 :sub-address "Flat 1"
+                              :electors [{:id 1 :name "Catriona Crathie" :gender :female :intention :yes}
+                                         {:id 2 :name "Colin Caruthers" :gender :male :intention :yes}
+                                         {:id 3 :name "Calum Crathie" :intention :yes}]}
+                             {:id 4 :sub-address "Flat 2"
+                              :electors [{:id 1 :name "David Dewar" :gender :male :intention :no}]}]}]
+    ;;; electors at the currently selected dwelling
     :electors [{:id 1 :name "Alan Anderson" :gender :male :intention :no}
                {:id 2 :name "Ann Anderson" :gender :female}
                {:id 3 :name "Alex Anderson" :gender :fluid :intention :yes}
                {:id 4 :name "Andy Anderson" :intention :yes}]
+    ;;; any error to display
+    :error nil
     ;;; the issue from among the issues which is currently selected.
+    ;;; any confirmation message to display
+    :feedback nil
+    ;;; the currently selected issue
     :issue "Currency"
     ;;; the issues selected for the issues page on this day.
     :issues {"Currency" "Scotland could keep the Pound, or use the Euro. But we could also set up a new currency of our own. Yada yada yada"
@@ -58,6 +79,11 @@
     :motd "This is a test version only. There is no real data."
     ;;; the options from among which electors can select.
     :options [{:id :yes :description "Yes"} {:id :no :description "No"}]
-    ;;; the currently displayed 'page' within the app.
+    ;;; the queue of items waiting to be transmitted.
+    :outqueue ()
+    ;;; the currently displayed page within the app.
     :page :home
-    })
+    :view nil
+    :latitude 55.82
+    :longitude -4.25
+    :zoom 12})

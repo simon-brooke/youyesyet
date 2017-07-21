@@ -1,10 +1,12 @@
-(ns youyesyet.views.map
+(ns ^{:doc "Canvasser app map view panel."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.views.map
   (:require [re-frame.core :refer [reg-sub subscribe dispatch]]
             [reagent.core :as reagent]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.views.map: map view for youyesyet.
+;;;; youyesyet.canvasser-app.views.map: map view for youyesyet.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -55,17 +57,36 @@
 (defn pin-image
   "select the name of a suitable pin image for this address"
   [address]
-  (let [intentions (set (remove nil? (map #(:intention %) (:electors address))))]
+  (let [intentions
+        (set
+          (remove
+            nil?
+            (map
+              :intention
+              (mapcat :electors
+                      (:dwellings address)))))]
     (case (count intentions)
       0 "unknown-pin"
       1 (str (name (first intentions)) "-pin")
       "mixed-pin")))
 
 
-(defn click-handler
+(defn map-pin-click-handler
+  "On clicking on the pin, navigate to the electors at the address.
+  This way of doing it adds an antry in the browser location history,
+  so back links work."
   [id]
   (js/console.log (str "Click handler for address #" id))
-  (dispatch [:set-address id]))
+  (let [view @(subscribe [:view])
+        centre (.getCenter view)]
+    (dispatch [:set-zoom (.getZoom view)])
+    (dispatch [:set-latitude (.-lat centre)])
+    (dispatch [:set-longitude (.-lng centre)]))
+  (set! window.location.href (str "#building/" id)))
+;; This way is probably more idiomatic React, but history doesn't work:
+;; (defn map-pin-click-handler
+;;  [id]
+;;  (dispatch [:set-address id]))
 
 
 (defn add-map-pin
@@ -83,9 +104,10 @@
                      :shadowAnchor [16 23]}))
         marker (.marker js/L
                         (.latLng js/L lat lng)
-                        (clj->js {:icon pin :title (:address address)}))
+                        (clj->js {:icon pin
+                                  :title (:address address)}))
         ]
-    (.on marker "click" #(fn [] (click-handler (:id address))))
+    (.on marker "click" (fn [_] (map-pin-click-handler (str (:id address)))))
     (.addTo marker view)))
 
 
@@ -104,7 +126,10 @@
 (defn map-did-mount-osm
   "Did-mount function loading map tile data from Open Street Map."
   []
-  (let [view (.setView (.map js/L "map" (clj->js {:zoomControl false})) #js [55.82 -4.25] 13)
+  (let [view (.setView
+               (.map js/L "map" (clj->js {:zoomControl false}))
+               #js [@(subscribe [:latitude]) @(subscribe [:longitude])]
+               @(subscribe [:zoom]))
         addresses @(subscribe [:addresses])]
     (js/console.log (str "Adding " (count addresses) " pins"))
     (doall (map #(add-map-pin % view) addresses))
@@ -112,7 +137,8 @@
                         (clj->js {:attribution osm-attrib
                                   :maxZoom 18}))
             view)
-    ))
+    (dispatch [:set-view view])
+    view))
 
 
 (defn map-did-mount

@@ -1,10 +1,12 @@
-(ns youyesyet.views.followup
-  (:require [re-frame.core :refer [reg-sub subscribe]]
-            [youyesyet.ui-utils :as ui]))
+(ns ^{:doc "Canvasser followup request form panel."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.views.followup
+  (:require [re-frame.core :refer [reg-sub subscribe dispatch]]
+            [youyesyet.canvasser-app.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.views.followup-request: followup-request view for youyesyet.
+;;;; youyesyet.canvasser-app.views.followup-request: followup-request view for youyesyet.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -39,36 +41,39 @@
   (let [issue @(subscribe [:issue])
         issues @(subscribe [:issues])
         elector @(subscribe [:elector])
-        address @(subscribe [:address])]
+        dwelling @(subscribe [:dwelling])]
     (js/console.log (str "Issue is " issue "; elector is " elector))
     (cond
-     (nil? address)
-     (ui/error-panel "No address selected")
+     (nil? dwelling)
+     (ui/error-panel "No dwelling selected")
      (nil? issues)
      (ui/error-panel "No issues loaded")
      true
      [:div
       [:h1 "Followup Request"]
       [:div.container {:id "main-container"}
-       [:form {}
+       [:div {}
         [:p.widget
          [:label {:for "elector"} "Elector"]
-         [:select {:id "elector" :name "elector" :value (:id elector)}
+         [:select {:id "elector" :name "elector" :defaultValue (:id elector)
+                   :on-change #(dispatch [:set-elector (.-value (.-target %))])}
           (map
            #(let []
-              [:option {:value (:id %) :key (:id %)} (:name %)]) (:electors address))]]
+              [:option {:value (:id %) :key (:id %)} (:name %)]) (:electors dwelling))]]
         [:p.widget
          [:label {:for "issue"} "Issue"]
-         [:select {:id "issue" :name "issue" :value issue}
+         ;; #(reset! val (-> % .-target .-value))
+         [:select {:id "issue" :name "issue" :defaultValue issue
+                   :on-change #(dispatch [:set-issue (.-value (.-target %))])}
           (map
            #(let []
               [:option {:key % :value %} %]) (keys issues))]]
         [:p.widget
          [:label {:for "telephone"} "Telephone number"]
-         [:input {:type "text" :id "telephone" :name "telephone"}]]
+         [:input {:type "text" :id "telephone" :name "telephone"
+                  :on-change #(dispatch [:set-telephone (.-value (.-target %))])}]]
         [:p.widget
-         [:label {:for "submit"} "To request a call"]
-         [:input {:id "submit" :name "submit" :type "submit" :value "Send this!"}]]
-        ]
+         [:label {:for "send"} "To request a call"]
+         [:button {:id "send" :on-click #(dispatch [:send-request])} "Send this!"]]]
        (ui/back-link)]])))
 

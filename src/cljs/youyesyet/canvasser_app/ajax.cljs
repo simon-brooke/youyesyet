@@ -1,9 +1,11 @@
-(ns youyesyet.subscriptions
-  (:require [re-frame.core :refer [reg-sub]]))
+(ns ^{:doc "Canvasser app transciever for ajax packets."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.ajax
+  (:require [ajax.core :as ajax]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.views.electors: subscriptions for everything in the app state.
+;;;; youyesyet.canvasser-app.ajax: transciever for ajax packets.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -24,42 +26,21 @@
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(reg-sub
-  :motd
-  (fn [db _]
-    (:motd db)))
 
-(reg-sub
-  :address
-  (fn [db _]
-    (:address db)))
+(defn local-uri? [{:keys [uri]}]
+  (not (re-find #"^\w+?://" uri)))
 
-(reg-sub
-  :addresses
-  (fn [db _]
-    (:addresses db)))
+(defn default-headers [request]
+  (if (local-uri? request)
+    (-> request
+        (update :uri #(str js/context %))
+        (update :headers #(merge {"x-csrf-token" js/csrfToken} %)))
+    request))
 
-(reg-sub
-  :elector
-  (fn [db _]
-    (:elector db)))
+(defn load-interceptors! []
+  (swap! ajax/default-interceptors
+         conj
+         (ajax/to-interceptor {:name "default headers"
+                               :request default-headers})))
 
-(reg-sub
-  :issue
-  (fn [db _]
-    (:issue db)))
 
-(reg-sub
-  :issues
-  (fn [db _]
-    (:issues db)))
-
-(reg-sub
-  :page
-  (fn [db _]
-    (:page db)))
-
-(reg-sub
-  :options
-  (fn [db _]
-    (:options db)))

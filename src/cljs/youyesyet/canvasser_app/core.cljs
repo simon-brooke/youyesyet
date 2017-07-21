@@ -1,26 +1,30 @@
-(ns youyesyet.core
-  (:require [reagent.core :as r]
-            [re-frame.core :as rf]
-            [secretary.core :as secretary]
+(ns ^{:doc "Canvasser app navigation and routing."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.core
+  (:require cljsjs.react-leaflet
+            [ajax.core :refer [GET POST]]
             [goog.events :as events]
             [goog.history.EventType :as HistoryEventType]
             [markdown.core :refer [md->html]]
-            [ajax.core :refer [GET POST]]
-            [youyesyet.ajax :refer [load-interceptors!]]
-            [youyesyet.handlers]
-            [youyesyet.subscriptions]
-            [youyesyet.ui-utils :as ui]
-            [youyesyet.views.about :as about]
-            [youyesyet.views.electors :as electors]
-            [youyesyet.views.followup :as followup]
-            [youyesyet.views.issue :as issue]
-            [youyesyet.views.issues :as issues]
-            [youyesyet.views.map :as maps])
+            [reagent.core :as r]
+            [re-frame.core :as rf]
+            [secretary.core :as secretary]
+            [youyesyet.canvasser-app.ajax :refer [load-interceptors!]]
+            [youyesyet.canvasser-app.handlers]
+            [youyesyet.canvasser-app.subscriptions]
+            [youyesyet.canvasser-app.ui-utils :as ui]
+            [youyesyet.canvasser-app.views.about :as about]
+            [youyesyet.canvasser-app.views.building :as building]
+            [youyesyet.canvasser-app.views.electors :as electors]
+            [youyesyet.canvasser-app.views.followup :as followup]
+            [youyesyet.canvasser-app.views.issue :as issue]
+            [youyesyet.canvasser-app.views.issues :as issues]
+            [youyesyet.canvasser-app.views.map :as maps])
   (:import goog.History))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.core: core of the app.
+;;;; youyesyet.canvasser-app.core: core of the app.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -47,6 +51,9 @@
 (defn about-page []
   (about/panel))
 
+(defn building-page []
+  (building/panel))
+
 (defn electors-page []
   (electors/panel))
 
@@ -64,6 +71,7 @@
 
 (def pages
   {:about #'about-page
+   :building #'building-page
    :electors #'electors-page
    :followup #'followup-page
    :issues #'issues-page
@@ -71,11 +79,26 @@
    :map #'map-page
    })
 
-(defn page []
-  [:div
-  [:header
-   [ui/navbar]]
-   [(pages @(rf/subscribe [:page]))]])
+
+(defn page
+  "Render the single page of the app, taking the current panel from
+  the :page key in the state map."
+  []
+  (let [content (pages @(rf/subscribe [:page]))
+        error @(rf/subscribe [:error])
+        feedback @(rf/subscribe [:feedback])
+        outqueue @(rf/subscribe [:outqueue])]
+    [:div
+     [:header
+      [ui/navbar]]
+     (if content [content]
+       [:div.error (str "No content in page " :page)])
+     [:footer
+      [:div.error {:style [:display (if error "block" "none")]} (str error)]
+      [:div.feedback {:style [:display (if feedback :block :none)]} (str feedback)]
+      [:div.queue (if
+                    (nil? outqueue) ""
+                    (str (count outqueue) " items queued to send"))]]]))
 
 ;; -------------------------
 ;; Routes
@@ -87,8 +110,11 @@
 (secretary/defroute "/about" []
   (rf/dispatch [:set-active-page :about]))
 
-(secretary/defroute "/electors" []
-  (rf/dispatch [:set-active-page :electors]))
+(secretary/defroute "/electors/:dwelling" {dwelling-id :dwelling}
+  (rf/dispatch [:set-dwelling dwelling-id]))
+
+(secretary/defroute "/building/:address" {address-id :address}
+  (rf/dispatch [:set-address address-id]))
 
 (secretary/defroute "/followup" []
   (rf/dispatch [:set-active-page :followup]))
@@ -100,7 +126,7 @@
   (rf/dispatch [:set-elector-and-page {:elector-id elector-id :page :issues}]))
 
 (secretary/defroute "/issue/:issue" {issue :issue}
-  (rf/dispatch [:set-issue issue]))
+  (rf/dispatch [:set-and-go-to-issue issue]))
 
 (secretary/defroute "/map" []
   (rf/dispatch [:set-active-page :map]))

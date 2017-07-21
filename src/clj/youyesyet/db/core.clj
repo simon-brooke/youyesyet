@@ -1,4 +1,6 @@
-(ns youyesyet.db.core
+(ns ^{:doc "Database access functions."
+      :author "Simon Brooke"}
+  youyesyet.db.core
   (:require
     [cheshire.core :refer [generate-string parse-string]]
     [clojure.java.jdbc :as jdbc]
@@ -15,12 +17,10 @@
             Timestamp
             PreparedStatement]))
 
-(def ^:dynamic *db* {:name "java:comp/env/jdbc/EmployeeDB"})
-;; (defstate ^:dynamic *db*
-;;            :start (conman/connect! {:jdbc-url-env (env :database-url)
-;;                                     :jdbc-url "jdbc:postgresql://127.0.0.1/youyesyet_dev?user=youyesyet&password=thisisnotsecure"
-;;                                     :driver-class-name "org.postgresql.Driver"})
-;;            :stop (conman/disconnect! *db*))
+(defstate ^:dynamic *db*
+            :start (conman/connect! {:jdbc-url (env :database-url)
+                                     :driver-class-name "org.postgresql.Driver"})
+            :stop (conman/disconnect! *db*))
 
 (conman/bind-connection *db* "sql/queries.sql")
 

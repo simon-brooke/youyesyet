@@ -1,4 +1,5 @@
-(ns youyesyet.routes.services
+(ns ^{:doc "REST API."
+      :author "Simon Brooke"} youyesyet.routes.services
   (:require [clj-http.client :as client]
             [ring.util.http-response :refer :all]
             [compojure.api.sweet :refer :all]

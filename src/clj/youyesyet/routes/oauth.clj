@@ -1,4 +1,5 @@
-(ns youyesyet.routes.oauth
+(ns ^{:doc "OAuth authentication routes - not finished, does not work yet."
+      :author "Simon Brooke"} youyesyet.routes.oauth
   (:require [compojure.core :refer [defroutes GET]]
             [ring.util.http-response :refer [ok found]]
             [clojure.java.io :as io]
