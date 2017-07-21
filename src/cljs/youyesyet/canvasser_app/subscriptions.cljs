@@ -77,6 +77,16 @@
     (:issues db)))
 
 (reg-sub
+  :latitude
+  (fn [db _]
+    (:latitude db)))
+
+(reg-sub
+  :longitude
+  (fn [db _]
+    (:longitude db)))
+
+(reg-sub
   :page
   (fn [db _]
     (:page db)))
@@ -91,3 +101,12 @@
  (fn [db _]
    (:outqueue db)))
 
+(reg-sub
+  :view
+  (fn [db _]
+    (:view db)))
+
+(reg-sub
+  :zoom
+  (fn [db _]
+    (:zoom db)))

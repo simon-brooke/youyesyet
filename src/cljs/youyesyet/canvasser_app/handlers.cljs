@@ -170,7 +170,33 @@
 
 
 (reg-event-db
+ :set-latitude
+ (fn [db [_ issue]]
+   (assoc db :latitude issue)))
+
+
+(reg-event-db
+ :set-longitude
+ (fn [db [_ issue]]
+   (assoc db :longitude issue)))
+
+
+(reg-event-db
  :set-telephone
  (fn [db [_ telephone]]
    (js/console.log (str "Setting telephone to " telephone))
    (assoc (clear-messages db) :telephone telephone)))
+
+
+(reg-event-db
+  :set-view
+  (fn [db [_ view]]
+    (assoc db :view view)))
+
+
+(reg-event-db
+  :set-zoom
+  (fn [db [_ zoom]]
+    (if (integer? zoom)
+      (assoc db :zoom zoom)
+      db)))

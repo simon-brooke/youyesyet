@@ -82,4 +82,8 @@
     ;;; the queue of items waiting to be transmitted.
     :outqueue ()
     ;;; the currently displayed page within the app.
-    :page :home})
+    :page :home
+    :view nil
+    :latitude 55.82
+    :longitude -4.25
+    :zoom 12})

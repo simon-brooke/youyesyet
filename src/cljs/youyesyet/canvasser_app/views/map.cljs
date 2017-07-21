@@ -77,6 +77,11 @@
   so back links work."
   [id]
   (js/console.log (str "Click handler for address #" id))
+  (let [view @(subscribe [:view])
+        centre (.getCenter view)]
+    (dispatch [:set-zoom (.getZoom view)])
+    (dispatch [:set-latitude (.-lat centre)])
+    (dispatch [:set-longitude (.-lng centre)]))
   (set! window.location.href (str "#building/" id)))
 ;; This way is probably more idiomatic React, but history doesn't work:
 ;; (defn map-pin-click-handler
@@ -121,7 +126,10 @@
 (defn map-did-mount-osm
   "Did-mount function loading map tile data from Open Street Map."
   []
-  (let [view (.setView (.map js/L "map" (clj->js {:zoomControl false})) #js [55.82 -4.25] 13)
+  (let [view (.setView
+               (.map js/L "map" (clj->js {:zoomControl false}))
+               #js [@(subscribe [:latitude]) @(subscribe [:longitude])]
+               @(subscribe [:zoom]))
         addresses @(subscribe [:addresses])]
     (js/console.log (str "Adding " (count addresses) " pins"))
     (doall (map #(add-map-pin % view) addresses))
@@ -129,7 +137,8 @@
                         (clj->js {:attribution osm-attrib
                                   :maxZoom 18}))
             view)
-    ))
+    (dispatch [:set-view view])
+    view))
 
 
 (defn map-did-mount
