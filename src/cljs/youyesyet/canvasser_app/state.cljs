@@ -41,18 +41,18 @@
                                       {:id 4 :name "Andy Anderson" :intention :yes}]}]}
     ;;; a list of the addresses in the current location at which there
     ;;; are electors registered.
-    :addresses [{:id 1 :address "13 Imaginary Terrace, IM1 3TE" :latitude 55.8253043 :longitude -4.2570944
+    :addresses [{:id 1 :address "13 Imaginary Terrace, IM1 3TE" :latitude 55.8253043 :longitude -4.2569057
                  :dwellings [{:id 1
                               :electors [{:id 1 :name "Alan Anderson" :gender :male :intention :no}
                                          {:id 2 :name "Ann Anderson" :gender :female}
                                          {:id 3 :name "Alex Anderson" :gender :fluid :intention :yes}
                                          {:id 4 :name "Andy Anderson" :intention :yes}]}]}
-                {:id 2  :address "15 Imaginary Terrace, IM1 3TE" :latitude 55.8252354 :longitude -4.2572778
+                {:id 2  :address "15 Imaginary Terrace, IM1 3TE" :latitude 55.8252354 :longitude -4.2569077
                  :dwellings [{:id 2
                               :electors [{:id 1 :name "Beryl Brown" :gender :female}
                                          {:id 2 :name "Betty Black" :gender :female}]}]}
 
-                {:id 3 :address "17 Imaginary Terrace, IM1 3TE" :latitude 55.825166 :longitude -4.257026
+                {:id 3 :address "17 Imaginary Terrace, IM1 3TE" :latitude 55.825166 :longitude -4.256926
                  :dwellings [{:id 3 :sub-address "Flat 1"
                               :electors [{:id 1 :name "Catriona Crathie" :gender :female :intention :yes}
                                          {:id 2 :name "Colin Caruthers" :gender :male :intention :yes}

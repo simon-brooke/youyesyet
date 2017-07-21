@@ -96,13 +96,10 @@
                  :closure-warnings
                  {:externs-validation :off :non-standard-jsdoc :off}
                  :externs ["react/externs/react.js"]}}}}
-
-
              :aot :all
              :uberjar-name "youyesyet.jar"
              :source-paths ["env/prod/clj"]
              :resource-paths ["env/prod/resources"]}
-
    :dev           [:project/dev :profiles/dev]
    :test          [:project/dev :project/test :profiles/test]
 
@@ -133,9 +130,6 @@
                       :source-map true
                       :optimizations :none
                       :pretty-print true}}}}
-
-
-
                   :doo {:build "test"}
                   :source-paths ["env/dev/clj"]
                   :resource-paths ["env/dev/resources"]
