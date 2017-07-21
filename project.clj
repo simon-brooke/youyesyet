@@ -55,11 +55,16 @@
             [lein-cljsbuild "1.1.4"]
             [lein-uberwar "0.2.0"]
             [lein-bower "0.5.1"]
-            [lein-less "1.7.5"]]
+            [lein-less "1.7.5"]
+            [lein-codox "0.10.3"]]
 
   :bower-dependencies [[leaflet "0.7.3"]]
 
   :cucumber-feature-paths ["test/clj/features"]
+
+  :codox {:metadata {:doc "FIXME: write docs"}
+          :languages [:clojure :clojurescript]
+          :source-paths ["src/clj" "src/cljc" "src/cljs"]}
 
   :uberwar
   {:handler youyesyet.handler/app

@@ -44,6 +44,8 @@ WHERE id = :id
 SELECT * FROM addresses
 WHERE id = :id
 
+-- :name get-addresses-by-postcode
+
 -- :name delete-address! :! :n
 -- :doc delete a address given the id
 DELETE FROM addresses
