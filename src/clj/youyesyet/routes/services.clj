@@ -1,4 +1,7 @@
-(ns youyesyet.routes.services
+;;;; This is probably the right way to do the API, but I don't understand it.
+
+(ns ^{:doc "REST API."
+      :author "Simon Brooke"} youyesyet.routes.services
   (:require [clj-http.client :as client]
             [ring.util.http-response :refer :all]
             [compojure.api.sweet :refer :all]
