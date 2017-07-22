@@ -1,4 +1,6 @@
-(ns youyesyet.layout
+(ns^{:doc "Render web pages using Selmer tamplating markup."
+      :author "Simon Brooke"}
+   youyesyet.layout
   (:require [selmer.parser :as parser]
             [selmer.filters :as filters]
             [markdown.core :refer [md-to-html-string]]
@@ -11,6 +13,7 @@
 (parser/set-resource-path!  (clojure.java.io/resource "templates"))
 (parser/add-tag! :csrf-field (fn [_ _] (anti-forgery-field)))
 (filters/add-filter! :markdown (fn [content] [:safe (md-to-html-string content)]))
+
 
 (defn render
   "renders the HTML template located relative to resources/templates"
@@ -25,6 +28,7 @@
           :servlet-context *app-context*
           :version (System/getProperty "youyesyet.version"))))
     "text/html; charset=utf-8"))
+
 
 (defn error-page
   "error-details should be a map containing the following keys:

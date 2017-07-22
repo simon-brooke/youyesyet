@@ -1,4 +1,4 @@
-### YouYesYet: User-oriented specification
+# YouYesYet: User-oriented specification
 
 ## Overview
 

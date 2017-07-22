@@ -1,12 +1,12 @@
-(ns youyesyet.views.issue
+(ns ^{:doc "Canvasser app households in building panel."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.views.building
   (:require [re-frame.core :refer [reg-sub subscribe]]
-            [markdown.core :refer [md->html]]
-            [youyesyet.ui-utils :as ui]
-            [youyesyet.views.issues :as issues]))
+            [youyesyet.canvasser-app.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.views.issues: issues view for youyesyet.
+;;;; youyesyet.canvasser-app.views.building: building view for youyesyet.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -31,19 +31,24 @@
 ;;; The pattern from the re-com demo (https://github.com/Day8/re-com) is to have
 ;;; one source file/namespace per view. Each namespace contains a function 'panel'
 ;;; whose output is an enlive-style specification of the view to be redered.
-;;; I propose to follow this pattern. This file will (eventually) provide the single issue view.
+;;; I propose to follow this pattern. This file will provide the building view.
 
 (defn panel
-  "Generate the issue panel."
+  "Generate the building panel."
   []
-  (let [issue @(subscribe [:issue])
-        issues @(subscribe [:issues])]
+  (let [address @(subscribe [:address])
+        dwellings (:dwellings address)]
     [:div
-     [:h1 issue]
+     [:h1 (str "Flats at " (:address address))]
      [:div.container {:id "main-container"}
-      [:div {:id "issue"}
-       [:div {:id "issue-text"
-              :dangerouslySetInnerHTML
-              {:__html (md->html (issues issue))}}]]
-      (ui/big-link "Request call" "#/followup")
-      (ui/back-link)]]))
+      (ui/back-link)
+      [:div {:id "dwelling-list"}
+       (map
+         (fn
+           [dwelling]
+           (ui/big-link
+             (:sub-address dwelling)
+             (str "#/electors/" (:id dwelling))) )
+         (sort
+           #(< (:sub-address %1) (:sub-address %2))
+           (:dwellings address)))]]]))

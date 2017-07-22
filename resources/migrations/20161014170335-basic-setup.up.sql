@@ -118,15 +118,16 @@ ALTER TABLE public.authorities OWNER TO youyesyet;
 --
 
 CREATE TABLE IF NOT EXISTS canvassers (
-    id serial,
-    username character varying(32) NOT NULL,
-    fullname character varying(64) NOT NULL,
-    elector_id integer,
-    address_id integer NOT NULL,
-    phone character varying(16),
-    email character varying(128),
-    authority_id character varying(32) NOT NULL,
-    authorised boolean
+    id             serial,
+    username       character varying(32) NOT NULL,
+    fullname       character varying(64) NOT NULL,
+    elector_id     integer,
+    address_id     integer NOT NULL,
+    phone          character varying(16),
+    email          character varying(128),
+    authority_id   character varying(32) NOT NULL,
+    introduced_by  int references canvassers(id),
+    authorised     boolean
 );
 --;;
 
@@ -534,6 +535,8 @@ ALTER TABLE ONLY canvassers
     ADD CONSTRAINT canvassers_elector_id_fkey FOREIGN KEY (elector_id) REFERENCES electors(id);
 --;;
 
+create unique index canvassers_username_ix on canvassers (username);
+create unique index canvassers_email_ix on canvassers(email);
 
 --
 -- Name: electors_address_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: youyesyet
