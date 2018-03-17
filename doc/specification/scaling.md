@@ -56,7 +56,37 @@ All this normalisation and memoisation reduces the number of read requests on th
 
 Note that [clojure.core.memoize](https://github.com/clojure/core.memoize) provides us with functions to create both size-limited, least-recently-used caches and duration limited, time-to-live caches.
 
+### Searching the database for localities
+
 At 56 degrees north there are 111,341 metres per degree of latitude, 62,392 metres per degree of longitude. So a 100 metre box is about 0.0016 degrees east-west and .0009 degrees north-south. If we simplify that slightly (and we don't need square boxes, we need units of area covering a group of people working together) then we can take .001 of a degree in either direction which is computationally cheap.
+
+Of course we could have a search query like this
+
+    select * from addresses
+      where latitude > 56.003
+        and latitude < 56.004
+        and longitude > -4.771
+        and longitude < -4.770;
+
+And it would work - but it would be computationally expensive. If we call each of these .001 x .001 roughly-rectangles a **locality**, then we can give every locality an integer index as follows
+
+    (defn locality-index
+      "Compute a locality for this `latitude`, `longitude` pair."
+      [latitude longitude]
+      (+
+        (* 10000            ;; left-shift the latitude component four digits
+          (integer
+            (* latitude 1000)))
+        (-                  ;; invert the sign of the longitude component, since
+                            ;; we're interested in localities West of Greenwich.
+          (integer
+            (* longitude 1000)))))
+
+For values in Scotland, this gives us a number comfortable smaller than the maximum size of a 32 bit integer. Note that this isn't generally the case, so to adapt this software for use in Canada, for example, a more general solution would need to be chosen; but this will do for now. If we compute this index at the time the address is geocoded, then we can achieve the exact same results as the query given above with a much simpler query:
+
+    select * from address where locality = 560034770;
+
+If the locality field is indexed (which obviously it should be) this query becomes very cheap.
 
 ### Geographic sharding
 
