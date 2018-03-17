@@ -40,7 +40,7 @@
 
 (defn get-issues
   "Get current issues. No arguments expected."
-  [request]
+  [request])
 
 (defroutes rest-routes
   (GET "/rest/get-local-data" request (route/restricted (get-local-data request)))

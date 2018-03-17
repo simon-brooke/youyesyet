@@ -3,6 +3,7 @@
             [youyesyet.layout :refer [error-page]]
             [youyesyet.routes.home :refer [home-routes]]
             [youyesyet.routes.oauth :refer [oauth-routes]]
+            [youyesyet.routes.auto-json-routes :refer [auto-rest-routes]]
             [compojure.route :as route]
             [youyesyet.env :refer [defaults]]
             [mount.core :as mount]
@@ -37,6 +38,9 @@
     (-> #'home-routes
         (wrap-routes middleware/wrap-csrf)
         (wrap-routes middleware/wrap-formats))
+    (-> #'auto-rest-routes
+        (wrap-routes middleware/wrap-csrf)
+        (wrap-routes middleware/wrap-formats))
     #'oauth-routes
     (route/not-found
       (:body
@@ -44,4 +48,5 @@
                      :title "page not found"})))))
 
 
-(def app (middleware/wrap-base #'app-routes))
+(def app #'app-routes)
+  ;;(middleware/wrap-base #'app-routes))

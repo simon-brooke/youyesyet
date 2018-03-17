@@ -15,14 +15,14 @@
             Timestamp
             PreparedStatement]))
 
-(def ^:dynamic *db* {:name "java:comp/env/jdbc/EmployeeDB"})
-;; (defstate ^:dynamic *db*
-;;            :start (conman/connect! {:jdbc-url-env (env :database-url)
-;;                                     :jdbc-url "jdbc:postgresql://127.0.0.1/youyesyet_dev?user=youyesyet&password=thisisnotsecure"
-;;                                     :driver-class-name "org.postgresql.Driver"})
-;;            :stop (conman/disconnect! *db*))
+;; (def ^:dynamic *db* {:name "java:comp/env/jdbc/EmployeeDB"})
+(defstate ^:dynamic *db*
+           :start (conman/connect! {:jdbc-url-env (env :database-url)
+                                    :jdbc-url "jdbc:postgresql://127.0.0.1/youyesyet_dev?user=youyesyet&password=thisisnotsecure"
+                                    :driver-class-name "org.postgresql.Driver"})
+           :stop (conman/disconnect! *db*))
 
-(conman/bind-connection *db* "sql/queries.sql")
+(conman/bind-connection *db* "sql/queries.auto.sql")
 
 (defn to-date [^java.sql.Date sql-date]
   (-> sql-date (.getTime) (java.util.Date.)))
