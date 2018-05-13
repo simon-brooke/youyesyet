@@ -45,7 +45,7 @@
 
   <entity name="electors">
     <key>
-      <property required="true" type="integer" name="id" column="id" immutable="true">
+      <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
@@ -82,13 +82,13 @@
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
-    <property size='256' required="true" type="string" name="address" column="address" size="256" distinct="user">
+    <property required="true" type="string" name="address" column="address" size="256" distinct="user">
       <prompt prompt="address" locale="en-GB"/>
     </property>
     <property type="defined" typedef="postcode" name="postcode" column="postcode" size="16" distinct="user">
       <prompt prompt="postcode" locale="en-GB"/>
     </property>
-    <property size='16' type="string" name="phone" column="phone" size="16">
+    <property type="string" name="phone" column="phone" size="16">
       <prompt prompt="phone" locale="en-GB"/>
     </property>
     <property type="entity" name="district_id" column="district_id" entity="districts" farkey="id">
