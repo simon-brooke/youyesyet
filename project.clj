@@ -53,6 +53,7 @@
             [migratus-lein "0.4.2"]
             [org.clojars.punkisdead/lein-cucumber "1.0.5"]
             [lein-cljsbuild "1.1.4"]
+            [lein-codox "0.10.3"]
             [lein-uberwar "0.2.0"]
             [lein-bower "0.5.1"]
             [lein-less "1.7.5"]]

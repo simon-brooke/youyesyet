@@ -11,7 +11,7 @@
 
 
 (declare
- create-addresse
+ create-address
  create-authority
  create-canvasser
  create-district
@@ -30,7 +30,7 @@
  create-teammembership
  create-teamorganisership
  create-visit
- delete-addresse
+ delete-address
  delete-authority
  delete-canvasser
  delete-district
@@ -41,7 +41,7 @@
  delete-issue
  delete-option
  delete-visit
- get-addresse
+ get-address
  get-authority
  get-canvasser
  get-district
@@ -61,7 +61,7 @@
  list-canvassers-by-elector
  list-districts
  list-electors
- list-electors-by-addresse
+ list-electors-by-address
  list-followupactions
  list-followupactions-by-canvasser
  list-followupactions-by-followuprequest
@@ -96,9 +96,9 @@
  list-teams
  list-teams-by-district
  list-visits
- list-visits-by-addresse
+ list-visits-by-address
  list-visits-by-canvasser
- update-addresse
+ update-address
  update-canvasser
  update-district
  update-elector
@@ -110,7 +110,7 @@
 
 (defroutes
  auto-rest-routes
- (POST "/json/auto/create-addresse" request (create-addresse request))
+ (POST "/json/auto/create-addresse" request (create-address request))
  (POST
   "/json/auto/create-authority"
   request
@@ -162,7 +162,7 @@
   request
   (create-teamorganisership request))
  (POST "/json/auto/create-visit" request (create-visit request))
- (POST "/json/auto/delete-addresse" request (delete-addresse request))
+ (POST "/json/auto/delete-addresse" request (delete-address request))
  (POST
   "/json/auto/delete-authority"
   request
@@ -382,10 +382,10 @@
 
 
 (defn
- create-addresse
+ create-address
  "Auto-generated method to insert one record to the addresses table. Expects the following key(s) to be present in `params`: (:id :address :postcode :phone :district_id :latitude :longitude). Returns a map containing the keys (:id) identifying the record created."
  [{:keys [params]}]
- (do (db/create-addresse! params)))
+ (do (db/create-address! params)))
 
 
 (defn
@@ -515,10 +515,10 @@
 
 
 (defn
- delete-addresse
+ delete-address
  "Auto-generated method to delete one record from the addresses table. Expects the following key(s) to be present in `params`: (:id)."
  [{:keys [params]}]
- (do (db/delete-addresse! params))
+ (do (db/delete-address! params))
  (response/found "/"))
 
 
@@ -970,10 +970,10 @@
 
 
 (defn
- update-addresse
+ update-address
  "Auto-generated method to update one record in the addresses table. Expects the following key(s) to be present in `params`: (:address :district_id :id :latitude :longitude :phone :postcode)."
  [{:keys [params]}]
- (do (db/update-addresse! params))
+ (do (db/update-address! params))
  (response/found "/"))
 
 
