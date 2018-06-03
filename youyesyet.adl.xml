@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- DOCTYPE application PUBLIC "-//JOURNEYMAN//DTD ADL 1.4//EN"
+"http://www.journeyman.cc/adl/stable/adl/schemas/adl-1.4.dtd" -->
+<application name="youyesyet" version="0.1.1"
+             xmlns="http://bowyer.journeyman.cc/adl/1.4/"
+             xmlns:adl="http://bowyer.journeyman.cc/adl/1.4/">
+  <documentation>
+    A web-app intended to be used by canvassers campaigning for a 'Yes' vote in the second independence referendum.
+
+    The web-app will be delivered to canvassers out knocking doors primarily through an HTML5/React single-page app designed to work on a mobile phone; it's possible that someone else may do an Android of iPhone native app to address the same back end but at present I have no plans for this.
+
+    There must also be an administrative interface through which privileged users can set the system up and authorise canvassers, and a 'followup' interface through which issue-expert specialist canvassers can address particular electors' queries.
+  </documentation>
+  <content>
+    <head> </head>
+    <top> </top>
+    <foot> </foot>
+  </content>
+  <typedef name="postcode" type="string"
+    pattern="^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))[0-9][A-Za-z]{2})$" size="16">
+    <documentation>See
+      https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/488478/Bulk_Data_Transfer_-_additional_validation_valid_from_12_November_2015.pdf,
+      section 3</documentation>
+    <help locale="en-GB">A valid postcode.</help>
+  </typedef>
+  <group name="public">
+    <documentation>All users</documentation>
+  </group>
+  <group name="canvassers" parent="public">
+    <documentation>All users of the canvasser app Able to read and add canvassing data in a limited
+      radius around their current position. </documentation>
+  </group>
+  <group name="teamorganiser" parent="canvassers">
+    <documentation>Organisers of canvassing teams Able to see and modify data on the canvassers in
+      the team(s) they organise; able to add canvassers to their team; able to update canvassers in
+      their team, including resetting passwords and locking accounts; able to see canvass data over
+      the whole area in which their team operates. </documentation>
+  </group>
+  <group name="issueexperts" parent="public">
+    <documentation>People expert on particular issues. Able to read followup requests, and the electors to which they
+      relate; able to access (read/write) the issues wiki; able to write followuop action records.
+    </documentation>
+  </group>
+  <group name="analysts" parent="public">
+    <documentation>Users entitled to see an overview of the canvassing data collected. Able to read canvassing data over the whole map, including historical
+      data.</documentation>
+  </group>
+  <group name="issueeditors" parent="analysts">
+    <documentation>Users responsible for determining what issues should be current at any time.
+      Able to set current issues; able to add issues.</documentation>
+  </group>
+  <group name="admin" parent="public">
+    <documentation>Able to read and update canvasser records, team membership records, team
+      organisership records, issue expertise records; able to add and update reference data
+      generally.</documentation>
+  </group>
+
+  <entity name="electors">
+    <key>
+      <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
+        <prompt prompt="id" locale="en-GB"/>
+      </property>
+    </key>
+    <property size="64" required="true" type="string" name="name" column="name" distinct="user">
+      <prompt prompt="name" locale="en-GB"/>
+    </property>
+    <property required="true" type="entity" name="address_id" column="address_id" entity="addresses"
+      farkey="id">
+      <prompt prompt="address_id" locale="en-GB"/>
+    </property>
+    <property size="16" type="string" name="phone" column="phone" distinct="user">
+      <prompt prompt="phone" locale="en-GB"/>
+    </property>
+    <property size="128" type="string" name="email" column="email" distinct="user">
+      <prompt prompt="email" locale="en-GB"/>
+    </property>
+    <property name="gender" type="entity" column="gender" entity="genders" farkey="id"
+      default="Unknown">
+      <prompt prompt="gender" locale="en-GB"/>
+    </property>
+    <list name="Electors" properties="all"/>
+    <form name="Elector" properties="all"/>
+  </entity>
+  <entity name="genders" natural-key="id">
+    <key>
+      <property name="id" type="string" size="32" distinct="all">
+        <prompt prompt="gender" locale="en-GB"/>
+      </property>
+    </key>
+    <list name="Genders" properties="all"/>
+    <form name="Gender" properties="all"/>
+  </entity>
+  <entity name="addresses">
+    <key>
+      <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
+        <prompt prompt="id" locale="en-GB"/>
+      </property>
+    </key>
+    <property required="true" type="string" name="address" column="address" size="256" distinct="user">
+      <prompt prompt="address" locale="en-GB"/>
+    </property>
+    <property type="defined" typedef="postcode" name="postcode" column="postcode" size="16" distinct="user">
+      <prompt prompt="postcode" locale="en-GB"/>
+    </property>
+    <property type="string" name="phone" column="phone" size="16">
+      <prompt prompt="phone" locale="en-GB"/>
+    </property>
+    <property type="entity" name="district_id" column="district_id" entity="districts" farkey="id">
+      <prompt prompt="district_id" locale="en-GB"/>
+    </property>
+    <property type="real" name="latitude" column="latitude">
+      <prompt prompt="latitude" locale="en-GB"/>
+    </property>
+    <property type="real" name="longitude" column="longitude">
+      <prompt prompt="longitude" locale="en-GB"/>
+    </property>
+    <permission group="admin" permission="all"/>
+    <permission group="canvassers" permission="read"/>
+    <permission group="analysts" permission="read"/>
+    <list name="Addresses" properties="all"/>
+    <form name="Address" properties="all"/>
+  </entity>
+  <entity name="visits">
+    <key>
+      <property required="true" type="integer" name="id" column="id" distinct="system">
+        <prompt prompt="id" locale="en-GB"/>
+      </property>
+    </key>
+    <property required="true" type="integer" name="address_id" column="address_id"
+      entity="addresses" farkey="id">
+      <prompt prompt="address_id" locale="en-GB"/>
+    </property>
+    <property required="true" type="entity" name="canvasser_id" column="canvasser_id"
+      entity="canvassers" farkey="id">
+      <prompt prompt="canvasser_id" locale="en-GB"/>
+    </property>
+    <property required="true" default="" type="timestamp" name="date" column="date">
+      <prompt prompt="date" locale="en-GB"/>
+    </property>
+    <permission group="public" permission="read"/>
+    <permission group="canvassers" permission="insert"/>
+  </entity>
+  <entity name="authorities">
+    <key>
+      <property required="true" type="string" name="id" column="id" size="32" distinct="all">
+        <prompt prompt="id" locale="en-GB"/>
+      </property>
+    </key>
+  </entity>
+  <entity name="issues">
+    <documentation>Issues believed to be of interest to electors, about which they may have questions.</documentation>
+    <key>
+      <property required="true" type="string" name="id" column="id" size="32" immutable="true" distinct="all">
+        <prompt prompt="id" locale="en-GB"/>
+      </property>
+    </key>
+    <property type="string" name="url" column="url" size="256">
+      <prompt prompt="url" locale="en-GB"/>
+    </property>
+    <property name="current" type="boolean" default="true">
+      <prompt prompt="Is current?" locale="en-GB"/>
+    </property>
+    <list name="Issues" properties="all"/>
+    <form name="Issue" properties="all"/>
+  </entity>
+  <entity name="intentions">
+    <documentation>Link table.</documentation>
+    <property required="true" type="entity" entity="visits" farkey="id" name="visit_id"
+      column="visit_id">
+      <prompt prompt="visit_id" locale="en-GB"/>
+    </property>
+    <property required="true" type="entity" entity="electors" farkey="id" name="elector_id"
+      column="elector_id">
+      <prompt prompt="elector_id" locale="en-GB"/>
+    </property>
+    <property required="true" type="entity" entity="options" farkey="id" name="option_id"
+      column="option_id">
+      <prompt prompt="option_id" locale="en-GB"/>
+    </property>
+  </entity>
+  <entity name="canvassers">
+    <documentation>Primary users of the system: those actually interviewing electors.</documentation>
+    <key>
+      <property type="integer" name="id" column="id" distinct="system" immutable="true">
+        <prompt prompt="id" locale="en-GB"/>
+      </property>
+    </key>
+    <property required="true" type="string" name="username" column="username" size="32" distinct="all">
+      <prompt prompt="username" locale="en-GB"/>
+    </property>
+    <property required="true" type="string" name="fullname" column="fullname" size="64" distinct="user">
+      <prompt prompt="fullname" locale="en-GB"/>
+    </property>
+    <property type="entity" name="elector_id" column="elector_id" entity="electors" farkey="id">
+      <prompt prompt="elector_id" locale="en-GB"/>
+    </property>
+    <property required="true" type="integer" name="address_id" column="address_id"
+      entity="addresses" farkey="id">
+      <prompt prompt="address_id" locale="en-GB"/>
+    </property>
+    <property type="string" name="phone" column="phone" size="16">
+      <prompt prompt="phone" locale="en-GB"/>
+    </property>
+    <property type="string" name="email" column="email" size="128" distinct="user">
+      <prompt prompt="email" locale="en-GB"/>
+    </property>
+    <property required="true" type="entity" name="authority_id"
+      entity="authorities" farkey="id">
+      <prompt prompt="authority_id" locale="en-GB"/>
+    </property>
+    <property type="boolean" name="authorised" column="authorised">
+      <prompt prompt="authorised" locale="en-GB"/>
+    </property>
+    <permission group="canvassers" permission="edit">
+      <documentation>But only their own record</documentation>
+    </permission>
+    <permission group="teamleaders" permission="edit">
+      <documentation>But only canvassers in their own team.</documentation>
+    </permission>
+    <permission group="admin" permission="all">
+      <documentation>All canvassers</documentation>
+    </permission>
+  </entity>
+  <entity name="followuprequests">
+    <documentation>Requests for a followup with an issue expert</documentation>
+    <key>
+      <property required="true" type="integer" name="id" column="id" distinct="system">
+        <prompt prompt="id" locale="en-GB"/>
+      </property>
+    </key>
+    <property required="true" type="entity" name="elector_id" column="elector_id" entity="electors"
+      farkey="id">
+      <prompt prompt="elector_id" locale="en-GB"/>
+    </property>
+    <property required="true" type="entity" name="visit_id" column="visit_id" entity="visits"
+      farkey="id">
+      <prompt prompt="visit_id" locale="en-GB"/>
+    </property>
+    <property required="true" type="entity" name="issue_id" column="issue_id" entity="issues"
+      farkey="id">
+      <prompt prompt="issue_id" locale="en-GB"/>
+    </property>
+    <property required="true" type="entity" name="method_id" column="method_id"
+      entity="followupmethods" farkey="id">
+      <prompt prompt="method_id" locale="en-GB"/>
+    </property>
+  </entity>
+  <entity name="rolememberships">
+    <documentation>Link table</documentation>
+    <property required="true" type="entity" entity="roles" farkey="id" name="role_id"
+      column="role_id">
+      <prompt prompt="role_id" locale="en-GB"/>
+    </property>
+    <property required="true" type="entity" entity="canvassers" farkey="id" name="canvasser_id"
+      column="canvasser_id">
+      <prompt prompt="canvasser_id" locale="en-GB"/>
+    </property>
+  </entity>
+  <entity name="roles">
+    <documentation>A role (essentially, the same as a group, but application layer rather than database layer) of which a user may be a member.</documentation>
+    <key>
+      <property type="integer" name="id" column="id" immutable="true" distinct="system">
+        <prompt prompt="id" locale="en-GB"/>
+      </property>
+    </key>
+    <property required="true" type="string" name="name" column="name" size="64" distinct="user" immutable="true">
+      <prompt prompt="name" locale="en-GB"/>
+    </property>
+  </entity>
+  <entity name="teams">
+    <key>
+      <property type="integer" name="id" column="id" distinct="system" immutable="true">
+        <prompt prompt="id" locale="en-GB"/>
+      </property>
+    </key>
+    <property required="true" type="string" name="name" column="name" size="64" distinct="user">
+      <prompt prompt="name" locale="en-GB"/>
+    </property>
+    <property required="true" type="entity" entity="districts" farkey="id" name="district_id"
+      column="district_id">
+      <prompt prompt="district_id" locale="en-GB"/>
+    </property>
+    <property type="real" name="latitude" column="latitude">
+      <prompt prompt="latitude" locale="en-GB"/>
+    </property>
+    <property type="real" name="longitude" column="longitude">
+      <prompt prompt="longitude" locale="en-GB"/>
+    </property>
+    <permission group="canvassers" permission="read"/>
+    <permission group="groupleaders" permission="edit">
+      <documentation>But only their own group(s)</documentation>
+    </permission>
+    <permission group="admin" permission="all">
+      <documentation>All groups</documentation>
+    </permission>
+  </entity>
+  <entity name="districts">
+    <documentation>Electoral districts</documentation>
+    <key>
+      <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
+        <prompt prompt="id" locale="en-GB"/>
+      </property>
+    </key>
+    <property required="true" type="string" name="name" column="name" size="64" distinct="user">
+      <prompt prompt="name" locale="en-GB"/>
+    </property>
+    <permission group="public" permission="read"></permission>
+    <permission group="admin" permission="all"></permission>
+  </entity>
+  <entity name="teamorganiserships">
+    <documentation>Link table</documentation>
+    <property required="true" type="entity" entity="teams" farkey="id" name="team_id"
+      column="team_id">
+      <prompt prompt="team_id" locale="en-GB"/>
+    </property>
+    <property required="true" type="entity" entity="canvassers" farkey="id" name="canvasser_id"
+      column="canvasser_id">
+      <prompt prompt="canvasser_id" locale="en-GB"/>
+    </property>
+  </entity>
+  <entity name="followupactions">
+    <documentation>Actions taken on followup requests.</documentation>
+    <key>
+      <property required="true" type="integer" name="id" column="id" distinct="system">
+        <prompt prompt="id" locale="en-GB"/>
+      </property>
+    </key>
+    <property required="true" type="entity" name="request_id" column="request_id"
+      entity="followuprequests" farkey="id">
+      <prompt prompt="request_id" locale="en-GB"/>
+    </property>
+    <property required="true" type="integer" name="actor" column="actor" entity="canvassers"
+      farkey="id">
+      <prompt prompt="actor" locale="en-GB"/>
+    </property>
+    <property required="true" default="" type="timestamp" name="date" column="date">
+      <prompt prompt="date" locale="en-GB"/>
+    </property>
+    <property type="text" name="notes" column="notes">
+      <prompt prompt="notes" locale="en-GB"/>
+    </property>
+    <property type="boolean" name="closed" column="closed" default="false">
+      <prompt prompt="closed" locale="en-GB"/>
+    </property>
+    <permission group="issueexperts" permission="insert"/>
+    <permission group="canvassers" permission="read">
+      <documentation>But only for electors in their immediate vicinity</documentation>
+    </permission>
+    <permission group="analysts" permission="read"/>
+  </entity>
+  <entity name="issueexpertise">
+    <documentation>Link table</documentation>
+      <property required="true" type="integer" name="canvasser_id" column="canvasser_id"
+        entity="canvassers" farkey="id">
+        <prompt prompt="canvasser_id" locale="en-GB"/>
+      </property>
+    <property required="true" type="entity" name="issue_id" column="issue_id" entity="issues"
+      farkey="id">
+      <prompt prompt="issue_id" locale="en-GB"/>
+    </property>
+    <property required="true" type="entity" name="method_id" column="method_id"
+      entity="followupmethods" farkey="id">
+      <prompt prompt="method_id" locale="en-GB"/>
+    </property>
+  </entity>
+  <entity name="options">
+    <documentation>Options in the election or referendum being canvassed on</documentation>
+    <key>
+      <property required="true" type="string" name="id" column="id" size="32" immutable="true" distinct="all">
+        <prompt prompt="id" locale="en-GB"/>
+      </property>
+    </key>
+  </entity>
+  <entity name="teammemberships">
+    <documentation>Link table</documentation>
+    <property required="true" type="entity" entity="teams" farkey="id" name="team_id"
+      column="team_id">
+      <prompt prompt="team_id" locale="en-GB"/>
+    </property>
+    <property required="true" type="entity" entity="canvassers" farkey="id" name="canvasser_id"
+      column="canvasser_id">
+      <prompt prompt="canvasser_id" locale="en-GB"/>
+    </property>
+  </entity>
+  <entity name="followupmethods">
+    <key>
+      <property required="true" type="string" size="32" name="id" column="id" immutable="true" distinct="all">
+        <prompt prompt="id" locale="en-GB"/>
+      </property>
+    </key>
+  </entity>
+</application>

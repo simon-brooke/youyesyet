@@ -1,4 +1,6 @@
-(ns youyesyet.outqueue
+(ns ^{:doc "Queue of messages waiting to be sent to the server."
+      :author "Simon Brooke"}
+  youyesyet.outqueue
   (:require
   #?(:clj [clojure.core]
      :cljs [reagent.core :refer [atom]])))
@@ -41,6 +43,7 @@
                   (reverse items)
                   (list items))})))
 
+
 (defn add!
   "Add this item to the queue."
   [q item]
@@ -49,7 +52,9 @@
            (assoc a :items
              (cons item (:items a))))))
 
-(defn q?
+
+(defn queue?
+  "True if x is a queue, else false."
   [x]
   (try
     (let [q (deref x)
@@ -61,20 +66,24 @@
         #?(:clj (print (.getMessage any))
                 :cljs (js/console.log (str any))))))
 
+
 (defn peek
   "Look at the next item which could be removed from the queue."
   [q]
   (last (:items (deref q))))
 
+
 (defn locked?
   [q]
   (:locked (deref q)))
+
 
 (defn unlock!
   ([q ]
    (unlock! q true))
   ([q value]
    (swap! q (fn [a] (assoc a :locked (not (true? value)))))))
+
 
 (defn lock!
   [q]
@@ -85,6 +94,7 @@
   "Return the count of items currently in the queue."
   [q]
   (count (deref q)))
+
 
 (defn take!
   "Return the first item from the queue, rebind the queue to the remaining
@@ -97,12 +107,13 @@
                (assoc (assoc a :items new-queue) :v item))))
   (:v (deref q)))
 
+
 (defn maybe-process-next
   "Apply this process, assumed to be a function of one argument, to the next
   item in the queue, if the queue is not currently locked; return the value
   returned by process."
   [q process]
-  (if (and (q? q)(not (locked? q)))
+  (if (and (queue? q)(not (locked? q)))
     (try
       (lock! q)
       (let [v (apply process (list (peek q)))]

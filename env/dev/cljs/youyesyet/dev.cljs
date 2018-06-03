@@ -1,5 +1,5 @@
-(ns ^:figwheel-no-load youyesyet.app
-  (:require [youyesyet.core :as core]
+(ns ^:figwheel-no-load youyesyet.canvasser-app.app
+  (:require [youyesyet.canvasser-app.core :as core]
             [devtools.core :as devtools]
             [figwheel.client :as figwheel :include-macros true]))
 

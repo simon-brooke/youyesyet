@@ -1,4 +1,6 @@
-(ns youyesyet.ui-utils
+(ns ^{:doc "Canvasser app user interface widgets."
+      :author "Simon Brooke"}
+  youyesyet.canvasser-app.ui-utils
   (:require [reagent.core :as r]
             [re-frame.core :as rf]))
 
