@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- DOCTYPE application PUBLIC "-//JOURNEYMAN//DTD ADL 1.4//EN"
-"http://www.journeyman.cc/adl/stable/adl/schemas/adl-1.4.dtd" -->
+<!-- DOCTYPE application PUBLIC "-//JOURNEYMAN//DTD ADL 1.4.1//EN"
+"http://www.journeyman.cc/adl/stable/adl/schemas/adl-1.4.1.dtd" -->
 <application name="youyesyet" version="0.1.1"
-             xmlns="http://bowyer.journeyman.cc/adl/1.4/"
-             xmlns:adl="http://bowyer.journeyman.cc/adl/1.4/">
+             xmlns="http://bowyer.journeyman.cc/adl/1.4.1/"
+             xmlns:adl="http://bowyer.journeyman.cc/adl/1.4.1/">
   <documentation>
     A web-app intended to be used by canvassers campaigning for a 'Yes' vote in the second independence referendum.
 
@@ -55,7 +55,7 @@
       generally.</documentation>
   </group>
 
-  <entity name="electors">
+  <entity name="electors" magnitude="6">
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
         <prompt prompt="id" locale="en-GB"/>
@@ -64,9 +64,8 @@
     <property size="64" required="true" type="string" name="name" column="name" distinct="user">
       <prompt prompt="name" locale="en-GB"/>
     </property>
-    <property required="true" type="entity" name="address_id" column="address_id" entity="addresses"
-      farkey="id">
-      <prompt prompt="address_id" locale="en-GB"/>
+    <property required="true" type="entity" name="dwelling_id" column="dwelling_id" entity="dwelling" farkey="id">
+      <prompt prompt="Flat" locale="en-GB"/>
     </property>
     <property size="16" type="string" name="phone" column="phone" distinct="user">
       <prompt prompt="phone" locale="en-GB"/>
@@ -81,7 +80,7 @@
     <list name="Electors" properties="all"/>
     <form name="Elector" properties="all"/>
   </entity>
-  <entity name="genders" natural-key="id">
+  <entity name="genders" natural-key="id" magnitude="1">
     <key>
       <property name="id" type="string" size="32" distinct="all">
         <prompt prompt="gender" locale="en-GB"/>
@@ -90,7 +89,18 @@
     <list name="Genders" properties="all"/>
     <form name="Gender" properties="all"/>
   </entity>
-  <entity name="addresses">
+  <entity name="dwellings" magnitude="6">
+    <key>
+      <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
+        <prompt prompt="id" locale="en-GB"/>
+      </property>
+    </key>
+    <property required="true" type="entity" name="address_id" column="address_id" entity="address" farkey="id">
+      <prompt prompt="Building Address" locale="en-GB"/>
+    </property>
+    <property required="false" type="string" size="32" name="sub-address"/>
+  </entity>
+  <entity name="addresses" magnitude="6">
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
         <prompt prompt="id" locale="en-GB"/>
@@ -120,7 +130,7 @@
     <list name="Addresses" properties="all"/>
     <form name="Address" properties="all"/>
   </entity>
-  <entity name="visits">
+  <entity name="visits" magnitude="7">
     <key>
       <property required="true" type="integer" name="id" column="id" distinct="system">
         <prompt prompt="id" locale="en-GB"/>
@@ -140,14 +150,14 @@
     <permission group="public" permission="read"/>
     <permission group="canvassers" permission="insert"/>
   </entity>
-  <entity name="authorities">
+  <entity name="authorities" magnitude="2">
     <key>
       <property required="true" type="string" name="id" column="id" size="32" distinct="all">
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
   </entity>
-  <entity name="issues">
+  <entity name="issues" magnitude="1">
     <documentation>Issues believed to be of interest to electors, about which they may have questions.</documentation>
     <key>
       <property required="true" type="string" name="id" column="id" size="32" immutable="true" distinct="all">
@@ -163,7 +173,7 @@
     <list name="Issues" properties="all"/>
     <form name="Issue" properties="all"/>
   </entity>
-  <entity name="intentions">
+  <entity name="intentions" magnitude="6">
     <documentation>Link table.</documentation>
     <property required="true" type="entity" entity="visits" farkey="id" name="visit_id"
       column="visit_id">
@@ -178,7 +188,7 @@
       <prompt prompt="option_id" locale="en-GB"/>
     </property>
   </entity>
-  <entity name="canvassers">
+  <entity name="canvassers" magnitude="5">
     <documentation>Primary users of the system: those actually interviewing electors.</documentation>
     <key>
       <property type="integer" name="id" column="id" distinct="system" immutable="true">
@@ -221,7 +231,7 @@
       <documentation>All canvassers</documentation>
     </permission>
   </entity>
-  <entity name="followuprequests">
+  <entity name="followuprequests" magnitude="7">
     <documentation>Requests for a followup with an issue expert</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" distinct="system">
@@ -245,7 +255,7 @@
       <prompt prompt="method_id" locale="en-GB"/>
     </property>
   </entity>
-  <entity name="rolememberships">
+  <entity name="rolememberships" magnitude="6">
     <documentation>Link table</documentation>
     <property required="true" type="entity" entity="roles" farkey="id" name="role_id"
       column="role_id">
@@ -256,7 +266,7 @@
       <prompt prompt="canvasser_id" locale="en-GB"/>
     </property>
   </entity>
-  <entity name="roles">
+  <entity name="roles" magnitude="1">
     <documentation>A role (essentially, the same as a group, but application layer rather than database layer) of which a user may be a member.</documentation>
     <key>
       <property type="integer" name="id" column="id" immutable="true" distinct="system">
@@ -267,7 +277,7 @@
       <prompt prompt="name" locale="en-GB"/>
     </property>
   </entity>
-  <entity name="teams">
+  <entity name="teams" magnitude="4">
     <key>
       <property type="integer" name="id" column="id" distinct="system" immutable="true">
         <prompt prompt="id" locale="en-GB"/>
@@ -294,7 +304,7 @@
       <documentation>All groups</documentation>
     </permission>
   </entity>
-  <entity name="districts">
+  <entity name="districts" magnitude="4">
     <documentation>Electoral districts</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
@@ -307,7 +317,7 @@
     <permission group="public" permission="read"></permission>
     <permission group="admin" permission="all"></permission>
   </entity>
-  <entity name="teamorganiserships">
+  <entity name="teamorganiserships" magnitude="4">
     <documentation>Link table</documentation>
     <property required="true" type="entity" entity="teams" farkey="id" name="team_id"
       column="team_id">
@@ -318,7 +328,7 @@
       <prompt prompt="canvasser_id" locale="en-GB"/>
     </property>
   </entity>
-  <entity name="followupactions">
+  <entity name="followupactions" magnitude="7">
     <documentation>Actions taken on followup requests.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" distinct="system">
@@ -348,7 +358,7 @@
     </permission>
     <permission group="analysts" permission="read"/>
   </entity>
-  <entity name="issueexpertise">
+  <entity name="issueexpertise" magnitude="5">
     <documentation>Link table</documentation>
       <property required="true" type="integer" name="canvasser_id" column="canvasser_id"
         entity="canvassers" farkey="id">
@@ -363,7 +373,7 @@
       <prompt prompt="method_id" locale="en-GB"/>
     </property>
   </entity>
-  <entity name="options">
+  <entity name="options" magnitude="1">
     <documentation>Options in the election or referendum being canvassed on</documentation>
     <key>
       <property required="true" type="string" name="id" column="id" size="32" immutable="true" distinct="all">
@@ -371,7 +381,7 @@
       </property>
     </key>
   </entity>
-  <entity name="teammemberships">
+  <entity name="teammemberships" magnitude="5">
     <documentation>Link table</documentation>
     <property required="true" type="entity" entity="teams" farkey="id" name="team_id"
       column="team_id">
@@ -382,7 +392,7 @@
       <prompt prompt="canvasser_id" locale="en-GB"/>
     </property>
   </entity>
-  <entity name="followupmethods">
+  <entity name="followupmethods" magnitude="1">
     <key>
       <property required="true" type="string" size="32" name="id" column="id" immutable="true" distinct="all">
         <prompt prompt="id" locale="en-GB"/>
