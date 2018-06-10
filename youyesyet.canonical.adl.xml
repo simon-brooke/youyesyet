@@ -67,6 +67,7 @@
 			entity electors already has a key - not generating one
 		-->
   <entity table="electors" name="electors" magnitude="6">
+    <documentation>All electors known to the system; electors are people believed to be entitled to vote in the current campaign.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
         <prompt prompt="id" locale="en-GB"/>
@@ -75,7 +76,7 @@
     <property size="64" required="true" type="string" name="name" column="name" distinct="user">
       <prompt prompt="name" locale="en-GB"/>
     </property>
-    <property required="true" type="entity" name="dwelling_id" column="dwelling_id" entity="dwelling" farkey="id">
+    <property required="true" type="entity" name="dwelling_id" column="dwelling_id" entity="dwellings" farkey="id">
       <prompt prompt="Flat" locale="en-GB"/>
     </property>
     <property size="16" type="string" name="phone" column="phone" distinct="user">
@@ -87,10 +88,11 @@
     <property name="gender" type="entity" column="gender" entity="genders" farkey="id" default="Unknown">
       <prompt prompt="gender" locale="en-GB"/>
     </property>
-    <list properties="listed" name="Electors"><field property="id"/><field property="name"/><field property="dwelling_id"/><field property="phone"/><field property="email"/><field property="gender"/></list>
-    <form properties="listed" name="Elector"><field property="id"/><field property="name"/><field property="dwelling_id"/><field property="phone"/><field property="email"/><field property="gender"/></form>
+    <list properties="listed" name="Electors"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field><field property="dwelling_id"><prompt prompt="Flat" locale="en-GB"/></field><field property="phone"><prompt prompt="phone" locale="en-GB"/></field><field property="email"><prompt prompt="email" locale="en-GB"/></field><field property="gender"><prompt prompt="gender" locale="en-GB"/></field></list>
+    <form properties="listed" name="Elector"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field><field property="dwelling_id"><prompt prompt="Flat" locale="en-GB"/></field><field property="phone"><prompt prompt="phone" locale="en-GB"/></field><field property="email"><prompt prompt="email" locale="en-GB"/></field><field property="gender"><prompt prompt="gender" locale="en-GB"/></field></form>
   </entity>
   <entity table="genders" name="genders" natural-key="id" magnitude="1">
+    <documentation>All genders which may be assigned to electors.</documentation>
     <key>
       <property name="id" type="string" size="32" distinct="all">
         <prompt prompt="gender" locale="en-GB"/>
@@ -104,16 +106,21 @@
     <permission permission="none" group="issueeditors"/>
     <permission permission="none" group="admin"/>
     <list properties="listed" name="Genders">
-      <field property="id"/>
+      <field property="id">
+        <prompt prompt="gender" locale="en-GB"/>
+      </field>
     </list>
     <form properties="listed" name="Gender">
-      <field property="id"/>
+      <field property="id">
+        <prompt prompt="gender" locale="en-GB"/>
+      </field>
     </form>
   </entity>
   <!--
 			entity dwellings already has a key - not generating one
 		-->
   <entity table="dwellings" name="dwellings" magnitude="6">
+    <documentation>All dwellings within addresses in the system; a dwelling is a house, flat or appartment in which electors live.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
         <prompt prompt="id" locale="en-GB"/>
@@ -123,11 +130,14 @@
       <prompt prompt="Building Address" locale="en-GB"/>
     </property>
     <property required="false" type="string" size="32" name="sub-address"/>
+    <list properties="listed" name="Dwellings"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="address_id"><prompt prompt="Building Address" locale="en-GB"/></field><field property="sub-address"/></list>
+    <form properties="listed" name="Dwelling"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="address_id"><prompt prompt="Building Address" locale="en-GB"/></field><field property="sub-address"/></form>
   </entity>
   <!--
 			entity addresses already has a key - not generating one
 		-->
   <entity table="addresses" name="addresses" magnitude="6">
+    <documentation>Addresses of all buildings which contain dwellings.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
         <prompt prompt="id" locale="en-GB"/>
@@ -154,13 +164,14 @@
     <permission group="admin" permission="all"/>
     <permission group="canvassers" permission="read"/>
     <permission group="analysts" permission="read"/>
-    <list properties="listed" name="Addresses"><field property="id"/><field property="address"/><field property="postcode"/><field property="phone"/><field property="district_id"/><field property="latitude"/><field property="longitude"/></list>
-    <form properties="listed" name="Address"><field property="id"/><field property="address"/><field property="postcode"/><field property="phone"/><field property="district_id"/><field property="latitude"/><field property="longitude"/></form>
+    <list properties="listed" name="Addresses"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="address"><prompt prompt="address" locale="en-GB"/></field><field property="postcode"><prompt prompt="postcode" locale="en-GB"/></field><field property="phone"><prompt prompt="phone" locale="en-GB"/></field><field property="district_id"><prompt prompt="district_id" locale="en-GB"/></field><field property="latitude"><prompt prompt="latitude" locale="en-GB"/></field><field property="longitude"><prompt prompt="longitude" locale="en-GB"/></field></list>
+    <form properties="listed" name="Address"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="address"><prompt prompt="address" locale="en-GB"/></field><field property="postcode"><prompt prompt="postcode" locale="en-GB"/></field><field property="phone"><prompt prompt="phone" locale="en-GB"/></field><field property="district_id"><prompt prompt="district_id" locale="en-GB"/></field><field property="latitude"><prompt prompt="latitude" locale="en-GB"/></field><field property="longitude"><prompt prompt="longitude" locale="en-GB"/></field></form>
   </entity>
   <!--
 			entity visits already has a key - not generating one
 		-->
   <entity table="visits" name="visits" magnitude="7">
+    <documentation>All visits made by canvassers to dwellings in which opinions were recorded.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" distinct="system">
         <prompt prompt="id" locale="en-GB"/>
@@ -177,16 +188,21 @@
     </property>
     <permission group="public" permission="read"/>
     <permission group="canvassers" permission="insert"/>
+    <list properties="listed" name="Visits"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="address_id"><prompt prompt="address_id" locale="en-GB"/></field><field property="canvasser_id"><prompt prompt="canvasser_id" locale="en-GB"/></field><field property="date"><prompt prompt="date" locale="en-GB"/></field></list>
+    <form properties="listed" name="Visit"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="address_id"><prompt prompt="address_id" locale="en-GB"/></field><field property="canvasser_id"><prompt prompt="canvasser_id" locale="en-GB"/></field><field property="date"><prompt prompt="date" locale="en-GB"/></field></form>
   </entity>
   <!--
 			entity authorities already has a key - not generating one
 		-->
   <entity table="authorities" name="authorities" magnitude="2">
+    <documentation>Authorities which may authenticate canvassers to the system.</documentation>
     <key>
       <property required="true" type="string" name="id" column="id" size="32" distinct="all">
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
+    <list properties="listed" name="Authorities"><field property="id"><prompt prompt="id" locale="en-GB"/></field></list>
+    <form properties="listed" name="Authority"><field property="id"><prompt prompt="id" locale="en-GB"/></field></form>
   </entity>
   <!--
 			entity issues already has a key - not generating one
@@ -204,13 +220,13 @@
     <property name="current" type="boolean" default="true">
       <prompt prompt="Is current?" locale="en-GB"/>
     </property>
-    <list properties="listed" name="Issues"><field property="id"/><field property="url"/><field property="current"/></list>
-    <form properties="listed" name="Issue"><field property="id"/><field property="url"/><field property="current"/></form>
+    <list properties="listed" name="Issues"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="url"><prompt prompt="url" locale="en-GB"/></field><field property="current"><prompt prompt="Is current?" locale="en-GB"/></field></list>
+    <form properties="listed" name="Issue"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="url"><prompt prompt="url" locale="en-GB"/></field><field property="current"><prompt prompt="Is current?" locale="en-GB"/></field></form>
   </entity>
   <!--
 			entity intentions has no key - generating one
 		-->
-  <entity magnitude="6" table="intentions" name="intentions">
+  <entity table="intentions" name="intentions" magnitude="6">
     <documentation>Link table.</documentation>
     <key>
       <property type="integer" distinct="system" required="true" name="Id">
@@ -236,6 +252,28 @@
     <permission permission="none" group="analysts"/>
     <permission permission="none" group="issueeditors"/>
     <permission permission="none" group="admin"/>
+    <list properties="listed" name="Intentions">
+      <field property="visit_id">
+        <prompt prompt="visit_id" locale="en-GB"/>
+      </field>
+      <field property="elector_id">
+        <prompt prompt="elector_id" locale="en-GB"/>
+      </field>
+      <field property="option_id">
+        <prompt prompt="option_id" locale="en-GB"/>
+      </field>
+    </list>
+    <form properties="listed" name="Intention">
+      <field property="visit_id">
+        <prompt prompt="visit_id" locale="en-GB"/>
+      </field>
+      <field property="elector_id">
+        <prompt prompt="elector_id" locale="en-GB"/>
+      </field>
+      <field property="option_id">
+        <prompt prompt="option_id" locale="en-GB"/>
+      </field>
+    </form>
   </entity>
   <!--
 			entity canvassers already has a key - not generating one
@@ -271,6 +309,9 @@
     <property type="boolean" name="authorised" column="authorised">
       <prompt prompt="authorised" locale="en-GB"/>
     </property>
+    <property type="link" name="roles" entity="role" farkey="role_id">
+      <prompt prompt="Roles" locale="en-GB"/>
+    </property>
     <permission group="canvassers" permission="edit">
       <documentation>But only their own record</documentation>
     </permission>
@@ -280,6 +321,8 @@
     <permission group="admin" permission="all">
       <documentation>All canvassers</documentation>
     </permission>
+    <list properties="listed" name="Canvassers"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="username"><prompt prompt="username" locale="en-GB"/></field><field property="fullname"><prompt prompt="fullname" locale="en-GB"/></field><field property="elector_id"><prompt prompt="elector_id" locale="en-GB"/></field><field property="address_id"><prompt prompt="address_id" locale="en-GB"/></field><field property="phone"><prompt prompt="phone" locale="en-GB"/></field><field property="email"><prompt prompt="email" locale="en-GB"/></field><field property="authority_id"><prompt prompt="authority_id" locale="en-GB"/></field><field property="authorised"><prompt prompt="authorised" locale="en-GB"/></field></list>
+    <form properties="listed" name="Canvasser"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="username"><prompt prompt="username" locale="en-GB"/></field><field property="fullname"><prompt prompt="fullname" locale="en-GB"/></field><field property="elector_id"><prompt prompt="elector_id" locale="en-GB"/></field><field property="address_id"><prompt prompt="address_id" locale="en-GB"/></field><field property="phone"><prompt prompt="phone" locale="en-GB"/></field><field property="email"><prompt prompt="email" locale="en-GB"/></field><field property="authority_id"><prompt prompt="authority_id" locale="en-GB"/></field><field property="authorised"><prompt prompt="authorised" locale="en-GB"/></field><field property="roles"><prompt prompt="Roles" locale="en-GB"/></field></form>
   </entity>
   <!--
 			entity followuprequests already has a key - not generating one
@@ -303,6 +346,8 @@
     <property required="true" type="entity" name="method_id" column="method_id" entity="followupmethods" farkey="id">
       <prompt prompt="method_id" locale="en-GB"/>
     </property>
+    <list properties="listed" name="Followuprequests"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="elector_id"><prompt prompt="elector_id" locale="en-GB"/></field><field property="visit_id"><prompt prompt="visit_id" locale="en-GB"/></field><field property="issue_id"><prompt prompt="issue_id" locale="en-GB"/></field><field property="method_id"><prompt prompt="method_id" locale="en-GB"/></field></list>
+    <form properties="listed" name="Followuprequest"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="elector_id"><prompt prompt="elector_id" locale="en-GB"/></field><field property="visit_id"><prompt prompt="visit_id" locale="en-GB"/></field><field property="issue_id"><prompt prompt="issue_id" locale="en-GB"/></field><field property="method_id"><prompt prompt="method_id" locale="en-GB"/></field></form>
   </entity>
   <!--
 			entity rolememberships has no key - generating one
@@ -344,6 +389,8 @@
     <property required="true" type="string" name="name" column="name" size="64" distinct="user" immutable="true">
       <prompt prompt="name" locale="en-GB"/>
     </property>
+    <list properties="listed" name="Roles"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field></list>
+    <form properties="listed" name="Role"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field></form>
   </entity>
   <!--
 			entity teams already has a key - not generating one
@@ -363,6 +410,9 @@
     <property type="real" name="latitude" column="latitude">
       <prompt prompt="latitude" locale="en-GB"/>
     </property>
+    <property type="link" entity="canvassers" name="members">
+      <prompt prompt="Members" locale="en-GB"/>
+    </property>
     <property type="real" name="longitude" column="longitude">
       <prompt prompt="longitude" locale="en-GB"/>
     </property>
@@ -373,6 +423,8 @@
     <permission group="admin" permission="all">
       <documentation>All groups</documentation>
     </permission>
+    <list properties="listed" name="Teams"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field><field property="district_id"><prompt prompt="district_id" locale="en-GB"/></field><field property="latitude"><prompt prompt="latitude" locale="en-GB"/></field><field property="longitude"><prompt prompt="longitude" locale="en-GB"/></field></list>
+    <form properties="listed" name="Team"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field><field property="district_id"><prompt prompt="district_id" locale="en-GB"/></field><field property="latitude"><prompt prompt="latitude" locale="en-GB"/></field><field property="members"><prompt prompt="Members" locale="en-GB"/></field><field property="longitude"><prompt prompt="longitude" locale="en-GB"/></field></form>
   </entity>
   <!--
 			entity districts already has a key - not generating one
@@ -389,6 +441,8 @@
     </property>
     <permission group="public" permission="read"/>
     <permission group="admin" permission="all"/>
+    <list properties="listed" name="Districts"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field></list>
+    <form properties="listed" name="District"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field></form>
   </entity>
   <!--
 			entity teamorganiserships has no key - generating one
@@ -447,11 +501,13 @@
       <documentation>But only for electors in their immediate vicinity</documentation>
     </permission>
     <permission group="analysts" permission="read"/>
+    <list properties="listed" name="Followupactions"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="request_id"><prompt prompt="request_id" locale="en-GB"/></field><field property="actor"><prompt prompt="actor" locale="en-GB"/></field><field property="date"><prompt prompt="date" locale="en-GB"/></field><field property="notes"><prompt prompt="notes" locale="en-GB"/></field><field property="closed"><prompt prompt="closed" locale="en-GB"/></field></list>
+    <form properties="listed" name="Followupaction"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="request_id"><prompt prompt="request_id" locale="en-GB"/></field><field property="actor"><prompt prompt="actor" locale="en-GB"/></field><field property="date"><prompt prompt="date" locale="en-GB"/></field><field property="notes"><prompt prompt="notes" locale="en-GB"/></field><field property="closed"><prompt prompt="closed" locale="en-GB"/></field></form>
   </entity>
   <!--
 			entity issueexpertise has no key - generating one
 		-->
-  <entity magnitude="6" table="issueexpertise" name="issueexpertise">
+  <entity table="issueexpertise" name="issueexpertise" magnitude="5">
     <documentation>Link table</documentation>
     <key>
       <property type="integer" distinct="system" required="true" name="Id">
@@ -488,6 +544,8 @@
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
+    <list properties="listed" name="Options"><field property="id"><prompt prompt="id" locale="en-GB"/></field></list>
+    <form properties="listed" name="Option"><field property="id"><prompt prompt="id" locale="en-GB"/></field></form>
   </entity>
   <!--
 			entity teammemberships has no key - generating one
@@ -525,5 +583,7 @@
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
+    <list properties="listed" name="Followupmethods"><field property="id"><prompt prompt="id" locale="en-GB"/></field></list>
+    <form properties="listed" name="Followupmethod"><field property="id"><prompt prompt="id" locale="en-GB"/></field></form>
   </entity>
 </application>

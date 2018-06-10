@@ -1,0 +1,70 @@
+{% extends "templates/base.html" %}
+
+<!-- File list-roles-Roles.html generated 2018-06-10T21:17:47.125Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+
+{% block content %}
+<form id='content' class='list'>
+<div class='big-link-container'>
+<a href='form-roles-Role'>
+Add a new Role
+</a>
+</div>
+<table caption='roles'>
+<thead>
+<tr>
+<th>
+id
+</th>
+<th>
+name
+</th>
+</tr>
+<tr>
+<th>
+<input id='id' name='id' value='{{ params.id }}'/>
+</th>
+<th>
+<input id='name' name='name' value='{{ params.name }}'/>
+</th>
+</tr>
+</thead>
+<tbody>
+{% for record in %records% %}
+<tr>
+<td>
+{{ record.id }}
+</td>
+<td>
+{{ record.name }}
+</td>
+<td>
+<a href='form-roles-Role?id={{ record.id}}'>
+View
+</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+<tfoot/>
+</table>
+{% if offset > 0 %}
+<div class='back-link-container'>
+<a href='FIXME'>
+Previous
+</a>
+</div>
+{% endif %}
+<div class='big-link-container'>
+<a href='FIXME'>
+Next
+</a>
+</div>
+<div class='big-link-container'>
+<a href='form-roles-Role'>
+Add a new Role
+</a>
+</div>
+</form>
+
+{% endblock %}

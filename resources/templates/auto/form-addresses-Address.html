@@ -1,0 +1,232 @@
+{% extends "templates/base.html" %}
+
+<!-- File form-addresses-Address.html generated 2018-06-10T21:17:47.120Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+
+{% block content %}
+<div id='content' class='edit'>
+<form action='{{servlet-context}}/form-addresses-Address' method='POST'>
+{% csrf-field %}
+<input id='id' name='id' type='hidden' value='{{record.id}}'/>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable addresses  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable addresses %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='address'>
+address
+</label>
+{% ifwritable addresses address %}
+<input id='address' name='address' type='text' value='{{record.address}}'/>
+{% else %}
+{% ifreadable addresses address%}
+<span id='address' name='address' class='pseudo-widget disabled'>
+{{record.address}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='postcode'>
+postcode
+</label>
+{% ifwritable addresses postcode %}
+<input id='postcode' name='postcode' type='text' value='{{record.postcode}}'/>
+{% else %}
+{% ifreadable addresses postcode%}
+<span id='postcode' name='postcode' class='pseudo-widget disabled'>
+{{record.postcode}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='phone'>
+phone
+</label>
+{% ifwritable addresses phone %}
+<input id='phone' name='phone' type='text' value='{{record.phone}}'/>
+{% else %}
+{% ifreadable addresses phone%}
+<span id='phone' name='phone' class='pseudo-widget disabled'>
+{{record.phone}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='district_id'>
+district_id
+</label>
+{% ifwritable addresses district_id %}
+<div class='select-box' farside='districts' found='true'>
+<input name='district_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='district_id' name='district_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in districts %}<option value='{{record.id}}'>{{record.name}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable addresses district_id%}
+<span id='district_id' name='district_id' class='pseudo-widget disabled'>
+{{record.district_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='latitude'>
+latitude
+</label>
+{% ifwritable addresses latitude %}
+<input id='latitude' name='latitude' type='number' value='{{record.latitude}}'/>
+{% else %}
+{% ifreadable addresses latitude%}
+<span id='latitude' name='latitude' class='pseudo-widget disabled'>
+{{record.latitude}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='longitude'>
+longitude
+</label>
+{% ifwritable addresses longitude %}
+<input id='longitude' name='longitude' type='number' value='{{record.longitude}}'/>
+{% else %}
+{% ifreadable addresses longitude%}
+<span id='longitude' name='longitude' class='pseudo-widget disabled'>
+{{record.longitude}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable addresses  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable addresses %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='address'>
+address
+</label>
+{% ifwritable addresses address %}
+<input id='address' name='address' type='text' value='{{record.address}}'/>
+{% else %}
+{% ifreadable addresses address%}
+<span id='address' name='address' class='pseudo-widget disabled'>
+{{record.address}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='postcode'>
+postcode
+</label>
+{% ifwritable addresses postcode %}
+<input id='postcode' name='postcode' type='text' value='{{record.postcode}}'/>
+{% else %}
+{% ifreadable addresses postcode%}
+<span id='postcode' name='postcode' class='pseudo-widget disabled'>
+{{record.postcode}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='phone'>
+phone
+</label>
+{% ifwritable addresses phone %}
+<input id='phone' name='phone' type='text' value='{{record.phone}}'/>
+{% else %}
+{% ifreadable addresses phone%}
+<span id='phone' name='phone' class='pseudo-widget disabled'>
+{{record.phone}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='district_id'>
+district_id
+</label>
+{% ifwritable addresses district_id %}
+<div class='select-box' farside='districts' found='true'>
+<input name='district_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='district_id' name='district_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in districts %}<option value='{{record.id}}'>{{record.name}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable addresses district_id%}
+<span id='district_id' name='district_id' class='pseudo-widget disabled'>
+{{record.district_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='latitude'>
+latitude
+</label>
+{% ifwritable addresses latitude %}
+<input id='latitude' name='latitude' type='number' value='{{record.latitude}}'/>
+{% else %}
+{% ifreadable addresses latitude%}
+<span id='latitude' name='latitude' class='pseudo-widget disabled'>
+{{record.latitude}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='longitude'>
+longitude
+</label>
+{% ifwritable addresses longitude %}
+<input id='longitude' name='longitude' type='number' value='{{record.longitude}}'/>
+{% else %}
+{% ifreadable addresses longitude%}
+<span id='longitude' name='longitude' class='pseudo-widget disabled'>
+{{record.longitude}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget action-safe'>
+<label for='save-button' class='action-safe'>
+To save this addresses record
+</label>
+<input id='save-button' name='save-button' class='action-safe' type=':submit' value='Save!'/>
+</p>
+<p class='widget action-dangerous'>
+<label for='delete-button' class='action-dangerous'>
+To delete this addresses record
+</label>
+<input id='delete-button' name='delete-button' class='action-dangerous' type=':submit' value='Delete!'/>
+</p>
+</form>
+</div>
+
+{% endblock %}

@@ -56,6 +56,7 @@
   </group>
 
   <entity name="electors" magnitude="6">
+    <documentation>All electors known to the system; electors are people believed to be entitled to vote in the current campaign.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
         <prompt prompt="id" locale="en-GB"/>
@@ -64,7 +65,7 @@
     <property size="64" required="true" type="string" name="name" column="name" distinct="user">
       <prompt prompt="name" locale="en-GB"/>
     </property>
-    <property required="true" type="entity" name="dwelling_id" column="dwelling_id" entity="dwelling" farkey="id">
+    <property required="true" type="entity" name="dwelling_id" column="dwelling_id" entity="dwellings" farkey="id">
       <prompt prompt="Flat" locale="en-GB"/>
     </property>
     <property size="16" type="string" name="phone" column="phone" distinct="user">
@@ -81,6 +82,7 @@
     <form name="Elector" properties="all"/>
   </entity>
   <entity name="genders" natural-key="id" magnitude="1">
+    <documentation>All genders which may be assigned to electors.</documentation>
     <key>
       <property name="id" type="string" size="32" distinct="all">
         <prompt prompt="gender" locale="en-GB"/>
@@ -90,6 +92,7 @@
     <form name="Gender" properties="all"/>
   </entity>
   <entity name="dwellings" magnitude="6">
+    <documentation>All dwellings within addresses in the system; a dwelling is a house, flat or appartment in which electors live.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
         <prompt prompt="id" locale="en-GB"/>
@@ -99,8 +102,11 @@
       <prompt prompt="Building Address" locale="en-GB"/>
     </property>
     <property required="false" type="string" size="32" name="sub-address"/>
+    <list name="Dwellings" properties="all"/>
+    <form name="Dwelling" properties="all"/>
   </entity>
   <entity name="addresses" magnitude="6">
+    <documentation>Addresses of all buildings which contain dwellings.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
         <prompt prompt="id" locale="en-GB"/>
@@ -131,6 +137,7 @@
     <form name="Address" properties="all"/>
   </entity>
   <entity name="visits" magnitude="7">
+    <documentation>All visits made by canvassers to dwellings in which opinions were recorded.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" distinct="system">
         <prompt prompt="id" locale="en-GB"/>
@@ -149,13 +156,18 @@
     </property>
     <permission group="public" permission="read"/>
     <permission group="canvassers" permission="insert"/>
+    <list name="Visits" properties="all"/>
+    <form name="Visit" properties="all"/>
   </entity>
   <entity name="authorities" magnitude="2">
+    <documentation>Authorities which may authenticate canvassers to the system.</documentation>
     <key>
       <property required="true" type="string" name="id" column="id" size="32" distinct="all">
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
+    <list name="Authorities" properties="all"/>
+    <form name="Authority" properties="all"/>
   </entity>
   <entity name="issues" magnitude="1">
     <documentation>Issues believed to be of interest to electors, about which they may have questions.</documentation>
@@ -187,6 +199,8 @@
       column="option_id">
       <prompt prompt="option_id" locale="en-GB"/>
     </property>
+    <list name="Intentions" properties="all"/>
+    <form name="Intention" properties="all"/>
   </entity>
   <entity name="canvassers" magnitude="5">
     <documentation>Primary users of the system: those actually interviewing electors.</documentation>
@@ -221,6 +235,9 @@
     <property type="boolean" name="authorised" column="authorised">
       <prompt prompt="authorised" locale="en-GB"/>
     </property>
+    <property type="link" name="roles" entity="role" farkey="role_id">
+      <prompt prompt="Roles" locale="en-GB"/>
+    </property>
     <permission group="canvassers" permission="edit">
       <documentation>But only their own record</documentation>
     </permission>
@@ -230,6 +247,8 @@
     <permission group="admin" permission="all">
       <documentation>All canvassers</documentation>
     </permission>
+    <list name="Canvassers" properties="all"/>
+    <form name="Canvasser" properties="all"/>
   </entity>
   <entity name="followuprequests" magnitude="7">
     <documentation>Requests for a followup with an issue expert</documentation>
@@ -254,6 +273,8 @@
       entity="followupmethods" farkey="id">
       <prompt prompt="method_id" locale="en-GB"/>
     </property>
+    <list name="Followuprequests" properties="all"/>
+    <form name="Followuprequest" properties="all"/>
   </entity>
   <entity name="rolememberships" magnitude="6">
     <documentation>Link table</documentation>
@@ -276,6 +297,8 @@
     <property required="true" type="string" name="name" column="name" size="64" distinct="user" immutable="true">
       <prompt prompt="name" locale="en-GB"/>
     </property>
+    <list name="Roles" properties="all"/>
+    <form name="Role" properties="all"/>
   </entity>
   <entity name="teams" magnitude="4">
     <key>
@@ -293,6 +316,9 @@
     <property type="real" name="latitude" column="latitude">
       <prompt prompt="latitude" locale="en-GB"/>
     </property>
+    <property type="link" entity="canvassers" name="members">
+      <prompt prompt="Members" locale="en-GB"/>
+    </property>
     <property type="real" name="longitude" column="longitude">
       <prompt prompt="longitude" locale="en-GB"/>
     </property>
@@ -303,6 +329,8 @@
     <permission group="admin" permission="all">
       <documentation>All groups</documentation>
     </permission>
+    <list name="Teams" properties="all"/>
+    <form name="Team" properties="all"/>
   </entity>
   <entity name="districts" magnitude="4">
     <documentation>Electoral districts</documentation>
@@ -316,6 +344,8 @@
     </property>
     <permission group="public" permission="read"></permission>
     <permission group="admin" permission="all"></permission>
+    <list name="Districts" properties="all"/>
+    <form name="District" properties="all"/>
   </entity>
   <entity name="teamorganiserships" magnitude="4">
     <documentation>Link table</documentation>
@@ -357,6 +387,8 @@
       <documentation>But only for electors in their immediate vicinity</documentation>
     </permission>
     <permission group="analysts" permission="read"/>
+    <list name="Followupactions" properties="all"/>
+    <form name="Followupaction" properties="all"/>
   </entity>
   <entity name="issueexpertise" magnitude="5">
     <documentation>Link table</documentation>
@@ -380,6 +412,8 @@
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
+    <list name="Options" properties="all"/>
+    <form name="Option" properties="all"/>
   </entity>
   <entity name="teammemberships" magnitude="5">
     <documentation>Link table</documentation>
@@ -398,5 +432,7 @@
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
+    <list name="Followupmethods" properties="all"/>
+    <form name="Followupmethod" properties="all"/>
   </entity>
 </application>

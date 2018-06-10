@@ -1,0 +1,123 @@
+{% extends "templates/base.html" %}
+
+<!-- File form-issues-Issue.html generated 2018-06-10T21:17:47.123Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+
+{% block content %}
+<div id='content' class='edit'>
+<form action='{{servlet-context}}/form-issues-Issue' method='POST'>
+{% csrf-field %}
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable issues id %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable issues id%}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable issues  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable issues %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='url'>
+url
+</label>
+{% ifwritable issues url %}
+<input id='url' name='url' type='text' value='{{record.url}}'/>
+{% else %}
+{% ifreadable issues url%}
+<span id='url' name='url' class='pseudo-widget disabled'>
+{{record.url}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='current'>
+current
+</label>
+{% ifwritable issues current %}
+<input id='current' name='current' type='checkbox' value='{{record.current}}'/>
+{% else %}
+{% ifreadable issues current%}
+<span id='current' name='current' class='pseudo-widget disabled'>
+{{record.current}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable issues  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable issues %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='url'>
+url
+</label>
+{% ifwritable issues url %}
+<input id='url' name='url' type='text' value='{{record.url}}'/>
+{% else %}
+{% ifreadable issues url%}
+<span id='url' name='url' class='pseudo-widget disabled'>
+{{record.url}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='current'>
+current
+</label>
+{% ifwritable issues current %}
+<input id='current' name='current' type='checkbox' value='{{record.current}}'/>
+{% else %}
+{% ifreadable issues current%}
+<span id='current' name='current' class='pseudo-widget disabled'>
+{{record.current}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget action-safe'>
+<label for='save-button' class='action-safe'>
+To save this issues record
+</label>
+<input id='save-button' name='save-button' class='action-safe' type=':submit' value='Save!'/>
+</p>
+<p class='widget action-dangerous'>
+<label for='delete-button' class='action-dangerous'>
+To delete this issues record
+</label>
+<input id='delete-button' name='delete-button' class='action-dangerous' type=':submit' value='Delete!'/>
+</p>
+</form>
+</div>
+
+{% endblock %}

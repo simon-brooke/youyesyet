@@ -1,0 +1,115 @@
+{% extends "templates/base.html" %}
+
+<!-- File list-addresses-Addresses.html generated 2018-06-10T21:17:47.133Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+
+{% block content %}
+<form id='content' class='list'>
+<div class='big-link-container'>
+<a href='form-addresses-Address'>
+Add a new Address
+</a>
+</div>
+<table caption='addresses'>
+<thead>
+<tr>
+<th>
+id
+</th>
+<th>
+address
+</th>
+<th>
+postcode
+</th>
+<th>
+phone
+</th>
+<th>
+district_id
+</th>
+<th>
+latitude
+</th>
+<th>
+longitude
+</th>
+</tr>
+<tr>
+<th>
+<input id='id' name='id' value='{{ params.id }}'/>
+</th>
+<th>
+<input id='address' name='address' value='{{ params.address }}'/>
+</th>
+<th>
+<input id='postcode' name='postcode' value='{{ params.postcode }}'/>
+</th>
+<th>
+<input id='phone' name='phone' value='{{ params.phone }}'/>
+</th>
+<th>
+<input id='district_id' name='district_id' value='{{ params.district_id }}'/>
+</th>
+<th>
+<input id='latitude' name='latitude' value='{{ params.latitude }}'/>
+</th>
+<th>
+<input id='longitude' name='longitude' value='{{ params.longitude }}'/>
+</th>
+</tr>
+</thead>
+<tbody>
+{% for record in %records% %}
+<tr>
+<td>
+{{ record.id }}
+</td>
+<td>
+{{ record.address }}
+</td>
+<td>
+{{ record.postcode }}
+</td>
+<td>
+{{ record.phone }}
+</td>
+<td>
+{{ record.district_id }}
+</td>
+<td>
+{{ record.latitude }}
+</td>
+<td>
+{{ record.longitude }}
+</td>
+<td>
+<a href='form-addresses-Address?id={{ record.id}}'>
+View
+</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+<tfoot/>
+</table>
+{% if offset > 0 %}
+<div class='back-link-container'>
+<a href='FIXME'>
+Previous
+</a>
+</div>
+{% endif %}
+<div class='big-link-container'>
+<a href='FIXME'>
+Next
+</a>
+</div>
+<div class='big-link-container'>
+<a href='form-addresses-Address'>
+Add a new Address
+</a>
+</div>
+</form>
+
+{% endblock %}

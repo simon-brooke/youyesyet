@@ -1,0 +1,106 @@
+{% extends "templates/base.html" %}
+
+<!-- File list-electors-Electors.html generated 2018-06-10T21:17:47.123Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+
+{% block content %}
+<form id='content' class='list'>
+<div class='big-link-container'>
+<a href='form-electors-Elector'>
+Add a new Elector
+</a>
+</div>
+<table caption='electors'>
+<thead>
+<tr>
+<th>
+id
+</th>
+<th>
+name
+</th>
+<th>
+dwelling_id
+</th>
+<th>
+phone
+</th>
+<th>
+email
+</th>
+<th>
+gender
+</th>
+</tr>
+<tr>
+<th>
+<input id='id' name='id' value='{{ params.id }}'/>
+</th>
+<th>
+<input id='name' name='name' value='{{ params.name }}'/>
+</th>
+<th>
+<input id='dwelling_id' name='dwelling_id' value='{{ params.dwelling_id }}'/>
+</th>
+<th>
+<input id='phone' name='phone' value='{{ params.phone }}'/>
+</th>
+<th>
+<input id='email' name='email' value='{{ params.email }}'/>
+</th>
+<th>
+<input id='gender' name='gender' value='{{ params.gender }}'/>
+</th>
+</tr>
+</thead>
+<tbody>
+{% for record in %records% %}
+<tr>
+<td>
+{{ record.id }}
+</td>
+<td>
+{{ record.name }}
+</td>
+<td>
+{{ record.dwelling_id }}
+</td>
+<td>
+{{ record.phone }}
+</td>
+<td>
+{{ record.email }}
+</td>
+<td>
+{{ record.gender }}
+</td>
+<td>
+<a href='form-electors-Elector?id={{ record.id}}'>
+View
+</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+<tfoot/>
+</table>
+{% if offset > 0 %}
+<div class='back-link-container'>
+<a href='FIXME'>
+Previous
+</a>
+</div>
+{% endif %}
+<div class='big-link-container'>
+<a href='FIXME'>
+Next
+</a>
+</div>
+<div class='big-link-container'>
+<a href='form-electors-Elector'>
+Add a new Elector
+</a>
+</div>
+</form>
+
+{% endblock %}

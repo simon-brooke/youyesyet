@@ -1,0 +1,212 @@
+{% extends "templates/base.html" %}
+
+<!-- File form-electors-Elector.html generated 2018-06-10T21:17:47.130Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+
+{% block content %}
+<div id='content' class='edit'>
+<form action='{{servlet-context}}/form-electors-Elector' method='POST'>
+{% csrf-field %}
+<input id='id' name='id' type='hidden' value='{{record.id}}'/>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable electors  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable electors %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='name'>
+name
+</label>
+{% ifwritable electors name %}
+<input id='name' name='name' type='text' value='{{record.name}}'/>
+{% else %}
+{% ifreadable electors name%}
+<span id='name' name='name' class='pseudo-widget disabled'>
+{{record.name}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='dwelling_id'>
+dwelling_id
+</label>
+{% ifwritable electors dwelling_id %}
+<div class='select-box' farside='dwellings' found='true'>
+<input name='dwelling_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='dwelling_id' name='dwelling_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in dwellings %}<option value='{{record.id}}'></option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable electors dwelling_id%}
+<span id='dwelling_id' name='dwelling_id' class='pseudo-widget disabled'>
+{{record.dwelling_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='phone'>
+phone
+</label>
+{% ifwritable electors phone %}
+<input id='phone' name='phone' type='text' value='{{record.phone}}'/>
+{% else %}
+{% ifreadable electors phone%}
+<span id='phone' name='phone' class='pseudo-widget disabled'>
+{{record.phone}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='email'>
+email
+</label>
+{% ifwritable electors email %}
+<input id='email' name='email' type='text' value='{{record.email}}'/>
+{% else %}
+{% ifreadable electors email%}
+<span id='email' name='email' class='pseudo-widget disabled'>
+{{record.email}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='gender'>
+gender
+</label>
+{% ifwritable electors gender %}
+<div class='select-box' farside='genders' found='true'>
+<select id='gender' name='gender'>
+{% for record in genders %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable electors gender%}
+<span id='gender' name='gender' class='pseudo-widget disabled'>
+{{record.gender}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable electors  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable electors %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='name'>
+name
+</label>
+{% ifwritable electors name %}
+<input id='name' name='name' type='text' value='{{record.name}}'/>
+{% else %}
+{% ifreadable electors name%}
+<span id='name' name='name' class='pseudo-widget disabled'>
+{{record.name}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='dwelling_id'>
+dwelling_id
+</label>
+{% ifwritable electors dwelling_id %}
+<div class='select-box' farside='dwellings' found='true'>
+<input name='dwelling_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='dwelling_id' name='dwelling_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in dwellings %}<option value='{{record.id}}'></option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable electors dwelling_id%}
+<span id='dwelling_id' name='dwelling_id' class='pseudo-widget disabled'>
+{{record.dwelling_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='phone'>
+phone
+</label>
+{% ifwritable electors phone %}
+<input id='phone' name='phone' type='text' value='{{record.phone}}'/>
+{% else %}
+{% ifreadable electors phone%}
+<span id='phone' name='phone' class='pseudo-widget disabled'>
+{{record.phone}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='email'>
+email
+</label>
+{% ifwritable electors email %}
+<input id='email' name='email' type='text' value='{{record.email}}'/>
+{% else %}
+{% ifreadable electors email%}
+<span id='email' name='email' class='pseudo-widget disabled'>
+{{record.email}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='gender'>
+gender
+</label>
+{% ifwritable electors gender %}
+<div class='select-box' farside='genders' found='true'>
+<select id='gender' name='gender'>
+{% for record in genders %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable electors gender%}
+<span id='gender' name='gender' class='pseudo-widget disabled'>
+{{record.gender}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget action-safe'>
+<label for='save-button' class='action-safe'>
+To save this electors record
+</label>
+<input id='save-button' name='save-button' class='action-safe' type=':submit' value='Save!'/>
+</p>
+<p class='widget action-dangerous'>
+<label for='delete-button' class='action-dangerous'>
+To delete this electors record
+</label>
+<input id='delete-button' name='delete-button' class='action-dangerous' type=':submit' value='Delete!'/>
+</p>
+</form>
+</div>
+
+{% endblock %}

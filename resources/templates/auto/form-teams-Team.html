@@ -1,0 +1,195 @@
+{% extends "templates/base.html" %}
+
+<!-- File form-teams-Team.html generated 2018-06-10T21:17:47.128Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+
+{% block content %}
+<div id='content' class='edit'>
+<form action='{{servlet-context}}/form-teams-Team' method='POST'>
+{% csrf-field %}
+<input id='id' name='id' type='hidden' value='{{record.id}}'/>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable teams  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable teams %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='name'>
+name
+</label>
+{% ifwritable teams name %}
+<input id='name' name='name' type='text' value='{{record.name}}'/>
+{% else %}
+{% ifreadable teams name%}
+<span id='name' name='name' class='pseudo-widget disabled'>
+{{record.name}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='district_id'>
+district_id
+</label>
+{% ifwritable teams district_id %}
+<div class='select-box' farside='districts' found='true'>
+<input name='district_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='district_id' name='district_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in districts %}<option value='{{record.id}}'>{{record.name}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable teams district_id%}
+<span id='district_id' name='district_id' class='pseudo-widget disabled'>
+{{record.district_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='latitude'>
+latitude
+</label>
+{% ifwritable teams latitude %}
+<input id='latitude' name='latitude' type='number' value='{{record.latitude}}'/>
+{% else %}
+{% ifreadable teams latitude%}
+<span id='latitude' name='latitude' class='pseudo-widget disabled'>
+{{record.latitude}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='longitude'>
+longitude
+</label>
+{% ifwritable teams longitude %}
+<input id='longitude' name='longitude' type='number' value='{{record.longitude}}'/>
+{% else %}
+{% ifreadable teams longitude%}
+<span id='longitude' name='longitude' class='pseudo-widget disabled'>
+{{record.longitude}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable teams  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable teams %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='name'>
+name
+</label>
+{% ifwritable teams name %}
+<input id='name' name='name' type='text' value='{{record.name}}'/>
+{% else %}
+{% ifreadable teams name%}
+<span id='name' name='name' class='pseudo-widget disabled'>
+{{record.name}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='district_id'>
+district_id
+</label>
+{% ifwritable teams district_id %}
+<div class='select-box' farside='districts' found='true'>
+<input name='district_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='district_id' name='district_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in districts %}<option value='{{record.id}}'>{{record.name}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable teams district_id%}
+<span id='district_id' name='district_id' class='pseudo-widget disabled'>
+{{record.district_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='latitude'>
+latitude
+</label>
+{% ifwritable teams latitude %}
+<input id='latitude' name='latitude' type='number' value='{{record.latitude}}'/>
+{% else %}
+{% ifreadable teams latitude%}
+<span id='latitude' name='latitude' class='pseudo-widget disabled'>
+{{record.latitude}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='members'>
+members
+</label>
+{% ifwritable teams members %}
+<div class='select-box' farside='canvassers' found='true'>
+<input name='members-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='members' name='members' multiple='multiple' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in canvassers %}<option value='{{record.id}}'>{{record.username}} {{record.fullname}} {{record.email}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable teams members%}
+<span id='members' name='members' class='pseudo-widget disabled'>
+{{record.members}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='longitude'>
+longitude
+</label>
+{% ifwritable teams longitude %}
+<input id='longitude' name='longitude' type='number' value='{{record.longitude}}'/>
+{% else %}
+{% ifreadable teams longitude%}
+<span id='longitude' name='longitude' class='pseudo-widget disabled'>
+{{record.longitude}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget action-safe'>
+<label for='save-button' class='action-safe'>
+To save this teams record
+</label>
+<input id='save-button' name='save-button' class='action-safe' type=':submit' value='Save!'/>
+</p>
+<p class='widget action-dangerous'>
+<label for='delete-button' class='action-dangerous'>
+To delete this teams record
+</label>
+<input id='delete-button' name='delete-button' class='action-dangerous' type=':submit' value='Delete!'/>
+</p>
+</form>
+</div>
+
+{% endblock %}
