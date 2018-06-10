@@ -1,0 +1,82 @@
+{% extends "templates/base.html" %}
+
+<!-- File form-districts-District.html generated 2018-06-10T21:17:47.119Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+
+{% block content %}
+<div id='content' class='edit'>
+<form action='{{servlet-context}}/form-districts-District' method='POST'>
+{% csrf-field %}
+<input id='id' name='id' type='hidden' value='{{record.id}}'/>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable districts  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable districts %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='name'>
+name
+</label>
+{% ifwritable districts name %}
+<input id='name' name='name' type='text' value='{{record.name}}'/>
+{% else %}
+{% ifreadable districts name%}
+<span id='name' name='name' class='pseudo-widget disabled'>
+{{record.name}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable districts  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable districts %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='name'>
+name
+</label>
+{% ifwritable districts name %}
+<input id='name' name='name' type='text' value='{{record.name}}'/>
+{% else %}
+{% ifreadable districts name%}
+<span id='name' name='name' class='pseudo-widget disabled'>
+{{record.name}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget action-safe'>
+<label for='save-button' class='action-safe'>
+To save this districts record
+</label>
+<input id='save-button' name='save-button' class='action-safe' type=':submit' value='Save!'/>
+</p>
+<p class='widget action-dangerous'>
+<label for='delete-button' class='action-dangerous'>
+To delete this districts record
+</label>
+<input id='delete-button' name='delete-button' class='action-dangerous' type=':submit' value='Delete!'/>
+</p>
+</form>
+</div>
+
+{% endblock %}

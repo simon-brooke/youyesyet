@@ -1,0 +1,79 @@
+{% extends "templates/base.html" %}
+
+<!-- File list-dwellings-Dwellings.html generated 2018-06-10T21:17:47.132Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+
+{% block content %}
+<form id='content' class='list'>
+<div class='big-link-container'>
+<a href='form-dwellings-Dwelling'>
+Add a new Dwelling
+</a>
+</div>
+<table caption='dwellings'>
+<thead>
+<tr>
+<th>
+id
+</th>
+<th>
+address_id
+</th>
+<th>
+sub-address
+</th>
+</tr>
+<tr>
+<th>
+<input id='id' name='id' value='{{ params.id }}'/>
+</th>
+<th>
+<input id='address_id' name='address_id' value='{{ params.address_id }}'/>
+</th>
+<th>
+<input id='sub-address' name='sub-address' value='{{ params.sub-address }}'/>
+</th>
+</tr>
+</thead>
+<tbody>
+{% for record in %records% %}
+<tr>
+<td>
+{{ record.id }}
+</td>
+<td>
+{{ record.address_id }}
+</td>
+<td>
+{{ record.sub-address }}
+</td>
+<td>
+<a href='form-dwellings-Dwelling?id={{ record.id}}'>
+View
+</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+<tfoot/>
+</table>
+{% if offset > 0 %}
+<div class='back-link-container'>
+<a href='FIXME'>
+Previous
+</a>
+</div>
+{% endif %}
+<div class='big-link-container'>
+<a href='FIXME'>
+Next
+</a>
+</div>
+<div class='big-link-container'>
+<a href='form-dwellings-Dwelling'>
+Add a new Dwelling
+</a>
+</div>
+</form>
+
+{% endblock %}

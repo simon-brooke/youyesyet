@@ -1,0 +1,79 @@
+{% extends "templates/base.html" %}
+
+<!-- File list-issues-Issues.html generated 2018-06-10T21:17:47.137Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+
+{% block content %}
+<form id='content' class='list'>
+<div class='big-link-container'>
+<a href='form-issues-Issue'>
+Add a new Issue
+</a>
+</div>
+<table caption='issues'>
+<thead>
+<tr>
+<th>
+id
+</th>
+<th>
+url
+</th>
+<th>
+current
+</th>
+</tr>
+<tr>
+<th>
+<input id='id' name='id' value='{{ params.id }}'/>
+</th>
+<th>
+<input id='url' name='url' value='{{ params.url }}'/>
+</th>
+<th>
+<input id='current' name='current' value='{{ params.current }}'/>
+</th>
+</tr>
+</thead>
+<tbody>
+{% for record in %records% %}
+<tr>
+<td>
+{{ record.id }}
+</td>
+<td>
+{{ record.url }}
+</td>
+<td>
+{{ record.current }}
+</td>
+<td>
+<a href='form-issues-Issue?id={{ record.id}}'>
+View
+</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+<tfoot/>
+</table>
+{% if offset > 0 %}
+<div class='back-link-container'>
+<a href='FIXME'>
+Previous
+</a>
+</div>
+{% endif %}
+<div class='big-link-container'>
+<a href='FIXME'>
+Next
+</a>
+</div>
+<div class='big-link-container'>
+<a href='form-issues-Issue'>
+Add a new Issue
+</a>
+</div>
+</form>
+
+{% endblock %}

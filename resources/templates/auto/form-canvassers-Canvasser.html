@@ -1,0 +1,317 @@
+{% extends "templates/base.html" %}
+
+<!-- File form-canvassers-Canvasser.html generated 2018-06-10T21:17:47.133Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+
+{% block content %}
+<div id='content' class='edit'>
+<form action='{{servlet-context}}/form-canvassers-Canvasser' method='POST'>
+{% csrf-field %}
+<input id='id' name='id' type='hidden' value='{{record.id}}'/>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable canvassers  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable canvassers %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='username'>
+username
+</label>
+{% ifwritable canvassers username %}
+<input id='username' name='username' type='text' value='{{record.username}}'/>
+{% else %}
+{% ifreadable canvassers username%}
+<span id='username' name='username' class='pseudo-widget disabled'>
+{{record.username}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='fullname'>
+fullname
+</label>
+{% ifwritable canvassers fullname %}
+<input id='fullname' name='fullname' type='text' value='{{record.fullname}}'/>
+{% else %}
+{% ifreadable canvassers fullname%}
+<span id='fullname' name='fullname' class='pseudo-widget disabled'>
+{{record.fullname}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='elector_id'>
+elector_id
+</label>
+{% ifwritable canvassers elector_id %}
+<div class='select-box' farside='electors' found='true'>
+<input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in electors %}<option value='{{record.id}}'>{{record.name}} {{record.phone}} {{record.email}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable canvassers elector_id%}
+<span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
+{{record.elector_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='address_id'>
+address_id
+</label>
+{% ifwritable canvassers address_id %}
+<input id='address_id' name='address_id' type='number' value='{{record.address_id}}'/>
+{% else %}
+{% ifreadable canvassers address_id%}
+<span id='address_id' name='address_id' class='pseudo-widget disabled'>
+{{record.address_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='phone'>
+phone
+</label>
+{% ifwritable canvassers phone %}
+<input id='phone' name='phone' type='text' value='{{record.phone}}'/>
+{% else %}
+{% ifreadable canvassers phone%}
+<span id='phone' name='phone' class='pseudo-widget disabled'>
+{{record.phone}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='email'>
+email
+</label>
+{% ifwritable canvassers email %}
+<input id='email' name='email' type='text' value='{{record.email}}'/>
+{% else %}
+{% ifreadable canvassers email%}
+<span id='email' name='email' class='pseudo-widget disabled'>
+{{record.email}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='authority_id'>
+authority_id
+</label>
+{% ifwritable canvassers authority_id %}
+<div class='select-box' farside='authorities' found='true'>
+<input name='authority_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='authority_id' name='authority_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in authorities %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable canvassers authority_id%}
+<span id='authority_id' name='authority_id' class='pseudo-widget disabled'>
+{{record.authority_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='authorised'>
+authorised
+</label>
+{% ifwritable canvassers authorised %}
+<input id='authorised' name='authorised' type='checkbox' value='{{record.authorised}}'/>
+{% else %}
+{% ifreadable canvassers authorised%}
+<span id='authorised' name='authorised' class='pseudo-widget disabled'>
+{{record.authorised}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable canvassers  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable canvassers %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='username'>
+username
+</label>
+{% ifwritable canvassers username %}
+<input id='username' name='username' type='text' value='{{record.username}}'/>
+{% else %}
+{% ifreadable canvassers username%}
+<span id='username' name='username' class='pseudo-widget disabled'>
+{{record.username}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='fullname'>
+fullname
+</label>
+{% ifwritable canvassers fullname %}
+<input id='fullname' name='fullname' type='text' value='{{record.fullname}}'/>
+{% else %}
+{% ifreadable canvassers fullname%}
+<span id='fullname' name='fullname' class='pseudo-widget disabled'>
+{{record.fullname}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='elector_id'>
+elector_id
+</label>
+{% ifwritable canvassers elector_id %}
+<div class='select-box' farside='electors' found='true'>
+<input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in electors %}<option value='{{record.id}}'>{{record.name}} {{record.phone}} {{record.email}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable canvassers elector_id%}
+<span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
+{{record.elector_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='address_id'>
+address_id
+</label>
+{% ifwritable canvassers address_id %}
+<input id='address_id' name='address_id' type='number' value='{{record.address_id}}'/>
+{% else %}
+{% ifreadable canvassers address_id%}
+<span id='address_id' name='address_id' class='pseudo-widget disabled'>
+{{record.address_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='phone'>
+phone
+</label>
+{% ifwritable canvassers phone %}
+<input id='phone' name='phone' type='text' value='{{record.phone}}'/>
+{% else %}
+{% ifreadable canvassers phone%}
+<span id='phone' name='phone' class='pseudo-widget disabled'>
+{{record.phone}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='email'>
+email
+</label>
+{% ifwritable canvassers email %}
+<input id='email' name='email' type='text' value='{{record.email}}'/>
+{% else %}
+{% ifreadable canvassers email%}
+<span id='email' name='email' class='pseudo-widget disabled'>
+{{record.email}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='authority_id'>
+authority_id
+</label>
+{% ifwritable canvassers authority_id %}
+<div class='select-box' farside='authorities' found='true'>
+<input name='authority_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='authority_id' name='authority_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in authorities %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable canvassers authority_id%}
+<span id='authority_id' name='authority_id' class='pseudo-widget disabled'>
+{{record.authority_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='authorised'>
+authorised
+</label>
+{% ifwritable canvassers authorised %}
+<input id='authorised' name='authorised' type='checkbox' value='{{record.authorised}}'/>
+{% else %}
+{% ifreadable canvassers authorised%}
+<span id='authorised' name='authorised' class='pseudo-widget disabled'>
+{{record.authorised}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='roles'>
+roles
+</label>
+{% ifwritable canvassers roles %}
+<div class='select-box' farside='role' found='false'>
+<input name='roles-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='roles' name='roles' multiple='multiple' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in role %}<option value='{{record.role_id}}'></option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable canvassers roles%}
+<span id='roles' name='roles' class='pseudo-widget disabled'>
+{{record.roles}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget action-safe'>
+<label for='save-button' class='action-safe'>
+To save this canvassers record
+</label>
+<input id='save-button' name='save-button' class='action-safe' type=':submit' value='Save!'/>
+</p>
+<p class='widget action-dangerous'>
+<label for='delete-button' class='action-dangerous'>
+To delete this canvassers record
+</label>
+<input id='delete-button' name='delete-button' class='action-dangerous' type=':submit' value='Delete!'/>
+</p>
+</form>
+</div>
+
+{% endblock %}

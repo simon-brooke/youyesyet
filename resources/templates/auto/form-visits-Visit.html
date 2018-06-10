@@ -1,0 +1,148 @@
+{% extends "templates/base.html" %}
+
+<!-- File form-visits-Visit.html generated 2018-06-10T21:17:47.126Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+
+{% block content %}
+<div id='content' class='edit'>
+<form action='{{servlet-context}}/form-visits-Visit' method='POST'>
+{% csrf-field %}
+<input id='id' name='id' type='hidden' value='{{record.id}}'/>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable visits  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable visits %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='address_id'>
+address_id
+</label>
+{% ifwritable visits address_id %}
+<input id='address_id' name='address_id' type='number' value='{{record.address_id}}'/>
+{% else %}
+{% ifreadable visits address_id%}
+<span id='address_id' name='address_id' class='pseudo-widget disabled'>
+{{record.address_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='canvasser_id'>
+canvasser_id
+</label>
+{% ifwritable visits canvasser_id %}
+<div class='select-box' farside='canvassers' found='true'>
+<input name='canvasser_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='canvasser_id' name='canvasser_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in canvassers %}<option value='{{record.id}}'>{{record.username}} {{record.fullname}} {{record.email}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable visits canvasser_id%}
+<span id='canvasser_id' name='canvasser_id' class='pseudo-widget disabled'>
+{{record.canvasser_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='date'>
+date
+</label>
+{% ifwritable visits date %}
+<input id='date' name='date' type='text' value='{{record.date}}'/>
+{% else %}
+{% ifreadable visits date%}
+<span id='date' name='date' class='pseudo-widget disabled'>
+{{record.date}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable visits  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable visits %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='address_id'>
+address_id
+</label>
+{% ifwritable visits address_id %}
+<input id='address_id' name='address_id' type='number' value='{{record.address_id}}'/>
+{% else %}
+{% ifreadable visits address_id%}
+<span id='address_id' name='address_id' class='pseudo-widget disabled'>
+{{record.address_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='canvasser_id'>
+canvasser_id
+</label>
+{% ifwritable visits canvasser_id %}
+<div class='select-box' farside='canvassers' found='true'>
+<input name='canvasser_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='canvasser_id' name='canvasser_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in canvassers %}<option value='{{record.id}}'>{{record.username}} {{record.fullname}} {{record.email}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable visits canvasser_id%}
+<span id='canvasser_id' name='canvasser_id' class='pseudo-widget disabled'>
+{{record.canvasser_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='date'>
+date
+</label>
+{% ifwritable visits date %}
+<input id='date' name='date' type='text' value='{{record.date}}'/>
+{% else %}
+{% ifreadable visits date%}
+<span id='date' name='date' class='pseudo-widget disabled'>
+{{record.date}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget action-safe'>
+<label for='save-button' class='action-safe'>
+To save this visits record
+</label>
+<input id='save-button' name='save-button' class='action-safe' type=':submit' value='Save!'/>
+</p>
+<p class='widget action-dangerous'>
+<label for='delete-button' class='action-dangerous'>
+To delete this visits record
+</label>
+<input id='delete-button' name='delete-button' class='action-dangerous' type=':submit' value='Delete!'/>
+</p>
+</form>
+</div>
+
+{% endblock %}

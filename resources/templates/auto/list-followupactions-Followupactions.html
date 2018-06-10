@@ -1,0 +1,106 @@
+{% extends "templates/base.html" %}
+
+<!-- File list-followupactions-Followupactions.html generated 2018-06-10T21:17:47.137Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+
+{% block content %}
+<form id='content' class='list'>
+<div class='big-link-container'>
+<a href='form-followupactions-Followupaction'>
+Add a new Followupaction
+</a>
+</div>
+<table caption='followupactions'>
+<thead>
+<tr>
+<th>
+id
+</th>
+<th>
+request_id
+</th>
+<th>
+actor
+</th>
+<th>
+date
+</th>
+<th>
+notes
+</th>
+<th>
+closed
+</th>
+</tr>
+<tr>
+<th>
+<input id='id' name='id' value='{{ params.id }}'/>
+</th>
+<th>
+<input id='request_id' name='request_id' value='{{ params.request_id }}'/>
+</th>
+<th>
+<input id='actor' name='actor' value='{{ params.actor }}'/>
+</th>
+<th>
+<input id='date' name='date' value='{{ params.date }}'/>
+</th>
+<th>
+<input id='notes' name='notes' value='{{ params.notes }}'/>
+</th>
+<th>
+<input id='closed' name='closed' value='{{ params.closed }}'/>
+</th>
+</tr>
+</thead>
+<tbody>
+{% for record in %records% %}
+<tr>
+<td>
+{{ record.id }}
+</td>
+<td>
+{{ record.request_id }}
+</td>
+<td>
+{{ record.actor }}
+</td>
+<td>
+{{ record.date }}
+</td>
+<td>
+{{ record.notes }}
+</td>
+<td>
+{{ record.closed }}
+</td>
+<td>
+<a href='form-followupactions-Followupaction?id={{ record.id}}'>
+View
+</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+<tfoot/>
+</table>
+{% if offset > 0 %}
+<div class='back-link-container'>
+<a href='FIXME'>
+Previous
+</a>
+</div>
+{% endif %}
+<div class='big-link-container'>
+<a href='FIXME'>
+Next
+</a>
+</div>
+<div class='big-link-container'>
+<a href='form-followupactions-Followupaction'>
+Add a new Followupaction
+</a>
+</div>
+</form>
+
+{% endblock %}

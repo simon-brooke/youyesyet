@@ -1,0 +1,204 @@
+{% extends "templates/base.html" %}
+
+<!-- File form-followupactions-Followupaction.html generated 2018-06-10T21:17:47.139Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+
+{% block content %}
+<div id='content' class='edit'>
+<form action='{{servlet-context}}/form-followupactions-Followupaction' method='POST'>
+{% csrf-field %}
+<input id='id' name='id' type='hidden' value='{{record.id}}'/>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable followupactions  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable followupactions %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='request_id'>
+request_id
+</label>
+{% ifwritable followupactions request_id %}
+<div class='select-box' farside='followuprequests' found='true'>
+<input name='request_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='request_id' name='request_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in followuprequests %}<option value='{{record.id}}'></option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable followupactions request_id%}
+<span id='request_id' name='request_id' class='pseudo-widget disabled'>
+{{record.request_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='actor'>
+actor
+</label>
+{% ifwritable followupactions actor %}
+<input id='actor' name='actor' type='number' value='{{record.actor}}'/>
+{% else %}
+{% ifreadable followupactions actor%}
+<span id='actor' name='actor' class='pseudo-widget disabled'>
+{{record.actor}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='date'>
+date
+</label>
+{% ifwritable followupactions date %}
+<input id='date' name='date' type='text' value='{{record.date}}'/>
+{% else %}
+{% ifreadable followupactions date%}
+<span id='date' name='date' class='pseudo-widget disabled'>
+{{record.date}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='notes'>
+notes
+</label>
+{% ifwritable followupactions notes %}
+<input id='notes' name='notes' type='text' value='{{record.notes}}'/>
+{% else %}
+{% ifreadable followupactions notes%}
+<span id='notes' name='notes' class='pseudo-widget disabled'>
+{{record.notes}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='closed'>
+closed
+</label>
+{% ifwritable followupactions closed %}
+<input id='closed' name='closed' type='checkbox' value='{{record.closed}}'/>
+{% else %}
+{% ifreadable followupactions closed%}
+<span id='closed' name='closed' class='pseudo-widget disabled'>
+{{record.closed}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='id'>
+id
+</label>
+{% ifwritable followupactions  %}
+<input id='id' name='id' type='text' value='{{record.id}}'/>
+{% else %}
+{% ifreadable followupactions %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='request_id'>
+request_id
+</label>
+{% ifwritable followupactions request_id %}
+<div class='select-box' farside='followuprequests' found='true'>
+<input name='request_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='request_id' name='request_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in followuprequests %}<option value='{{record.id}}'></option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable followupactions request_id%}
+<span id='request_id' name='request_id' class='pseudo-widget disabled'>
+{{record.request_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='actor'>
+actor
+</label>
+{% ifwritable followupactions actor %}
+<input id='actor' name='actor' type='number' value='{{record.actor}}'/>
+{% else %}
+{% ifreadable followupactions actor%}
+<span id='actor' name='actor' class='pseudo-widget disabled'>
+{{record.actor}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='date'>
+date
+</label>
+{% ifwritable followupactions date %}
+<input id='date' name='date' type='text' value='{{record.date}}'/>
+{% else %}
+{% ifreadable followupactions date%}
+<span id='date' name='date' class='pseudo-widget disabled'>
+{{record.date}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='notes'>
+notes
+</label>
+{% ifwritable followupactions notes %}
+<input id='notes' name='notes' type='text' value='{{record.notes}}'/>
+{% else %}
+{% ifreadable followupactions notes%}
+<span id='notes' name='notes' class='pseudo-widget disabled'>
+{{record.notes}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='closed'>
+closed
+</label>
+{% ifwritable followupactions closed %}
+<input id='closed' name='closed' type='checkbox' value='{{record.closed}}'/>
+{% else %}
+{% ifreadable followupactions closed%}
+<span id='closed' name='closed' class='pseudo-widget disabled'>
+{{record.closed}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget action-safe'>
+<label for='save-button' class='action-safe'>
+To save this followupactions record
+</label>
+<input id='save-button' name='save-button' class='action-safe' type=':submit' value='Save!'/>
+</p>
+<p class='widget action-dangerous'>
+<label for='delete-button' class='action-dangerous'>
+To delete this followupactions record
+</label>
+<input id='delete-button' name='delete-button' class='action-dangerous' type=':submit' value='Delete!'/>
+</p>
+</form>
+</div>
+
+{% endblock %}
