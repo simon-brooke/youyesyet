@@ -1,5 +1,5 @@
 (ns
- youyesyet.routes.auto
+ youyesyet.routes.manual
  "Manual overrides for auto-generated routes"
  (:require
   [noir.response :as nresponse]

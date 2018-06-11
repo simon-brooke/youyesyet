@@ -414,8 +414,11 @@
     <property required="true" type="string" name="name" column="name" size="64" distinct="user" immutable="true">
       <prompt prompt="name" locale="en-GB"/>
     </property>
+    <property type="link" entity="canvassers" name="members">
+      <prompt prompt="Members" locale="en-GB"/>
+    </property>
     <list properties="listed" name="Roles"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field></list>
-    <form properties="listed" name="Role"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field></form>
+    <form properties="listed" name="Role"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field><field property="members"><prompt prompt="Members" locale="en-GB"/></field></form>
   </entity>
   <!--
 			entity teams already has a key - not generating one

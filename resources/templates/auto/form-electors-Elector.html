@@ -1,7 +1,24 @@
-{% extends "templates/base.html" %}
-
-<!-- File form-electors-Elector.html generated 2018-06-10T21:17:47.130Z by adl.to-selmer-templates.
+{% extends "base.html" %}
+<!-- File form-electors-Elector.html generated 2018-06-11T17:32:20.365Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
+{% block head %}
+<html:meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+
+<html:meta content='width=device-width, initial-scale=1' name='viewport'/>
+
+<html:link href='css/yyy-common.css' type='text/css' rel='stylesheet'/>
+
+<html:link href='css/yyy-site.css' type='text/css' rel='stylesheet'/>
+
+<html:link href='css/spinner.css' type='text/css' rel='stylesheet'/>
+
+<html:link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow'/>
+
+<html:title>
+{{site-title}}: {{title}}
+</html:title>
+
+{% endblock %}
 
 {% block content %}
 <div id='content' class='edit'>
@@ -208,5 +225,52 @@ To delete this electors record
 </p>
 </form>
 </div>
+
+{% endblock %}
+{% block foot %}
+<html:footer>
+<html:div id='credits'>
+<html:div>
+<html:img height='24' width='24' src='img/credits/ric-logo.png'/>
+
+            A project of the
+            
+<html:a href='https://radical.scot/'>
+Radical Independence Campaign
+</html:a>
+ ||
+            Version {{version}}
+          
+</html:div>
+<html:div>
+<html:img src='img/credits/luminus-logo.png' alt='Clojure' width='16' height='16'/>
+Built with 
+<html:a href='http://www.luminusweb.net/'>
+LuminusWeb
+</html:a>
+ ||
+            
+<html:img src='img/credits/clojure-icon.gif' alt='Clojure' width='16' height='16'/>
+ Powered by 
+<html:a href='http://clojure.org'>
+Clojure
+</html:a>
+ ||
+            
+<html:img src='img/credits/github-logo-transparent.png' alt='GitHub' width='16' height='16'/>
+Find me/fork me on 
+<html:a href='https://github.com/simon-brooke/smeagol'>
+Github
+</html:a>
+ ||
+            
+<html:img src='img/credits/gnu.small.png' alt='Free Software Foundation' width='16' height='16'/>
+Licensed under the 
+<html:a href='http://www.gnu.org/licenses/gpl-2.0.html'>
+GNU General Public License version 2.0
+</html:a>
+</html:div>
+</html:div>
+</html:footer>
 
 {% endblock %}

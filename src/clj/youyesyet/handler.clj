@@ -6,7 +6,8 @@
             [youyesyet.routes.authenticated :refer [authenticated-routes]]
             [youyesyet.routes.home :refer [home-routes]]
             [youyesyet.routes.oauth :refer [oauth-routes]]
-            [youyesyet.routes.auto-json-routes :refer [auto-rest-routes]]
+            [youyesyet.routes.auto-json :refer [auto-rest-routes]]
+            [youyesyet.routes.auto :refer [auto-selmer-routes]]
             [compojure.route :as route]
             [youyesyet.env :refer [defaults]]
             [mount.core :as mount]
@@ -67,6 +68,9 @@
     (-> #'auto-rest-routes
         (wrap-routes middleware/wrap-csrf)
         (wrap-routes middleware/wrap-formats))
+    (-> #'auto-selmer-routes
+        (wrap-routes middleware/wrap-csrf)
+        (wrap-routes middleware/wrap-formats))
     #'oauth-routes
     #'authenticated-routes
     (route/not-found
@@ -75,5 +79,5 @@
                      :title "page not found"})))))
 
 
-(def app #'app-routes)
-  ;;(middleware/wrap-base #'app-routes))
+(def app ;; #'app-routes)
+  (middleware/wrap-base #'app-routes))

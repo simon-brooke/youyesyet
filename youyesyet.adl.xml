@@ -323,6 +323,9 @@
     <property required="true" type="string" name="name" column="name" size="64" distinct="user" immutable="true">
       <prompt prompt="name" locale="en-GB"/>
     </property>
+    <property type="link" entity="canvassers" name="members">
+      <prompt prompt="Members" locale="en-GB"/>
+    </property>
     <list name="Roles" properties="all"/>
     <form name="Role" properties="all"/>
   </entity>
