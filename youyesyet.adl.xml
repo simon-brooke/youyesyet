@@ -3,6 +3,7 @@
 "http://www.journeyman.cc/adl/stable/adl/schemas/adl-1.4.1.dtd" -->
 <application name="youyesyet" version="0.1.1"
              xmlns="http://bowyer.journeyman.cc/adl/1.4.1/"
+             xmlns:html="http://www.w3.org/1999/xhtml"
              xmlns:adl="http://bowyer.journeyman.cc/adl/1.4.1/">
   <documentation>
     A web-app intended to be used by canvassers campaigning for a 'Yes' vote in the second independence referendum.
@@ -12,9 +13,34 @@
     There must also be an administrative interface through which privileged users can set the system up and authorise canvassers, and a 'followup' interface through which issue-expert specialist canvassers can address particular electors' queries.
   </documentation>
   <content>
-    <head> </head>
+    <head>
+        <html:meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <html:meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <html:link rel="stylesheet" type="text/css" href="css/yyy-common.css" />
+        <html:link rel="stylesheet" type="text/css" href="css/yyy-site.css" />
+        <html:link rel="stylesheet" type="text/css" href="css/spinner.css" />
+        <html:link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
+        <html:title>{{site-title}}: {{title}}</html:title>
+      </head>
     <top> </top>
-    <foot> </foot>
+    <foot>
+      <html:footer>
+        <html:div id="credits">
+          <html:div>
+            <html:img src="img/credits/ric-logo.png" width="24" height="24"/>
+            A project of the
+            <html:a href="https://radical.scot/">Radical Independence Campaign</html:a> ||
+            Version {{version}}
+          </html:div>
+          <html:div>
+            <html:img height="16" width="16" alt="Clojure" src="img/credits/luminus-logo.png"/>Built with <html:a href="http://www.luminusweb.net/">LuminusWeb</html:a> ||
+            <html:img height="16" width="16" alt="Clojure" src="img/credits/clojure-icon.gif"/> Powered by <html:a href="http://clojure.org">Clojure</html:a> ||
+            <html:img height="16" width="16" alt="GitHub" src="img/credits/github-logo-transparent.png"/>Find me/fork me on <html:a href="https://github.com/simon-brooke/smeagol">Github</html:a> ||
+            <html:img height="16" width="16" alt="Free Software Foundation" src="img/credits/gnu.small.png"/>Licensed under the <html:a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License version 2.0</html:a>
+          </html:div>
+        </html:div>
+      </html:footer>
+    </foot>
   </content>
   <typedef name="postcode" type="string"
     pattern="^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))[0-9][A-Za-z]{2})$" size="16">
@@ -143,7 +169,7 @@
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
-    <property required="true" type="integer" name="address_id" column="address_id"
+    <property required="true" type="entity" name="address_id" column="address_id"
       entity="addresses" farkey="id">
       <prompt prompt="address_id" locale="en-GB"/>
     </property>
@@ -218,7 +244,7 @@
     <property type="entity" name="elector_id" column="elector_id" entity="electors" farkey="id">
       <prompt prompt="elector_id" locale="en-GB"/>
     </property>
-    <property required="true" type="integer" name="address_id" column="address_id"
+    <property required="true" type="entity" name="address_id" column="address_id"
       entity="addresses" farkey="id">
       <prompt prompt="address_id" locale="en-GB"/>
     </property>
@@ -369,7 +395,7 @@
       entity="followuprequests" farkey="id">
       <prompt prompt="request_id" locale="en-GB"/>
     </property>
-    <property required="true" type="integer" name="actor" column="actor" entity="canvassers"
+    <property required="true" type="entity" name="actor" column="actor" entity="canvassers"
       farkey="id">
       <prompt prompt="actor" locale="en-GB"/>
     </property>
@@ -392,7 +418,7 @@
   </entity>
   <entity name="issueexpertise" magnitude="5">
     <documentation>Link table</documentation>
-      <property required="true" type="integer" name="canvasser_id" column="canvasser_id"
+      <property required="true" type="entity" name="canvasser_id" column="canvasser_id"
         entity="canvassers" farkey="id">
         <prompt prompt="canvasser_id" locale="en-GB"/>
       </property>

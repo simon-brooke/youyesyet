@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" type="text/css" href="css/yyy-common.css" />
     <link rel="stylesheet" type="text/css" href="css/yyy-site.css" />
     <link rel="stylesheet" type="text/css" href="css/spinner.css" />
@@ -11,6 +11,7 @@
   </head>
   <body>
     {% block whole-page %}
+    {% block top %}
     <header>
       <div id="nav">
         <img id="nav-icon" src="img/threelines.png" alt="Menu"/>
@@ -31,7 +32,7 @@
         {{title}}
       </h1>
     </header>
-
+    {% endblock %}
     <div id="main-container" class="container">
       <div id="big-links">
         {% block big-links %}
@@ -45,6 +46,7 @@
         <a href="javascript:history.back()" id="back-link">Back</a>
       </div>
     </div>
+    {% block foot %}
     <footer>
       <div id="credits">
         <div>
@@ -61,6 +63,7 @@
         </div>
       </div>
     </footer>
+    {% endblock %}
     {% endblock %}
     <script type="text/javascript">
         var context = "{{servlet-context}}";

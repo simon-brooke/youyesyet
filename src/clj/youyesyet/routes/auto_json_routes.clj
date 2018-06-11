@@ -56,7 +56,7 @@
  list-addresses-by-district
  list-authorities
  list-canvassers
- list-canvassers-by-addresse
+ list-canvassers-by-address
  list-canvassers-by-authoritie
  list-canvassers-by-elector
  list-districts
@@ -110,7 +110,7 @@
 
 (defroutes
  auto-rest-routes
- (POST "/json/auto/create-addresse" request (create-address request))
+ (POST "/json/auto/create-address" request (create-address request))
  (POST
   "/json/auto/create-authority"
   request
@@ -162,7 +162,7 @@
   request
   (create-teamorganisership request))
  (POST "/json/auto/create-visit" request (create-visit request))
- (POST "/json/auto/delete-addresse" request (delete-address request))
+ (POST "/json/auto/delete-address" request (delete-address request))
  (POST
   "/json/auto/delete-authority"
   request
@@ -188,7 +188,7 @@
  (POST "/json/auto/delete-issue" request (delete-issue request))
  (POST "/json/auto/delete-option" request (delete-option request))
  (POST "/json/auto/delete-visit" request (delete-visit request))
- (POST "/json/auto/get-addresse" request (get-addresse request))
+ (POST "/json/auto/get-address" request (get-address request))
  (POST "/json/auto/get-authority" request (get-authority request))
  (POST "/json/auto/get-canvasser" request (get-canvasser request))
  (POST "/json/auto/get-district" request (get-district request))
@@ -216,9 +216,9 @@
  (GET "/json/auto/list-authorities" request (list-authorities request))
  (GET "/json/auto/list-canvassers" request (list-canvassers request))
  (GET
-  "/json/auto/list-canvassers-by-addresse"
+  "/json/auto/list-canvassers-by-address"
   request
-  (list-canvassers-by-addresse request))
+  (list-canvassers-by-address request))
  (GET
   "/json/auto/list-canvassers-by-authoritie"
   request
@@ -230,9 +230,9 @@
  (GET "/json/auto/list-districts" request (list-districts request))
  (GET "/json/auto/list-electors" request (list-electors request))
  (GET
-  "/json/auto/list-electors-by-addresse"
+  "/json/auto/list-electors-by-address"
   request
-  (list-electors-by-addresse request))
+  (list-electors-by-address request))
  (GET
   "/json/auto/list-followupactions"
   request
@@ -355,14 +355,14 @@
   (list-teams-by-district request))
  (GET "/json/auto/list-visits" request (list-visits request))
  (GET
-  "/json/auto/list-visits-by-addresse"
+  "/json/auto/list-visits-by-address"
   request
-  (list-visits-by-addresse request))
+  (list-visits-by-address request))
  (GET
   "/json/auto/list-visits-by-canvasser"
   request
   (list-visits-by-canvasser request))
- (POST "/json/auto/update-addresse" request (update-addresse request))
+ (POST "/json/auto/update-address" request (update-address request))
  (POST
   "/json/auto/update-canvasser"
   request
@@ -603,10 +603,10 @@
 
 
 (defn
- get-addresse
+ get-address
  "Auto-generated method to select one record from the addresses table. Expects the following key(s) to be present in `params`: (:id). Returns a map containing the following keys: (:address :district_id :id :latitude :longitude :phone :postcode)."
  [{:keys [params]}]
- (do (db/get-addresse params)))
+ (do (db/get-address params)))
 
 
 (defn
@@ -707,9 +707,9 @@
 
 
 (defn
- list-canvassers-by-addresse
+ list-canvassers-by-address
  [{:keys [params]}]
- (do (db/list-canvassers-by-addresse params)))
+ (do (db/list-canvassers-by-address params)))
 
 
 (defn
@@ -739,9 +739,9 @@
 
 
 (defn
- list-electors-by-addresse
+ list-electors-by-address
  [{:keys [params]}]
- (do (db/list-electors-by-addresse params)))
+ (do (db/list-electors-by-address params)))
 
 
 (defn
@@ -958,9 +958,9 @@
 
 
 (defn
- list-visits-by-addresse
+ list-visits-by-address
  [{:keys [params]}]
- (do (db/list-visits-by-addresse params)))
+ (do (db/list-visits-by-address params)))
 
 
 (defn

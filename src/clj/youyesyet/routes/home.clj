@@ -57,7 +57,7 @@
     [session (:session request)
      username (:user session)
      user (if username (db-core/get-canvasser-by-username db-core/*db* {:username username}))
-     roles (if user (db-core/get-roles-by-canvasser db-core/*db* {:canvasser (:id user)}))]
+     roles (if user (db-core/list-roles-by-canvasser db-core/*db* {:id (:id user)}))]
     (cond
       roles (layout/render "roles.html"
                            {:title (str "Welcome " (:fullname user) ", what do you want to do?")
