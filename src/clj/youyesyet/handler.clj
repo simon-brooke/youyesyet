@@ -13,6 +13,7 @@
             [mount.core :as mount]
             [youyesyet.middleware :as middleware]
             [clojure.tools.logging :as log]
+            [youyesyet.db.core :as db]
             [youyesyet.config :refer [env]]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -41,6 +42,8 @@
 (mount/defstate init-app
                 :start ((or (:init defaults) identity))
                 :stop  ((or (:stop defaults) identity)))
+
+;;(mount/start db/*db*)
 
 (defn init
   "init will be called once when

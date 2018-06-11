@@ -1,8 +1,10 @@
 (ns ^{:doc "Routes/pages available to unauthenticated users."
       :author "Simon Brooke"} youyesyet.routes.home
   (:require [clojure.walk :refer [keywordize-keys]]
+            [clojure.java.io :refer [input-stream]]
             [noir.response :as nresponse]
             [noir.util.route :as route]
+            [ring.util.http-response :refer [content-type ok]]
             [youyesyet.layout :as layout]
             [youyesyet.db.core :as db-core]
             [compojure.core :refer [defroutes GET POST]]
@@ -95,6 +97,10 @@
 
 (defroutes home-routes
   (GET "/" [] (home-page))
+  (GET "/js/:file" [file]
+       (-> (input-stream (str "resources/public/js/" file))
+           ok
+           (content-type "text/javascript;charset=UTF-8")))
   (GET "/home" [] (home-page))
   (GET "/about" [] (about-page))
   (GET "/roles" request (route/restricted (roles-page request)))
@@ -104,6 +110,6 @@
   (GET "/auth" request (login-page request))
   (POST "/auth" request (login-page request))
   (GET "/notyet" [] (layout/render "notyet.html"
-                                      {:title "Can we persuade you?"}))
+                                   {:title "Can we persuade you?"}))
   (GET "/supporter" [] (layout/render "supporter.html"
                                       {:title "Have you signed up as a canvasser yet?"})))

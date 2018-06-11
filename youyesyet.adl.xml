@@ -14,32 +14,32 @@
   </documentation>
   <content>
     <head>
-        <html:meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <html:meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <html:link rel="stylesheet" type="text/css" href="css/yyy-common.css" />
-        <html:link rel="stylesheet" type="text/css" href="css/yyy-site.css" />
-        <html:link rel="stylesheet" type="text/css" href="css/spinner.css" />
-        <html:link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
-        <html:title>{{site-title}}: {{title}}</html:title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" type="text/css" href="css/yyy-common.css" />
+        <link rel="stylesheet" type="text/css" href="css/yyy-site.css" />
+        <link rel="stylesheet" type="text/css" href="css/spinner.css" />
+        <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
+        <title>{{site-title}}: {{title}}</title>
       </head>
     <top> </top>
     <foot>
-      <html:footer>
-        <html:div id="credits">
-          <html:div>
-            <html:img src="img/credits/ric-logo.png" width="24" height="24"/>
+      <footer>
+        <div id="credits">
+          <div>
+            <img src="img/credits/ric-logo.png" width="24" height="24"/>
             A project of the
-            <html:a href="https://radical.scot/">Radical Independence Campaign</html:a> ||
+            <a href="https://radical.scot/">Radical Independence Campaign</a> ||
             Version {{version}}
-          </html:div>
-          <html:div>
-            <html:img height="16" width="16" alt="Clojure" src="img/credits/luminus-logo.png"/>Built with <html:a href="http://www.luminusweb.net/">LuminusWeb</html:a> ||
-            <html:img height="16" width="16" alt="Clojure" src="img/credits/clojure-icon.gif"/> Powered by <html:a href="http://clojure.org">Clojure</html:a> ||
-            <html:img height="16" width="16" alt="GitHub" src="img/credits/github-logo-transparent.png"/>Find me/fork me on <html:a href="https://github.com/simon-brooke/smeagol">Github</html:a> ||
-            <html:img height="16" width="16" alt="Free Software Foundation" src="img/credits/gnu.small.png"/>Licensed under the <html:a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License version 2.0</html:a>
-          </html:div>
-        </html:div>
-      </html:footer>
+          </div>
+          <div>
+            <img height="16" width="16" alt="Clojure" src="img/credits/luminus-logo.png"/>Built with <a href="http://www.luminusweb.net/">LuminusWeb</a> ||
+            <img height="16" width="16" alt="Clojure" src="img/credits/clojure-icon.gif"/> Powered by <a href="http://clojure.org">Clojure</a> ||
+            <img height="16" width="16" alt="GitHub" src="img/credits/github-logo-transparent.png"/>Find me/fork me on <a href="https://github.com/simon-brooke/smeagol">Github</a> ||
+            <img height="16" width="16" alt="Free Software Foundation" src="img/credits/gnu.small.png"/>Licensed under the <a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License version 2.0</a>
+          </div>
+        </div>
+      </footer>
     </foot>
   </content>
   <typedef name="postcode" type="string"
