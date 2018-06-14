@@ -262,6 +262,13 @@
     <permission group="admin" permission="all"/>
     <list properties="listed" name="Visits"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="address_id"><prompt prompt="address_id" locale="en-GB"/></field><field property="canvasser_id"><prompt prompt="canvasser_id" locale="en-GB"/></field><field property="date"><prompt prompt="date" locale="en-GB"/></field></list>
     <form properties="listed" name="Visit"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="address_id"><prompt prompt="address_id" locale="en-GB"/></field><field property="canvasser_id"><prompt prompt="canvasser_id" locale="en-GB"/></field><field property="date"><prompt prompt="date" locale="en-GB"/></field></form>
+    <permission permission="none" group="public"/>
+    <permission permission="noedit" group="canvassers"/>
+    <permission permission="noedit" group="teamorganisers"/>
+    <permission permission="read" group="issueexperts"/>
+    <permission permission="read" group="analysts"/>
+    <permission permission="read" group="issueeditors"/>
+    <permission permission="all" group="admin"/>
   </entity>
   <!--
 			entity authorities already has a key - not generating one
