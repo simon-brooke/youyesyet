@@ -132,7 +132,12 @@
     <permission permission="all" group="admin"/>
   </entity>
   <entity name="dwellings" magnitude="6">
-    <documentation>All dwellings within addresses in the system; a dwelling is a house, flat or appartment in which electors live.</documentation>
+    <documentation>All dwellings within addresses in the system; a dwelling is a
+      house, flat or appartment in which electors live. Every address should have
+      at least one dwelling; essentially, an address maps onto a street door and
+      dwellings map onto what's behind that door. So a tenement or a block of flats
+      would be one address with many dwellings.
+    </documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
         <prompt prompt="id" locale="en-GB"/>
@@ -261,7 +266,7 @@
     <permission permission="all" group="admin"/>
   </entity>
   <entity name="intentions" magnitude="6">
-    <documentation>Link table.</documentation>
+    <documentation>Intentions of electors to vote for options elicited in visits.</documentation>
     <property required="true" type="entity" entity="visits" farkey="id" name="visit_id"
       column="visit_id">
       <prompt prompt="visit_id" locale="en-GB"/>
