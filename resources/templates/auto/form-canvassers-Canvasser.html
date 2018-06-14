@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-canvassers-Canvasser.html generated 2018-06-11T18:42:42.844Z by adl.to-selmer-templates.
+<!-- File form-canvassers-Canvasser.html generated 2018-06-14T19:58:20.337Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -75,7 +75,7 @@ elector_id
 <div class='select-box' farside='electors' found='true'>
 <input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in electors %}<option value='{{record.id}}'>{{record.name}} {{record.phone}} {{record.email}}</option>{% endfor %}
+{% for record in electors %}<option value='{{record.id}}'>{{record.name}} {{record.phone}} {{record.email}} {{record.gender}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
@@ -216,7 +216,7 @@ elector_id
 <div class='select-box' farside='electors' found='true'>
 <input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in electors %}<option value='{{record.id}}'>{{record.name}} {{record.phone}} {{record.email}}</option>{% endfor %}
+{% for record in electors %}<option value='{{record.id}}'>{{record.name}} {{record.phone}} {{record.email}} {{record.gender}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
@@ -312,10 +312,9 @@ authorised
 roles
 </label>
 {% ifwritable canvassers roles %}
-<div class='select-box' farside='role' found='false'>
-<input name='roles-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='roles' name='roles' multiple='multiple' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in role %}<option value='{{record.role_id}}'></option>{% endfor %}
+<div class='select-box' farside='roles' found='true'>
+<select id='roles' name='roles' multiple='multiple'>
+{% for record in roles %}<option value='{{record.role_id}}'>{{record.name}}</option>{% endfor %}
 </select>
 </div>
 {% else %}

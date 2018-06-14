@@ -1,20 +1,19 @@
 (ns ^{:doc "Handlers for starting and stopping the webapp."
       :author "Simon Brooke"}
   youyesyet.handler
-  (:require [compojure.core :refer [routes wrap-routes]]
+  (:require [clojure.tools.logging :as log]
+            [compojure.core :refer [routes wrap-routes]]
+            [compojure.route :as route]
+            [mount.core :as mount]
+            [youyesyet.config :refer [env]]
             [youyesyet.layout :refer [error-page]]
+            [youyesyet.middleware :as middleware]
             [youyesyet.routes.authenticated :refer [authenticated-routes]]
             [youyesyet.routes.home :refer [home-routes]]
             [youyesyet.routes.oauth :refer [oauth-routes]]
             [youyesyet.routes.auto-json :refer [auto-rest-routes]]
             [youyesyet.routes.auto :refer [auto-selmer-routes]]
-            [compojure.route :as route]
-            [youyesyet.env :refer [defaults]]
-            [mount.core :as mount]
-            [youyesyet.middleware :as middleware]
-            [clojure.tools.logging :as log]
-            [youyesyet.db.core :as db]
-            [youyesyet.config :refer [env]]))
+            [youyesyet.env :refer [defaults]]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
@@ -82,5 +81,5 @@
                      :title "page not found"})))))
 
 
-(def app ;; #'app-routes)
-  (middleware/wrap-base #'app-routes))
+(def app #'app-routes)
+;;  (middleware/wrap-base #'app-routes))

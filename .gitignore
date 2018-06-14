@@ -22,3 +22,5 @@ pom.xml.asc
 profiles\.clj
 .bowerrc
 bower.json
+
+src/clj/youyesyet/scratchpad\.clj

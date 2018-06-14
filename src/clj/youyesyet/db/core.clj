@@ -5,8 +5,8 @@
     [cheshire.core :refer [generate-string parse-string]]
     [clojure.java.jdbc :as jdbc]
     [conman.core :as conman]
-    [youyesyet.config :refer [env]]
-    [mount.core :refer [defstate]])
+    [mount.core :refer [defstate]]
+    [youyesyet.config :refer [env]])
   (:import org.postgresql.util.PGobject
            java.sql.Array
            clojure.lang.IPersistentMap

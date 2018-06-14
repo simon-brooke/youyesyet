@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-teams-Team.html generated 2018-06-11T18:42:42.836Z by adl.to-selmer-templates.
+<!-- File form-teams-Team.html generated 2018-06-14T19:58:20.329Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -176,6 +176,25 @@ members
 {% ifreadable teams members%}
 <span id='members' name='members' class='pseudo-widget disabled'>
 {{record.members}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='organisers'>
+organisers
+</label>
+{% ifwritable teams organisers %}
+<div class='select-box' farside='canvassers' found='true'>
+<input name='organisers-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='organisers' name='organisers' multiple='multiple' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in canvassers %}<option value='{{record.id}}'>{{record.username}} {{record.fullname}} {{record.email}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable teams organisers%}
+<span id='organisers' name='organisers' class='pseudo-widget disabled'>
+{{record.organisers}}
 </span>
 {% endifreadable %}
 {% endifwritable %}

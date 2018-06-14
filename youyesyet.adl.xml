@@ -56,7 +56,7 @@
     <documentation>All users of the canvasser app Able to read and add canvassing data in a limited
       radius around their current position. </documentation>
   </group>
-  <group name="teamorganiser" parent="canvassers">
+  <group name="teamorganisers" parent="canvassers">
     <documentation>Organisers of canvassing teams Able to see and modify data on the canvassers in
       the team(s) they organise; able to add canvassers to their team; able to update canvassers in
       their team, including resetting passwords and locking accounts; able to see canvass data over
@@ -101,13 +101,19 @@
       <prompt prompt="email" locale="en-GB"/>
     </property>
     <property name="gender" type="entity" column="gender" entity="genders" farkey="id"
-      default="Unknown">
+      default="Unknown" distinct="user">
       <prompt prompt="gender" locale="en-GB"/>
     </property>
     <list name="Electors" properties="all"/>
     <form name="Elector" properties="all"/>
+    <permission group="canvassers" permission="read"/>
+    <permission group="teamorganisers" permission="read"/>
+    <permission group="issueexperts" permission="read"/>
+    <permission group="analysts" permission="read"/>
+    <permission group="issueeditors" permission="read"/>
+    <permission group="admin" permission="all"/>
   </entity>
-  <entity name="genders" natural-key="id" magnitude="1">
+  <entity name="genders" magnitude="1">
     <documentation>All genders which may be assigned to electors.</documentation>
     <key>
       <property name="id" type="string" size="32" distinct="all">
@@ -116,6 +122,12 @@
     </key>
     <list name="Genders" properties="all"/>
     <form name="Gender" properties="all"/>
+    <permission group="canvassers" permission="read"/>
+    <permission group="teamorganisers" permission="read"/>
+    <permission group="issueexperts" permission="read"/>
+    <permission group="analysts" permission="read"/>
+    <permission group="issueeditors" permission="read"/>
+    <permission group="admin" permission="all"/>
   </entity>
   <entity name="dwellings" magnitude="6">
     <documentation>All dwellings within addresses in the system; a dwelling is a house, flat or appartment in which electors live.</documentation>
@@ -124,12 +136,18 @@
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
-    <property required="true" type="entity" name="address_id" column="address_id" entity="address" farkey="id">
+    <property required="true" type="entity" name="address_id" column="address_id" entity="addresses" farkey="id" distinct="user">
       <prompt prompt="Building Address" locale="en-GB"/>
     </property>
-    <property required="false" type="string" size="32" name="sub-address"/>
+    <property required="false" type="string" size="32" name="sub-address" distinct="user"/>
     <list name="Dwellings" properties="all"/>
     <form name="Dwelling" properties="all"/>
+    <permission group="canvassers" permission="read"/>
+    <permission group="teamorganisers" permission="read"/>
+    <permission group="issueexperts" permission="read"/>
+    <permission group="analysts" permission="read"/>
+    <permission group="issueeditors" permission="read"/>
+    <permission group="admin" permission="all"/>
   </entity>
   <entity name="addresses" magnitude="6">
     <documentation>Addresses of all buildings which contain dwellings.</documentation>
@@ -156,11 +174,46 @@
     <property type="real" name="longitude" column="longitude">
       <prompt prompt="longitude" locale="en-GB"/>
     </property>
-    <permission group="admin" permission="all"/>
+    <property type="integer" name="locality" column="locality">
+      <documentation>
+        Locality indexing; see issue #44. Note that this property should be generated
+        automatically from the latitude and longitude:
+        (+
+          (* 10000            ;; left-shift the latitude component four digits
+            (integer
+              (* latitude 1000)))
+          (-                  ;; invert the sign of the longitude component, since
+                              ;; we're interested in localities West of Greenwich.
+            (integer
+              (* longitude 1000))))
+        We'll use a trigger to insert this. I don't think it will ever appear in the user
+        interface; it's an implementation detail, not of interest to users.
+      </documentation>
+    </property>
+    <list properties="listed" name="Addresses">
+      <field property="id"><prompt prompt="id" locale="en-GB"/></field>
+      <field property="address"><prompt prompt="address" locale="en-GB"/></field>
+      <field property="postcode"><prompt prompt="postcode" locale="en-GB"/></field>
+      <field property="phone"><prompt prompt="phone" locale="en-GB"/></field>
+      <field property="district_id"><prompt prompt="district_id" locale="en-GB"/></field>
+      <field property="latitude"><prompt prompt="latitude" locale="en-GB"/></field>
+      <field property="longitude"><prompt prompt="longitude" locale="en-GB"/></field>
+    </list>
+    <form properties="listed" name="Address">
+      <field property="id"><prompt prompt="id" locale="en-GB"/></field>
+      <field property="address"><prompt prompt="address" locale="en-GB"/></field>
+      <field property="postcode"><prompt prompt="postcode" locale="en-GB"/></field>
+      <field property="phone"><prompt prompt="phone" locale="en-GB"/></field>
+      <field property="district_id"><prompt prompt="district_id" locale="en-GB"/></field>
+      <field property="latitude"><prompt prompt="latitude" locale="en-GB"/></field>
+      <field property="longitude"><prompt prompt="longitude" locale="en-GB"/></field>
+    </form>
     <permission group="canvassers" permission="read"/>
+    <permission group="teamorganisers" permission="read"/>
+    <permission group="issueexperts" permission="read"/>
     <permission group="analysts" permission="read"/>
-    <list name="Addresses" properties="all"/>
-    <form name="Address" properties="all"/>
+    <permission group="issueeditors" permission="read"/>
+    <permission group="admin" permission="all"/>
   </entity>
   <entity name="visits" magnitude="7">
     <documentation>All visits made by canvassers to dwellings in which opinions were recorded.</documentation>
@@ -170,18 +223,24 @@
       </property>
     </key>
     <property required="true" type="entity" name="address_id" column="address_id"
-      entity="addresses" farkey="id">
+      entity="addresses" farkey="id" distinct="user">
       <prompt prompt="address_id" locale="en-GB"/>
     </property>
     <property required="true" type="entity" name="canvasser_id" column="canvasser_id"
       entity="canvassers" farkey="id">
       <prompt prompt="canvasser_id" locale="en-GB"/>
     </property>
-    <property required="true" default="" type="timestamp" name="date" column="date">
+    <property required="true" type="timestamp" name="date" column="date" default="now()" distinct="user">
       <prompt prompt="date" locale="en-GB"/>
     </property>
-    <permission group="public" permission="read"/>
-    <permission group="canvassers" permission="insert"/>
+    <permission group="canvassers" permission="noedit">
+      <documentation>But only in their immediate area.</documentation>
+    </permission>
+    <permission group="teamorganisers" permission="read"/>
+    <permission group="issueexperts" permission="read"/>
+    <permission group="analysts" permission="read"/>
+    <permission group="issueeditors" permission="read"/>
+    <permission group="admin" permission="all"/>
     <list name="Visits" properties="all"/>
     <form name="Visit" properties="all"/>
   </entity>
@@ -194,6 +253,12 @@
     </key>
     <list name="Authorities" properties="all"/>
     <form name="Authority" properties="all"/>
+    <permission group="canvassers" permission="read"/>
+    <permission group="teamorganisers" permission="read"/>
+    <permission group="issueexperts" permission="read"/>
+    <permission group="analysts" permission="read"/>
+    <permission group="issueeditors" permission="read"/>
+    <permission group="admin" permission="all"/>
   </entity>
   <entity name="issues" magnitude="1">
     <documentation>Issues believed to be of interest to electors, about which they may have questions.</documentation>
@@ -210,6 +275,12 @@
     </property>
     <list name="Issues" properties="all"/>
     <form name="Issue" properties="all"/>
+    <permission group="canvassers" permission="read"/>
+    <permission group="teamorganisers" permission="read"/>
+    <permission group="issueexperts" permission="read"/>
+    <permission group="analysts" permission="read"/>
+    <permission group="issueeditors" permission="edit"/>
+    <permission group="admin" permission="all"/>
   </entity>
   <entity name="intentions" magnitude="6">
     <documentation>Link table.</documentation>
@@ -227,6 +298,16 @@
     </property>
     <list name="Intentions" properties="all"/>
     <form name="Intention" properties="all"/>
+    <permission group="canvassers" permission="noedit">
+      <documentation>But only for intentions in their immediate locality.</documentation>
+    </permission>
+    <permission group="teamorganisers" permission="none"/>
+    <permission group="issueexperts" permission="none"/>
+    <permission group="analysts" permission="read">
+      <documentation>Can see all recorded intentions across the whole of Scotland.</documentation>
+    </permission>
+    <permission group="issueeditors" permission="none"/>
+    <permission group="admin" permission="all"/>
   </entity>
   <entity name="canvassers" magnitude="5">
     <documentation>Primary users of the system: those actually interviewing electors.</documentation>
@@ -261,13 +342,13 @@
     <property type="boolean" name="authorised" column="authorised">
       <prompt prompt="authorised" locale="en-GB"/>
     </property>
-    <property type="link" name="roles" entity="role" farkey="role_id">
+    <property type="link" name="roles" entity="roles" farkey="role_id">
       <prompt prompt="Roles" locale="en-GB"/>
     </property>
     <permission group="canvassers" permission="edit">
       <documentation>But only their own record</documentation>
     </permission>
-    <permission group="teamleaders" permission="edit">
+    <permission group="teamorganisers" permission="edit">
       <documentation>But only canvassers in their own team.</documentation>
     </permission>
     <permission group="admin" permission="all">
@@ -275,6 +356,14 @@
     </permission>
     <list name="Canvassers" properties="all"/>
     <form name="Canvasser" properties="all"/>
+    <permission group="canvassers" permission="edit">
+      <documentation>But should only be able to edit their own record.</documentation>
+    </permission>
+    <permission group="teamorganisers" permission="edit"/>
+    <permission group="issueexperts" permission="read"/>
+    <permission group="analysts" permission="read"/>
+    <permission group="issueeditors" permission="read"/>
+    <permission group="admin" permission="all"/>
   </entity>
   <entity name="followuprequests" magnitude="7">
     <documentation>Requests for a followup with an issue expert</documentation>
@@ -284,15 +373,15 @@
       </property>
     </key>
     <property required="true" type="entity" name="elector_id" column="elector_id" entity="electors"
-      farkey="id">
+      farkey="id" distinct="user">
       <prompt prompt="elector_id" locale="en-GB"/>
     </property>
     <property required="true" type="entity" name="visit_id" column="visit_id" entity="visits"
-      farkey="id">
+      farkey="id" distinct="user">
       <prompt prompt="visit_id" locale="en-GB"/>
     </property>
     <property required="true" type="entity" name="issue_id" column="issue_id" entity="issues"
-      farkey="id">
+      farkey="id" distinct="user">
       <prompt prompt="issue_id" locale="en-GB"/>
     </property>
     <property required="true" type="entity" name="method_id" column="method_id"
@@ -301,17 +390,12 @@
     </property>
     <list name="Followuprequests" properties="all"/>
     <form name="Followuprequest" properties="all"/>
-  </entity>
-  <entity name="rolememberships" magnitude="6">
-    <documentation>Link table</documentation>
-    <property required="true" type="entity" entity="roles" farkey="id" name="role_id"
-      column="role_id">
-      <prompt prompt="role_id" locale="en-GB"/>
-    </property>
-    <property required="true" type="entity" entity="canvassers" farkey="id" name="canvasser_id"
-      column="canvasser_id">
-      <prompt prompt="canvasser_id" locale="en-GB"/>
-    </property>
+    <permission group="canvassers" permission="noedit"/>
+    <permission group="teamorganisers" permission="read"/>
+    <permission group="issueexperts" permission="read"/>
+    <permission group="analysts" permission="read"/>
+    <permission group="issueeditors" permission="read"/>
+    <permission group="admin" permission="all"/>
   </entity>
   <entity name="roles" magnitude="1">
     <documentation>A role (essentially, the same as a group, but application layer rather than database layer) of which a user may be a member.</documentation>
@@ -320,7 +404,7 @@
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
-    <property required="true" type="string" name="name" column="name" size="64" distinct="user" immutable="true">
+    <property required="true" type="string" name="name" column="name" size="64" distinct="all" immutable="true">
       <prompt prompt="name" locale="en-GB"/>
     </property>
     <property type="link" entity="canvassers" name="members">
@@ -328,6 +412,12 @@
     </property>
     <list name="Roles" properties="all"/>
     <form name="Role" properties="all"/>
+    <permission group="canvassers" permission="read"/>
+    <permission group="teamorganisers" permission="read"/>
+    <permission group="issueexperts" permission="read"/>
+    <permission group="analysts" permission="read"/>
+    <permission group="issueeditors" permission="read"/>
+    <permission group="admin" permission="all"/>
   </entity>
   <entity name="teams" magnitude="4">
     <key>
@@ -348,13 +438,19 @@
     <property type="link" entity="canvassers" name="members">
       <prompt prompt="Members" locale="en-GB"/>
     </property>
+    <property type="link" entity="canvassers" name="organisers">
+      <prompt prompt="Organisers" locale="en-GB"/>
+    </property>
     <property type="real" name="longitude" column="longitude">
       <prompt prompt="longitude" locale="en-GB"/>
     </property>
     <permission group="canvassers" permission="read"/>
-    <permission group="groupleaders" permission="edit">
+    <permission group="teamorganisers" permission="edit">
       <documentation>But only their own group(s)</documentation>
     </permission>
+    <permission group="issueexperts" permission="read"/>
+    <permission group="analysts" permission="read"/>
+    <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all">
       <documentation>All groups</documentation>
     </permission>
@@ -362,7 +458,7 @@
     <form name="Team" properties="all"/>
   </entity>
   <entity name="districts" magnitude="4">
-    <documentation>Electoral districts</documentation>
+    <documentation>Electoral districts: TODO: Shape (polygon) information will need to be added, for use in maps.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
         <prompt prompt="id" locale="en-GB"/>
@@ -375,17 +471,12 @@
     <permission group="admin" permission="all"></permission>
     <list name="Districts" properties="all"/>
     <form name="District" properties="all"/>
-  </entity>
-  <entity name="teamorganiserships" magnitude="4">
-    <documentation>Link table</documentation>
-    <property required="true" type="entity" entity="teams" farkey="id" name="team_id"
-      column="team_id">
-      <prompt prompt="team_id" locale="en-GB"/>
-    </property>
-    <property required="true" type="entity" entity="canvassers" farkey="id" name="canvasser_id"
-      column="canvasser_id">
-      <prompt prompt="canvasser_id" locale="en-GB"/>
-    </property>
+    <permission group="canvassers" permission="read"/>
+    <permission group="teamorganisers" permission="read"/>
+    <permission group="issueexperts" permission="read"/>
+    <permission group="analysts" permission="read"/>
+    <permission group="issueeditors" permission="read"/>
+    <permission group="admin" permission="all"/>
   </entity>
   <entity name="followupactions" magnitude="7">
     <documentation>Actions taken on followup requests.</documentation>
@@ -402,37 +493,25 @@
       farkey="id">
       <prompt prompt="actor" locale="en-GB"/>
     </property>
-    <property required="true" default="" type="timestamp" name="date" column="date">
+    <property required="true" default="now()" type="timestamp" name="date" column="date" distinct="user">
       <prompt prompt="date" locale="en-GB"/>
     </property>
-    <property type="text" name="notes" column="notes">
+    <property type="text" name="notes" column="notes" distinct="user">
       <prompt prompt="notes" locale="en-GB"/>
     </property>
     <property type="boolean" name="closed" column="closed" default="false">
       <prompt prompt="closed" locale="en-GB"/>
     </property>
-    <permission group="issueexperts" permission="insert"/>
+    <list name="Followupactions" properties="all"/>
+    <form name="Followupaction" properties="all"/>
+    <permission group="issueexperts" permission="noedit"/>
     <permission group="canvassers" permission="read">
       <documentation>But only for electors in their immediate vicinity</documentation>
     </permission>
+    <permission group="teamorganisers" permission="none"/>
     <permission group="analysts" permission="read"/>
-    <list name="Followupactions" properties="all"/>
-    <form name="Followupaction" properties="all"/>
-  </entity>
-  <entity name="issueexpertise" magnitude="5">
-    <documentation>Link table</documentation>
-      <property required="true" type="entity" name="canvasser_id" column="canvasser_id"
-        entity="canvassers" farkey="id">
-        <prompt prompt="canvasser_id" locale="en-GB"/>
-      </property>
-    <property required="true" type="entity" name="issue_id" column="issue_id" entity="issues"
-      farkey="id">
-      <prompt prompt="issue_id" locale="en-GB"/>
-    </property>
-    <property required="true" type="entity" name="method_id" column="method_id"
-      entity="followupmethods" farkey="id">
-      <prompt prompt="method_id" locale="en-GB"/>
-    </property>
+    <permission group="issueeditors" permission="read"/>
+    <permission group="admin" permission="all"/>
   </entity>
   <entity name="options" magnitude="1">
     <documentation>Options in the election or referendum being canvassed on</documentation>
@@ -443,17 +522,12 @@
     </key>
     <list name="Options" properties="all"/>
     <form name="Option" properties="all"/>
-  </entity>
-  <entity name="teammemberships" magnitude="5">
-    <documentation>Link table</documentation>
-    <property required="true" type="entity" entity="teams" farkey="id" name="team_id"
-      column="team_id">
-      <prompt prompt="team_id" locale="en-GB"/>
-    </property>
-    <property required="true" type="entity" entity="canvassers" farkey="id" name="canvasser_id"
-      column="canvasser_id">
-      <prompt prompt="canvasser_id" locale="en-GB"/>
-    </property>
+    <permission group="canvassers" permission="read"/>
+    <permission group="teamorganisers" permission="read"/>
+    <permission group="issueexperts" permission="read"/>
+    <permission group="analysts" permission="read"/>
+    <permission group="issueeditors" permission="read"/>
+    <permission group="admin" permission="all"/>
   </entity>
   <entity name="followupmethods" magnitude="1">
     <key>
@@ -463,5 +537,11 @@
     </key>
     <list name="Followupmethods" properties="all"/>
     <form name="Followupmethod" properties="all"/>
+    <permission group="canvassers" permission="read"/>
+    <permission group="teamorganisers" permission="read"/>
+    <permission group="issueexperts" permission="read"/>
+    <permission group="analysts" permission="read"/>
+    <permission group="issueeditors" permission="read"/>
+    <permission group="admin" permission="all"/>
   </entity>
 </application>

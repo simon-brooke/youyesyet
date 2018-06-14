@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-visits-Visits.html generated 2018-06-14T19:58:20.295Z by adl.to-selmer-templates.
+<!-- File list-genders-Genders.html generated 2018-06-14T19:58:20.293Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -23,38 +23,20 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block content %}
 <form id='content' class='list'>
 <div class='big-link-container'>
-<a href='form-visits-Visit'>
-Add a new Visit
+<a href='form-genders-Gender'>
+Add a new Gender
 </a>
 </div>
-<table caption='visits'>
+<table caption='genders'>
 <thead>
 <tr>
 <th>
 id
 </th>
-<th>
-address_id
-</th>
-<th>
-canvasser_id
-</th>
-<th>
-date
-</th>
 </tr>
 <tr>
 <th>
 <input id='id' type='text' name='id' value='{{ params.id }}'/>
-</th>
-<th>
-<input id='address_id' type='text' name='address_id' value='{{ params.address_id }}'/>
-</th>
-<th>
-<input id='canvasser_id' type='text' name='canvasser_id' value='{{ params.canvasser_id }}'/>
-</th>
-<th>
-<input id='date' type='date' name='date' value='{{ params.date }}'/>
 </th>
 <th>
 <input type='submit' id='search' value='Search'/>
@@ -68,16 +50,7 @@ date
 {{ record.id }}
 </td>
 <td>
-{{ record.address_id }}
-</td>
-<td>
-{{ record.canvasser_id }}
-</td>
-<td>
-{{ record.date }}
-</td>
-<td>
-<a href='{{servlet-context}}/form-visits-Visit?id={{ record.id}}'>
+<a href='{{servlet-context}}/form-genders-Gender?id={{ record.id}}'>
 View
 </a>
 </td>

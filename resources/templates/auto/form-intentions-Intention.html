@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+<!-- File form-intentions-Intention.html generated 2018-06-14T19:58:20.343Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+{% block head %}
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+
+<meta content='width=device-width, initial-scale=1' name='viewport'/>
+
+<link href='css/yyy-common.css' type='text/css' rel='stylesheet'/>
+
+<link href='css/yyy-site.css' type='text/css' rel='stylesheet'/>
+
+<link href='css/spinner.css' type='text/css' rel='stylesheet'/>
+
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow'/>
+
+<title>
+{{site-title}}: {{title}}
+</title>
+
+{% endblock %}
+
+{% block content %}
+<div id='content' class='edit'>
+<form action='{{servlet-context}}/form-intentions-Intention' method='POST'>
+{% csrf-field %}
+<input id='Id' name='Id' type='hidden' value='{{record.Id}}'/>
+<p class='widget'>
+<label for='visit_id'>
+visit_id
+</label>
+{% ifwritable intentions visit_id %}
+<div class='select-box' farside='visits' found='true'>
+<input name='visit_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='visit_id' name='visit_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in visits %}<option value='{{record.id}}'>{{record.address_id}} {{record.date}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable intentions visit_id%}
+<span id='visit_id' name='visit_id' class='pseudo-widget disabled'>
+{{record.visit_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='elector_id'>
+elector_id
+</label>
+{% ifwritable intentions elector_id %}
+<div class='select-box' farside='electors' found='true'>
+<input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in electors %}<option value='{{record.id}}'>{{record.name}} {{record.phone}} {{record.email}} {{record.gender}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable intentions elector_id%}
+<span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
+{{record.elector_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='option_id'>
+option_id
+</label>
+{% ifwritable intentions option_id %}
+<div class='select-box' farside='options' found='true'>
+<select id='option_id' name='option_id'>
+{% for record in options %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable intentions option_id%}
+<span id='option_id' name='option_id' class='pseudo-widget disabled'>
+{{record.option_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='visit_id'>
+visit_id
+</label>
+{% ifwritable intentions visit_id %}
+<div class='select-box' farside='visits' found='true'>
+<input name='visit_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='visit_id' name='visit_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in visits %}<option value='{{record.id}}'>{{record.address_id}} {{record.date}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable intentions visit_id%}
+<span id='visit_id' name='visit_id' class='pseudo-widget disabled'>
+{{record.visit_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='elector_id'>
+elector_id
+</label>
+{% ifwritable intentions elector_id %}
+<div class='select-box' farside='electors' found='true'>
+<input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
+<select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% for record in electors %}<option value='{{record.id}}'>{{record.name}} {{record.phone}} {{record.email}} {{record.gender}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable intentions elector_id%}
+<span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
+{{record.elector_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget'>
+<label for='option_id'>
+option_id
+</label>
+{% ifwritable intentions option_id %}
+<div class='select-box' farside='options' found='true'>
+<select id='option_id' name='option_id'>
+{% for record in options %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
+</select>
+</div>
+{% else %}
+{% ifreadable intentions option_id%}
+<span id='option_id' name='option_id' class='pseudo-widget disabled'>
+{{record.option_id}}
+</span>
+{% endifreadable %}
+{% endifwritable %}
+</p>
+<p class='widget action-safe'>
+<label for='save-button' class='action-safe'>
+To save this intentions record
+</label>
+<input id='save-button' name='save-button' class='action-safe' type=':submit' value='Save!'/>
+</p>
+<p class='widget action-dangerous'>
+<label for='delete-button' class='action-dangerous'>
+To delete this intentions record
+</label>
+<input id='delete-button' name='delete-button' class='action-dangerous' type=':submit' value='Delete!'/>
+</p>
+</form>
+</div>
+
+{% endblock %}
+{% block foot %}
+<footer>
+<div id='credits'>
+<div>
+<img height='24' width='24' src='img/credits/ric-logo.png'/>
+
+            A project of the
+            
+<a href='https://radical.scot/'>
+Radical Independence Campaign
+</a>
+ ||
+            Version {{version}}
+          
+</div>
+<div>
+<img src='img/credits/luminus-logo.png' alt='Clojure' width='16' height='16'/>
+Built with 
+<a href='http://www.luminusweb.net/'>
+LuminusWeb
+</a>
+ ||
+            
+<img src='img/credits/clojure-icon.gif' alt='Clojure' width='16' height='16'/>
+ Powered by 
+<a href='http://clojure.org'>
+Clojure
+</a>
+ ||
+            
+<img src='img/credits/github-logo-transparent.png' alt='GitHub' width='16' height='16'/>
+Find me/fork me on 
+<a href='https://github.com/simon-brooke/smeagol'>
+Github
+</a>
+ ||
+            
+<img src='img/credits/gnu.small.png' alt='Free Software Foundation' width='16' height='16'/>
+Licensed under the 
+<a href='http://www.gnu.org/licenses/gpl-2.0.html'>
+GNU General Public License version 2.0
+</a>
+</div>
+</div>
+</footer>
+
+{% endblock %}

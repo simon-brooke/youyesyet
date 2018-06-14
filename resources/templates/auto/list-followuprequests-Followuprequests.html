@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-visits-Visits.html generated 2018-06-14T19:58:20.295Z by adl.to-selmer-templates.
+<!-- File list-followuprequests-Followuprequests.html generated 2018-06-14T19:58:20.303Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -23,24 +23,27 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block content %}
 <form id='content' class='list'>
 <div class='big-link-container'>
-<a href='form-visits-Visit'>
-Add a new Visit
+<a href='form-followuprequests-Followuprequest'>
+Add a new Followuprequest
 </a>
 </div>
-<table caption='visits'>
+<table caption='followuprequests'>
 <thead>
 <tr>
 <th>
 id
 </th>
 <th>
-address_id
+elector_id
 </th>
 <th>
-canvasser_id
+visit_id
 </th>
 <th>
-date
+issue_id
+</th>
+<th>
+method_id
 </th>
 </tr>
 <tr>
@@ -48,13 +51,16 @@ date
 <input id='id' type='text' name='id' value='{{ params.id }}'/>
 </th>
 <th>
-<input id='address_id' type='text' name='address_id' value='{{ params.address_id }}'/>
+<input id='elector_id' type='text' name='elector_id' value='{{ params.elector_id }}'/>
 </th>
 <th>
-<input id='canvasser_id' type='text' name='canvasser_id' value='{{ params.canvasser_id }}'/>
+<input id='visit_id' type='text' name='visit_id' value='{{ params.visit_id }}'/>
 </th>
 <th>
-<input id='date' type='date' name='date' value='{{ params.date }}'/>
+<input id='issue_id' type='text' name='issue_id' value='{{ params.issue_id }}'/>
+</th>
+<th>
+<input id='method_id' type='text' name='method_id' value='{{ params.method_id }}'/>
 </th>
 <th>
 <input type='submit' id='search' value='Search'/>
@@ -68,16 +74,19 @@ date
 {{ record.id }}
 </td>
 <td>
-{{ record.address_id }}
+{{ record.elector_id }}
 </td>
 <td>
-{{ record.canvasser_id }}
+{{ record.visit_id }}
 </td>
 <td>
-{{ record.date }}
+{{ record.issue_id }}
 </td>
 <td>
-<a href='{{servlet-context}}/form-visits-Visit?id={{ record.id}}'>
+{{ record.method_id }}
+</td>
+<td>
+<a href='{{servlet-context}}/form-followuprequests-Followuprequest?id={{ record.id}}'>
 View
 </a>
 </td>

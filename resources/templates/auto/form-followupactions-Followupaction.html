@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-followupactions-Followupaction.html generated 2018-06-11T18:42:42.854Z by adl.to-selmer-templates.
+<!-- File form-followupactions-Followupaction.html generated 2018-06-14T19:58:20.348Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -47,7 +47,7 @@ request_id
 <div class='select-box' farside='followuprequests' found='true'>
 <input name='request_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='request_id' name='request_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in followuprequests %}<option value='{{record.id}}'></option>{% endfor %}
+{% for record in followuprequests %}<option value='{{record.id}}'>{{record.elector_id}} {{record.visit_id}} {{record.issue_id}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
@@ -141,7 +141,7 @@ request_id
 <div class='select-box' farside='followuprequests' found='true'>
 <input name='request_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='request_id' name='request_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in followuprequests %}<option value='{{record.id}}'></option>{% endfor %}
+{% for record in followuprequests %}<option value='{{record.id}}'>{{record.elector_id}} {{record.visit_id}} {{record.issue_id}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
