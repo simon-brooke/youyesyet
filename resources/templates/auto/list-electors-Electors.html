@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-electors-Electors.html generated 2018-06-14T19:58:20.320Z by adl.to-selmer-templates.
+<!-- File list-electors-Electors.html generated 2018-06-15T08:47:04.313Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -74,7 +74,7 @@ gender
 </tr>
 </thead>
 <tbody>
-{% for record in %records% %}
+{% for record in records %}
 <tr>
 <td>
 {{ record.id }}
@@ -95,7 +95,7 @@ gender
 {{ record.gender }}
 </td>
 <td>
-<a href='{{servlet-context}}/form-electors-Elector?id={{ record.id}}'>
+<a href='form-electors-Elector?id={{ record.id}}'>
 View
 </a>
 </td>

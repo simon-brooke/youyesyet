@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-intentions-Intentions.html generated 2018-06-14T19:58:20.348Z by adl.to-selmer-templates.
+<!-- File list-intentions-Intentions.html generated 2018-06-15T08:47:04.341Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -56,7 +56,7 @@ option_id
 </tr>
 </thead>
 <tbody>
-{% for record in %records% %}
+{% for record in records %}
 <tr>
 <td>
 {{ record.visit_id }}
@@ -68,7 +68,7 @@ option_id
 {{ record.option_id }}
 </td>
 <td>
-<a href='{{servlet-context}}/form-intentions-Intention?Id={{ record.Id}}'>
+<a href='form-intentions-Intention?Id={{ record.Id}}'>
 View
 </a>
 </td>

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-dwellings-Dwellings.html generated 2018-06-14T19:58:20.334Z by adl.to-selmer-templates.
+<!-- File list-dwellings-Dwellings.html generated 2018-06-15T08:47:04.329Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -56,7 +56,7 @@ sub-address
 </tr>
 </thead>
 <tbody>
-{% for record in %records% %}
+{% for record in records %}
 <tr>
 <td>
 {{ record.id }}
@@ -68,7 +68,7 @@ sub-address
 {{ record.sub-address }}
 </td>
 <td>
-<a href='{{servlet-context}}/form-dwellings-Dwelling?id={{ record.id}}'>
+<a href='form-dwellings-Dwelling?id={{ record.id}}'>
 View
 </a>
 </td>

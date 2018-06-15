@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-followuprequests-Followuprequests.html generated 2018-06-14T19:58:20.303Z by adl.to-selmer-templates.
+<!-- File list-followuprequests-Followuprequests.html generated 2018-06-15T08:47:04.296Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -68,7 +68,7 @@ method_id
 </tr>
 </thead>
 <tbody>
-{% for record in %records% %}
+{% for record in records %}
 <tr>
 <td>
 {{ record.id }}
@@ -86,7 +86,7 @@ method_id
 {{ record.method_id }}
 </td>
 <td>
-<a href='{{servlet-context}}/form-followuprequests-Followuprequest?id={{ record.id}}'>
+<a href='form-followuprequests-Followuprequest?id={{ record.id}}'>
 View
 </a>
 </td>
