@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-followupactions-Followupaction.html generated 2018-06-15T08:47:04.342Z by adl.to-selmer-templates.
+<!-- File form-followupactions-Followupaction.html generated 2018-06-18T10:08:09.853Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -29,21 +29,21 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <label for='id'>
 id
 </label>
-{% ifwritable followupactions  %}
+{% ifmemberof admin %}
 <input id='id' name='id' type='text' value='{{record.id}}'/>
 {% else %}
-{% ifreadable followupactions %}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='request_id'>
 request_id
 </label>
-{% ifwritable followupactions request_id %}
+{% ifmemberof admin %}
 <div class='select-box' farside='followuprequests' found='true'>
 <input name='request_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='request_id' name='request_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -51,18 +51,18 @@ request_id
 </select>
 </div>
 {% else %}
-{% ifreadable followupactions request_id%}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='request_id' name='request_id' class='pseudo-widget disabled'>
 {{record.request_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='actor'>
 actor
 </label>
-{% ifwritable followupactions actor %}
+{% ifmemberof admin %}
 <div class='select-box' farside='canvassers' found='true'>
 <input name='actor-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='actor' name='actor' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -70,74 +70,74 @@ actor
 </select>
 </div>
 {% else %}
-{% ifreadable followupactions actor%}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='actor' name='actor' class='pseudo-widget disabled'>
 {{record.actor}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='date'>
 date
 </label>
-{% ifwritable followupactions date %}
+{% ifmemberof admin %}
 <input id='date' name='date' type='text' value='{{record.date}}'/>
 {% else %}
-{% ifreadable followupactions date%}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='date' name='date' class='pseudo-widget disabled'>
 {{record.date}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='notes'>
 notes
 </label>
-{% ifwritable followupactions notes %}
+{% ifmemberof admin %}
 <input id='notes' name='notes' type='text' value='{{record.notes}}'/>
 {% else %}
-{% ifreadable followupactions notes%}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='notes' name='notes' class='pseudo-widget disabled'>
 {{record.notes}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='closed'>
 closed
 </label>
-{% ifwritable followupactions closed %}
+{% ifmemberof admin %}
 <input id='closed' name='closed' type='checkbox' value='{{record.closed}}'/>
 {% else %}
-{% ifreadable followupactions closed%}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='closed' name='closed' class='pseudo-widget disabled'>
 {{record.closed}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='id'>
 id
 </label>
-{% ifwritable followupactions  %}
+{% ifmemberof admin %}
 <input id='id' name='id' type='text' value='{{record.id}}'/>
 {% else %}
-{% ifreadable followupactions %}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='request_id'>
 request_id
 </label>
-{% ifwritable followupactions request_id %}
+{% ifmemberof admin %}
 <div class='select-box' farside='followuprequests' found='true'>
 <input name='request_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='request_id' name='request_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -145,18 +145,18 @@ request_id
 </select>
 </div>
 {% else %}
-{% ifreadable followupactions request_id%}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='request_id' name='request_id' class='pseudo-widget disabled'>
 {{record.request_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='actor'>
 actor
 </label>
-{% ifwritable followupactions actor %}
+{% ifmemberof admin %}
 <div class='select-box' farside='canvassers' found='true'>
 <input name='actor-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='actor' name='actor' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -164,54 +164,54 @@ actor
 </select>
 </div>
 {% else %}
-{% ifreadable followupactions actor%}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='actor' name='actor' class='pseudo-widget disabled'>
 {{record.actor}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='date'>
 date
 </label>
-{% ifwritable followupactions date %}
+{% ifmemberof admin %}
 <input id='date' name='date' type='text' value='{{record.date}}'/>
 {% else %}
-{% ifreadable followupactions date%}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='date' name='date' class='pseudo-widget disabled'>
 {{record.date}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='notes'>
 notes
 </label>
-{% ifwritable followupactions notes %}
+{% ifmemberof admin %}
 <input id='notes' name='notes' type='text' value='{{record.notes}}'/>
 {% else %}
-{% ifreadable followupactions notes%}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='notes' name='notes' class='pseudo-widget disabled'>
 {{record.notes}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='closed'>
 closed
 </label>
-{% ifwritable followupactions closed %}
+{% ifmemberof admin %}
 <input id='closed' name='closed' type='checkbox' value='{{record.closed}}'/>
 {% else %}
-{% ifreadable followupactions closed%}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='closed' name='closed' class='pseudo-widget disabled'>
 {{record.closed}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>

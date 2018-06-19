@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-teams-Team.html generated 2018-06-15T08:47:04.323Z by adl.to-selmer-templates.
+<!-- File form-teams-Team.html generated 2018-06-18T10:08:09.801Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -29,35 +29,35 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <label for='id'>
 id
 </label>
-{% ifwritable teams  %}
+{% ifmemberof teamorganisers admin %}
 <input id='id' name='id' type='text' value='{{record.id}}'/>
 {% else %}
-{% ifreadable teams %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='name'>
 name
 </label>
-{% ifwritable teams name %}
+{% ifmemberof teamorganisers admin %}
 <input id='name' name='name' type='text' value='{{record.name}}'/>
 {% else %}
-{% ifreadable teams name%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='name' name='name' class='pseudo-widget disabled'>
 {{record.name}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='district_id'>
 district_id
 </label>
-{% ifwritable teams district_id %}
+{% ifmemberof teamorganisers admin %}
 <div class='select-box' farside='districts' found='true'>
 <input name='district_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='district_id' name='district_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -65,74 +65,74 @@ district_id
 </select>
 </div>
 {% else %}
-{% ifreadable teams district_id%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='district_id' name='district_id' class='pseudo-widget disabled'>
 {{record.district_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='latitude'>
 latitude
 </label>
-{% ifwritable teams latitude %}
+{% ifmemberof teamorganisers admin %}
 <input id='latitude' name='latitude' type='number' value='{{record.latitude}}'/>
 {% else %}
-{% ifreadable teams latitude%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='latitude' name='latitude' class='pseudo-widget disabled'>
 {{record.latitude}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='longitude'>
 longitude
 </label>
-{% ifwritable teams longitude %}
+{% ifmemberof teamorganisers admin %}
 <input id='longitude' name='longitude' type='number' value='{{record.longitude}}'/>
 {% else %}
-{% ifreadable teams longitude%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='longitude' name='longitude' class='pseudo-widget disabled'>
 {{record.longitude}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='id'>
 id
 </label>
-{% ifwritable teams  %}
+{% ifmemberof teamorganisers admin %}
 <input id='id' name='id' type='text' value='{{record.id}}'/>
 {% else %}
-{% ifreadable teams %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='name'>
 name
 </label>
-{% ifwritable teams name %}
+{% ifmemberof teamorganisers admin %}
 <input id='name' name='name' type='text' value='{{record.name}}'/>
 {% else %}
-{% ifreadable teams name%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='name' name='name' class='pseudo-widget disabled'>
 {{record.name}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='district_id'>
 district_id
 </label>
-{% ifwritable teams district_id %}
+{% ifmemberof teamorganisers admin %}
 <div class='select-box' farside='districts' found='true'>
 <input name='district_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='district_id' name='district_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -140,32 +140,32 @@ district_id
 </select>
 </div>
 {% else %}
-{% ifreadable teams district_id%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='district_id' name='district_id' class='pseudo-widget disabled'>
 {{record.district_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='latitude'>
 latitude
 </label>
-{% ifwritable teams latitude %}
+{% ifmemberof teamorganisers admin %}
 <input id='latitude' name='latitude' type='number' value='{{record.latitude}}'/>
 {% else %}
-{% ifreadable teams latitude%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='latitude' name='latitude' class='pseudo-widget disabled'>
 {{record.latitude}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='members'>
 members
 </label>
-{% ifwritable teams members %}
+{% ifmemberof teamorganisers admin %}
 <div class='select-box' farside='canvassers' found='true'>
 <input name='members-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='members' name='members' multiple='multiple' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -173,18 +173,18 @@ members
 </select>
 </div>
 {% else %}
-{% ifreadable teams members%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='members' name='members' class='pseudo-widget disabled'>
 {{record.members}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='organisers'>
 organisers
 </label>
-{% ifwritable teams organisers %}
+{% ifmemberof teamorganisers admin %}
 <div class='select-box' farside='canvassers' found='true'>
 <input name='organisers-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='organisers' name='organisers' multiple='multiple' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -192,26 +192,26 @@ organisers
 </select>
 </div>
 {% else %}
-{% ifreadable teams organisers%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='organisers' name='organisers' class='pseudo-widget disabled'>
 {{record.organisers}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='longitude'>
 longitude
 </label>
-{% ifwritable teams longitude %}
+{% ifmemberof teamorganisers admin %}
 <input id='longitude' name='longitude' type='number' value='{{record.longitude}}'/>
 {% else %}
-{% ifreadable teams longitude%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='longitude' name='longitude' class='pseudo-widget disabled'>
 {{record.longitude}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>

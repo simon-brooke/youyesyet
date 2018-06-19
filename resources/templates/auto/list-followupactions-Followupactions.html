@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-followupactions-Followupactions.html generated 2018-06-15T08:47:04.338Z by adl.to-selmer-templates.
+<!-- File list-followupactions-Followupactions.html generated 2018-06-18T10:08:09.842Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -54,10 +54,10 @@ closed
 <input id='id' type='text' name='id' value='{{ params.id }}'/>
 </th>
 <th>
-<input id='request_id' type='text' name='request_id' value='{{ params.request_id }}'/>
+<input id='request_id_expanded' type='text' name='request_id_expanded' value='{{ params.request_id_expanded }}'/>
 </th>
 <th>
-<input id='actor' type='text' name='actor' value='{{ params.actor }}'/>
+<input id='actor_expanded' type='text' name='actor_expanded' value='{{ params.actor_expanded }}'/>
 </th>
 <th>
 <input id='date' type='date' name='date' value='{{ params.date }}'/>
@@ -80,10 +80,14 @@ closed
 {{ record.id }}
 </td>
 <td>
-{{ record.request_id }}
+<a href='form-followuprequests-Followuprequest?id={{ record.request_id }}'>
+{{ record.request_id_expanded }}
+</a>
 </td>
 <td>
-{{ record.actor }}
+<a href='form-canvassers-Canvasser?id={{ record.actor }}'>
+{{ record.actor_expanded }}
+</a>
 </td>
 <td>
 {{ record.date }}
@@ -95,7 +99,7 @@ closed
 {{ record.closed }}
 </td>
 <td>
-<a href='form-followupactions-Followupaction?id={{ record.id}}'>
+<a href='form-followupactions-Followupaction?id={{ record.id }}'>
 View
 </a>
 </td>

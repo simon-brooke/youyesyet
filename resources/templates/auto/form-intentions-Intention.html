@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-intentions-Intention.html generated 2018-06-15T08:47:04.336Z by adl.to-selmer-templates.
+<!-- File form-intentions-Intention.html generated 2018-06-18T10:08:09.837Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -29,7 +29,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <label for='visit_id'>
 visit_id
 </label>
-{% ifwritable intentions visit_id %}
+{% ifmemberof admin %}
 <div class='select-box' farside='visits' found='true'>
 <input name='visit_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='visit_id' name='visit_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -37,18 +37,18 @@ visit_id
 </select>
 </div>
 {% else %}
-{% ifreadable intentions visit_id%}
+{% ifmemberof canvassers analysts admin %}
 <span id='visit_id' name='visit_id' class='pseudo-widget disabled'>
 {{record.visit_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='elector_id'>
 elector_id
 </label>
-{% ifwritable intentions elector_id %}
+{% ifmemberof admin %}
 <div class='select-box' farside='electors' found='true'>
 <input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -56,36 +56,36 @@ elector_id
 </select>
 </div>
 {% else %}
-{% ifreadable intentions elector_id%}
+{% ifmemberof canvassers analysts admin %}
 <span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
 {{record.elector_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='option_id'>
 option_id
 </label>
-{% ifwritable intentions option_id %}
+{% ifmemberof admin %}
 <div class='select-box' farside='options' found='true'>
 <select id='option_id' name='option_id'>
 {% for record in options %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
-{% ifreadable intentions option_id%}
+{% ifmemberof canvassers analysts admin %}
 <span id='option_id' name='option_id' class='pseudo-widget disabled'>
 {{record.option_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='visit_id'>
 visit_id
 </label>
-{% ifwritable intentions visit_id %}
+{% ifmemberof admin %}
 <div class='select-box' farside='visits' found='true'>
 <input name='visit_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='visit_id' name='visit_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -93,18 +93,18 @@ visit_id
 </select>
 </div>
 {% else %}
-{% ifreadable intentions visit_id%}
+{% ifmemberof canvassers analysts admin %}
 <span id='visit_id' name='visit_id' class='pseudo-widget disabled'>
 {{record.visit_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='elector_id'>
 elector_id
 </label>
-{% ifwritable intentions elector_id %}
+{% ifmemberof admin %}
 <div class='select-box' farside='electors' found='true'>
 <input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -112,30 +112,30 @@ elector_id
 </select>
 </div>
 {% else %}
-{% ifreadable intentions elector_id%}
+{% ifmemberof canvassers analysts admin %}
 <span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
 {{record.elector_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='option_id'>
 option_id
 </label>
-{% ifwritable intentions option_id %}
+{% ifmemberof admin %}
 <div class='select-box' farside='options' found='true'>
 <select id='option_id' name='option_id'>
 {% for record in options %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
-{% ifreadable intentions option_id%}
+{% ifmemberof canvassers analysts admin %}
 <span id='option_id' name='option_id' class='pseudo-widget disabled'>
 {{record.option_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>

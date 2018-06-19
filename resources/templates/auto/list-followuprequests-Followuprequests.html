@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-followuprequests-Followuprequests.html generated 2018-06-15T08:47:04.296Z by adl.to-selmer-templates.
+<!-- File list-followuprequests-Followuprequests.html generated 2018-06-18T10:08:09.751Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -51,16 +51,16 @@ method_id
 <input id='id' type='text' name='id' value='{{ params.id }}'/>
 </th>
 <th>
-<input id='elector_id' type='text' name='elector_id' value='{{ params.elector_id }}'/>
+<input id='elector_id_expanded' type='text' name='elector_id_expanded' value='{{ params.elector_id_expanded }}'/>
 </th>
 <th>
-<input id='visit_id' type='text' name='visit_id' value='{{ params.visit_id }}'/>
+<input id='visit_id_expanded' type='text' name='visit_id_expanded' value='{{ params.visit_id_expanded }}'/>
 </th>
 <th>
-<input id='issue_id' type='text' name='issue_id' value='{{ params.issue_id }}'/>
+<input id='issue_id_expanded' type='text' name='issue_id_expanded' value='{{ params.issue_id_expanded }}'/>
 </th>
 <th>
-<input id='method_id' type='text' name='method_id' value='{{ params.method_id }}'/>
+<input id='method_id_expanded' type='text' name='method_id_expanded' value='{{ params.method_id_expanded }}'/>
 </th>
 <th>
 <input type='submit' id='search' value='Search'/>
@@ -74,19 +74,27 @@ method_id
 {{ record.id }}
 </td>
 <td>
-{{ record.elector_id }}
+<a href='form-electors-Elector?id={{ record.elector_id }}'>
+{{ record.elector_id_expanded }}
+</a>
 </td>
 <td>
-{{ record.visit_id }}
+<a href='form-visits-Visit?id={{ record.visit_id }}'>
+{{ record.visit_id_expanded }}
+</a>
 </td>
 <td>
-{{ record.issue_id }}
+<a href='form-issues-Issue?id={{ record.issue_id }}'>
+{{ record.issue_id_expanded }}
+</a>
 </td>
 <td>
-{{ record.method_id }}
+<a href='form-followupmethods-Followupmethod?id={{ record.method_id }}'>
+{{ record.method_id_expanded }}
+</a>
 </td>
 <td>
-<a href='form-followuprequests-Followuprequest?id={{ record.id}}'>
+<a href='form-followuprequests-Followuprequest?id={{ record.id }}'>
 View
 </a>
 </td>

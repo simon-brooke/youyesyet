@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-roles-Role.html generated 2018-06-15T08:47:04.316Z by adl.to-selmer-templates.
+<!-- File form-roles-Role.html generated 2018-06-18T10:08:09.788Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -29,63 +29,63 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <label for='id'>
 id
 </label>
-{% ifwritable roles  %}
+{% ifmemberof admin %}
 <input id='id' name='id' type='text' value='{{record.id}}'/>
 {% else %}
-{% ifreadable roles %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='name'>
 name
 </label>
-{% ifwritable roles name %}
+{% ifmemberof admin %}
 <input id='name' name='name' type='text' value='{{record.name}}'/>
 {% else %}
-{% ifreadable roles name%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='name' name='name' class='pseudo-widget disabled'>
 {{record.name}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='id'>
 id
 </label>
-{% ifwritable roles  %}
+{% ifmemberof admin %}
 <input id='id' name='id' type='text' value='{{record.id}}'/>
 {% else %}
-{% ifreadable roles %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='name'>
 name
 </label>
-{% ifwritable roles name %}
+{% ifmemberof admin %}
 <input id='name' name='name' type='text' value='{{record.name}}'/>
 {% else %}
-{% ifreadable roles name%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='name' name='name' class='pseudo-widget disabled'>
 {{record.name}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='members'>
 members
 </label>
-{% ifwritable roles members %}
+{% ifmemberof admin %}
 <div class='select-box' farside='canvassers' found='true'>
 <input name='members-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='members' name='members' multiple='multiple' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -93,12 +93,12 @@ members
 </select>
 </div>
 {% else %}
-{% ifreadable roles members%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='members' name='members' class='pseudo-widget disabled'>
 {{record.members}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-canvassers-Canvasser.html generated 2018-06-15T08:47:04.331Z by adl.to-selmer-templates.
+<!-- File form-canvassers-Canvasser.html generated 2018-06-18T10:08:09.823Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -29,49 +29,49 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <label for='id'>
 id
 </label>
-{% ifwritable canvassers  %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='id' name='id' type='text' value='{{record.id}}'/>
 {% else %}
-{% ifreadable canvassers %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='username'>
 username
 </label>
-{% ifwritable canvassers username %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='username' name='username' type='text' value='{{record.username}}'/>
 {% else %}
-{% ifreadable canvassers username%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='username' name='username' class='pseudo-widget disabled'>
 {{record.username}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='fullname'>
 fullname
 </label>
-{% ifwritable canvassers fullname %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='fullname' name='fullname' type='text' value='{{record.fullname}}'/>
 {% else %}
-{% ifreadable canvassers fullname%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='fullname' name='fullname' class='pseudo-widget disabled'>
 {{record.fullname}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='elector_id'>
 elector_id
 </label>
-{% ifwritable canvassers elector_id %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <div class='select-box' farside='electors' found='true'>
 <input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -79,18 +79,18 @@ elector_id
 </select>
 </div>
 {% else %}
-{% ifreadable canvassers elector_id%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
 {{record.elector_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='address_id'>
 address_id
 </label>
-{% ifwritable canvassers address_id %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <div class='select-box' farside='addresses' found='true'>
 <input name='address_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='address_id' name='address_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -98,46 +98,46 @@ address_id
 </select>
 </div>
 {% else %}
-{% ifreadable canvassers address_id%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='address_id' name='address_id' class='pseudo-widget disabled'>
 {{record.address_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='phone'>
 phone
 </label>
-{% ifwritable canvassers phone %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='phone' name='phone' type='text' value='{{record.phone}}'/>
 {% else %}
-{% ifreadable canvassers phone%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='phone' name='phone' class='pseudo-widget disabled'>
 {{record.phone}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='email'>
 email
 </label>
-{% ifwritable canvassers email %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='email' name='email' type='text' value='{{record.email}}'/>
 {% else %}
-{% ifreadable canvassers email%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='email' name='email' class='pseudo-widget disabled'>
 {{record.email}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='authority_id'>
 authority_id
 </label>
-{% ifwritable canvassers authority_id %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <div class='select-box' farside='authorities' found='true'>
 <input name='authority_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='authority_id' name='authority_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -145,74 +145,74 @@ authority_id
 </select>
 </div>
 {% else %}
-{% ifreadable canvassers authority_id%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='authority_id' name='authority_id' class='pseudo-widget disabled'>
 {{record.authority_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='authorised'>
 authorised
 </label>
-{% ifwritable canvassers authorised %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='authorised' name='authorised' type='checkbox' value='{{record.authorised}}'/>
 {% else %}
-{% ifreadable canvassers authorised%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='authorised' name='authorised' class='pseudo-widget disabled'>
 {{record.authorised}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='id'>
 id
 </label>
-{% ifwritable canvassers  %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='id' name='id' type='text' value='{{record.id}}'/>
 {% else %}
-{% ifreadable canvassers %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='username'>
 username
 </label>
-{% ifwritable canvassers username %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='username' name='username' type='text' value='{{record.username}}'/>
 {% else %}
-{% ifreadable canvassers username%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='username' name='username' class='pseudo-widget disabled'>
 {{record.username}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='fullname'>
 fullname
 </label>
-{% ifwritable canvassers fullname %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='fullname' name='fullname' type='text' value='{{record.fullname}}'/>
 {% else %}
-{% ifreadable canvassers fullname%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='fullname' name='fullname' class='pseudo-widget disabled'>
 {{record.fullname}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='elector_id'>
 elector_id
 </label>
-{% ifwritable canvassers elector_id %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <div class='select-box' farside='electors' found='true'>
 <input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -220,18 +220,18 @@ elector_id
 </select>
 </div>
 {% else %}
-{% ifreadable canvassers elector_id%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
 {{record.elector_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='address_id'>
 address_id
 </label>
-{% ifwritable canvassers address_id %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <div class='select-box' farside='addresses' found='true'>
 <input name='address_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='address_id' name='address_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -239,46 +239,46 @@ address_id
 </select>
 </div>
 {% else %}
-{% ifreadable canvassers address_id%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='address_id' name='address_id' class='pseudo-widget disabled'>
 {{record.address_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='phone'>
 phone
 </label>
-{% ifwritable canvassers phone %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='phone' name='phone' type='text' value='{{record.phone}}'/>
 {% else %}
-{% ifreadable canvassers phone%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='phone' name='phone' class='pseudo-widget disabled'>
 {{record.phone}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='email'>
 email
 </label>
-{% ifwritable canvassers email %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='email' name='email' type='text' value='{{record.email}}'/>
 {% else %}
-{% ifreadable canvassers email%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='email' name='email' class='pseudo-widget disabled'>
 {{record.email}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='authority_id'>
 authority_id
 </label>
-{% ifwritable canvassers authority_id %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <div class='select-box' farside='authorities' found='true'>
 <input name='authority_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='authority_id' name='authority_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -286,44 +286,44 @@ authority_id
 </select>
 </div>
 {% else %}
-{% ifreadable canvassers authority_id%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='authority_id' name='authority_id' class='pseudo-widget disabled'>
 {{record.authority_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='authorised'>
 authorised
 </label>
-{% ifwritable canvassers authorised %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='authorised' name='authorised' type='checkbox' value='{{record.authorised}}'/>
 {% else %}
-{% ifreadable canvassers authorised%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='authorised' name='authorised' class='pseudo-widget disabled'>
 {{record.authorised}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='roles'>
 roles
 </label>
-{% ifwritable canvassers roles %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <div class='select-box' farside='roles' found='true'>
 <select id='roles' name='roles' multiple='multiple'>
 {% for record in roles %}<option value='{{record.role_id}}'>{{record.name}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
-{% ifreadable canvassers roles%}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='roles' name='roles' class='pseudo-widget disabled'>
 {{record.roles}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>

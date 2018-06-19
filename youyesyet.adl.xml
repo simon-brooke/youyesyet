@@ -300,13 +300,19 @@
       column="visit_id">
       <prompt prompt="visit_id" locale="en-GB"/>
     </property>
-    <property required="true" type="entity" entity="electors" farkey="id" name="elector_id"
+    <property type="entity" entity="electors" farkey="id" name="elector_id"
       column="elector_id">
       <prompt prompt="elector_id" locale="en-GB"/>
     </property>
     <property required="true" type="entity" entity="options" farkey="id" name="option_id"
       column="option_id">
       <prompt prompt="option_id" locale="en-GB"/>
+    </property>
+    <property name="locality" type="integer" required="true">
+      <documentation>
+        The locality at which the intention was recorded; used where an elector does not consent to
+        have polling intention stored against them. This is a locality as described in
+      </documentation>
     </property>
     <list name="Intentions" properties="all"/>
     <form name="Intention" properties="all"/>

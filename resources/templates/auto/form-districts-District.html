@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-districts-District.html generated 2018-06-15T08:47:04.299Z by adl.to-selmer-templates.
+<!-- File form-districts-District.html generated 2018-06-18T10:08:09.756Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -29,57 +29,57 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <label for='id'>
 id
 </label>
-{% ifwritable districts  %}
+{% ifmemberof admin admin %}
 <input id='id' name='id' type='text' value='{{record.id}}'/>
 {% else %}
-{% ifreadable districts %}
+{% ifmemberof public admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='name'>
 name
 </label>
-{% ifwritable districts name %}
+{% ifmemberof admin admin %}
 <input id='name' name='name' type='text' value='{{record.name}}'/>
 {% else %}
-{% ifreadable districts name%}
+{% ifmemberof public admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='name' name='name' class='pseudo-widget disabled'>
 {{record.name}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='id'>
 id
 </label>
-{% ifwritable districts  %}
+{% ifmemberof admin admin %}
 <input id='id' name='id' type='text' value='{{record.id}}'/>
 {% else %}
-{% ifreadable districts %}
+{% ifmemberof public admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='name'>
 name
 </label>
-{% ifwritable districts name %}
+{% ifmemberof admin admin %}
 <input id='name' name='name' type='text' value='{{record.name}}'/>
 {% else %}
-{% ifreadable districts name%}
+{% ifmemberof public admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='name' name='name' class='pseudo-widget disabled'>
 {{record.name}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>

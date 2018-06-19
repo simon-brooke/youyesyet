@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-electors-Elector.html generated 2018-06-15T08:47:04.327Z by adl.to-selmer-templates.
+<!-- File form-electors-Elector.html generated 2018-06-18T10:08:09.808Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -29,35 +29,35 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <label for='id'>
 id
 </label>
-{% ifwritable electors  %}
+{% ifmemberof admin %}
 <input id='id' name='id' type='text' value='{{record.id}}'/>
 {% else %}
-{% ifreadable electors %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='name'>
 name
 </label>
-{% ifwritable electors name %}
+{% ifmemberof admin %}
 <input id='name' name='name' type='text' value='{{record.name}}'/>
 {% else %}
-{% ifreadable electors name%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='name' name='name' class='pseudo-widget disabled'>
 {{record.name}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='dwelling_id'>
 dwelling_id
 </label>
-{% ifwritable electors dwelling_id %}
+{% ifmemberof admin %}
 <div class='select-box' farside='dwellings' found='true'>
 <input name='dwelling_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='dwelling_id' name='dwelling_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -65,92 +65,92 @@ dwelling_id
 </select>
 </div>
 {% else %}
-{% ifreadable electors dwelling_id%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='dwelling_id' name='dwelling_id' class='pseudo-widget disabled'>
 {{record.dwelling_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='phone'>
 phone
 </label>
-{% ifwritable electors phone %}
+{% ifmemberof admin %}
 <input id='phone' name='phone' type='text' value='{{record.phone}}'/>
 {% else %}
-{% ifreadable electors phone%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='phone' name='phone' class='pseudo-widget disabled'>
 {{record.phone}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='email'>
 email
 </label>
-{% ifwritable electors email %}
+{% ifmemberof admin %}
 <input id='email' name='email' type='text' value='{{record.email}}'/>
 {% else %}
-{% ifreadable electors email%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='email' name='email' class='pseudo-widget disabled'>
 {{record.email}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='gender'>
 gender
 </label>
-{% ifwritable electors gender %}
+{% ifmemberof admin %}
 <div class='select-box' farside='genders' found='true'>
 <select id='gender' name='gender'>
 {% for record in genders %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
-{% ifreadable electors gender%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='gender' name='gender' class='pseudo-widget disabled'>
 {{record.gender}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='id'>
 id
 </label>
-{% ifwritable electors  %}
+{% ifmemberof admin %}
 <input id='id' name='id' type='text' value='{{record.id}}'/>
 {% else %}
-{% ifreadable electors %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='name'>
 name
 </label>
-{% ifwritable electors name %}
+{% ifmemberof admin %}
 <input id='name' name='name' type='text' value='{{record.name}}'/>
 {% else %}
-{% ifreadable electors name%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='name' name='name' class='pseudo-widget disabled'>
 {{record.name}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='dwelling_id'>
 dwelling_id
 </label>
-{% ifwritable electors dwelling_id %}
+{% ifmemberof admin %}
 <div class='select-box' farside='dwellings' found='true'>
 <input name='dwelling_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='dwelling_id' name='dwelling_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -158,58 +158,58 @@ dwelling_id
 </select>
 </div>
 {% else %}
-{% ifreadable electors dwelling_id%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='dwelling_id' name='dwelling_id' class='pseudo-widget disabled'>
 {{record.dwelling_id}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='phone'>
 phone
 </label>
-{% ifwritable electors phone %}
+{% ifmemberof admin %}
 <input id='phone' name='phone' type='text' value='{{record.phone}}'/>
 {% else %}
-{% ifreadable electors phone%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='phone' name='phone' class='pseudo-widget disabled'>
 {{record.phone}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='email'>
 email
 </label>
-{% ifwritable electors email %}
+{% ifmemberof admin %}
 <input id='email' name='email' type='text' value='{{record.email}}'/>
 {% else %}
-{% ifreadable electors email%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='email' name='email' class='pseudo-widget disabled'>
 {{record.email}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget'>
 <label for='gender'>
 gender
 </label>
-{% ifwritable electors gender %}
+{% ifmemberof admin %}
 <div class='select-box' farside='genders' found='true'>
 <select id='gender' name='gender'>
 {% for record in genders %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
-{% ifreadable electors gender%}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='gender' name='gender' class='pseudo-widget disabled'>
 {{record.gender}}
 </span>
-{% endifreadable %}
-{% endifwritable %}
+{% endifmemberof %}
+{% endifmemberof %}
 </p>
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>

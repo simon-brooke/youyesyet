@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-canvassers-Canvassers.html generated 2018-06-15T08:47:04.339Z by adl.to-selmer-templates.
+<!-- File list-canvassers-Canvassers.html generated 2018-06-18T10:08:09.844Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -69,10 +69,10 @@ authorised
 <input id='fullname' type='text' name='fullname' value='{{ params.fullname }}'/>
 </th>
 <th>
-<input id='elector_id' type='text' name='elector_id' value='{{ params.elector_id }}'/>
+<input id='elector_id_expanded' type='text' name='elector_id_expanded' value='{{ params.elector_id_expanded }}'/>
 </th>
 <th>
-<input id='address_id' type='text' name='address_id' value='{{ params.address_id }}'/>
+<input id='address_id_expanded' type='text' name='address_id_expanded' value='{{ params.address_id_expanded }}'/>
 </th>
 <th>
 <input id='phone' type='text' name='phone' value='{{ params.phone }}'/>
@@ -81,7 +81,7 @@ authorised
 <input id='email' type='text' name='email' value='{{ params.email }}'/>
 </th>
 <th>
-<input id='authority_id' type='text' name='authority_id' value='{{ params.authority_id }}'/>
+<input id='authority_id_expanded' type='text' name='authority_id_expanded' value='{{ params.authority_id_expanded }}'/>
 </th>
 <th>
 <input id='authorised' type='text' name='authorised' value='{{ params.authorised }}'/>
@@ -104,10 +104,14 @@ authorised
 {{ record.fullname }}
 </td>
 <td>
-{{ record.elector_id }}
+<a href='form-electors-Elector?id={{ record.elector_id }}'>
+{{ record.elector_id_expanded }}
+</a>
 </td>
 <td>
-{{ record.address_id }}
+<a href='form-addresses-Address?id={{ record.address_id }}'>
+{{ record.address_id_expanded }}
+</a>
 </td>
 <td>
 {{ record.phone }}
@@ -116,13 +120,15 @@ authorised
 {{ record.email }}
 </td>
 <td>
-{{ record.authority_id }}
+<a href='form-authorities-Authority?id={{ record.authority_id }}'>
+{{ record.authority_id_expanded }}
+</a>
 </td>
 <td>
 {{ record.authorised }}
 </td>
 <td>
-<a href='form-canvassers-Canvasser?id={{ record.id}}'>
+<a href='form-canvassers-Canvasser?id={{ record.id }}'>
 View
 </a>
 </td>

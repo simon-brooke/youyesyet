@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-addresses-Addresses.html generated 2018-06-15T08:47:04.330Z by adl.to-selmer-templates.
+<!-- File list-addresses-Addresses.html generated 2018-06-18T10:08:09.820Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -66,7 +66,7 @@ longitude
 <input id='phone' type='text' name='phone' value='{{ params.phone }}'/>
 </th>
 <th>
-<input id='district_id' type='text' name='district_id' value='{{ params.district_id }}'/>
+<input id='district_id_expanded' type='text' name='district_id_expanded' value='{{ params.district_id_expanded }}'/>
 </th>
 <th>
 <input id='latitude' type='number' name='latitude' value='{{ params.latitude }}'/>
@@ -95,7 +95,9 @@ longitude
 {{ record.phone }}
 </td>
 <td>
-{{ record.district_id }}
+<a href='form-districts-District?id={{ record.district_id }}'>
+{{ record.district_id_expanded }}
+</a>
 </td>
 <td>
 {{ record.latitude }}
@@ -104,7 +106,7 @@ longitude
 {{ record.longitude }}
 </td>
 <td>
-<a href='form-addresses-Address?id={{ record.id}}'>
+<a href='form-addresses-Address?id={{ record.id }}'>
 View
 </a>
 </td>

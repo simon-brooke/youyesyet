@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-electors-Electors.html generated 2018-06-15T08:47:04.313Z by adl.to-selmer-templates.
+<!-- File list-electors-Electors.html generated 2018-06-18T10:08:09.780Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -57,7 +57,7 @@ gender
 <input id='name' type='text' name='name' value='{{ params.name }}'/>
 </th>
 <th>
-<input id='dwelling_id' type='text' name='dwelling_id' value='{{ params.dwelling_id }}'/>
+<input id='dwelling_id_expanded' type='text' name='dwelling_id_expanded' value='{{ params.dwelling_id_expanded }}'/>
 </th>
 <th>
 <input id='phone' type='text' name='phone' value='{{ params.phone }}'/>
@@ -66,7 +66,7 @@ gender
 <input id='email' type='text' name='email' value='{{ params.email }}'/>
 </th>
 <th>
-<input id='gender' type='text' name='gender' value='{{ params.gender }}'/>
+<input id='gender_expanded' type='text' name='gender_expanded' value='{{ params.gender_expanded }}'/>
 </th>
 <th>
 <input type='submit' id='search' value='Search'/>
@@ -83,7 +83,9 @@ gender
 {{ record.name }}
 </td>
 <td>
-{{ record.dwelling_id }}
+<a href='form-dwellings-Dwelling?id={{ record.dwelling_id }}'>
+{{ record.dwelling_id_expanded }}
+</a>
 </td>
 <td>
 {{ record.phone }}
@@ -92,10 +94,12 @@ gender
 {{ record.email }}
 </td>
 <td>
-{{ record.gender }}
+<a href='form-genders-Gender?id={{ record.gender }}'>
+{{ record.gender_expanded }}
+</a>
 </td>
 <td>
-<a href='form-electors-Elector?id={{ record.id}}'>
+<a href='form-electors-Elector?id={{ record.id }}'>
 View
 </a>
 </td>
