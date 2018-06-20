@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-followupactions-Followupaction.html generated 2018-06-18T10:08:09.853Z by adl.to-selmer-templates.
+<!-- File form-followupactions-Followupaction.html generated 2018-06-19T18:51:51.743Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -24,7 +24,6 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-followupactions-Followupaction' method='POST'>
 {% csrf-field %}
-<input id='id' name='id' type='hidden' value='{{record.id}}'/>
 <p class='widget'>
 <label for='id'>
 id
@@ -35,6 +34,10 @@ id
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
+</span>
+{% else %}
+<span id='id' name='id' class='pseudo-widget not-authorised'>
+You are not permitted to view id of followupactions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -55,99 +58,9 @@ request_id
 <span id='request_id' name='request_id' class='pseudo-widget disabled'>
 {{record.request_id}}
 </span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='actor'>
-actor
-</label>
-{% ifmemberof admin %}
-<div class='select-box' farside='canvassers' found='true'>
-<input name='actor-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='actor' name='actor' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in canvassers %}<option value='{{record.id}}'>{{record.username}} {{record.fullname}} {{record.email}}</option>{% endfor %}
-</select>
-</div>
 {% else %}
-{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
-<span id='actor' name='actor' class='pseudo-widget disabled'>
-{{record.actor}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='date'>
-date
-</label>
-{% ifmemberof admin %}
-<input id='date' name='date' type='text' value='{{record.date}}'/>
-{% else %}
-{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
-<span id='date' name='date' class='pseudo-widget disabled'>
-{{record.date}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='notes'>
-notes
-</label>
-{% ifmemberof admin %}
-<input id='notes' name='notes' type='text' value='{{record.notes}}'/>
-{% else %}
-{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
-<span id='notes' name='notes' class='pseudo-widget disabled'>
-{{record.notes}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='closed'>
-closed
-</label>
-{% ifmemberof admin %}
-<input id='closed' name='closed' type='checkbox' value='{{record.closed}}'/>
-{% else %}
-{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
-<span id='closed' name='closed' class='pseudo-widget disabled'>
-{{record.closed}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='id'>
-id
-</label>
-{% ifmemberof admin %}
-<input id='id' name='id' type='text' value='{{record.id}}'/>
-{% else %}
-{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
-<span id='id' name='id' class='pseudo-widget disabled'>
-{{record.id}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='request_id'>
-request_id
-</label>
-{% ifmemberof admin %}
-<div class='select-box' farside='followuprequests' found='true'>
-<input name='request_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='request_id' name='request_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in followuprequests %}<option value='{{record.id}}'>{{record.elector_id}} {{record.visit_id}} {{record.issue_id}}</option>{% endfor %}
-</select>
-</div>
-{% else %}
-{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
-<span id='request_id' name='request_id' class='pseudo-widget disabled'>
-{{record.request_id}}
+<span id='request_id' name='request_id' class='pseudo-widget not-authorised'>
+You are not permitted to view request_id of followupactions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -168,6 +81,10 @@ actor
 <span id='actor' name='actor' class='pseudo-widget disabled'>
 {{record.actor}}
 </span>
+{% else %}
+<span id='actor' name='actor' class='pseudo-widget not-authorised'>
+You are not permitted to view actor of followupactions
+</span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
@@ -181,6 +98,10 @@ date
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='date' name='date' class='pseudo-widget disabled'>
 {{record.date}}
+</span>
+{% else %}
+<span id='date' name='date' class='pseudo-widget not-authorised'>
+You are not permitted to view date of followupactions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -196,6 +117,10 @@ notes
 <span id='notes' name='notes' class='pseudo-widget disabled'>
 {{record.notes}}
 </span>
+{% else %}
+<span id='notes' name='notes' class='pseudo-widget not-authorised'>
+You are not permitted to view notes of followupactions
+</span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
@@ -209,6 +134,10 @@ closed
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='closed' name='closed' class='pseudo-widget disabled'>
 {{record.closed}}
+</span>
+{% else %}
+<span id='closed' name='closed' class='pseudo-widget not-authorised'>
+You are not permitted to view closed of followupactions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -217,13 +146,13 @@ closed
 <label for='save-button' class='action-safe'>
 To save this followupactions record
 </label>
-<input id='save-button' name='save-button' class='action-safe' type=':submit' value='Save!'/>
+<input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this followupactions record
 </label>
-<input id='delete-button' name='delete-button' class='action-dangerous' type=':submit' value='Delete!'/>
+<input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
 </form>
 </div>

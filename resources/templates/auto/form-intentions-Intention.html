@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-intentions-Intention.html generated 2018-06-18T10:08:09.837Z by adl.to-selmer-templates.
+<!-- File form-intentions-Intention.html generated 2018-06-19T18:51:51.734Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -24,7 +24,6 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-intentions-Intention' method='POST'>
 {% csrf-field %}
-<input id='Id' name='Id' type='hidden' value='{{record.Id}}'/>
 <p class='widget'>
 <label for='visit_id'>
 visit_id
@@ -40,6 +39,10 @@ visit_id
 {% ifmemberof canvassers analysts admin %}
 <span id='visit_id' name='visit_id' class='pseudo-widget disabled'>
 {{record.visit_id}}
+</span>
+{% else %}
+<span id='visit_id' name='visit_id' class='pseudo-widget not-authorised'>
+You are not permitted to view visit_id of intentions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -60,61 +63,9 @@ elector_id
 <span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
 {{record.elector_id}}
 </span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='option_id'>
-option_id
-</label>
-{% ifmemberof admin %}
-<div class='select-box' farside='options' found='true'>
-<select id='option_id' name='option_id'>
-{% for record in options %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
-</select>
-</div>
 {% else %}
-{% ifmemberof canvassers analysts admin %}
-<span id='option_id' name='option_id' class='pseudo-widget disabled'>
-{{record.option_id}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='visit_id'>
-visit_id
-</label>
-{% ifmemberof admin %}
-<div class='select-box' farside='visits' found='true'>
-<input name='visit_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='visit_id' name='visit_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in visits %}<option value='{{record.id}}'>{{record.address_id}} {{record.date}}</option>{% endfor %}
-</select>
-</div>
-{% else %}
-{% ifmemberof canvassers analysts admin %}
-<span id='visit_id' name='visit_id' class='pseudo-widget disabled'>
-{{record.visit_id}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='elector_id'>
-elector_id
-</label>
-{% ifmemberof admin %}
-<div class='select-box' farside='electors' found='true'>
-<input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in electors %}<option value='{{record.id}}'>{{record.name}} {{record.phone}} {{record.email}} {{record.gender}}</option>{% endfor %}
-</select>
-</div>
-{% else %}
-{% ifmemberof canvassers analysts admin %}
-<span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
-{{record.elector_id}}
+<span id='elector_id' name='elector_id' class='pseudo-widget not-authorised'>
+You are not permitted to view elector_id of intentions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -133,6 +84,10 @@ option_id
 {% ifmemberof canvassers analysts admin %}
 <span id='option_id' name='option_id' class='pseudo-widget disabled'>
 {{record.option_id}}
+</span>
+{% else %}
+<span id='option_id' name='option_id' class='pseudo-widget not-authorised'>
+You are not permitted to view option_id of intentions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -141,13 +96,13 @@ option_id
 <label for='save-button' class='action-safe'>
 To save this intentions record
 </label>
-<input id='save-button' name='save-button' class='action-safe' type=':submit' value='Save!'/>
+<input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this intentions record
 </label>
-<input id='delete-button' name='delete-button' class='action-dangerous' type=':submit' value='Delete!'/>
+<input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
 </form>
 </div>

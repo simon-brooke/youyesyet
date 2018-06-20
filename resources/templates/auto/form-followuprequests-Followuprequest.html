@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-followuprequests-Followuprequest.html generated 2018-06-18T10:08:09.760Z by adl.to-selmer-templates.
+<!-- File form-followuprequests-Followuprequest.html generated 2018-06-19T18:51:51.667Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -24,7 +24,6 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-followuprequests-Followuprequest' method='POST'>
 {% csrf-field %}
-<input id='id' name='id' type='hidden' value='{{record.id}}'/>
 <p class='widget'>
 <label for='id'>
 id
@@ -35,6 +34,10 @@ id
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
+</span>
+{% else %}
+<span id='id' name='id' class='pseudo-widget not-authorised'>
+You are not permitted to view id of followuprequests
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -55,93 +58,9 @@ elector_id
 <span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
 {{record.elector_id}}
 </span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='visit_id'>
-visit_id
-</label>
-{% ifmemberof admin %}
-<div class='select-box' farside='visits' found='true'>
-<input name='visit_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='visit_id' name='visit_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in visits %}<option value='{{record.id}}'>{{record.address_id}} {{record.date}}</option>{% endfor %}
-</select>
-</div>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='visit_id' name='visit_id' class='pseudo-widget disabled'>
-{{record.visit_id}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='issue_id'>
-issue_id
-</label>
-{% ifmemberof admin %}
-<div class='select-box' farside='issues' found='true'>
-<select id='issue_id' name='issue_id'>
-{% for record in issues %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
-</select>
-</div>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='issue_id' name='issue_id' class='pseudo-widget disabled'>
-{{record.issue_id}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='method_id'>
-method_id
-</label>
-{% ifmemberof admin %}
-<div class='select-box' farside='followupmethods' found='true'>
-<select id='method_id' name='method_id'>
-{% for record in followupmethods %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
-</select>
-</div>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='method_id' name='method_id' class='pseudo-widget disabled'>
-{{record.method_id}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='id'>
-id
-</label>
-{% ifmemberof admin %}
-<input id='id' name='id' type='text' value='{{record.id}}'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='id' name='id' class='pseudo-widget disabled'>
-{{record.id}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='elector_id'>
-elector_id
-</label>
-{% ifmemberof admin %}
-<div class='select-box' farside='electors' found='true'>
-<input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in electors %}<option value='{{record.id}}'>{{record.name}} {{record.phone}} {{record.email}} {{record.gender}}</option>{% endfor %}
-</select>
-</div>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
-{{record.elector_id}}
+<span id='elector_id' name='elector_id' class='pseudo-widget not-authorised'>
+You are not permitted to view elector_id of followuprequests
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -162,6 +81,10 @@ visit_id
 <span id='visit_id' name='visit_id' class='pseudo-widget disabled'>
 {{record.visit_id}}
 </span>
+{% else %}
+<span id='visit_id' name='visit_id' class='pseudo-widget not-authorised'>
+You are not permitted to view visit_id of followuprequests
+</span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
@@ -180,6 +103,10 @@ issue_id
 <span id='issue_id' name='issue_id' class='pseudo-widget disabled'>
 {{record.issue_id}}
 </span>
+{% else %}
+<span id='issue_id' name='issue_id' class='pseudo-widget not-authorised'>
+You are not permitted to view issue_id of followuprequests
+</span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
@@ -197,6 +124,10 @@ method_id
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='method_id' name='method_id' class='pseudo-widget disabled'>
 {{record.method_id}}
+</span>
+{% else %}
+<span id='method_id' name='method_id' class='pseudo-widget not-authorised'>
+You are not permitted to view method_id of followuprequests
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -205,13 +136,13 @@ method_id
 <label for='save-button' class='action-safe'>
 To save this followuprequests record
 </label>
-<input id='save-button' name='save-button' class='action-safe' type=':submit' value='Save!'/>
+<input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this followuprequests record
 </label>
-<input id='delete-button' name='delete-button' class='action-dangerous' type=':submit' value='Delete!'/>
+<input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
 </form>
 </div>

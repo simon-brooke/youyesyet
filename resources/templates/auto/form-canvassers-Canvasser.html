@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-canvassers-Canvasser.html generated 2018-06-18T10:08:09.823Z by adl.to-selmer-templates.
+<!-- File form-canvassers-Canvasser.html generated 2018-06-19T18:51:51.720Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -24,7 +24,6 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-canvassers-Canvasser' method='POST'>
 {% csrf-field %}
-<input id='id' name='id' type='hidden' value='{{record.id}}'/>
 <p class='widget'>
 <label for='id'>
 id
@@ -35,6 +34,10 @@ id
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
+</span>
+{% else %}
+<span id='id' name='id' class='pseudo-widget not-authorised'>
+You are not permitted to view id of canvassers
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -50,6 +53,10 @@ username
 <span id='username' name='username' class='pseudo-widget disabled'>
 {{record.username}}
 </span>
+{% else %}
+<span id='username' name='username' class='pseudo-widget not-authorised'>
+You are not permitted to view username of canvassers
+</span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
@@ -63,6 +70,10 @@ fullname
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='fullname' name='fullname' class='pseudo-widget disabled'>
 {{record.fullname}}
+</span>
+{% else %}
+<span id='fullname' name='fullname' class='pseudo-widget not-authorised'>
+You are not permitted to view fullname of canvassers
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -83,146 +94,9 @@ elector_id
 <span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
 {{record.elector_id}}
 </span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='address_id'>
-address_id
-</label>
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<div class='select-box' farside='addresses' found='true'>
-<input name='address_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='address_id' name='address_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in addresses %}<option value='{{record.id}}'>{{record.address}} {{record.postcode}}</option>{% endfor %}
-</select>
-</div>
 {% else %}
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='address_id' name='address_id' class='pseudo-widget disabled'>
-{{record.address_id}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='phone'>
-phone
-</label>
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='phone' name='phone' type='text' value='{{record.phone}}'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='phone' name='phone' class='pseudo-widget disabled'>
-{{record.phone}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='email'>
-email
-</label>
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='email' name='email' type='text' value='{{record.email}}'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='email' name='email' class='pseudo-widget disabled'>
-{{record.email}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='authority_id'>
-authority_id
-</label>
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<div class='select-box' farside='authorities' found='true'>
-<input name='authority_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='authority_id' name='authority_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in authorities %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
-</select>
-</div>
-{% else %}
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='authority_id' name='authority_id' class='pseudo-widget disabled'>
-{{record.authority_id}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='authorised'>
-authorised
-</label>
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='authorised' name='authorised' type='checkbox' value='{{record.authorised}}'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='authorised' name='authorised' class='pseudo-widget disabled'>
-{{record.authorised}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='id'>
-id
-</label>
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='id' name='id' type='text' value='{{record.id}}'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='id' name='id' class='pseudo-widget disabled'>
-{{record.id}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='username'>
-username
-</label>
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='username' name='username' type='text' value='{{record.username}}'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='username' name='username' class='pseudo-widget disabled'>
-{{record.username}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='fullname'>
-fullname
-</label>
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='fullname' name='fullname' type='text' value='{{record.fullname}}'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='fullname' name='fullname' class='pseudo-widget disabled'>
-{{record.fullname}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='elector_id'>
-elector_id
-</label>
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<div class='select-box' farside='electors' found='true'>
-<input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in electors %}<option value='{{record.id}}'>{{record.name}} {{record.phone}} {{record.email}} {{record.gender}}</option>{% endfor %}
-</select>
-</div>
-{% else %}
-{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
-{{record.elector_id}}
+<span id='elector_id' name='elector_id' class='pseudo-widget not-authorised'>
+You are not permitted to view elector_id of canvassers
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -243,6 +117,10 @@ address_id
 <span id='address_id' name='address_id' class='pseudo-widget disabled'>
 {{record.address_id}}
 </span>
+{% else %}
+<span id='address_id' name='address_id' class='pseudo-widget not-authorised'>
+You are not permitted to view address_id of canvassers
+</span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
@@ -257,6 +135,10 @@ phone
 <span id='phone' name='phone' class='pseudo-widget disabled'>
 {{record.phone}}
 </span>
+{% else %}
+<span id='phone' name='phone' class='pseudo-widget not-authorised'>
+You are not permitted to view phone of canvassers
+</span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
@@ -270,6 +152,10 @@ email
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='email' name='email' class='pseudo-widget disabled'>
 {{record.email}}
+</span>
+{% else %}
+<span id='email' name='email' class='pseudo-widget not-authorised'>
+You are not permitted to view email of canvassers
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -290,6 +176,10 @@ authority_id
 <span id='authority_id' name='authority_id' class='pseudo-widget disabled'>
 {{record.authority_id}}
 </span>
+{% else %}
+<span id='authority_id' name='authority_id' class='pseudo-widget not-authorised'>
+You are not permitted to view authority_id of canvassers
+</span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
@@ -303,6 +193,10 @@ authorised
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='authorised' name='authorised' class='pseudo-widget disabled'>
 {{record.authorised}}
+</span>
+{% else %}
+<span id='authorised' name='authorised' class='pseudo-widget not-authorised'>
+You are not permitted to view authorised of canvassers
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -322,6 +216,10 @@ roles
 <span id='roles' name='roles' class='pseudo-widget disabled'>
 {{record.roles}}
 </span>
+{% else %}
+<span id='roles' name='roles' class='pseudo-widget not-authorised'>
+You are not permitted to view roles of canvassers
+</span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
@@ -329,13 +227,13 @@ roles
 <label for='save-button' class='action-safe'>
 To save this canvassers record
 </label>
-<input id='save-button' name='save-button' class='action-safe' type=':submit' value='Save!'/>
+<input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this canvassers record
 </label>
-<input id='delete-button' name='delete-button' class='action-dangerous' type=':submit' value='Delete!'/>
+<input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
 </form>
 </div>

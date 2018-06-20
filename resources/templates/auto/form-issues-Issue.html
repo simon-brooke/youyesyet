@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-issues-Issue.html generated 2018-06-18T10:08:09.783Z by adl.to-selmer-templates.
+<!-- File form-issues-Issue.html generated 2018-06-19T18:51:51.684Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -35,19 +35,9 @@ id
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='id'>
-id
-</label>
-{% ifmemberof issueeditors admin %}
-<input id='id' name='id' type='text' value='{{record.id}}'/>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='id' name='id' class='pseudo-widget disabled'>
-{{record.id}}
+<span id='id' name='id' class='pseudo-widget not-authorised'>
+You are not permitted to view id of issues
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -63,47 +53,9 @@ url
 <span id='url' name='url' class='pseudo-widget disabled'>
 {{record.url}}
 </span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='current'>
-current
-</label>
-{% ifmemberof issueeditors admin %}
-<input id='current' name='current' type='checkbox' value='{{record.current}}'/>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='current' name='current' class='pseudo-widget disabled'>
-{{record.current}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='id'>
-id
-</label>
-{% ifmemberof issueeditors admin %}
-<input id='id' name='id' type='text' value='{{record.id}}'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='id' name='id' class='pseudo-widget disabled'>
-{{record.id}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='url'>
-url
-</label>
-{% ifmemberof issueeditors admin %}
-<input id='url' name='url' type='text' value='{{record.url}}'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='url' name='url' class='pseudo-widget disabled'>
-{{record.url}}
+<span id='url' name='url' class='pseudo-widget not-authorised'>
+You are not permitted to view url of issues
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -118,6 +70,10 @@ current
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='current' name='current' class='pseudo-widget disabled'>
 {{record.current}}
+</span>
+{% else %}
+<span id='current' name='current' class='pseudo-widget not-authorised'>
+You are not permitted to view current of issues
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -126,13 +82,13 @@ current
 <label for='save-button' class='action-safe'>
 To save this issues record
 </label>
-<input id='save-button' name='save-button' class='action-safe' type=':submit' value='Save!'/>
+<input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this issues record
 </label>
-<input id='delete-button' name='delete-button' class='action-dangerous' type=':submit' value='Delete!'/>
+<input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
 </form>
 </div>

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-electors-Elector.html generated 2018-06-18T10:08:09.808Z by adl.to-selmer-templates.
+<!-- File form-electors-Elector.html generated 2018-06-19T18:51:51.709Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -24,7 +24,6 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-electors-Elector' method='POST'>
 {% csrf-field %}
-<input id='id' name='id' type='hidden' value='{{record.id}}'/>
 <p class='widget'>
 <label for='id'>
 id
@@ -35,6 +34,10 @@ id
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
+</span>
+{% else %}
+<span id='id' name='id' class='pseudo-widget not-authorised'>
+You are not permitted to view id of electors
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -49,6 +52,10 @@ name
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='name' name='name' class='pseudo-widget disabled'>
 {{record.name}}
+</span>
+{% else %}
+<span id='name' name='name' class='pseudo-widget not-authorised'>
+You are not permitted to view name of electors
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -69,6 +76,10 @@ dwelling_id
 <span id='dwelling_id' name='dwelling_id' class='pseudo-widget disabled'>
 {{record.dwelling_id}}
 </span>
+{% else %}
+<span id='dwelling_id' name='dwelling_id' class='pseudo-widget not-authorised'>
+You are not permitted to view dwelling_id of electors
+</span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
@@ -83,6 +94,10 @@ phone
 <span id='phone' name='phone' class='pseudo-widget disabled'>
 {{record.phone}}
 </span>
+{% else %}
+<span id='phone' name='phone' class='pseudo-widget not-authorised'>
+You are not permitted to view phone of electors
+</span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
@@ -96,6 +111,10 @@ email
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='email' name='email' class='pseudo-widget disabled'>
 {{record.email}}
+</span>
+{% else %}
+<span id='email' name='email' class='pseudo-widget not-authorised'>
+You are not permitted to view email of electors
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -115,98 +134,9 @@ gender
 <span id='gender' name='gender' class='pseudo-widget disabled'>
 {{record.gender}}
 </span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='id'>
-id
-</label>
-{% ifmemberof admin %}
-<input id='id' name='id' type='text' value='{{record.id}}'/>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='id' name='id' class='pseudo-widget disabled'>
-{{record.id}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='name'>
-name
-</label>
-{% ifmemberof admin %}
-<input id='name' name='name' type='text' value='{{record.name}}'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='name' name='name' class='pseudo-widget disabled'>
-{{record.name}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='dwelling_id'>
-dwelling_id
-</label>
-{% ifmemberof admin %}
-<div class='select-box' farside='dwellings' found='true'>
-<input name='dwelling_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='dwelling_id' name='dwelling_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in dwellings %}<option value='{{record.id}}'>{{record.address_id}} {{record.sub-address}}</option>{% endfor %}
-</select>
-</div>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='dwelling_id' name='dwelling_id' class='pseudo-widget disabled'>
-{{record.dwelling_id}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='phone'>
-phone
-</label>
-{% ifmemberof admin %}
-<input id='phone' name='phone' type='text' value='{{record.phone}}'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='phone' name='phone' class='pseudo-widget disabled'>
-{{record.phone}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='email'>
-email
-</label>
-{% ifmemberof admin %}
-<input id='email' name='email' type='text' value='{{record.email}}'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='email' name='email' class='pseudo-widget disabled'>
-{{record.email}}
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
-<p class='widget'>
-<label for='gender'>
-gender
-</label>
-{% ifmemberof admin %}
-<div class='select-box' farside='genders' found='true'>
-<select id='gender' name='gender'>
-{% for record in genders %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
-</select>
-</div>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='gender' name='gender' class='pseudo-widget disabled'>
-{{record.gender}}
+<span id='gender' name='gender' class='pseudo-widget not-authorised'>
+You are not permitted to view gender of electors
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
@@ -215,13 +145,13 @@ gender
 <label for='save-button' class='action-safe'>
 To save this electors record
 </label>
-<input id='save-button' name='save-button' class='action-safe' type=':submit' value='Save!'/>
+<input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this electors record
 </label>
-<input id='delete-button' name='delete-button' class='action-dangerous' type=':submit' value='Delete!'/>
+<input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
 </form>
 </div>
