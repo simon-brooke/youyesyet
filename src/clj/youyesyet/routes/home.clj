@@ -1,7 +1,8 @@
 (ns ^{:doc "Routes/pages available to unauthenticated users."
       :author "Simon Brooke"} youyesyet.routes.home
-  (:require [clojure.walk :refer [keywordize-keys]]
-            [clojure.java.io :refer [input-stream]]
+  (:require [clojure.java.io :as io]
+            [clojure.tools.logging :as log]
+            [clojure.walk :refer [keywordize-keys]]
             [noir.response :as nresponse]
             [noir.util.route :as route]
             [ring.util.http-response :refer [content-type ok]]
@@ -10,7 +11,7 @@
             [youyesyet.oauth :as oauth]
             [compojure.core :refer [defroutes GET POST]]
             [ring.util.http-response :as response]
-            [clojure.java.io :as io]))
+            ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
@@ -86,27 +87,41 @@
         redirect-to (or (:redirect-to params) "roles")]
     (cond
       (:authority params)
-      (oauth/fetch-request-token request)
+      (let [auth (oauth/authority! (:authority params))]
+        (if auth
+          (do
+            (log/info "Attempting to authorise with authority " (:authority params))
+            (oauth/fetch-request-token
+              (assoc request :session (assoc session :authority auth))
+              auth))
+          (throw (Exception. (str "No such authority: " (:authority params))))))
       ;; this is obviously, ABSURDLY, insecure. I don't want to put just-about-good-enough,
       ;; it-will-do-for-now security in place; instead, I want this to be test code only
       ;; until we have o-auth properly working.
       (and user (= username password))
       (assoc (response/found redirect-to) :session (assoc session :user username))
       user
-      (layout/render "login.html" {:title (str "User " username " is unknown") :redirect-to redirect-to})
+      (layout/render
+        "login.html"
+        {:title (str "User " username " is unknown") :redirect-to redirect-to})
       true
-      (layout/render "login.html" {:title "Please log in" :redirect-to redirect-to :authorities (db-core/list-authorities db-core/*db*)}))))
+      (layout/render
+        "login.html"
+        {:title "Please log in"
+         :redirect-to redirect-to
+         :authorities (db-core/list-authorities db-core/*db*)}))))
 
 
 (defroutes home-routes
   (GET "/" [] (home-page))
-  (GET "/js/:file" [file]
-       (-> (input-stream (str "resources/public/js/" file))
-           ok
-           (content-type "text/javascript;charset=UTF-8")))
+;;   (GET "/js/:file" [file]
+;;        (-> (io/input-stream (str "resources/public/js/" file))
+;;            ok
+;;            (content-type "text/javascript;charset=UTF-8")))
   (GET "/home" [] (home-page))
   (GET "/about" [] (about-page))
   (GET "/roles" request (route/restricted (roles-page request)))
+  (GET "/canvassers" [] (route/restricted (app-page)))
   (GET "/app" [] (route/restricted (app-page)))
   (GET "/call-me" [] (call-me-page nil))
   (POST "/call-me" request (call-me-page request))

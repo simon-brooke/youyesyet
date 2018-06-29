@@ -23,7 +23,7 @@
             {% else %}<a href="login">Login</a>{% endif %}</li>
           <li class=""><a href="about">About</a></li>
           {% if user %}
-          <li id="user"><a href="profile">Logged in as {{user.username}}</a></li>
+          <li id="user"><a href="profile">Logged in as {{user.fullname}}</a></li>
           {% endif %}
         </menu>
       </div>
@@ -34,6 +34,9 @@
     </header>
     {% endblock %}
     <div id="main-container" class="container">
+      <div id="back-link-container">
+        <a href="javascript:history.back()" id="back-link">Back</a>
+      </div>
       <div id="big-links">
         {% block big-links %}
         {% endblock %}
@@ -41,9 +44,6 @@
       <div if="#content">
         {% block content %}
         {% endblock %}
-      </div>
-      <div id="back-link-container">
-        <a href="javascript:history.back()" id="back-link">Back</a>
       </div>
     </div>
     {% block foot %}

@@ -3,9 +3,6 @@
   {{ user }}
 {% endblock %}
 {% block big-links %}
-      <div class="big-link-container">
-        <a href="app" class="big-link" id="big-link">Canvasser</a>
-      </div>
       {% for role in roles %}
       <div class="big-link-container">
         <a href="{{role.name|lower}}" class="big-link" id="big-link">{{role.name}}</a>

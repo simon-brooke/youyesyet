@@ -49,12 +49,11 @@
             :hmac-sha1)))
       (db/list-authorities db/*db* {}))))
 
-
 (def authority!
-  ;; Closure to allow authorities to be created once when the function is first
+  ;; Closure to allow authorities map to be created once when the function is first
   ;; called. The argument `id` should be a string, the id of some authority
-  ;; known to the database. As side-effect, the key `:authority` is bound in the
-  ;; session to the selected authority.
+  ;; known to the database. As side-effect, the authorities map is bound in the
+  ;; closure.
   (let [authorities (atom nil)]
     (fn [id]
       (if
@@ -69,8 +68,7 @@
         (if authority
           (do
             (log/debug (str "Selected authority " id))
-            (session/put! :authority authority)))
-        authority))))
+        authority))))))
 
 (defn oauth-callback-uri
   "Generates the oauth request callback URI."
@@ -79,23 +77,18 @@
 
 (defn fetch-request-token
   "Fetches a request token from the authority implied by this `request`."
-  [request]
-  (let [callback-uri (oauth-callback-uri request)
-        auth-id (:authority (:params request))
-        auth (authority! auth-id)]
-    (log/info "Attempting to authorise with authority " auth-id)
-    (if
-      auth
-      (do
-        (log/info "Fetching request token using callback-uri" callback-uri)
-        (oauth/request-token auth (oauth-callback-uri request)))
-      (throw (Exception. (str "No such authority: " auth-id))))))
+  ([request auth]
+  (let [callback-uri (oauth-callback-uri request)]
+    (log/info "Fetching request token using callback-uri" callback-uri)
+    (oauth/request-token auth (oauth-callback-uri request))))
+  ([request]
+   (fetch-request-token request (:authority (:session request)))))
 
 (defn fetch-access-token
-  [request_token]
-  (oauth/access-token (session/get :authority) request_token (:oauth_verifier request_token)))
+  [request_token authority]
+  (oauth/access-token authority request_token (:oauth_verifier request_token)))
 
 (defn auth-redirect-uri
   "Gets the URI the user should be redirected to when authenticating."
-  [request-token]
-  (str (oauth/user-approval-uri (session/get :authority) request-token)))
+  [request-token authority]
+  (str (oauth/user-approval-uri authority request-token)))

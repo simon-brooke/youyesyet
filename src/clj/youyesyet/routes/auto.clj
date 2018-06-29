@@ -523,7 +523,7 @@
 (defroutes
  auto-selmer-routes
  (GET
-  "/index"
+  "/admin"
   request
   (route/restricted (apply (resolve-handler "index") (list request))))
  (GET
