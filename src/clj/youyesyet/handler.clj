@@ -5,6 +5,7 @@
             [compojure.core :refer [routes wrap-routes]]
             [compojure.route :as route]
             [mount.core :as mount]
+            [noir.session :as session]
             [youyesyet.config :refer [env]]
             [youyesyet.layout :refer [error-page]]
             [youyesyet.middleware :as middleware]
@@ -73,7 +74,7 @@
     (-> #'auto-selmer-routes
         (wrap-routes middleware/wrap-csrf)
         (wrap-routes middleware/wrap-formats))
-    #'oauth-routes
+    'oauth-routes
     #'authenticated-routes
     (route/not-found
       (:body

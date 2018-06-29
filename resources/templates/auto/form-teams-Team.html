@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-teams-Team.html generated 2018-06-29T10:10:59.616Z by adl.to-selmer-templates.
+<!-- File form-teams-Team.html generated 2018-06-29T14:15:38.717Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -28,10 +28,10 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <label for='id'>
 id
 </label>
-{% ifmemberof teamorganisers admin %}
+{% ifmemberof teamorganisers admin teamorganisers admin %}
 <input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
@@ -46,10 +46,10 @@ You are not permitted to view id of teams
 <label for='name'>
 name
 </label>
-{% ifmemberof teamorganisers admin %}
+{% ifmemberof teamorganisers admin teamorganisers admin %}
 <input id='name' name='name' type='text' value='{{record.name}}' maxlength='64' size='60'/>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='name' name='name' class='pseudo-widget disabled'>
 {{record.name}}
 </span>
@@ -64,7 +64,7 @@ You are not permitted to view name of teams
 <label for='district_id'>
 district_id
 </label>
-{% ifmemberof teamorganisers admin %}
+{% ifmemberof teamorganisers admin teamorganisers admin %}
 <div class='select-box' farside='districts' found='true'>
 <input name='district_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='district_id' name='district_id' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -72,7 +72,7 @@ district_id
 </select>
 </div>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='district_id' name='district_id' class='pseudo-widget disabled'>
 {{record.district_id}}
 </span>
@@ -87,10 +87,10 @@ You are not permitted to view district_id of teams
 <label for='latitude'>
 latitude
 </label>
-{% ifmemberof teamorganisers admin %}
+{% ifmemberof teamorganisers admin teamorganisers admin %}
 <input id='latitude' name='latitude' type='number' value='{{record.latitude}}' maxlength='' size='16'/>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='latitude' name='latitude' class='pseudo-widget disabled'>
 {{record.latitude}}
 </span>
@@ -105,7 +105,7 @@ You are not permitted to view latitude of teams
 <label for='members'>
 members
 </label>
-{% ifmemberof teamorganisers admin %}
+{% ifmemberof teamorganisers admin teamorganisers admin %}
 <div class='select-box' farside='canvassers' found='true'>
 <input name='members-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='members' name='members' multiple='multiple' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -113,7 +113,7 @@ members
 </select>
 </div>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='members' name='members' class='pseudo-widget disabled'>
 {{record.members}}
 </span>
@@ -128,7 +128,7 @@ You are not permitted to view members of teams
 <label for='organisers'>
 organisers
 </label>
-{% ifmemberof teamorganisers admin %}
+{% ifmemberof teamorganisers admin teamorganisers admin %}
 <div class='select-box' farside='canvassers' found='true'>
 <input name='organisers-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='organisers' name='organisers' multiple='multiple' comment='JavaScript stuff to fix up aynchronous loading'>
@@ -136,7 +136,7 @@ organisers
 </select>
 </div>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='organisers' name='organisers' class='pseudo-widget disabled'>
 {{record.organisers}}
 </span>
@@ -151,10 +151,10 @@ You are not permitted to view organisers of teams
 <label for='longitude'>
 longitude
 </label>
-{% ifmemberof teamorganisers admin %}
+{% ifmemberof teamorganisers admin teamorganisers admin %}
 <input id='longitude' name='longitude' type='number' value='{{record.longitude}}' maxlength='' size='16'/>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='longitude' name='longitude' class='pseudo-widget disabled'>
 {{record.longitude}}
 </span>

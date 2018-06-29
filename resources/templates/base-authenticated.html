@@ -16,12 +16,12 @@
       <div id="nav">
         <img id="nav-icon" src="img/threelines.png" alt="Menu"/>
         <menu id="nav-menu" class="nav">
-          <li class=""><a href="index.html">Home</a></li>
-          <li class=""><a href="library.html">Library</a></li>
-          <li class=""><a href="register.html">Register</a></li>
+          <li class=""><a href="home">Home</a></li>
+          <li class=""><a href="library">Library</a></li>
+          <li class=""><a href="register">Register</a></li>
           <li class="">{% if user %}<a href="logout.html">Logout</a>
-            {% else %}<a href="login.html">Login</a>{% endif %}</li>
-          <li class=""><a href="about.html">About</a></li>
+            {% else %}<a href="login">Login</a>{% endif %}</li>
+          <li class=""><a href="about">About</a></li>
           {% if user %}
           <li id="user"><a href="profile">Logged in as {{user.username}}</a></li>
           {% endif %}

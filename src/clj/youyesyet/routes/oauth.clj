@@ -7,7 +7,7 @@
             [clojure.tools.logging :as log]))
 
 (defn oauth-init
-  "Initiates the Twitter OAuth"
+  "Initiates the OAuth with the authority implied by this `request`"
   [request]
   (-> (oauth/fetch-request-token request)
       :oauth_token
@@ -15,11 +15,11 @@
       found))
 
 (defn oauth-callback
-  "Handles the callback from Twitter."
+  "Handles the callback from the authority."
   [request_token {:keys [session]}]
   ; oauth request was denied by user
   (if (:denied request_token)
-    (-> (found "/")
+    (-> (found "/login")
         (assoc :flash {:denied true}))
     ; fetch the request token and do anything else you wanna do if not denied.
     (let [{:keys [user_id screen_name]} (oauth/fetch-access-token request_token)]

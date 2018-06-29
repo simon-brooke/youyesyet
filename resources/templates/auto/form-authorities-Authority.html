@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-authorities-Authority.html generated 2018-06-29T10:10:59.623Z by adl.to-selmer-templates.
+<!-- File form-authorities-Authority.html generated 2018-06-29T14:15:38.724Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -38,6 +38,96 @@ id
 {% else %}
 <span id='id' name='id' class='pseudo-widget not-authorised'>
 You are not permitted to view id of authorities
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+</p>
+<p class='widget'>
+<label for='request-token-uri'>
+request-token-uri
+</label>
+{% ifmemberof admin %}
+<input id='request-token-uri' name='request-token-uri' type='text' value='{{record.request-token-uri}}' maxlength='256' size='60'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='request-token-uri' name='request-token-uri' class='pseudo-widget disabled'>
+{{record.request-token-uri}}
+</span>
+{% else %}
+<span id='request-token-uri' name='request-token-uri' class='pseudo-widget not-authorised'>
+You are not permitted to view request-token-uri of authorities
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+</p>
+<p class='widget'>
+<label for='access-token-uri'>
+access-token-uri
+</label>
+{% ifmemberof admin %}
+<input id='access-token-uri' name='access-token-uri' type='text' value='{{record.access-token-uri}}' maxlength='256' size='60'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='access-token-uri' name='access-token-uri' class='pseudo-widget disabled'>
+{{record.access-token-uri}}
+</span>
+{% else %}
+<span id='access-token-uri' name='access-token-uri' class='pseudo-widget not-authorised'>
+You are not permitted to view access-token-uri of authorities
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+</p>
+<p class='widget'>
+<label for='authorize-uri'>
+authorize-uri
+</label>
+{% ifmemberof admin %}
+<input id='authorize-uri' name='authorize-uri' type='text' value='{{record.authorize-uri}}' maxlength='256' size='60'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='authorize-uri' name='authorize-uri' class='pseudo-widget disabled'>
+{{record.authorize-uri}}
+</span>
+{% else %}
+<span id='authorize-uri' name='authorize-uri' class='pseudo-widget not-authorised'>
+You are not permitted to view authorize-uri of authorities
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+</p>
+<p class='widget'>
+<label for='consumer-key'>
+consumer-key
+</label>
+{% ifmemberof admin %}
+<input id='consumer-key' name='consumer-key' type='text' value='{{record.consumer-key}}' maxlength='32' size='32'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='consumer-key' name='consumer-key' class='pseudo-widget disabled'>
+{{record.consumer-key}}
+</span>
+{% else %}
+<span id='consumer-key' name='consumer-key' class='pseudo-widget not-authorised'>
+You are not permitted to view consumer-key of authorities
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+</p>
+<p class='widget'>
+<label for='consumer-secret'>
+consumer-secret
+</label>
+{% ifmemberof admin %}
+<input id='consumer-secret' name='consumer-secret' type='text' value='{{record.consumer-secret}}' maxlength='256' size='60'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='consumer-secret' name='consumer-secret' class='pseudo-widget disabled'>
+{{record.consumer-secret}}
+</span>
+{% else %}
+<span id='consumer-secret' name='consumer-secret' class='pseudo-widget not-authorised'>
+You are not permitted to view consumer-secret of authorities
 </span>
 {% endifmemberof %}
 {% endifmemberof %}

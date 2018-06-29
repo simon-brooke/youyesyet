@@ -145,7 +145,12 @@
 			entity dwellings already has a key - not generating one
 		-->
   <entity table="dwellings" name="dwellings" magnitude="6">
-    <documentation>All dwellings within addresses in the system; a dwelling is a house, flat or appartment in which electors live.</documentation>
+    <documentation>All dwellings within addresses in the system; a dwelling is a
+      house, flat or appartment in which electors live. Every address should have
+      at least one dwelling; essentially, an address maps onto a street door and
+      dwellings map onto what's behind that door. So a tenement or a block of flats
+      would be one address with many dwellings.
+    </documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
         <prompt prompt="id" locale="en-GB"/>
@@ -280,8 +285,18 @@
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
-    <list properties="listed" name="Authorities"><field property="id"><prompt prompt="id" locale="en-GB"/></field></list>
-    <form properties="listed" name="Authority"><field property="id"><prompt prompt="id" locale="en-GB"/></field></form>
+    <property name="request-token-uri" type="string" size="256" required="true"/>
+    <property name="access-token-uri" type="string" size="256" required="true"/>
+    <property name="authorize-uri" type="string" size="256" required="true"/>
+    <property name="consumer-key" type="string" size="32" required="true" default="youyesyet"/>
+    <property name="consumer-secret" type="string" size="256" required="true"/>
+    <list name="Authorities" properties="listed">
+      <field property="id"><prompt prompt="id" locale="en-GB"/></field>#
+      <field property="request-token-uri"/>
+      <field property="access-token-uri"/>
+      <field property="authorize-uri"/>
+    </list>
+    <form properties="listed" name="Authority"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="request-token-uri"/><field property="access-token-uri"/><field property="authorize-uri"/><field property="consumer-key"/><field property="consumer-secret"/><permission group="canvassers" permission="none"/><permission group="teamorganisers" permission="none"/><permission group="issueexperts" permission="none"/><permission group="analysts" permission="none"/><permission group="issueeditors" permission="none"/><permission group="admin" permission="all"/></form>
     <permission group="canvassers" permission="read"/>
     <permission group="teamorganisers" permission="read"/>
     <permission group="issueexperts" permission="read"/>
@@ -318,7 +333,7 @@
 			entity intentions has no key - generating one
 		-->
   <entity table="intentions" name="intentions" magnitude="6">
-    <documentation>Link table.</documentation>
+    <documentation>Intentions of electors to vote for options elicited in visits.</documentation>
     <key>
       <property type="integer" distinct="system" required="true" name="Id">
         <generator action="native"/>
@@ -330,11 +345,17 @@
     <property required="true" type="entity" entity="visits" farkey="id" name="visit_id" column="visit_id">
       <prompt prompt="visit_id" locale="en-GB"/>
     </property>
-    <property required="true" type="entity" entity="electors" farkey="id" name="elector_id" column="elector_id">
+    <property type="entity" entity="electors" farkey="id" name="elector_id" column="elector_id">
       <prompt prompt="elector_id" locale="en-GB"/>
     </property>
     <property required="true" type="entity" entity="options" farkey="id" name="option_id" column="option_id">
       <prompt prompt="option_id" locale="en-GB"/>
+    </property>
+    <property name="locality" type="integer" required="true">
+      <documentation>
+        The locality at which the intention was recorded; used where an elector does not consent to
+        have polling intention stored against them. This is a locality as described in
+      </documentation>
     </property>
     <permission permission="none" group="public"/>
     <permission group="canvassers" permission="noedit"/>
@@ -353,6 +374,12 @@
       <field property="option_id">
         <prompt prompt="option_id" locale="en-GB"/>
       </field>
+      <field property="locality">
+        <documentation>
+        The locality at which the intention was recorded; used where an elector does not consent to
+        have polling intention stored against them. This is a locality as described in
+      </documentation>
+      </field>
     </list>
     <form properties="listed" name="Intention">
       <field property="visit_id">
@@ -363,6 +390,12 @@
       </field>
       <field property="option_id">
         <prompt prompt="option_id" locale="en-GB"/>
+      </field>
+      <field property="locality">
+        <documentation>
+        The locality at which the intention was recorded; used where an elector does not consent to
+        have polling intention stored against them. This is a locality as described in
+      </documentation>
       </field>
     </form>
   </entity>
@@ -518,6 +551,13 @@
     </permission>
     <list properties="listed" name="Teams"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field><field property="district_id"><prompt prompt="district_id" locale="en-GB"/></field><field property="latitude"><prompt prompt="latitude" locale="en-GB"/></field><field property="longitude"><prompt prompt="longitude" locale="en-GB"/></field></list>
     <form properties="listed" name="Team"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field><field property="district_id"><prompt prompt="district_id" locale="en-GB"/></field><field property="latitude"><prompt prompt="latitude" locale="en-GB"/></field><field property="members"><prompt prompt="Members" locale="en-GB"/></field><field property="organisers"><prompt prompt="Organisers" locale="en-GB"/></field><field property="longitude"><prompt prompt="longitude" locale="en-GB"/></field></form>
+    <permission permission="none" group="public"/>
+    <permission permission="read" group="canvassers"/>
+    <permission permission="edit" group="teamorganisers"/>
+    <permission permission="read" group="issueexperts"/>
+    <permission permission="read" group="analysts"/>
+    <permission permission="read" group="issueeditors"/>
+    <permission permission="all" group="admin"/>
   </entity>
   <!--
 			entity districts already has a key - not generating one

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-dwellings-Dwellings.html generated 2018-06-29T10:10:59.622Z by adl.to-selmer-templates.
+<!-- File list-dwellings-Dwellings.html generated 2018-06-29T14:15:38.723Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -48,7 +48,7 @@ sub-address
 <input id='address_id_expanded' type='text' name='address_id_expanded' value='{{ params.address_id_expanded }}'/>
 </th>
 <th>
-<input id='sub-address' type='text' name='sub-address' value='{{ params.sub-address }}'/>
+<input id='sub_address' type='text' name='sub_address' value='{{ params.sub_address }}'/>
 </th>
 <th>
 <input type='submit' id='search' value='Search'/>
@@ -67,7 +67,7 @@ sub-address
 </a>
 </td>
 <td>
-{{ record.sub-address }}
+{{ record.sub_address }}
 </td>
 <td>
 <a href='form-dwellings-Dwelling?id={{ record.id }}'>

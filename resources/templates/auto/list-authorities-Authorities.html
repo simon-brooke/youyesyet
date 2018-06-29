@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-authorities-Authorities.html generated 2018-06-29T10:10:59.597Z by adl.to-selmer-templates.
+<!-- File list-authorities-Authorities.html generated 2018-06-29T14:15:38.699Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -33,10 +33,28 @@ Add a new Authority
 <th>
 id
 </th>
+<th>
+request-token-uri
+</th>
+<th>
+access-token-uri
+</th>
+<th>
+authorize-uri
+</th>
 </tr>
 <tr>
 <th>
 <input id='id' type='text' name='id' value='{{ params.id }}'/>
+</th>
+<th>
+<input id='request_token_uri' type='text' name='request_token_uri' value='{{ params.request_token_uri }}'/>
+</th>
+<th>
+<input id='access_token_uri' type='text' name='access_token_uri' value='{{ params.access_token_uri }}'/>
+</th>
+<th>
+<input id='authorize_uri' type='text' name='authorize_uri' value='{{ params.authorize_uri }}'/>
 </th>
 <th>
 <input type='submit' id='search' value='Search'/>
@@ -48,6 +66,15 @@ id
 <tr>
 <td>
 {{ record.id }}
+</td>
+<td>
+{{ record.request_token_uri }}
+</td>
+<td>
+{{ record.access_token_uri }}
+</td>
+<td>
+{{ record.authorize_uri }}
 </td>
 <td>
 <a href='form-authorities-Authority?id={{ record.id }}'>

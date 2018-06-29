@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File application-index.html generated 2018-06-29T10:10:59.615Z by adl.to-selmer-templates.
+<!-- File application-index.html generated 2018-06-29T14:15:38.716Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -49,7 +49,12 @@ Dwelling
 </dt>
 <dd>
 <p>
-All dwellings within addresses in the system; a dwelling is a house, flat or appartment in which electors live.
+All dwellings within addresses in the system; a dwelling is a
+      house, flat or appartment in which electors live. Every address should have
+      at least one dwelling; essentially, an address maps onto a street door and
+      dwellings map onto what's behind that door. So a tenement or a block of flats
+      would be one address with many dwellings.
+    
 </p>
 </dd>
 <dt>
@@ -99,7 +104,7 @@ Intention
 </dt>
 <dd>
 <p>
-Link table.
+Intentions of electors to vote for options elicited in visits.
 </p>
 </dd>
 <dt>
