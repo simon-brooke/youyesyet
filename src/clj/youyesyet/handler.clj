@@ -81,5 +81,4 @@
                      :title "page not found"})))))
 
 
-(def app #'app-routes)
-;;  (middleware/wrap-base #'app-routes))
+(def app (middleware/wrap-base #'app-routes))

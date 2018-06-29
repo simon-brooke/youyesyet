@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-issues-Issue.html generated 2018-06-19T18:51:51.684Z by adl.to-selmer-templates.
+<!-- File form-issues-Issue.html generated 2018-06-29T10:10:59.607Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -29,7 +29,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 id
 </label>
 {% ifmemberof issueeditors admin %}
-<input id='id' name='id' type='text' value='{{record.id}}'/>
+<input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -47,7 +47,7 @@ You are not permitted to view id of issues
 url
 </label>
 {% ifmemberof issueeditors admin %}
-<input id='url' name='url' type='text' value='{{record.url}}'/>
+<input id='url' name='url' type='text' value='{{record.url}}' maxlength='256' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='url' name='url' class='pseudo-widget disabled'>
@@ -65,7 +65,7 @@ You are not permitted to view url of issues
 current
 </label>
 {% ifmemberof issueeditors admin %}
-<input id='current' name='current' type='checkbox' value='{{record.current}}'/>
+<input id='current' name='current' type='checkbox' value='{{record.current}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='current' name='current' class='pseudo-widget disabled'>

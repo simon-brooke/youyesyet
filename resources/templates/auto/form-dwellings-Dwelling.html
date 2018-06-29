@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-dwellings-Dwelling.html generated 2018-06-19T18:51:51.739Z by adl.to-selmer-templates.
+<!-- File form-dwellings-Dwelling.html generated 2018-06-29T10:10:59.636Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -29,7 +29,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 id
 </label>
 {% ifmemberof admin %}
-<input id='id' name='id' type='text' value='{{record.id}}'/>
+<input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -70,7 +70,7 @@ You are not permitted to view address_id of dwellings
 sub-address
 </label>
 {% ifmemberof admin %}
-<input id='sub-address' name='sub-address' type='text' value='{{record.sub-address}}'/>
+<input id='sub-address' name='sub-address' type='text' value='{{record.sub-address}}' maxlength='32' size='32'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='sub-address' name='sub-address' class='pseudo-widget disabled'>

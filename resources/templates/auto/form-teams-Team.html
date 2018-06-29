@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-teams-Team.html generated 2018-06-19T18:51:51.702Z by adl.to-selmer-templates.
+<!-- File form-teams-Team.html generated 2018-06-29T10:10:59.616Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -29,7 +29,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 id
 </label>
 {% ifmemberof teamorganisers admin %}
-<input id='id' name='id' type='text' value='{{record.id}}'/>
+<input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -47,7 +47,7 @@ You are not permitted to view id of teams
 name
 </label>
 {% ifmemberof teamorganisers admin %}
-<input id='name' name='name' type='text' value='{{record.name}}'/>
+<input id='name' name='name' type='text' value='{{record.name}}' maxlength='64' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='name' name='name' class='pseudo-widget disabled'>
@@ -88,7 +88,7 @@ You are not permitted to view district_id of teams
 latitude
 </label>
 {% ifmemberof teamorganisers admin %}
-<input id='latitude' name='latitude' type='number' value='{{record.latitude}}'/>
+<input id='latitude' name='latitude' type='number' value='{{record.latitude}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='latitude' name='latitude' class='pseudo-widget disabled'>
@@ -152,7 +152,7 @@ You are not permitted to view organisers of teams
 longitude
 </label>
 {% ifmemberof teamorganisers admin %}
-<input id='longitude' name='longitude' type='number' value='{{record.longitude}}'/>
+<input id='longitude' name='longitude' type='number' value='{{record.longitude}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='longitude' name='longitude' class='pseudo-widget disabled'>

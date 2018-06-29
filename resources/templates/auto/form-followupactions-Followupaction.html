@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-followupactions-Followupaction.html generated 2018-06-19T18:51:51.743Z by adl.to-selmer-templates.
+<!-- File form-followupactions-Followupaction.html generated 2018-06-29T10:10:59.639Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -29,7 +29,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 id
 </label>
 {% ifmemberof admin %}
-<input id='id' name='id' type='text' value='{{record.id}}'/>
+<input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -93,7 +93,7 @@ You are not permitted to view actor of followupactions
 date
 </label>
 {% ifmemberof admin %}
-<input id='date' name='date' type='text' value='{{record.date}}'/>
+<input id='date' name='date' type='text' value='{{record.date}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='date' name='date' class='pseudo-widget disabled'>
@@ -111,7 +111,7 @@ You are not permitted to view date of followupactions
 notes
 </label>
 {% ifmemberof admin %}
-<input id='notes' name='notes' type='text' value='{{record.notes}}'/>
+<input id='notes' name='notes' type='text' value='{{record.notes}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='notes' name='notes' class='pseudo-widget disabled'>
@@ -129,7 +129,7 @@ You are not permitted to view notes of followupactions
 closed
 </label>
 {% ifmemberof admin %}
-<input id='closed' name='closed' type='checkbox' value='{{record.closed}}'/>
+<input id='closed' name='closed' type='checkbox' value='{{record.closed}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='closed' name='closed' class='pseudo-widget disabled'>

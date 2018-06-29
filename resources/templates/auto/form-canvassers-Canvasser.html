@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-canvassers-Canvasser.html generated 2018-06-19T18:51:51.720Z by adl.to-selmer-templates.
+<!-- File form-canvassers-Canvasser.html generated 2018-06-29T10:10:59.624Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -29,7 +29,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 id
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='id' name='id' type='text' value='{{record.id}}'/>
+<input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -47,7 +47,7 @@ You are not permitted to view id of canvassers
 username
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='username' name='username' type='text' value='{{record.username}}'/>
+<input id='username' name='username' type='text' value='{{record.username}}' maxlength='32' size='32'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='username' name='username' class='pseudo-widget disabled'>
@@ -65,7 +65,7 @@ You are not permitted to view username of canvassers
 fullname
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='fullname' name='fullname' type='text' value='{{record.fullname}}'/>
+<input id='fullname' name='fullname' type='text' value='{{record.fullname}}' maxlength='64' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='fullname' name='fullname' class='pseudo-widget disabled'>
@@ -129,7 +129,7 @@ You are not permitted to view address_id of canvassers
 phone
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='phone' name='phone' type='text' value='{{record.phone}}'/>
+<input id='phone' name='phone' type='text' value='{{record.phone}}' maxlength='16' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='phone' name='phone' class='pseudo-widget disabled'>
@@ -147,7 +147,7 @@ You are not permitted to view phone of canvassers
 email
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='email' name='email' type='text' value='{{record.email}}'/>
+<input id='email' name='email' type='text' value='{{record.email}}' maxlength='128' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='email' name='email' class='pseudo-widget disabled'>
@@ -188,7 +188,7 @@ You are not permitted to view authority_id of canvassers
 authorised
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='authorised' name='authorised' type='checkbox' value='{{record.authorised}}'/>
+<input id='authorised' name='authorised' type='checkbox' value='{{record.authorised}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='authorised' name='authorised' class='pseudo-widget disabled'>

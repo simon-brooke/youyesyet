@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-addresses-Address.html generated 2018-06-19T18:51:51.676Z by adl.to-selmer-templates.
+<!-- File form-addresses-Address.html generated 2018-06-29T10:10:59.603Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -29,7 +29,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 id
 </label>
 {% ifmemberof admin %}
-<input id='id' name='id' type='text' value='{{record.id}}'/>
+<input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -47,7 +47,7 @@ You are not permitted to view id of addresses
 address
 </label>
 {% ifmemberof admin %}
-<input id='address' name='address' type='text' value='{{record.address}}'/>
+<input id='address' name='address' type='text' value='{{record.address}}' maxlength='256' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='address' name='address' class='pseudo-widget disabled'>
@@ -65,7 +65,7 @@ You are not permitted to view address of addresses
 postcode
 </label>
 {% ifmemberof admin %}
-<input id='postcode' name='postcode' type='text' value='{{record.postcode}}'/>
+<input id='postcode' name='postcode' type='text' value='{{record.postcode}}' maxlength='16' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='postcode' name='postcode' class='pseudo-widget disabled'>
@@ -83,7 +83,7 @@ You are not permitted to view postcode of addresses
 phone
 </label>
 {% ifmemberof admin %}
-<input id='phone' name='phone' type='text' value='{{record.phone}}'/>
+<input id='phone' name='phone' type='text' value='{{record.phone}}' maxlength='16' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='phone' name='phone' class='pseudo-widget disabled'>
@@ -124,7 +124,7 @@ You are not permitted to view district_id of addresses
 latitude
 </label>
 {% ifmemberof admin %}
-<input id='latitude' name='latitude' type='number' value='{{record.latitude}}'/>
+<input id='latitude' name='latitude' type='number' value='{{record.latitude}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='latitude' name='latitude' class='pseudo-widget disabled'>
@@ -142,7 +142,7 @@ You are not permitted to view latitude of addresses
 longitude
 </label>
 {% ifmemberof admin %}
-<input id='longitude' name='longitude' type='number' value='{{record.longitude}}'/>
+<input id='longitude' name='longitude' type='number' value='{{record.longitude}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='longitude' name='longitude' class='pseudo-widget disabled'>

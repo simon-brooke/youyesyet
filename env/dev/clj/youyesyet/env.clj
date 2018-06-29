@@ -1,7 +1,8 @@
 (ns youyesyet.env
   (:require [selmer.parser :as parser]
             [clojure.tools.logging :as log]
-            [youyesyet.dev-middleware :refer [wrap-dev]]))
+            [youyesyet.dev-middleware :refer [wrap-dev]]
+            ))
 
 (def defaults
   {:init
@@ -11,4 +12,5 @@
    :stop
    (fn []
      (log/info "\n-=[youyesyet has shut down successfully]=-"))
-   :middleware wrap-dev})
+   :middleware wrap-dev
+   })
