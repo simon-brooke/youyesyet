@@ -34,6 +34,9 @@
     </header>
     {% endblock %}
     <div id="main-container" class="container">
+      <div id="back-link-container">
+        <a href="javascript:history.back()" id="back-link">Back</a>
+      </div>
       <div id="big-links">
         {% block big-links %}
         {% endblock %}
@@ -43,9 +46,6 @@
         {% endblock %}
       </div>
       <br clear="both"/>
-      <div id="back-link-container">
-        <a href="javascript:history.back()" id="back-link">Back</a>
-      </div>
     </div>
     {% block foot %}
     <footer>

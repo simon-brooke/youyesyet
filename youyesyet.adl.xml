@@ -361,10 +361,10 @@
       <prompt prompt="elector_id" locale="en-GB"/>
     </property>
     <property required="true" type="entity" name="address_id" column="address_id"
-      entity="addresses" farkey="id">
+      entity="addresses" farkey="id" distinct="user">
       <prompt prompt="address_id" locale="en-GB"/>
     </property>
-    <property type="string" name="phone" column="phone" size="16">
+    <property type="string" name="phone" column="phone" size="16" distinct="user">
       <prompt prompt="phone" locale="en-GB"/>
     </property>
     <property type="string" name="email" column="email" size="128" distinct="user">

@@ -1,5 +1,4 @@
-(ns ^{:doc "Plumbing, mainly boilerplate from Luminus."
-      :author "Simon Brooke"}
+(ns ^{:doc "Plumbing, mainly boilerplate from Luminus."}
   youyesyet.middleware
   (:require [youyesyet.env :refer [defaults]]
             [clojure.tools.logging :as log]

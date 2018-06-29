@@ -54,6 +54,7 @@
       ))]
     (layout/render
       "canvasser.html"
+      (:session request)
       {:title (if canvasser
                 (str
                   "Edit canvasser "
@@ -66,10 +67,10 @@
 
 (defn routing-page
   "Render the routing page, which offers routes according to the user's roles"
-  []
-  (layout/render "routing.html"))
+  [request]
+  (layout/render "routing.html" (:session request)))
 
 (defroutes authenticated-routes
   (GET "/edit-canvasser" request (canvasser-page request))
   (POST "/edit-canvasser" request (canvasser-page request))
-  (GET "/routing" [] (routing-page)))
+  (GET "/routing" [request] (routing-page request)))

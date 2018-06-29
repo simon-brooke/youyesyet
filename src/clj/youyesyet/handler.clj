@@ -43,8 +43,6 @@
                 :start ((or (:init defaults) identity))
                 :stop  ((or (:stop defaults) identity)))
 
-;;(mount/start db/*db*)
-
 (defn init
   "init will be called once when
    app is deployed as a servlet on

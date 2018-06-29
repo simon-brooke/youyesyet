@@ -37,11 +37,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn app-page []
-  (layout/render "app.html"))
+  (layout/render "app.html" {}))
 
 
 (defn about-page []
-  (layout/render "about.html"))
+  (layout/render "about.html" {}))
 
 
 (defn call-me-page [request]
@@ -49,8 +49,8 @@
     request
     (do
       ;; do something to store it in the database
-      (layout/render "call-me-accepted.html" (:params request)))
-    (layout/render "call-me.html"
+      (layout/render "call-me-accepted.html" (:session request) (:params request)))
+    (layout/render "call-me.html" (:session request)
                    {:title "Please call me!"
                     ;; TODO: Issues need to be fetched from the database
                     :concerns nil})))
@@ -59,21 +59,20 @@
 (defn roles-page [request]
   (let
     [session (:session request)
-     username (:user session)
-     user (if username (db-core/get-canvasser-by-username db-core/*db* {:username username}))
+     user (:user session)
      roles (if user (db-core/list-roles-by-canvasser db-core/*db* {:id (:id user)}))]
     (cond
       roles (layout/render "roles.html"
+                           (:session request)
                            {:title (str "Welcome " (:fullname user) ", what do you want to do?")
                             :user user
                             :roles roles})
       (empty? roles)(response/found "/app")
-      true (assoc (response/found "/login") :session (dissoc session :user))
-      )))
+      true (assoc (response/found "/login") :session (dissoc session :user)))))
 
 
 (defn home-page []
-  (layout/render "home.html" {:title "You Yes Yet?"}))
+  (layout/render "home.html" {} {:title "You Yes Yet?"}))
 
 
 (defn login-page
@@ -99,14 +98,18 @@
       ;; it-will-do-for-now security in place; instead, I want this to be test code only
       ;; until we have o-auth properly working.
       (and user (= username password))
-      (assoc (response/found redirect-to) :session (assoc session :user username))
-      user
+      (assoc
+        (response/found redirect-to)
+        :session (assoc session :user user :roles (layout/get-user-roles user)))
+      username
       (layout/render
         "login.html"
+        session
         {:title (str "User " username " is unknown") :redirect-to redirect-to})
       true
       (layout/render
         "login.html"
+        session
         {:title "Please log in"
          :redirect-to redirect-to
          :authorities (db-core/list-authorities db-core/*db*)}))))
@@ -127,7 +130,7 @@
   (POST "/call-me" request (call-me-page request))
   (GET "/auth" request (login-page request))
   (POST "/auth" request (login-page request))
-  (GET "/notyet" [] (layout/render "notyet.html"
+  (GET "/notyet" [] (layout/render "notyet.html" {}
                                    {:title "Can we persuade you?"}))
-  (GET "/supporter" [] (layout/render "supporter.html"
+  (GET "/supporter" [] (layout/render "supporter.html" {}
                                       {:title "Have you signed up as a canvasser yet?"})))

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File application-index.html generated 2018-06-29T16:36:20.140Z by adl.to-selmer-templates.
+<!-- File application-index.html generated 2018-06-29T22:21:55.471Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -23,23 +23,43 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block content %}
 <dl class='index'>
 <dt>
-<a href='list-electors-Electors'>
-Elector
+<a href='list-addresses-Addresses'>
+Address
 </a>
 </dt>
 <dd>
 <p>
-All electors known to the system; electors are people believed to be entitled to vote in the current campaign.
+Addresses of all buildings which contain dwellings.
 </p>
 </dd>
 <dt>
-<a href='list-genders-Genders'>
-Gender
+<a href='list-authorities-Authorities'>
+Authority
 </a>
 </dt>
 <dd>
 <p>
-All genders which may be assigned to electors.
+Authorities which may authenticate canvassers to the system.
+</p>
+</dd>
+<dt>
+<a href='list-canvassers-Canvassers'>
+Canvasser
+</a>
+</dt>
+<dd>
+<p>
+Primary users of the system: those actually interviewing electors.
+</p>
+</dd>
+<dt>
+<a href='list-districts-Districts'>
+District
+</a>
+</dt>
+<dd>
+<p>
+Electoral districts: TODO: Shape (polygon) information will need to be added, for use in maps.
 </p>
 </dd>
 <dt>
@@ -58,43 +78,50 @@ All dwellings within addresses in the system; a dwelling is a
 </p>
 </dd>
 <dt>
-<a href='list-addresses-Addresses'>
-Address
+<a href='list-electors-Electors'>
+Elector
 </a>
 </dt>
 <dd>
 <p>
-Addresses of all buildings which contain dwellings.
+All electors known to the system; electors are people believed to be entitled to vote in the current campaign.
 </p>
 </dd>
 <dt>
-<a href='list-visits-Visits'>
-Visit
+<a href='list-followupactions-Followupactions'>
+Followupaction
 </a>
 </dt>
 <dd>
 <p>
-All visits made by canvassers to dwellings in which opinions were recorded.
+Actions taken on followup requests.
 </p>
 </dd>
 <dt>
-<a href='list-authorities-Authorities'>
-Authority
+<a href='list-followupmethods-Followupmethods'>
+Followupmethod
+</a>
+</dt>
+<dd>
+</dd>
+<dt>
+<a href='list-followuprequests-Followuprequests'>
+Followuprequest
 </a>
 </dt>
 <dd>
 <p>
-Authorities which may authenticate canvassers to the system.
+Requests for a followup with an issue expert
 </p>
 </dd>
 <dt>
-<a href='list-issues-Issues'>
-Issue
+<a href='list-genders-Genders'>
+Gender
 </a>
 </dt>
 <dd>
 <p>
-Issues believed to be of interest to electors, about which they may have questions.
+All genders which may be assigned to electors.
 </p>
 </dd>
 <dt>
@@ -108,23 +135,23 @@ Intentions of electors to vote for options elicited in visits.
 </p>
 </dd>
 <dt>
-<a href='list-canvassers-Canvassers'>
-Canvasser
+<a href='list-issues-Issues'>
+Issue
 </a>
 </dt>
 <dd>
 <p>
-Primary users of the system: those actually interviewing electors.
+Issues believed to be of interest to electors, about which they may have questions.
 </p>
 </dd>
 <dt>
-<a href='list-followuprequests-Followuprequests'>
-Followuprequest
+<a href='list-options-Options'>
+Option
 </a>
 </dt>
 <dd>
 <p>
-Requests for a followup with an issue expert
+Options in the election or referendum being canvassed on
 </p>
 </dd>
 <dt>
@@ -145,41 +172,14 @@ Team
 <dd>
 </dd>
 <dt>
-<a href='list-districts-Districts'>
-District
+<a href='list-visits-Visits'>
+Visit
 </a>
 </dt>
 <dd>
 <p>
-Electoral districts: TODO: Shape (polygon) information will need to be added, for use in maps.
+All visits made by canvassers to dwellings in which opinions were recorded.
 </p>
-</dd>
-<dt>
-<a href='list-followupactions-Followupactions'>
-Followupaction
-</a>
-</dt>
-<dd>
-<p>
-Actions taken on followup requests.
-</p>
-</dd>
-<dt>
-<a href='list-options-Options'>
-Option
-</a>
-</dt>
-<dd>
-<p>
-Options in the election or referendum being canvassed on
-</p>
-</dd>
-<dt>
-<a href='list-followupmethods-Followupmethods'>
-Followupmethod
-</a>
-</dt>
-<dd>
 </dd>
 </dl>
 

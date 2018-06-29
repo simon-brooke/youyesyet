@@ -42,8 +42,8 @@
   "Get current issues. No arguments expected."
   [request])
 
-(defroutes rest-routes
-  (GET "/rest/get-local-data" request (route/restricted (get-local-data request)))
-  (GET "/rest/get-issues" request (route/restricted (get-issues request)))
-  (GET "/rest/set-intention" request (route/restricted (set-intention request)))
-  (GET "/rest/request-followup" request (route/restricted (request-followup request))))
+;; (defroutes rest-routes
+;;   (GET "/rest/get-local-data" request (route/restricted (get-local-data request)))
+;;   (GET "/rest/get-issues" request (route/restricted (get-issues request)))
+;;   (GET "/rest/set-intention" request (route/restricted (set-intention request)))
+;;   (GET "/rest/request-followup" request (route/restricted (request-followup request))))

@@ -2,13 +2,15 @@
      :author "Simon Brooke"}
           youyesyet.layout
           (:require [adl-support.tags :as tags]
+                    [clojure.string :refer [lower-case]]
+                    [clojure.tools.logging :as log]
                     [markdown.core :refer [md-to-html-string]]
-                    [noir.session :as session]
                     [ring.util.http-response :refer [content-type ok]]
                     [ring.util.anti-forgery :refer [anti-forgery-field]]
                     [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
                     [selmer.parser :as parser]
                     [selmer.filters :as filters]
+                    [youyesyet.db.core :as db]
                     ))
 
 
@@ -17,18 +19,25 @@
 (parser/set-resource-path!  (clojure.java.io/resource "templates"))
 (parser/add-tag! :csrf-field (fn [_ _] (anti-forgery-field)))
 (filters/add-filter! :markdown (fn [content] [:safe (md-to-html-string content)]))
+(tags/add-tags)
+
+(defn raw-get-user-roles [user]
+  "Return, as a set, the names of the roles of which this user is a member."
+  (if
+    user
+    (do
+      (log/debug (str "seeking roles for user " user))
+      (set (map #(lower-case (:name %)) (db/list-roles-by-canvasser db/*db* user))))))
 
 
-(defn raw-get-user-roles [_]
-  #{"admin" "canvassers"})
-
+;; role assignments change only rarely.
 (def get-user-roles (memoize raw-get-user-roles))
 
 
 (defn render
   "renders the HTML template located relative to resources/templates"
-  [template & [params]]
-  (let [user (try session/get :user)]
+  [template session & [params]]
+  (let [user (:user session)]
     (content-type
       (ok
         (parser/render-file
