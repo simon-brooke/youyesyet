@@ -89,9 +89,9 @@
       generally.</documentation>
   </group>
   <!--
-			entity electors already has a key - not generating one
-		-->
-  <entity table="electors" name="electors" magnitude="6">
+    entity electors already has a key - not generating one
+    -->
+  <entity table="electors" name="electors" magnitude="6" volatility="5">
     <documentation>All electors known to the system; electors are people believed to be entitled to vote in the current campaign.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
@@ -123,9 +123,9 @@
     <permission group="admin" permission="all"/>
   </entity>
   <!--
-			entity genders already has a key - not generating one
-		-->
-  <entity table="genders" name="genders" magnitude="1">
+    entity genders already has a key - not generating one
+    -->
+  <entity table="genders" name="genders" magnitude="1" volatility="6">
     <documentation>All genders which may be assigned to electors.</documentation>
     <key>
       <property name="id" type="string" size="32" distinct="all">
@@ -142,9 +142,9 @@
     <permission group="admin" permission="all"/>
   </entity>
   <!--
-			entity dwellings already has a key - not generating one
-		-->
-  <entity table="dwellings" name="dwellings" magnitude="6">
+    entity dwellings already has a key - not generating one
+    -->
+  <entity table="dwellings" name="dwellings" magnitude="6" volatility="6">
     <documentation>All dwellings within addresses in the system; a dwelling is a
       house, flat or appartment in which electors live. Every address should have
       at least one dwelling; essentially, an address maps onto a street door and
@@ -170,9 +170,9 @@
     <permission group="admin" permission="all"/>
   </entity>
   <!--
-			entity addresses already has a key - not generating one
-		-->
-  <entity table="addresses" name="addresses" magnitude="6">
+    entity addresses already has a key - not generating one
+    -->
+  <entity table="addresses" name="addresses" magnitude="6" volatility="6">
     <documentation>Addresses of all buildings which contain dwellings.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
@@ -239,9 +239,9 @@
     <permission group="admin" permission="all"/>
   </entity>
   <!--
-			entity visits already has a key - not generating one
-		-->
-  <entity table="visits" name="visits" magnitude="7">
+    entity visits already has a key - not generating one
+    -->
+  <entity table="visits" name="visits" magnitude="7" volatility="2">
     <documentation>All visits made by canvassers to dwellings in which opinions were recorded.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" distinct="system">
@@ -276,9 +276,9 @@
     <permission permission="all" group="admin"/>
   </entity>
   <!--
-			entity authorities already has a key - not generating one
-		-->
-  <entity table="authorities" name="authorities" magnitude="2">
+    entity authorities already has a key - not generating one
+    -->
+  <entity table="authorities" name="authorities" magnitude="2" volatility="7">
     <documentation>Authorities which may authenticate canvassers to the system.</documentation>
     <key>
       <property required="true" type="string" name="id" column="id" size="32" distinct="all">
@@ -305,9 +305,9 @@
     <permission group="admin" permission="all"/>
   </entity>
   <!--
-			entity issues already has a key - not generating one
-		-->
-  <entity table="issues" name="issues" magnitude="1">
+    entity issues already has a key - not generating one
+    -->
+  <entity table="issues" name="issues" magnitude="1" volatility="3">
     <documentation>Issues believed to be of interest to electors, about which they may have questions.</documentation>
     <key>
       <property required="true" type="string" name="id" column="id" size="32" immutable="true" distinct="all">
@@ -332,7 +332,7 @@
   <!--
 			entity intentions has no key - generating one
 		-->
-  <entity table="intentions" name="intentions" magnitude="6">
+  <entity table="intentions" name="intentions" magnitude="6" volatility="0">
     <documentation>Intentions of electors to vote for options elicited in visits.</documentation>
     <key>
       <property type="integer" distinct="system" required="true" name="Id">
@@ -400,9 +400,9 @@
     </form>
   </entity>
   <!--
-			entity canvassers already has a key - not generating one
-		-->
-  <entity table="canvassers" name="canvassers" magnitude="5">
+    entity canvassers already has a key - not generating one
+    -->
+  <entity table="canvassers" name="canvassers" magnitude="5" volatility="4">
     <documentation>Primary users of the system: those actually interviewing electors.</documentation>
     <key>
       <property type="integer" name="id" column="id" distinct="system" immutable="true">
@@ -418,10 +418,10 @@
     <property type="entity" name="elector_id" column="elector_id" entity="electors" farkey="id">
       <prompt prompt="elector_id" locale="en-GB"/>
     </property>
-    <property required="true" type="entity" name="address_id" column="address_id" entity="addresses" farkey="id">
+    <property required="true" type="entity" name="address_id" column="address_id" entity="addresses" farkey="id" distinct="user">
       <prompt prompt="address_id" locale="en-GB"/>
     </property>
-    <property type="string" name="phone" column="phone" size="16">
+    <property type="string" name="phone" column="phone" size="16" distinct="user">
       <prompt prompt="phone" locale="en-GB"/>
     </property>
     <property type="string" name="email" column="email" size="128" distinct="user">
@@ -457,9 +457,9 @@
     <permission group="admin" permission="all"/>
   </entity>
   <!--
-			entity followuprequests already has a key - not generating one
-		-->
-  <entity table="followuprequests" name="followuprequests" magnitude="7">
+    entity followuprequests already has a key - not generating one
+    -->
+  <entity table="followuprequests" name="followuprequests" magnitude="7" volatility="2">
     <documentation>Requests for a followup with an issue expert</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" distinct="system">
@@ -488,9 +488,9 @@
     <permission group="admin" permission="all"/>
   </entity>
   <!--
-			entity roles already has a key - not generating one
-		-->
-  <entity table="roles" name="roles" magnitude="1">
+    entity roles already has a key - not generating one
+    -->
+  <entity table="roles" name="roles" magnitude="1" volatility="7">
     <documentation>A role (essentially, the same as a group, but application layer rather than database layer) of which a user may be a member.</documentation>
     <key>
       <property type="integer" name="id" column="id" immutable="true" distinct="system">
@@ -513,9 +513,9 @@
     <permission group="admin" permission="all"/>
   </entity>
   <!--
-			entity teams already has a key - not generating one
-		-->
-  <entity table="teams" name="teams" magnitude="4">
+    entity teams already has a key - not generating one
+    -->
+  <entity table="teams" name="teams" magnitude="4" volatility="4">
     <key>
       <property type="integer" name="id" column="id" distinct="system" immutable="true">
         <prompt prompt="id" locale="en-GB"/>
@@ -560,9 +560,9 @@
     <permission permission="all" group="admin"/>
   </entity>
   <!--
-			entity districts already has a key - not generating one
-		-->
-  <entity table="districts" name="districts" magnitude="4">
+    entity districts already has a key - not generating one
+    -->
+  <entity table="districts" name="districts" magnitude="4" volatility="7">
     <documentation>Electoral districts: TODO: Shape (polygon) information will need to be added, for use in maps.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
@@ -584,9 +584,9 @@
     <permission group="admin" permission="all"/>
   </entity>
   <!--
-			entity followupactions already has a key - not generating one
-		-->
-  <entity table="followupactions" name="followupactions" magnitude="7">
+    entity followupactions already has a key - not generating one
+    -->
+  <entity table="followupactions" name="followupactions" magnitude="7" volatility="0">
     <documentation>Actions taken on followup requests.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" distinct="system">
@@ -620,9 +620,9 @@
     <permission group="admin" permission="all"/>
   </entity>
   <!--
-			entity options already has a key - not generating one
-		-->
-  <entity table="options" name="options" magnitude="1">
+    entity options already has a key - not generating one
+    -->
+  <entity table="options" name="options" magnitude="1" volatility="7">
     <documentation>Options in the election or referendum being canvassed on</documentation>
     <key>
       <property required="true" type="string" name="id" column="id" size="32" immutable="true" distinct="all">
@@ -639,9 +639,9 @@
     <permission group="admin" permission="all"/>
   </entity>
   <!--
-			entity followupmethods already has a key - not generating one
-		-->
-  <entity table="followupmethods" name="followupmethods" magnitude="1">
+    entity followupmethods already has a key - not generating one
+    -->
+  <entity table="followupmethods" name="followupmethods" magnitude="1" volatility="7">
     <key>
       <property required="true" type="string" size="32" name="id" column="id" immutable="true" distinct="all">
         <prompt prompt="id" locale="en-GB"/>

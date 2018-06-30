@@ -78,6 +78,7 @@ header {
   margin-top: 0;
   width:100%;
   max-width: 100%;
+  min-height: 96px; /* yes, we don't approve of pixel values; but this is to ensure the logo fits. */
   background-color: rgb(7, 57, 106);
   color: white;
 }
@@ -236,6 +237,11 @@ th {
 	color: white;
   background:rgba(40,40,40,0.8);
 	border-bottom: thin solid white;
+}
+
+#site-logo {
+  padding: 0.5em;
+  float: left;
 }
 
 /* but magically appears on mouseover */

@@ -6,8 +6,9 @@
             [noir.response :as nresponse]
             [noir.util.route :as route]
             [ring.util.http-response :refer [content-type ok]]
-            [youyesyet.layout :as layout]
+            [youyesyet.config :refer [env]]
             [youyesyet.db.core :as db-core]
+            [youyesyet.layout :as layout]
             [youyesyet.oauth :as oauth]
             [compojure.core :refer [defroutes GET POST]]
             [ring.util.http-response :as response]
@@ -41,7 +42,7 @@
 
 
 (defn about-page []
-  (layout/render "about.html" {}))
+  (layout/render "about.html" {} {:title (str "About " (:site-title env))}))
 
 
 (defn call-me-page [request]
@@ -53,7 +54,7 @@
     (layout/render "call-me.html" (:session request)
                    {:title "Please call me!"
                     ;; TODO: Issues need to be fetched from the database
-                    :concerns nil})))
+                    :concerns (db-core/list-issues db-core/*db* {})})))
 
 
 (defn roles-page [request]
@@ -72,7 +73,7 @@
 
 
 (defn home-page []
-  (layout/render "home.html" {} {:title "You Yes Yet?"}))
+  (layout/render "home.html" {} {:title "You yes yet?"}))
 
 
 (defn login-page

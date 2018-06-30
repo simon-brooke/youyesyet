@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-roles-Role.html generated 2018-06-29T16:36:20.134Z by adl.to-selmer-templates.
+<!-- File form-roles-Role.html generated 2018-06-30T11:36:00.884Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% block head %}
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
@@ -68,7 +68,7 @@ members
 <div class='select-box' farside='canvassers' found='true'>
 <input name='members-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='members' name='members' multiple='multiple' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in canvassers %}<option value='{{record.id}}'>{{record.username}} {{record.fullname}} {{record.email}}</option>{% endfor %}
+{% for record in canvassers %}<option value='{{record.id}}'>{{record.username}} {{record.fullname}} {{record.address_id}} {{record.phone}} {{record.email}}</option>{% endfor %}
 </select>
 </div>
 {% else %}

@@ -1,4 +1,4 @@
-{% extends "base-authenticated.html" %}
+{% extends "base.html" %}
 {% block whole-page %}
     <div id="app">
       <div class="splash-screen">
@@ -23,13 +23,13 @@
       </p>
     </div>
 {% endblock %}
-{% block extra-script %}
+{% block extra-tail %}
 <!-- scripts and styles -->
 <!-- ATTENTION \/ -->
+<!-- ATTENTION /\ -->
 <!-- Leaflet -->
 <link rel="stylesheet" href="vendor/leaflet/dist/leaflet.css" />
 <script src="vendor/leaflet/dist/leaflet.js"></script>
-<!-- ATTENTION /\ -->
 {% script "/js/app.js" %}
 {% endblock %}
 

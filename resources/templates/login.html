@@ -1,9 +1,6 @@
-{% extends "base-unauthenticated.html" %}
-{% block content %}
-      <div id="back-link-container">
-        <a href="javascript:history.back()" id="back-link">Back</a>
-      </div>
-      {% for authority in authorities %}
+{% extends "base.html" %}
+{% block big-links %}
+     {% for authority in authorities %}
       <div class="big-link-container">
         <a href="auth?authority={{authority.id}}" class="big-link" id="{{authority.id}}-link">
           <img src="img/authorities/{{authority.id}}.png" width="32" height="32" alt="{{authority.id}}"/>
@@ -11,6 +8,9 @@
         </a>
       </div>
       {% endfor %}
+{% endblock %}
+
+{% block content %}
       <form action="auth" method="post">
         {% csrf-field %}
         <h2>

@@ -7,10 +7,15 @@
     <link rel="stylesheet" type="text/css" href="css/yyy-site.css" />
     <link rel="stylesheet" type="text/css" href="css/spinner.css" />
     <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
-    <title>{{title}}</title>
+    <title>{{site-title}}: {{title}}</title>
+    {% block extra-head %}
+    <!-- extra-head: put any additional markup to go into the head of your document into this block -->
+    <!-- e.g. script tags, link tags -->
+    {% endblock %}
   </head>
   <body>
     {% block whole-page %}
+    <!-- whole-page: if you want an entire custom page layout, override this block. -->
     {% block top %}
     <header>
       <div id="nav">
@@ -27,10 +32,8 @@
           {% endif %}
         </menu>
       </div>
-
-      <h1>
-        {{title}}
-      </h1>
+      <img id="site-logo" src="{{site-logo}}" alt="{{site-title}}" width="64" height="64"/>
+      <h1>{{title}}</h1>
     </header>
     {% endblock %}
     <div id="main-container" class="container">
@@ -39,15 +42,18 @@
       </div>
       <div id="big-links">
         {% block big-links %}
+        <!-- big-links: put any main navigation links into this block -->
         {% endblock %}
        </div>
       <div if="#content">
         {% block content %}
+        <!-- content: put your main page content into this block -->
         {% endblock %}
       </div>
       <br clear="both"/>
     </div>
     {% block foot %}
+    <!-- foot: override this block if you don't want the standard footer -->
     <footer>
       <div id="credits">
         <div>
@@ -66,11 +72,18 @@
     </footer>
     {% endblock %}
     {% endblock %}
+    {% block extra-tail %}
+    <!-- extra-tail: put markup here which needs to be at the very end of the body -->
+    <!-- e.g. some javascript script tags, some link tags -->
+    {% endblock %}
     <script type="text/javascript">
+        //<![CDATA[
         var context = "{{servlet-context}}";
         var csrfToken = "{{csrf-token}}";
         {% block extra-script %}
+        /* extra-script: put any actual javascript source text you need into this block */
         {% endblock %}
+        //]]>
     </script>
   </body>
 </html>

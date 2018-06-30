@@ -81,7 +81,7 @@
       generally.</documentation>
   </group>
 
-  <entity name="electors" magnitude="6">
+  <entity name="electors" magnitude="6" volatility="5">
     <documentation>All electors known to the system; electors are people believed to be entitled to vote in the current campaign.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
@@ -92,7 +92,7 @@
       <prompt prompt="name" locale="en-GB"/>
     </property>
     <property required="true" type="entity" name="dwelling_id" column="dwelling_id" entity="dwellings" farkey="id">
-      <prompt prompt="Flat" locale="en-GB"/>
+      <prompt prompt="home" locale="en-GB"/>
     </property>
     <property size="16" type="string" name="phone" column="phone" distinct="user">
       <prompt prompt="phone" locale="en-GB"/>
@@ -113,7 +113,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <entity name="genders" magnitude="1">
+  <entity name="genders" magnitude="1" volatility="6">
     <documentation>All genders which may be assigned to electors.</documentation>
     <key>
       <property name="id" type="string" size="32" distinct="all">
@@ -129,7 +129,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <entity name="dwellings" magnitude="6">
+  <entity name="dwellings" magnitude="6" volatility="6">
     <documentation>All dwellings within addresses in the system; a dwelling is a
       house, flat or appartment in which electors live. Every address should have
       at least one dwelling; essentially, an address maps onto a street door and
@@ -154,7 +154,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <entity name="addresses" magnitude="6">
+  <entity name="addresses" magnitude="6" volatility="6">
     <documentation>Addresses of all buildings which contain dwellings.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
@@ -220,7 +220,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <entity name="visits" magnitude="7">
+  <entity name="visits" magnitude="7" volatility="2">
     <documentation>All visits made by canvassers to dwellings in which opinions were recorded.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" distinct="system">
@@ -256,7 +256,7 @@
     <permission permission="read" group="issueeditors"/>
     <permission permission="all" group="admin"/>
   </entity>
-  <entity name="authorities" magnitude="2">
+  <entity name="authorities" magnitude="2" volatility="7">
     <documentation>Authorities which may authenticate canvassers to the system.</documentation>
     <key>
       <property required="true" type="string" name="id" column="id" size="32" distinct="all">
@@ -289,7 +289,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <entity name="issues" magnitude="1">
+  <entity name="issues" magnitude="1" volatility="3">
     <documentation>Issues believed to be of interest to electors, about which they may have questions.</documentation>
     <key>
       <property required="true" type="string" name="id" column="id" size="32" immutable="true" distinct="all">
@@ -311,7 +311,7 @@
     <permission group="issueeditors" permission="edit"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <entity name="intentions" magnitude="6">
+  <entity name="intentions" magnitude="6" volatility="2">
     <documentation>Intentions of electors to vote for options elicited in visits.</documentation>
     <property required="true" type="entity" entity="visits" farkey="id" name="visit_id"
       column="visit_id">
@@ -344,7 +344,7 @@
     <permission group="issueeditors" permission="none"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <entity name="canvassers" magnitude="5">
+  <entity name="canvassers" magnitude="5" volatility="4">
     <documentation>Primary users of the system: those actually interviewing electors.</documentation>
     <key>
       <property type="integer" name="id" column="id" distinct="system" immutable="true">
@@ -400,7 +400,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <entity name="followuprequests" magnitude="7">
+  <entity name="followuprequests" magnitude="7" volatility="2">
     <documentation>Requests for a followup with an issue expert</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" distinct="system">
@@ -432,7 +432,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <entity name="roles" magnitude="1">
+  <entity name="roles" magnitude="1" volatility="7">
     <documentation>A role (essentially, the same as a group, but application layer rather than database layer) of which a user may be a member.</documentation>
     <key>
       <property type="integer" name="id" column="id" immutable="true" distinct="system">
@@ -454,7 +454,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <entity name="teams" magnitude="4">
+  <entity name="teams" magnitude="4" volatility="4">
     <key>
       <property type="integer" name="id" column="id" distinct="system" immutable="true">
         <prompt prompt="id" locale="en-GB"/>
@@ -499,7 +499,7 @@
     <permission permission="read" group="issueeditors"/>
     <permission permission="all" group="admin"/>
   </entity>
-  <entity name="districts" magnitude="4">
+  <entity name="districts" magnitude="4" volatility="7">
     <documentation>Electoral districts: TODO: Shape (polygon) information will need to be added, for use in maps.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
@@ -520,7 +520,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <entity name="followupactions" magnitude="7">
+  <entity name="followupactions" magnitude="7" volatility="0">
     <documentation>Actions taken on followup requests.</documentation>
     <key>
       <property required="true" type="integer" name="id" column="id" distinct="system">
@@ -555,7 +555,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <entity name="options" magnitude="1">
+  <entity name="options" magnitude="1" volatility="7">
     <documentation>Options in the election or referendum being canvassed on</documentation>
     <key>
       <property required="true" type="string" name="id" column="id" size="32" immutable="true" distinct="all">
@@ -571,7 +571,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <entity name="followupmethods" magnitude="1">
+  <entity name="followupmethods" magnitude="1" volatility="7">
     <key>
       <property required="true" type="string" size="32" name="id" column="id" immutable="true" distinct="all">
         <prompt prompt="id" locale="en-GB"/>
