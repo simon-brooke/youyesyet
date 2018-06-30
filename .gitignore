@@ -10,6 +10,7 @@ pom.xml.asc
 /resources/public/content/.git
 /resources/public/vendor
 /bower_components/
+/resources/public/js/lib/
 .lein-deps-sum
 .lein-repl-history
 .lein-plugins/

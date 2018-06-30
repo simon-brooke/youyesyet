@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    {% block head %}
+    <!-- head: if you want entire custom head content, override this block. -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" type="text/css" href="css/yyy-common.css" />
@@ -8,9 +10,11 @@
     <link rel="stylesheet" type="text/css" href="css/spinner.css" />
     <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
     <title>{{site-title}}: {{title}}</title>
+    {% script "js/lib/jquery/dist/jquery.min.js" %}
     {% block extra-head %}
     <!-- extra-head: put any additional markup to go into the head of your document into this block -->
     <!-- e.g. script tags, link tags -->
+    {% endblock %}
     {% endblock %}
   </head>
   <body>
@@ -32,7 +36,7 @@
           {% endif %}
         </menu>
       </div>
-      <img id="site-logo" src="{{site-logo}}" alt="{{site-title}}" width="64" height="64"/>
+      <!-- img id="site-logo" src="{{site-logo}}" alt="{{site-title}}" width="64" height="64"/ -->
       <h1>{{title}}</h1>
     </header>
     {% endblock %}

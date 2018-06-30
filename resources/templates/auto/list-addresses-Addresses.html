@@ -19,13 +19,29 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 </title>
 
 {% endblock %}
-
-{% block content %}
-<form id='content' class='list'>
+{% block big-links %}
 <div class='big-link-container'>
-<a href='form-addresses-Address'>
+<a href='form-addresses-Address' class="big-link">
 Add a new Address
 </a>
+</div>
+<div class='big-link-container'>
+<a role="button" class="big-link" id="next-selector" href="javascript:void(0)"
+   onclick="document.querySelector('content').submit()">
+Next
+</a>
+</div>
+{% endblock %}
+{% block content %}
+<form id='content' class='list'>
+{% csrf-field %}
+<input id="offset" type="hidden" value="{{offset|0}}"/>
+<input id="limit" type="hidden" value="{{limit|50}}"/>
+<div class='back-link-container'>
+<input id='page' name='page' disabled='{% ifequal offset 0 %} false {% else %} true {% endifequal %}' value='Previous'/>
+</div>
+<div class='big-link-container'>
+<input id='page' name='page' disabled='false' value='Next'/>
 </div>
 <table caption='addresses'>
 <thead>
@@ -114,12 +130,6 @@ View
 {% endfor %}
 </tbody>
 <tfoot>
-<div class='back-link-container'>
-<input id='page' name='page' disabled='{% ifequal offset 0 %} false {% else %} true {% endifequal %}' value='Previous'/>
-</div>
-<div class='big-link-container'>
-<input id='page' name='page' disabled='false' value='Next'/>
-</div>
 </tfoot>
 </table>
 </form>
@@ -132,38 +142,38 @@ View
 <img height='24' width='24' src='img/credits/ric-logo.png'/>
 
             A project of the
-            
+
 <a href='https://radical.scot/'>
 Radical Independence Campaign
 </a>
  ||
             Version {{version}}
-          
+
 </div>
 <div>
 <img src='img/credits/luminus-logo.png' alt='Clojure' width='16' height='16'/>
-Built with 
+Built with
 <a href='http://www.luminusweb.net/'>
 LuminusWeb
 </a>
  ||
-            
+
 <img src='img/credits/clojure-icon.gif' alt='Clojure' width='16' height='16'/>
- Powered by 
+ Powered by
 <a href='http://clojure.org'>
 Clojure
 </a>
  ||
-            
+
 <img src='img/credits/github-logo-transparent.png' alt='GitHub' width='16' height='16'/>
-Find me/fork me on 
+Find me/fork me on
 <a href='https://github.com/simon-brooke/smeagol'>
 Github
 </a>
  ||
-            
+
 <img src='img/credits/gnu.small.png' alt='Free Software Foundation' width='16' height='16'/>
-Licensed under the 
+Licensed under the
 <a href='http://www.gnu.org/licenses/gpl-2.0.html'>
 GNU General Public License version 2.0
 </a>
@@ -171,4 +181,11 @@ GNU General Public License version 2.0
 </div>
 </footer>
 
+{% endblock %}
+{% block extra-script %}
+var form = document.getElementById("content");
+
+document.getElementById("next-selector").addEventListener("click", function () {
+  form.submit();
+});
 {% endblock %}

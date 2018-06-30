@@ -61,7 +61,9 @@
             [lein-less "1.7.5"]
             [lein-codox "0.10.3"]]
 
-  :bower-dependencies [[leaflet "0.7.3"]]
+  :bower-dependencies [[leaflet "0.7.3"]
+                       [jquery "3.3.1"]]
+  :bower {:directory "resources/public/js/lib"}
 
   :cucumber-feature-paths ["test/clj/features"]
 
