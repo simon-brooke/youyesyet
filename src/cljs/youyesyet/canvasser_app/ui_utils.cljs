@@ -28,15 +28,22 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defn back-link []
-  [:div.back-link-container {:id "back-link-container"}
-   [:a {:href "javascript:history.back()" :id "back-link"} "Back"]])
+(defn back-link
+  "Generate a back link to the preceding page, or, if `target` is specified,
+  to a particular page."
+  ([]
+   (back-link "javascript:history.back()"))
+  ([target]
+   [:div.back-link-container {:id "back-link-container"}
+    [:a {:href target :id "back-link"} "Back"]]))
 
-
-(defn big-link [text target]
+(defn big-link
+  [text & {:keys [target intention]}]
   [:div.big-link-container {:key target}
-   [:a.big-link {:href target} text]])
-
+   [:a.big-link (merge
+                  (if target {:href target}{})
+                  (if intention {:on-click intention}))
+    text]])
 
 (defn nav-link [uri title page collapsed?]
   (let [selected-page (rf/subscribe [:page])]

@@ -47,5 +47,5 @@
        [:div {:id "issue-text"
               :dangerouslySetInnerHTML
               {:__html (md->html (issues issue))}}]]
-      (ui/big-link "Request call" "#/followup")
+      (ui/big-link "Request call" :target "#/followup")
       (ui/back-link)]]))

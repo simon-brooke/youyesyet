@@ -36,12 +36,14 @@
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn app-page []
-  (layout/render "app.html" {}))
+(defn app-page [request]
+  (layout/render "app.html" {:title "Canvasser app"
+                             :user (:user (:session request))}))
 
 
 (defn about-page []
-  (layout/render "about.html" {} {:title (str "About " (:site-title env))}))
+  (layout/render "about.html" {} {:title
+                                  (str "About " (:site-title env))}))
 
 
 (defn call-me-page [request]
@@ -129,8 +131,7 @@
   (GET "/home" [] (home-page))
   (GET "/about" [] (about-page))
   (GET "/roles" request (route/restricted (roles-page request)))
-  (GET "/canvassers" [] (route/restricted (app-page)))
-  (GET "/app" [] (route/restricted (app-page)))
+  (GET "/canvassers" [request] (route/restricted (app-page request)))
   (GET "/call-me" [] (call-me-page nil))
   (POST "/call-me" request (call-me-page request))
   (GET "/auth" request (login-page request))

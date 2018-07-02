@@ -9,7 +9,6 @@
             [youyesyet.config :refer [env]]
             [youyesyet.layout :refer [error-page]]
             [youyesyet.middleware :as middleware]
-            [youyesyet.routes.authenticated :refer [authenticated-routes]]
             [youyesyet.routes.home :refer [home-routes]]
             [youyesyet.routes.oauth :refer [oauth-routes]]
             [youyesyet.routes.auto-json :refer [auto-rest-routes]]
@@ -73,7 +72,7 @@
         (wrap-routes middleware/wrap-csrf)
         (wrap-routes middleware/wrap-formats))
     'oauth-routes
-    #'authenticated-routes
+    (route/resources "/")
     (route/not-found
       (:body
         (error-page {:status 404

@@ -66,21 +66,18 @@
   [template session & [params]]
   (let [user (:user session)]
     (log/debug (str "layout/render: template: '" template "'; user: '" user "'."))
-    (assoc
-      (content-type
-       (ok
+    (content-type
+      (ok
         (parser/render-file
-         template
-         (assoc params
-           :page template
-           :csrf-token *anti-forgery-token*
-           :version (System/getProperty "youyesyet.version"))))
-       "text/html; charset=utf-8")
-      :user user
-      :user-roles (get-user-roles user)
-      :site-title (:site-title env)
-      :site-logo (:site-logo env)
-      :session session)))
+          template
+          (assoc params
+            :page template
+            :csrf-token *anti-forgery-token*
+            :user user
+            :user-roles (get-user-roles user)
+            :site-title (:site-title env)
+            :version (System/getProperty "youyesyet.version"))))
+      "text/html; charset=utf-8")))
 
 
 (defn error-page

@@ -23,13 +23,22 @@
       </p>
     </div>
 {% endblock %}
+{% block extra-script %}
+    var user = {
+      "username": "{{user.username}}",
+      "fullname": "{{user.fullname}}",
+      "id": {{user.id|default:-1}},
+      "authorised": {{user.authorised|default:false}}
+    };
+{% endblock %}
 {% block extra-tail %}
 <!-- scripts and styles -->
 <!-- ATTENTION \/ -->
 <!-- ATTENTION /\ -->
 <!-- Leaflet -->
-<link rel="stylesheet" href="js/lib/leaflet/dist/leaflet.css" />
-{% script "js/lib/leaflet/dist/leaflet.js" %}
+<link rel="stylesheet" href="js/lib/node_modules/leaflet/dist/leaflet.css" />
+{% script "js/lib/node_modules/signature_pad/dist/signature_pad.min.js" %}
+{% script "js/lib/node_modules/leaflet/dist/leaflet.js" %}
 {% script "/js/app.js" %}
 {% endblock %}
 
