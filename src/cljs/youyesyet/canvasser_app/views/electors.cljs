@@ -62,11 +62,12 @@
 
 (defn name-cell
   [elector]
-   [:td {:key (str "name-" (:id elector))
-         :on-click #(dispatch
-                       [:set-elector-and-page {:elector-id (:id elector)
-                                         :page "gdpr"}])}
-    (:name elector)])
+  [:td {:key (str "name-" (:id elector))
+        :on-click #(dispatch
+                     [:set-elector-and-page
+                      {:elector-id (:id elector)
+                       :page "gdpr"}])}
+   (:name elector)])
 
 
 (defn names-row
@@ -92,9 +93,7 @@
        [:div.container {:id "main-container"}
         [:table
          [:tbody
-          ;; genders row
           (genders-row electors)
-          ;; names row
           (names-row electors)]]
         (ui/back-link)]]
       (ui/error-panel "No address selected"))))

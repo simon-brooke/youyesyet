@@ -59,15 +59,23 @@ Do get the database initialised, run
 
     createdb youyesyet_dev
 
-followed by
+I'm no longer using Migratus as I'm using [Application Description Language]()
+to generate the majority of the application, and, as changes are made to the application
+description, new database schemas are generated. The database initialisation script will
+be found at `resources/sql/youyesyet.postgres.sql`. Reference data initialisation scripts
+will in due course be stored in the same directory.
 
-    lein migratus migrate
-
-**NOTE THAT** in the namespace *youyesyet.db.schema*, there are a series of functions *create-xxx-table!*. These are a snare and a delusion; they are how I originally bootstrapped the database, but are no longer used (and should probably be deleted). The database is now constructed using [migratus](https://github.com/yogthos/migratus).
+Once we have a more or less finished application it may be worth going back to
+[Migratus](https://github.com/yogthos/migratus); I might have a go at generating migrations from
+diffs between successive versions of the application description.
 
 ## Running in a dev environment
 
 To run in a dev environment, checkout the *develop* branch
+
+To download and install Javascript delendencies, run
+
+    lein npm install
 
 To start a development web server for the application, run:
 
