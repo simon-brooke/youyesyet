@@ -46,14 +46,14 @@
                                          {:id 4 :name "Andy Anderson" :intention :yes}]}]}
                 {:id 2  :address "15 Imaginary Terrace, IM1 3TE" :latitude 55.8252354 :longitude -4.2572778
                  :dwellings [{:id 2
-                              :electors [{:id 1 :name "Beryl Brown" :gender :female}
-                                         {:id 2 :name "Betty Black" :gender :female}]}]}
+                              :electors [{:id 5 :name "Beryl Brown" :gender :female}
+                                         {:id 6 :name "Betty Black" :gender :female}]}]}
 
                 {:id 3 :address "17 Imaginary Terrace, IM1 3TE" :latitude 55.825166 :longitude -4.257026
                  :dwellings [{:id 3 :sub-address "Flat 1"
-                              :electors [{:id 1 :name "Catriona Crathie" :gender :female :intention :yes}
-                                         {:id 2 :name "Colin Caruthers" :gender :male :intention :yes}
-                                         {:id 3 :name "Calum Crathie" :intention :yes}]}
+                              :electors [{:id 7 :name "Catriona Crathie" :gender :female :intention :yes}
+                                         {:id 8 :name "Colin Caruthers" :gender :male :intention :yes}
+                                         {:id 9 :name "Calum Crathie" :intention :yes}]}
                              {:id 4 :sub-address "Flat 2"
                               :electors [{:id 1 :name "David Dewar" :gender :male :intention :no}]}]}]
     ;;; electors at the currently selected dwelling

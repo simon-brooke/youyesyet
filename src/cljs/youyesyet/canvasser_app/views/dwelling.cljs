@@ -1,13 +1,13 @@
 (ns ^{:doc "Canvasser app electors in household panel."
       :author "Simon Brooke"}
-  youyesyet.canvasser-app.views.electors
+  youyesyet.canvasser-app.views.dwelling
   (:require [reagent.core :refer [atom]]
             [re-frame.core :refer [reg-sub subscribe dispatch]]
             [youyesyet.canvasser-app.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.canvasser-app.views.electors: electors view for youyesyet.
+;;;; youyesyet.canvasser-app.views.dwelling: dweling view for youyesyet.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -42,15 +42,20 @@
 ;;; 2. the elector's name;
 ;;; The mechanics of how this panel is laid out don't matter.
 
+(defn go-to-gdpr-for-elector [elector]
+  (dispatch [:set-elector-and-page {:elector-id (:id elector)
+                                    :page :gdpr}]))
+
+
 (defn gender-cell
   [elector]
   (let [gender (:gender elector)
         image (if gender (name gender) "unknown")]
     [:td {:key (str "gender-" (:id elector))}
-      [:img {:src (str "img/gender/" image ".png") :alt image
-             :on-click #(dispatch
-                       [:set-elector-and-page {:elector-id (:id elector)
-                                         :page "gdpr"}])}]]))
+      [:a {:href (str "#gdpr/" (:id elector))}
+       [:img {:src (str "img/gender/" image ".png") :alt image
+             ;; :on-click #(go-to-gdpr-for-elector elector)
+                                                }]]]))
 
 
 (defn genders-row
@@ -63,10 +68,7 @@
 (defn name-cell
   [elector]
   [:td {:key (str "name-" (:id elector))
-        :on-click #(dispatch
-                     [:set-elector-and-page
-                      {:elector-id (:id elector)
-                       :page "gdpr"}])}
+        :on-click  #(go-to-gdpr-for-elector elector)}
    (:name elector)])
 
 

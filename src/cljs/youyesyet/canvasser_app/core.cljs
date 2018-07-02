@@ -15,8 +15,8 @@
             [youyesyet.canvasser-app.ui-utils :as ui]
             [youyesyet.canvasser-app.views.about :as about]
             [youyesyet.canvasser-app.views.building :as building]
+            [youyesyet.canvasser-app.views.dwelling :as dwelling]
             [youyesyet.canvasser-app.views.elector :as elector]
-            [youyesyet.canvasser-app.views.electors :as electors]
             [youyesyet.canvasser-app.views.followup :as followup]
             [youyesyet.canvasser-app.views.gdpr :as gdpr]
             [youyesyet.canvasser-app.views.issue :as issue]
@@ -56,8 +56,8 @@
 (defn building-page []
   (building/panel))
 
-(defn electors-page []
-  (electors/panel))
+(defn dwelling-page []
+  (dwelling/panel))
 
 (defn elector-page []
   (elector/panel))
@@ -81,7 +81,7 @@
   {:about #'about-page
    :building #'building-page
    :elector #'elector-page
-   :electors #'electors-page
+   :dwelling #'dwelling-page
    :followup #'followup-page
    :gdpr #'gdpr-page
    :issues #'issues-page
@@ -114,41 +114,49 @@
 ;; Routes
 (secretary/set-config! :prefix "#")
 
+(defn log-and-dispatch [arg]
+  (js/console.log (str "Dispatching " arg))
+  (rf/dispatch arg))
+
 (secretary/defroute "/" []
-  (rf/dispatch [:set-active-page :map]))
+  (log-and-dispatch [:set-active-page :map]))
 
 (secretary/defroute "/about" []
-  (rf/dispatch [:set-active-page :about]))
+  (log-and-dispatch [:set-active-page :about]))
 
-(secretary/defroute "/electors/:dwelling" {dwelling-id :dwelling}
-  (rf/dispatch [:set-dwelling dwelling-id]))
+(secretary/defroute "/dwelling" []
+  (log-and-dispatch [:set-active-page :dwelling]))
+
+(secretary/defroute "/dwelling/:dwelling" {dwelling-id :dwelling}
+  (log-and-dispatch [:set-dwelling dwelling-id])
+  (log-and-dispatch [:set-active-page :dwelling]))
 
 (secretary/defroute "/building/:address" {address-id :address}
-  (rf/dispatch [:set-address address-id]))
+  (log-and-dispatch [:set-address address-id]))
 
 (secretary/defroute "/followup" []
-  (rf/dispatch [:set-active-page :followup]))
+  (log-and-dispatch [:set-active-page :followup]))
 
 (secretary/defroute "/gdpr" []
-  (rf/dispatch [:set-active-page :gdpr]))
+  (log-and-dispatch [:set-active-page :gdpr]))
 
 (secretary/defroute "/gdpr/:elector" {elector-id :elector}
-  (rf/dispatch [:set-elector-and-page {:elector-id elector-id :page :gdpr}]))
+  (log-and-dispatch [:set-elector-and-page {:elector-id elector-id :page :gdpr}]))
 
 (secretary/defroute "/issues" []
-  (rf/dispatch [:set-active-page :issues]))
+  (log-and-dispatch [:set-active-page :issues]))
 
 (secretary/defroute "/issues/:elector" {elector-id :elector}
-  (rf/dispatch [:set-elector-and-page {:elector-id elector-id :page :issues}]))
+  (log-and-dispatch [:set-elector-and-page {:elector-id elector-id :page :issues}]))
 
 (secretary/defroute "/issue/:issue" {issue :issue}
-  (rf/dispatch [:set-and-go-to-issue issue]))
+  (log-and-dispatch [:set-and-go-to-issue issue]))
 
 (secretary/defroute "/map" []
-  (rf/dispatch [:set-active-page :map]))
+  (log-and-dispatch [:set-active-page :map]))
 
 (secretary/defroute "/set-intention/:elector/:intention" {elector-id :elector intention :intention}
-  (rf/dispatch [:set-intention {:elector-id elector-id :intention intention}]))
+  (log-and-dispatch [:set-intention {:elector-id elector-id :intention intention}]))
 
 ;; -------------------------
 ;; History
@@ -173,3 +181,4 @@
   (load-interceptors!)
   (hook-browser-navigation!)
   (mount-components))
+

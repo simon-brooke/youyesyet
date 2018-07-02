@@ -1,4 +1,13 @@
 {% extends "base.html" %}
+{% block head %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="css/yyy-common.css" />
+    <link rel="stylesheet" type="text/css" href="css/yyy-app.css" />
+    <link rel="stylesheet" type="text/css" href="css/spinner.css" />
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
+    <title>{{site-title}}: {{title}}</title>
+{% endblock %}
 {% block whole-page %}
     <div id="app">
       <div class="splash-screen">

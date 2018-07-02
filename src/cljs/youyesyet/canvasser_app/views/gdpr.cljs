@@ -36,7 +36,6 @@
     [:div
      [:h1 "GDPR Consent"]
      [:div.container {:id "main-container"}
-      (ui/back-link "#electors")
       [:table
        [:tbody
         [:tr
@@ -51,16 +50,21 @@
                only against your electoral district, and not link it to you"]]]]
         [:tr
          [:td
-          [:canvas {:id "signature-pad" :style "width: 100%; min-width 300px; min-height 200px;"}]]]]]]
+          [:canvas {:id "signature-pad"}]]]]]]
+     (ui/back-link "#dwelling")
      (ui/big-link "I consent"
-                  :handler (fn [] (dispatch [:set-consent-and-page elector "#/gdpr"])))
+                  :handler #(fn [] (dispatch [:set-consent-and-page {:elector-id (:id elector)
+                                                                     :page :elector}])))
      ;; TODO: need to save the signature
-     (ui/big-link "I DO NOT consent" :target "#elector")]))
+     (ui/big-link "I DO NOT consent"
+                  :handler
+                  #(fn [] (dispatch [:set-elector-and-page {:elector-id (:id elector)
+                                                            :page :elector}])))]))
 
 
 (defn gdpr-did-mount
   []
-  (js/SignaturePad (.getElementById js/document "signature-pad")))
+  (js/SignaturePad. (.getElementById js/document "signature-pad")))
 
 
 (defn panel

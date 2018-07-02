@@ -36,18 +36,33 @@
   (merge state {:error nil :feedback nil}))
 
 
+(defn coerce-to-number [v]
+  (if (number? v) v
+    (try
+      (read-string (str v))
+      (catch js/Object any
+        (js/console.log (str "Could not coerce '" v "' to number: " any))))))
+
+
 (defn get-elector
   "Return the elector at this address (or the current address if not specified)
   with this id."
   ([elector-id state]
    (get-elector elector-id state (:address state)))
   ([elector-id state address]
-   (first
-    (remove
-     nil?
-     (map
-      #(if (= elector-id (:id %)) %)
-      (:electors address))))))
+   (try
+     (first
+       (remove
+         nil?
+         (map
+           #(if (= (coerce-to-number elector-id) (:id %)) %)
+           (:electors state))))
+     (catch js/Object _
+       (str
+         "Failed to find id '"
+         elector-id
+         "' among '"
+         (:electors state) "'")))))
 
 
 (reg-event-db
@@ -60,7 +75,7 @@
   :send-intention
   (fn [db [_ args]]
     (let [intention (:intention args)
-          elector-id (:elector-id args)
+          elector-id (coerce-to-number (:elector-id args))
           old-elector (first
                         (remove nil?
                                 (map
@@ -134,17 +149,19 @@
 (reg-event-db
  :set-address
  (fn [db [_ address-id]]
-   (let [id (read-string address-id)
+   (let [id (coerce-to-number address-id)
          address (first (remove nil? (map #(if (= id (:id %)) %) (:addresses db))))]
      (if
        (= (count (:dwellings address)) 1)
        (assoc (clear-messages db)
          :address address
          :dwelling (first (:dwellings address))
-         :page :electors)
+         :electors (:electors (first (:dwellings address)))
+         :page :dwelling)
        (assoc (clear-messages db)
          :address address
          :dwelling nil
+         :electors nil
          :page :building)))))
 
 
@@ -152,24 +169,28 @@
   :set-consent-and-page
   (fn [db [_ args]]
     (let [page (:page args)
-          elector-id (read-string (:elector-id args))
+          elector-id (coerce-to-number (:elector-id args))
           elector (get-elector elector-id db)]
       (js/console.log (str "Setting page to " page ", consent to true for " elector))
       (assoc (clear-messages db) :elector (assoc elector :consent true) :page page))))
 
 
-
 (reg-event-db
   :set-dwelling
   (fn [db [_ dwelling-id]]
-    (let [id (read-string dwelling-id)
+    (let [id (coerce-to-number dwelling-id)
           dwelling (first
                      (remove
                        nil?
                        (map
                          #(if (= id (:id %)) %)
                          (mapcat :dwellings (:addresses db)))))]
-      (assoc (clear-messages db) :dwelling dwelling :page :electors))))
+      (if dwelling
+        (assoc
+          (clear-messages db)
+          :dwelling dwelling
+          :electors (:electors dwelling)
+          :page :dwelling)))))
 
 
 (reg-event-db
@@ -183,7 +204,7 @@
   :set-elector-and-page
   (fn [db [_ args]]
     (let [page (:page args)
-          elector-id (read-string (:elector-id args))
+          elector-id (coerce-to-number (:elector-id args))
           elector (get-elector elector-id db)]
       (js/console.log (str "Setting page to " page ", elector to " elector))
       (assoc (clear-messages db) :elector elector :page page))))
@@ -192,7 +213,7 @@
 (reg-event-db
  :set-elector
  (fn [db [_ elector-id]]
-   (let [elector (get-elector (read-string elector-id) db)]
+   (let [elector (get-elector (coerce-to-number elector-id) db)]
      (js/console.log (str "Setting elector to " elector))
      (assoc (clear-messages db) :elector elector))))
 
@@ -206,14 +227,14 @@
 
 (reg-event-db
  :set-latitude
- (fn [db [_ issue]]
-   (assoc db :latitude issue)))
+ (fn [db [_ v]]
+   (assoc db :latitude (coerce-to-number v))))
 
 
 (reg-event-db
  :set-longitude
- (fn [db [_ issue]]
-   (assoc db :longitude issue)))
+ (fn [db [_ v]]
+   (assoc db :longitude (coerce-to-number v))))
 
 
 (reg-event-db

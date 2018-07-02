@@ -28,6 +28,12 @@ h1 {
   margin-top: 0;
 }
 
+#signature-pad {
+  width: 300px;
+  border: thin solid white;
+  min-height: 150px;
+}
+
 /* desktops and laptops, primarily. Adapted to mouse; targets may be small */
 @media all and (min-device-width: 1025px) {
 

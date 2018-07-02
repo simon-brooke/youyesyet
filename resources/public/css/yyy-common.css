@@ -164,7 +164,7 @@ th {
 #main-container{
 }
 
-#back-link, .back-link {
+.back-link {
   min-width: 8em;
   padding: 0.25em 1em;
   background-color: gray;
@@ -174,26 +174,26 @@ th {
   border-bottom-right-radius: 0.5em;
 }
 
-#back-link:hover, #back-link:active, .back-link:hover, .back-link:active, {
+.back-link:hover, .back-link:active, {
   text-decoration: none;
   background-color: rgb(160, 160, 160);
 }
 
-#back-link:hover::before, #back-link:active::before {
+.back-link:hover::before, .back-link:active::before {
   content: "< ";
 }
 
-#back-link-container {
+.back-link-container {
   float: left;
   text-align: left;
 }
 
-#back-link-container, .big-link-container {
+.back-link-container, .big-link-container {
   font-size: 200%;
   padding: 0.5em 0;
 }
 
-#back-link-container > #back-link:hover::before, #back-link-container > #back-link:active::before {
+.back-link-container > .back-link:hover::before, .back-link-container > .back-link:active::before {
 
 }
 
