@@ -149,6 +149,17 @@
 
 
 (reg-event-db
+  :set-consent-and-page
+  (fn [db [_ args]]
+    (let [page (:page args)
+          elector-id (read-string (:elector-id args))
+          elector (get-elector elector-id db)]
+      (js/console.log (str "Setting page to " page ", consent to true for " elector))
+      (assoc (clear-messages db) :elector (assoc elector :consent true) :page page))))
+
+
+
+(reg-event-db
   :set-dwelling
   (fn [db [_ dwelling-id]]
     (let [id (read-string dwelling-id)
@@ -168,7 +179,7 @@
    (assoc (assoc (clear-messages db) :issue issue) :page :issue)))
 
 
- (reg-event-db
+(reg-event-db
   :set-elector-and-page
   (fn [db [_ args]]
     (let [page (:page args)

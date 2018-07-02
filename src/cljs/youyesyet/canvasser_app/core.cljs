@@ -10,7 +10,7 @@
             [re-frame.core :as rf]
             [secretary.core :as secretary]
             [youyesyet.canvasser-app.ajax :refer [load-interceptors!]]
-            [youyesyet.canvasser-app.handlers]
+            [youyesyet.canvasser-app.handlers :as h]
             [youyesyet.canvasser-app.subscriptions]
             [youyesyet.canvasser-app.ui-utils :as ui]
             [youyesyet.canvasser-app.views.about :as about]
@@ -62,6 +62,9 @@
 (defn elector-page []
   (elector/panel))
 
+(defn gdpr-page []
+  (gdpr/panel))
+
 (defn followup-page []
   (followup/panel))
 
@@ -80,6 +83,7 @@
    :elector #'elector-page
    :electors #'electors-page
    :followup #'followup-page
+   :gdpr #'gdpr-page
    :issues #'issues-page
    :issue #'issue-page
    :map #'map-page
@@ -98,7 +102,7 @@
      [:header
       [ui/navbar]]
      (if content [content]
-       [:div.error (str "No content in page " :page)])
+       [:div.error (str "No content in page " @(rf/subscribe [:page]))])
      [:footer
       [:div.error {:style [:display (if error "block" "none")]} (str error)]
       [:div.feedback {:style [:display (if feedback :block :none)]} (str feedback)]
@@ -126,7 +130,10 @@
   (rf/dispatch [:set-active-page :followup]))
 
 (secretary/defroute "/gdpr" []
-  (rf/despatch [:set-active-page :gdpr]))
+  (rf/dispatch [:set-active-page :gdpr]))
+
+(secretary/defroute "/gdpr/:elector" {elector-id :elector}
+  (rf/dispatch [:set-elector-and-page {:elector-id elector-id :page :gdpr}]))
 
 (secretary/defroute "/issues" []
   (rf/dispatch [:set-active-page :issues]))
@@ -162,7 +169,7 @@
 
 (defn init! []
   (rf/dispatch-sync [:initialize-db])
-  (get-current-location)
+  (h/get-current-location)
   (load-interceptors!)
   (hook-browser-navigation!)
   (mount-components))

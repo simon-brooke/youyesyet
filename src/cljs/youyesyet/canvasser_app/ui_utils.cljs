@@ -38,11 +38,11 @@
     [:a {:href target :id "back-link"} "Back"]]))
 
 (defn big-link
-  [text & {:keys [target intention]}]
+  [text & {:keys [target handler]}]
   [:div.big-link-container {:key target}
    [:a.big-link (merge
                   (if target {:href target}{})
-                  (if intention {:on-click intention}))
+                  (if handler {:on-click handler}))
     text]])
 
 (defn nav-link [uri title page collapsed?]

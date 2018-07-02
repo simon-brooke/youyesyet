@@ -1,8 +1,8 @@
 (ns ^{:doc "Canvasser app electors in household panel."
       :author "Simon Brooke"}
   youyesyet.canvasser-app.views.gdpr
-  (:require [reagent.core :refer [atom]]
-            [re-frame.core :refer [reg-sub subscribe dispatch]]
+  (:require [re-frame.core :refer [reg-sub subscribe dispatch]]
+            [reagent.core :as reagent]
             [youyesyet.canvasser-app.ui-utils :as ui]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -30,7 +30,6 @@
 
 ;; OK, the idea here is a GDPR consent form to be signed by the elector
 
-
 (defn gdpr-render
   []
   (let [elector @(subscribe [:elector])]
@@ -53,7 +52,9 @@
         [:tr
          [:td
           [:canvas {:id "signature-pad" :style "width: 100%; min-width 300px; min-height 200px;"}]]]]]]
-     (ui/big-link "I consent" :target "#elector") ;; TODO: need to save the signature
+     (ui/big-link "I consent"
+                  :handler (fn [] (dispatch [:set-consent-and-page elector "#/gdpr"])))
+     ;; TODO: need to save the signature
      (ui/big-link "I DO NOT consent" :target "#elector")]))
 
 

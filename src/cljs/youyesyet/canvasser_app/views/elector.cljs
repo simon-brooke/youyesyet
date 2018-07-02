@@ -90,15 +90,11 @@
        [:div.container {:id "main-container"}
         [:table
          [:tbody
-          ;; genders row
           (gender-row elector)
-          ;; names row
           (name-row elector)
-          ;; options rows
           (map
-           #(option-row elector %)
-           options)
-          ;; issues row
+            #(option-row elector %)
+            options)
           (issue-row elector)]]
         (ui/back-link)]]
       (ui/error-panel "No address selected"))))
