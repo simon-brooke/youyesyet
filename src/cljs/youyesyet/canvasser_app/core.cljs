@@ -125,6 +125,9 @@
 (secretary/defroute "/followup" []
   (rf/dispatch [:set-active-page :followup]))
 
+(secretary/defroute "/gdpr" []
+  (rf/despatch [:set-active-page :gdpr]))
+
 (secretary/defroute "/issues" []
   (rf/dispatch [:set-active-page :issues]))
 
@@ -159,6 +162,7 @@
 
 (defn init! []
   (rf/dispatch-sync [:initialize-db])
+  (get-current-location)
   (load-interceptors!)
   (hook-browser-navigation!)
   (mount-components))

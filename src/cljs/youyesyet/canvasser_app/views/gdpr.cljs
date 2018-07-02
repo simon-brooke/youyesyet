@@ -31,7 +31,7 @@
 ;; OK, the idea here is a GDPR consent form to be signed by the elector
 
 
-(defn gdpr-panel-render
+(defn gdpr-render
   []
   (let [elector @(subscribe [:elector])]
     [:div
@@ -51,10 +51,19 @@
           [:p [:i "If you do not consent, we will store your voting intention
                only against your electoral district, and not link it to you"]]]]
         [:tr
-         [:td {:id "signature-pad"}
-          [:canvas]]]]]]
+         [:td
+          [:canvas {:id "signature-pad" :style "width: 100%; min-width 300px; min-height 200px;"}]]]]]]
      (ui/big-link "I consent" :target "#elector") ;; TODO: need to save the signature
      (ui/big-link "I DO NOT consent" :target "#elector")]))
 
 
+(defn gdpr-did-mount
+  []
+  (js/SignaturePad (.getElementById js/document "signature-pad")))
 
+
+(defn panel
+  "A reagent class for the GDPR consent form"
+  []
+  (reagent/create-class {:reagent-render gdpr-render
+                         :component-did-mount gdpr-did-mount}))

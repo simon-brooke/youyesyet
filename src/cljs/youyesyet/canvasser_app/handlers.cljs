@@ -233,6 +233,7 @@
       (.getCurrentPosition
         (.-geolocation js/navigator)
         (fn [position]
+          (js/console.log "Current location is: " + position)
           (dispatch [:set-latitude (.-latitude (.-coords position))])
           (dispatch [:set-longitude (.-longitude (.-coords position))])))
       (js/console.log "Geolocation not available"))
