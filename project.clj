@@ -102,8 +102,7 @@
   {:uberjar {:omit-source true
              :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
              :cljsbuild
-             {:prep-tasks [["npm" "install"]]
-              :builds
+             {:builds
               {:min
                {:source-paths ["src/cljc" "src/cljs" "env/prod/cljs"]
                 :compiler
@@ -150,7 +149,7 @@
                       :source-map true
                       :optimizations :none
                       :pretty-print true}}}}
-                  :doo {:build "test"}
+                 :doo {:build "test"}
                   :source-paths ["env/dev/clj"]
                   :resource-paths ["env/dev/resources"]
                   :repl-options {:init-ns user}
