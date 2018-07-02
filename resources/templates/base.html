@@ -11,10 +11,10 @@
     <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
     <title>{{site-title}}: {{title}}</title>
     {% script "js/lib/jquery/dist/jquery.min.js" %}
+    {% endblock %}
     {% block extra-head %}
     <!-- extra-head: put any additional markup to go into the head of your document into this block -->
     <!-- e.g. script tags, link tags -->
-    {% endblock %}
     {% endblock %}
   </head>
   <body>
@@ -48,7 +48,7 @@
         {% block big-links %}
         <!-- big-links: put any main navigation links into this block -->
         {% endblock %}
-       </div>
+      </div>
       <div if="#content">
         {% block content %}
         <!-- content: put your main page content into this block -->
@@ -81,13 +81,11 @@
     <!-- e.g. some javascript script tags, some link tags -->
     {% endblock %}
     <script type="text/javascript">
-        //<![CDATA[
         var context = "{{servlet-context}}";
         var csrfToken = "{{csrf-token}}";
         {% block extra-script %}
         /* extra-script: put any actual javascript source text you need into this block */
         {% endblock %}
-        //]]>
     </script>
   </body>
 </html>

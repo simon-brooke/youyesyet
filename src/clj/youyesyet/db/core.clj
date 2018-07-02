@@ -1,5 +1,4 @@
-(ns ^{:doc "Database access functions."
-      :author "Simon Brooke"}
+(ns ^{:doc "Database access functions, mostly from Luminus template."}
   youyesyet.db.core
   (:require
     [cheshire.core :refer [generate-string parse-string]]

@@ -62,7 +62,9 @@
             [lein-codox "0.10.3"]]
 
   :bower-dependencies [[leaflet "0.7.3"]
-                       [jquery "3.3.1"]]
+                       [jquery "3.3.1"]
+                       [datatables.net "1.10.19"]
+                       [datatables.net-dt "1.10.19"]]
   :bower {:directory "resources/public/js/lib"}
 
   :cucumber-feature-paths ["test/clj/features"]

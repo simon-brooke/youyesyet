@@ -1,17 +1,16 @@
 (ns ^{:doc "Routes/pages available to unauthenticated users."
       :author "Simon Brooke"} youyesyet.routes.home
   (:require [clojure.java.io :as io]
+            [clojure.string :as s]
             [clojure.tools.logging :as log]
             [clojure.walk :refer [keywordize-keys]]
-            [noir.response :as nresponse]
             [noir.util.route :as route]
-            [ring.util.http-response :refer [content-type ok]]
+            [ring.util.http-response :as response]
             [youyesyet.config :refer [env]]
             [youyesyet.db.core :as db-core]
             [youyesyet.layout :as layout]
             [youyesyet.oauth :as oauth]
             [compojure.core :refer [defroutes GET POST]]
-            [ring.util.http-response :as response]
             ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -63,13 +62,13 @@
      user (:user session)
      roles (if user (db-core/list-roles-by-canvasser db-core/*db* {:id (:id user)}))]
     (cond
-      roles (layout/render "roles.html"
-                           (:session request)
-                           {:title (str "Welcome " (:fullname user) ", what do you want to do?")
-                            :user user
-                            :roles roles})
-      (empty? roles)(response/found "/app")
-      true (assoc (response/found "/login") :session (dissoc session :user)))))
+     roles (layout/render "roles.html"
+                          (:session request)
+                          {:title (str "Welcome " (:fullname user) ", what do you want to do?")
+                           :user user
+                           :roles roles})
+     (empty? roles)(response/found "/app")
+     true (assoc (response/found "/login") :session (dissoc session :user)))))
 
 
 (defn home-page []
@@ -86,42 +85,47 @@
         password (:password params)
         redirect-to (or (:redirect-to params) "roles")]
     (cond
-      (:authority params)
-      (let [auth (oauth/authority! (:authority params))]
-        (if auth
-          (do
-            (log/info "Attempting to authorise with authority " (:authority params))
-            (oauth/fetch-request-token
-              (assoc request :session (assoc session :authority auth))
-              auth))
-          (throw (Exception. (str "No such authority: " (:authority params))))))
-      ;; this is obviously, ABSURDLY, insecure. I don't want to put just-about-good-enough,
-      ;; it-will-do-for-now security in place; instead, I want this to be test code only
-      ;; until we have o-auth properly working.
-      (and user (= username password))
-      (assoc
-        (response/found redirect-to)
-        :session (assoc session :user user :roles (layout/get-user-roles user)))
-      username
+     (:authority params)
+     (let [auth (oauth/authority! (:authority params))]
+       (if auth
+         (do
+           (log/info "Attempting to authorise with authority " (:authority params))
+           (oauth/fetch-request-token
+            (assoc request :session (assoc session :authority auth))
+            auth))
+         (throw (Exception. (str "No such authority: " (:authority params))))))
+     ;; this is obviously, ABSURDLY, insecure. I don't want to put just-about-good-enough,
+     ;; it-will-do-for-now security in place; instead, I want this to be test code only
+     ;; until we have o-auth properly working.
+     (and user (= username password))
+     (let
+       [roles (layout/get-user-roles user)]
+       (log/info (str "Logged in user '" username "' with roles " roles))
+       (assoc
+         (response/found redirect-to)
+         :session
+         (assoc session :user user :roles roles)))
+     ;; if we've got a username but either no user object or else
+     ;; the password doesn't match
+     username
       (layout/render
-        "login.html"
-        session
-        {:title (str "User " username " is unknown") :redirect-to redirect-to})
-      true
+       "login.html"
+       session
+       {:title (str "User " username " is unknown")
+        :redirect-to redirect-to
+        :warnings ["Your user name was not recognised or your password did not match"]})
+     ;; if we've no username, just invite the user to log in
+     true
       (layout/render
-        "login.html"
-        session
-        {:title "Please log in"
-         :redirect-to redirect-to
-         :authorities (db-core/list-authorities db-core/*db*)}))))
+       "login.html"
+       session
+       {:title "Please log in"
+        :redirect-to redirect-to
+        :authorities (db-core/list-authorities db-core/*db*)}))))
 
 
 (defroutes home-routes
   (GET "/" [] (home-page))
-;;   (GET "/js/:file" [file]
-;;        (-> (io/input-stream (str "resources/public/js/" file))
-;;            ok
-;;            (content-type "text/javascript;charset=UTF-8")))
   (GET "/home" [] (home-page))
   (GET "/about" [] (about-page))
   (GET "/roles" request (route/restricted (roles-page request)))

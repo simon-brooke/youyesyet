@@ -50,7 +50,10 @@
     user
     (do
       (log/debug (str "seeking roles for user " user))
-      (set (map #(lower-case (:name %)) (db/list-roles-by-canvasser db/*db* user))))))
+      (let [roles
+      (set (map #(lower-case (:name %)) (db/list-roles-by-canvasser db/*db* user)))]
+        (log/debug (str "found roles " roles " for user " user))
+        roles))))
 
 
 ;; role assignments change only rarely.
@@ -58,22 +61,26 @@
 
 
 (defn render
-  "renders the HTML template located relative to resources/templates"
+  "renders the HTML `template` located relative to resources/templates in
+  the context of this session and with these parameters."
   [template session & [params]]
   (let [user (:user session)]
-    (content-type
-      (ok
+    (log/debug (str "layout/render: template: '" template "'; user: '" user "'."))
+    (assoc
+      (content-type
+       (ok
         (parser/render-file
-          template
-          (assoc params
-            :page template
-            :csrf-token *anti-forgery-token*
-            :user user
-            :user-roles (get-user-roles user)
-            :site-title (:site-title env)
-            :site-logo (:site-logo env)
-            :version (System/getProperty "youyesyet.version"))))
-      "text/html; charset=utf-8")))
+         template
+         (assoc params
+           :page template
+           :csrf-token *anti-forgery-token*
+           :version (System/getProperty "youyesyet.version"))))
+       "text/html; charset=utf-8")
+      :user user
+      :user-roles (get-user-roles user)
+      :site-title (:site-title env)
+      :site-logo (:site-logo env)
+      :session session)))
 
 
 (defn error-page

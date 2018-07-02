@@ -1,32 +1,44 @@
 {% extends "base.html" %}
-<!-- File list-followuprequests-Followuprequests.html generated 2018-06-30T11:36:00.866Z by adl.to-selmer-templates.
+<!-- File list-followuprequests-Followuprequests.html generated 2018-07-01T22:15:35.297Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
-{% block head %}
-<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
 
-<meta content='width=device-width, initial-scale=1' name='viewport'/>
 
-<link href='css/yyy-common.css' type='text/css' rel='stylesheet'/>
-
-<link href='css/yyy-site.css' type='text/css' rel='stylesheet'/>
-
-<link href='css/spinner.css' type='text/css' rel='stylesheet'/>
-
-<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow'/>
-
-<title>
-{{site-title}}: {{title}}
-</title>
+{% block back-links %}
+<div>
+<div class='back-link-container'>
+{% ifunequal params.offset "0" %}
+<a id='prev-selector' class='back-link'>
+Previous
+</a>
+{% else %}
+<a id='back-link' class='back-link' href='{{servlet-context}}/admin'>
+Back
+</a>
+{% endifunequal %}
+</div>
+</div>
 
 {% endblock %}
-
-{% block content %}
-<form id='content' class='list'>
+{% block big-links %}
+<div>
 <div class='big-link-container'>
-<a href='form-followuprequests-Followuprequest'>
+<a id='next-selector' role='button' class='big-link'>
+Next
+</a>
+</div>
+<div class='big-link-container'>
+<a href='form-followuprequests-Followuprequest' class='big-link'>
 Add a new Followuprequest
 </a>
 </div>
+</div>
+
+{% endblock %}
+{% block content %}
+<form id='list-followuprequests-Followuprequests' class='list' action='{{servlet-context}}/list-followuprequests-Followuprequests' method='POST'>
+{% csrf-field %}
+<input id='offset' type='hidden' value='{{params.offset|default:0}}'/>
+<input id='limit' type='hidden' value='{{params.limit|default:50}}'/>
 <table caption='followuprequests'>
 <thead>
 <tr>
@@ -63,7 +75,7 @@ method_id
 <input id='method_id_expanded' type='text' name='method_id_expanded' value='{{ params.method_id_expanded }}'/>
 </th>
 <th>
-<input type='submit' id='search' value='Search'/>
+<input type='submit' id='search-widget' value='Search'/>
 </th>
 </tr>
 </thead>
@@ -101,62 +113,30 @@ View
 </tr>
 {% endfor %}
 </tbody>
-<tfoot>
-<div class='back-link-container'>
-<input id='page' name='page' disabled='{% ifequal offset 0 %} false {% else %} true {% endifequal %}' value='Previous'/>
-</div>
-<div class='big-link-container'>
-<input id='page' name='page' disabled='false' value='Next'/>
-</div>
-</tfoot>
 </table>
 </form>
 
 {% endblock %}
-{% block foot %}
-<footer>
-<div id='credits'>
-<div>
-<img height='24' width='24' src='img/credits/ric-logo.png'/>
+{% block extra-script %}
 
-            A project of the
-            
-<a href='https://radical.scot/'>
-Radical Independence Campaign
-</a>
- ||
-            Version {{version}}
-          
-</div>
-<div>
-<img src='img/credits/luminus-logo.png' alt='Clojure' width='16' height='16'/>
-Built with 
-<a href='http://www.luminusweb.net/'>
-LuminusWeb
-</a>
- ||
-            
-<img src='img/credits/clojure-icon.gif' alt='Clojure' width='16' height='16'/>
- Powered by 
-<a href='http://clojure.org'>
-Clojure
-</a>
- ||
-            
-<img src='img/credits/github-logo-transparent.png' alt='GitHub' width='16' height='16'/>
-Find me/fork me on 
-<a href='https://github.com/simon-brooke/smeagol'>
-Github
-</a>
- ||
-            
-<img src='img/credits/gnu.small.png' alt='Free Software Foundation' width='16' height='16'/>
-Licensed under the 
-<a href='http://www.gnu.org/licenses/gpl-2.0.html'>
-GNU General Public License version 2.0
-</a>
-</div>
-</div>
-</footer>
+          var form = document.getElementById('list-followuprequests-Followuprequests');
+          var ow = document.getElementById('offset');
+          var lw = document.getElementById('limit');
+          form.addEventListener('submit', function() {
+            ow.value='0';
+          });
 
+          {% ifunequal offset 0 %}
+          document.getElementById('prev-selector').addEventListener('click', function () {
+            ow.value=(parseInt(ow.value)-parseInt(lw.value));
+            console.log('Updated offset to ' + ow.value);
+            form.submit();
+          });
+          {% endifunequal %}
+
+          document.getElementById('next-selector').addEventListener('click', function () {
+            ow.value=(parseInt(ow.value)+parseInt(lw.value));
+            console.log('Updated offset to ' + ow.value);
+            form.submit();
+          });
 {% endblock %}

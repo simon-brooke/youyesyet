@@ -21,36 +21,6 @@
 
     There must also be an administrative interface through which privileged users can set the system up and authorise canvassers, and a 'followup' interface through which issue-expert specialist canvassers can address particular electors' queries.
   </documentation>
-  <content>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link rel="stylesheet" type="text/css" href="css/yyy-common.css"/>
-        <link rel="stylesheet" type="text/css" href="css/yyy-site.css"/>
-        <link rel="stylesheet" type="text/css" href="css/spinner.css"/>
-        <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
-        <title>{{site-title}}: {{title}}</title>
-      </head>
-    <top> </top>
-    <foot>
-      <footer>
-        <div id="credits">
-          <div>
-            <img src="img/credits/ric-logo.png" width="24" height="24"/>
-            A project of the
-            <a href="https://radical.scot/">Radical Independence Campaign</a> ||
-            Version {{version}}
-          </div>
-          <div>
-            <img height="16" width="16" alt="Clojure" src="img/credits/luminus-logo.png"/>Built with <a href="http://www.luminusweb.net/">LuminusWeb</a> ||
-            <img height="16" width="16" alt="Clojure" src="img/credits/clojure-icon.gif"/> Powered by <a href="http://clojure.org">Clojure</a> ||
-            <img height="16" width="16" alt="GitHub" src="img/credits/github-logo-transparent.png"/>Find me/fork me on <a href="https://github.com/simon-brooke/smeagol">Github</a> ||
-            <img height="16" width="16" alt="Free Software Foundation" src="img/credits/gnu.small.png"/>Licensed under the <a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License version 2.0</a>
-          </div>
-        </div>
-      </footer>
-    </foot>
-  </content>
   <typedef name="postcode" type="string" pattern="^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))[0-9][A-Za-z]{2})$" size="16">
     <documentation>See
       https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/488478/Bulk_Data_Transfer_-_additional_validation_valid_from_12_November_2015.pdf,
@@ -102,7 +72,7 @@
       <prompt prompt="name" locale="en-GB"/>
     </property>
     <property required="true" type="entity" name="dwelling_id" column="dwelling_id" entity="dwellings" farkey="id">
-      <prompt prompt="Flat" locale="en-GB"/>
+      <prompt prompt="home" locale="en-GB"/>
     </property>
     <property size="16" type="string" name="phone" column="phone" distinct="user">
       <prompt prompt="phone" locale="en-GB"/>
@@ -113,8 +83,8 @@
     <property name="gender" type="entity" column="gender" entity="genders" farkey="id" default="Unknown" distinct="user">
       <prompt prompt="gender" locale="en-GB"/>
     </property>
-    <list properties="listed" name="Electors"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field><field property="dwelling_id"><prompt prompt="Flat" locale="en-GB"/></field><field property="phone"><prompt prompt="phone" locale="en-GB"/></field><field property="email"><prompt prompt="email" locale="en-GB"/></field><field property="gender"><prompt prompt="gender" locale="en-GB"/></field></list>
-    <form properties="listed" name="Elector"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field><field property="dwelling_id"><prompt prompt="Flat" locale="en-GB"/></field><field property="phone"><prompt prompt="phone" locale="en-GB"/></field><field property="email"><prompt prompt="email" locale="en-GB"/></field><field property="gender"><prompt prompt="gender" locale="en-GB"/></field></form>
+    <list properties="listed" name="Electors"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field><field property="dwelling_id"><prompt prompt="home" locale="en-GB"/></field><field property="phone"><prompt prompt="phone" locale="en-GB"/></field><field property="email"><prompt prompt="email" locale="en-GB"/></field><field property="gender"><prompt prompt="gender" locale="en-GB"/></field></list>
+    <form properties="listed" name="Elector"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="name"><prompt prompt="name" locale="en-GB"/></field><field property="dwelling_id"><prompt prompt="home" locale="en-GB"/></field><field property="phone"><prompt prompt="phone" locale="en-GB"/></field><field property="email"><prompt prompt="email" locale="en-GB"/></field><field property="gender"><prompt prompt="gender" locale="en-GB"/></field></form>
     <permission group="canvassers" permission="read"/>
     <permission group="teamorganisers" permission="read"/>
     <permission group="issueexperts" permission="read"/>
@@ -332,7 +302,7 @@
   <!--
 			entity intentions has no key - generating one
 		-->
-  <entity table="intentions" name="intentions" magnitude="6" volatility="0">
+  <entity table="intentions" name="intentions" magnitude="6" volatility="2">
     <documentation>Intentions of electors to vote for options elicited in visits.</documentation>
     <key>
       <property type="integer" distinct="system" required="true" name="Id">
