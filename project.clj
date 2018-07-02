@@ -51,15 +51,16 @@
   :main ^:skip-aot youyesyet.core
   :migratus {:store :database :db ~(get (System/getenv) "DATABASE_URL")}
 
-  :plugins [[lein-cprop "1.0.1"]
-            [migratus-lein "0.4.2"]
-            [org.clojars.punkisdead/lein-cucumber "1.0.5"]
+  :plugins [[lein-bower "0.5.1"]
             [lein-cljsbuild "1.1.4"]
             [lein-codox "0.10.3"]
-            [lein-uberwar "0.2.0"]
-            [lein-bower "0.5.1"]
+            [lein-cprop "1.0.1"]
             [lein-less "1.7.5"]
-            [lein-codox "0.10.3"]]
+            [lein-npm "0.6.2"]
+            [lein-uberwar "0.2.0"]
+            [migratus-lein "0.4.2"]
+            [org.clojars.punkisdead/lein-cucumber "1.0.5"]
+             ]
 
   :bower-dependencies [[leaflet "0.7.3"]
                        [jquery "3.3.1"]
@@ -73,6 +74,13 @@
           :languages [:clojure :clojurescript]
           :source-paths ["src/clj" "src/cljc" "src/cljs"]}
 
+  :npm {:dependencies [[datatables.net "1.10.19"]
+                       [datatables.net-dt "1.10.19"]
+                       [jquery "3.3.1"]
+                       [leaflet "1.3.1"]
+                       [signature_pad "2.3.2"]]
+        :root "resources/public/js/lib"}
+
   :uberwar
   {:handler youyesyet.handler/app
    :init youyesyet.handler/init
@@ -80,7 +88,8 @@
    :name "youyesyet.war"}
 
   :clean-targets ^{:protect false}
-  [:target-path [:cljsbuild :builds :app :compiler :output-dir] [:cljsbuild :builds :app :compiler :output-to]]
+  [:target-path [:cljsbuild :builds :app :compiler :output-dir]
+   [:cljsbuild :builds :app :compiler :output-to]]
 
   :figwheel
   {:http-server-root "public"
@@ -93,7 +102,8 @@
   {:uberjar {:omit-source true
              :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
              :cljsbuild
-             {:builds
+             {:prep-tasks [["npm" "install"]]
+              :builds
               {:min
                {:source-paths ["src/cljc" "src/cljs" "env/prod/cljs"]
                 :compiler
@@ -129,7 +139,8 @@
                                  [lein-figwheel "0.5.9"]
                                  [org.clojure/clojurescript "1.9.495"]]
                   :cljsbuild
-                  {:builds
+                  {:prep-tasks [["npm" "install"]]
+                   :builds
                    {:app
                     {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
                      :compiler
@@ -140,9 +151,6 @@
                       :source-map true
                       :optimizations :none
                       :pretty-print true}}}}
-
-
-
                   :doo {:build "test"}
                   :source-paths ["env/dev/clj"]
                   :resource-paths ["env/dev/resources"]
@@ -151,7 +159,8 @@
                                (pjstadig.humane-test-output/activate!)]}
    :project/test {:resource-paths ["env/test/resources"]
                   :cljsbuild
-                  {:builds
+                  {:prep-tasks [["npm" "install"]]
+                   :builds
                    {:test
                     {:source-paths ["src/cljc" "src/cljs" "test/cljs"]
                      :compiler

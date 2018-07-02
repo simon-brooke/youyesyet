@@ -224,3 +224,17 @@
     (if (integer? zoom)
       (assoc db :zoom zoom)
       db)))
+
+
+(defn get-current-location []
+  "Get the current location from the device."
+  (try
+    (if (.-geolocation js/navigator)
+      (.getCurrentPosition
+        (.-geolocation js/navigator)
+        (fn [position]
+          (dispatch [:set-latitude (.-latitude (.-coords position))])
+          (dispatch [:set-longitude (.-longitude (.-coords position))])))
+      (js/console.log "Geolocation not available"))
+    (catch js/Object any
+      (js/console.log "Exception while trying to access location: " + any))))

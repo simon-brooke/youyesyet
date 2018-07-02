@@ -40,15 +40,17 @@
 ;;; Each column contains
 ;;; 1. a stick figure identifying gender (for recognition);
 ;;; 2. the elector's name;
-;;; 3. one icon for each option on the ballot;
-;;; 4. an 'issues' icon.
 ;;; The mechanics of how this panel is laid out don't matter.
 
 (defn gender-cell
   [elector]
   (let [gender (:gender elector)
         image (if gender (name gender) "unknown")]
-    [:td {:key (:id elector)} [:img {:src (str "img/gender/" image ".png") :alt image}]]))
+    [:td {:key (str "gender-" (:id elector))}
+      [:img {:src (str "img/gender/" image ".png") :alt image
+             :on-click #(dispatch
+                       [:set-elector-and-page {:elector-id (:id elector)
+                                         :page "gdpr"}])}]]))
 
 
 (defn genders-row
@@ -60,7 +62,12 @@
 
 (defn name-cell
   [elector]
-  [:td {:key (str "name-" (:id elector))} (:name elector)])
+   [:td {:key (str "name-" (:id elector))
+         :on-click #(dispatch
+                       [:set-elector-and-page {:elector-id (:id elector)
+                                         :page "gdpr"}])}
+    (:name elector)])
+
 
 (defn names-row
   [electors]
@@ -68,41 +75,6 @@
    (map
      #(name-cell %) electors)])
 
-
-(defn options-row
-  [electors option]
-  (let [optid (:id option)
-        optname (name optid)]
-    [:tr {:key (str "options-" optname)}
-     (map
-      (fn [elector] (let [selected (= optid (:intention elector))
-                          image (if selected (str "img/option/" optname "-selected.png")
-                                  (str "img/option/" optname "-unselected.png"))]
-                      [:td  {:key (str "option-" optid "-" (:id elector))}
-                       [:img
-                        {:src image
-                         :alt optname
-                         :on-click #(dispatch
-                                    [:send-intention {:elector-id (:id elector)
-                                                     :intention optid}])}]]))
-      ;; TODO: impose an ordering on electors - by name or by id
-      electors)]))
-
-
-(defn issue-cell
-  "Create an issue cell for a particular elector"
-  [elector]
-  [:td {:key (:id elector)}
-   [:a {:href (str "#/issues/" (:id elector))}
-    [:img {:src "img/issues.png" :alt "Issues"}]]])
-
-
-(defn issues-row
-  [electors]
-  [:tr
-   (map
-     #(issue-cell %)
-     electors)])
 
 (defn panel
   "Generate the electors panel."
@@ -123,13 +95,7 @@
           ;; genders row
           (genders-row electors)
           ;; names row
-          (names-row electors)
-          ;; options rows
-          (map
-           #(options-row electors %)
-           options)
-          ;; issues row
-          (issues-row electors)]]
+          (names-row electors)]]
         (ui/back-link)]]
       (ui/error-panel "No address selected"))))
 

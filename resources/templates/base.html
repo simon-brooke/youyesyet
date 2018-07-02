@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="css/spinner.css" />
     <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
     <title>{{site-title}}: {{title}}</title>
-    {% script "js/lib/jquery/dist/jquery.min.js" %}
     {% endblock %}
     {% block extra-head %}
     <!-- extra-head: put any additional markup to go into the head of your document into this block -->
@@ -76,10 +75,6 @@
     </footer>
     {% endblock %}
     {% endblock %}
-    {% block extra-tail %}
-    <!-- extra-tail: put markup here which needs to be at the very end of the body -->
-    <!-- e.g. some javascript script tags, some link tags -->
-    {% endblock %}
     <script type="text/javascript">
         var context = "{{servlet-context}}";
         var csrfToken = "{{csrf-token}}";
@@ -87,6 +82,10 @@
         /* extra-script: put any actual javascript source text you need into this block */
         {% endblock %}
     </script>
+    {% block extra-tail %}
+    <!-- extra-tail: put markup here which needs to be at the very end of the body -->
+    <!-- e.g. some javascript script tags, some link tags -->
+    {% endblock %}
   </body>
 </html>
 

@@ -27,9 +27,6 @@
 
 ;;; This is the constructor for the atom in which the state of the user interface is held.
 ;;; The atom gets updated by 'events' registered in handler.cljs, q.v.
-;;;
-;;; not wonderfully happy with 'db' as a name for this namespace; will probably change to
-;;; 'client-state'.
 
 (def default-db
   {;;; the currently selected address, if any.
@@ -87,3 +84,4 @@
     :latitude 55.82
     :longitude -4.25
     :zoom 12})
+

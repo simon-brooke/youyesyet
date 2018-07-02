@@ -2,7 +2,8 @@
       :author "Simon Brooke"}
   youyesyet.canvasser-app.views.map
   (:require [re-frame.core :refer [reg-sub subscribe dispatch]]
-            [reagent.core :as reagent]))
+            [reagent.core :as reagent]
+            [youyesyet.canvasser-app.handlers :refer [get-current-location]]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
@@ -115,6 +116,7 @@
 (defn map-did-mount-mapbox
   "Did-mount function loading map tile data from MapBox (proprietary)."
   []
+  (get-current-location)
   (let [view (.setView (.map js/L "map" (clj->js {:zoomControl "false"})) #js [55.82 -4.25] 40)]
     ;; NEED TO REPLACE FIXME with your mapID!
     (.addTo (.tileLayer js/L "http://{s}.tiles.mapbox.com/v3/FIXME/{z}/{x}/{y}.png"
@@ -126,6 +128,7 @@
 (defn map-did-mount-osm
   "Did-mount function loading map tile data from Open Street Map."
   []
+  (get-current-location)
   (let [view (.setView
                (.map js/L "map" (clj->js {:zoomControl false}))
                #js [@(subscribe [:latitude]) @(subscribe [:longitude])]

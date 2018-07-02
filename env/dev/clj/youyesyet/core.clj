@@ -1,4 +1,5 @@
-(ns youyesyet.core
+(ns ^{:doc "Devalopment launcher, entirely boilerplate from Luminus."}
+  youyesyet.core
   (:require [youyesyet.handler :as handler]
             [luminus.repl-server :as repl]
             [luminus.http-server :as http]
@@ -60,8 +61,8 @@
     :else
     (start-app args)))
 
-(mount/stop)
+;; (mount/start)
+;; (mount/stop)
 
-(mount/start)
 
 
