@@ -97,19 +97,21 @@
         lng (:longitude address)
         pin (.icon js/L
                    (clj->js
-                    {:iconUrl (str "img/map-pins/" (pin-image address) ".png")
-                     :shadowUrl "img/map-pins/shadow_pin.png"
+                    {:iconAnchor [16 41]
                      :iconSize [32 42]
+                     :iconUrl (str "img/map-pins/" (pin-image address) ".png")
+                     :riseOnHover true
+                     :shadowAnchor [16 23]
                      :shadowSize [57 24]
-                     :iconAnchor [16 41]
-                     :shadowAnchor [16 23]}))
+                     :shadowUrl "img/map-pins/shadow_pin.png"}))
         marker (.marker js/L
                         (.latLng js/L lat lng)
                         (clj->js {:icon pin
                                   :title (:address address)}))
         ]
-    (.on marker "click" (fn [_] (map-pin-click-handler (str (:id address)))))
-    (.addTo marker view)))
+    
+    (.on (.addTo marker view) "click" (fn [_] (map-pin-click-handler (str (:id address)))))
+    ))
 
 
 ;; My gods mapbox is user-hostile!

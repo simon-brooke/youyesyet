@@ -48,7 +48,7 @@
            [dwelling]
            (ui/big-link
              (:sub-address dwelling)
-             :target (str "#/electors/" (:id dwelling))) )
+             :target (str "#electors/" (:id dwelling))) )
          (sort
            #(< (:sub-address %1) (:sub-address %2))
            (:dwellings address)))]]]))

@@ -15,8 +15,10 @@
             [youyesyet.canvasser-app.ui-utils :as ui]
             [youyesyet.canvasser-app.views.about :as about]
             [youyesyet.canvasser-app.views.building :as building]
+            [youyesyet.canvasser-app.views.elector :as elector]
             [youyesyet.canvasser-app.views.electors :as electors]
             [youyesyet.canvasser-app.views.followup :as followup]
+            [youyesyet.canvasser-app.views.gdpr :as gdpr]
             [youyesyet.canvasser-app.views.issue :as issue]
             [youyesyet.canvasser-app.views.issues :as issues]
             [youyesyet.canvasser-app.views.map :as maps])
@@ -57,6 +59,9 @@
 (defn electors-page []
   (electors/panel))
 
+(defn elector-page []
+  (elector/panel))
+
 (defn followup-page []
   (followup/panel))
 
@@ -72,6 +77,7 @@
 (def pages
   {:about #'about-page
    :building #'building-page
+   :elector #'elector-page
    :electors #'electors-page
    :followup #'followup-page
    :issues #'issues-page

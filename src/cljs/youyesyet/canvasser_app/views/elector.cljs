@@ -1,6 +1,6 @@
 (ns ^{:doc "Canvasser app single elector panel."
       :author "Simon Brooke"}
-  youyesyet.canvasser-app.views.electors
+  youyesyet.canvasser-app.views.elector
   (:require [reagent.core :refer [atom]]
             [re-frame.core :refer [reg-sub subscribe dispatch]]
             [youyesyet.canvasser-app.ui-utils :as ui]))
@@ -99,6 +99,6 @@
            #(option-row elector %)
            options)
           ;; issues row
-          (issues-row elector)]]
+          (issue-row elector)]]
         (ui/back-link)]]
       (ui/error-panel "No address selected"))))
