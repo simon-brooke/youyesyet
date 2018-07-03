@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-issues-Issue.html generated 2018-07-01T22:15:35.330Z by adl.to-selmer-templates.
+<!-- File form-issues-Issue.html generated 2018-07-03T12:23:51.907Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -57,6 +57,24 @@ current
 {% else %}
 <span id='current' name='current' class='pseudo-widget not-authorised'>
 You are not permitted to view current of issues
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+</p>
+<p class='widget'>
+<label for='brief'>
+brief
+</label>
+{% ifmemberof issueeditors admin %}
+<input id='brief' name='brief' type='text' value='{{record.brief}}' maxlength='' size='16'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='brief' name='brief' class='pseudo-widget disabled'>
+{{record.brief}}
+</span>
+{% else %}
+<span id='brief' name='brief' class='pseudo-widget not-authorised'>
+You are not permitted to view brief of issues
 </span>
 {% endifmemberof %}
 {% endifmemberof %}

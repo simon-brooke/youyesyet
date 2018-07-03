@@ -37,14 +37,15 @@
    [:div.back-link-container {:key (gensym "back-link")}
     [:a.back-link {:href target} "Back"]]))
 
+
 (defn big-link
   [text & {:keys [target handler]}]
-  (js/console.log (str "Constructing big link; target is '" target "'; handler is '" handler "'"))
   [:div.big-link-container {:key (gensym "big-link")}
    [:a.big-link (merge
                   (if target {:href target}{})
                   (if handler {:on-click handler}{}))
     text]])
+
 
 (defn nav-link [uri title page collapsed?]
   (let [selected-page @(rf/subscribe [:page])]

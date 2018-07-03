@@ -1,10 +1,10 @@
 (ns youyesyet.utils
-  #?(:clj (require [clojure.tools.logging :as log]))
-  )
+  #?(:clj (:require [clojure.tools.logging :as log])
+          :cljs (:require [cljs.reader :refer [read-string]])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.locality: small utility functions.
+;;;; youyesyet.utils: small utility functions.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -27,9 +27,11 @@
 
 (defn coerce-to-number [v]
   "If it is possible to do so, coerce `v` to a number"
+  ;; TODO: this doesn't work in cljs.
   (if (number? v) v
     (try
       (read-string (str v))
       #?(:clj  (catch Exception any
                  (log/error (str "Could not coerce '" v "' to number: " any)))
-         :cljs (js/console.log (str "Could not coerce '" v "' to number: " any))))))
+         :cljs (catch js/Object any
+                 (js/console.log (str "Could not coerce '" v "' to number: " any)))))))

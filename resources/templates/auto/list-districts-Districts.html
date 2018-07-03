@@ -1,44 +1,15 @@
 {% extends "base.html" %}
-<!-- File list-districts-Districts.html generated 2018-07-01T22:15:35.384Z by adl.to-selmer-templates.
+<!-- File list-districts-Districts.html generated 2018-07-03T12:23:51.932Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
-{% block back-links %}
-<div>
-<div class='back-link-container'>
-{% ifunequal params.offset "0" %}
-<a id='prev-selector' class='back-link'>
-Previous
-</a>
-{% else %}
-<a id='back-link' class='back-link' href='{{servlet-context}}/admin'>
-Back
-</a>
-{% endifunequal %}
-</div>
-</div>
-
-{% endblock %}
-{% block big-links %}
-<div>
+{% block content %}
+<form id='content' class='list'>
 <div class='big-link-container'>
-<a id='next-selector' role='button' class='big-link'>
-Next
-</a>
-</div>
-<div class='big-link-container'>
-<a href='form-districts-District' class='big-link'>
+<a href='form-districts-District'>
 Add a new District
 </a>
 </div>
-</div>
-
-{% endblock %}
-{% block content %}
-<form id='list-districts-Districts' class='list' action='{{servlet-context}}/list-districts-Districts' method='POST'>
-{% csrf-field %}
-<input id='offset' type='hidden' value='{{params.offset|default:0}}'/>
-<input id='limit' type='hidden' value='{{params.limit|default:50}}'/>
 <table caption='districts'>
 <thead>
 <tr>
@@ -57,7 +28,7 @@ name
 <input id='name' type='text' name='name' value='{{ params.name }}'/>
 </th>
 <th>
-<input type='submit' id='search-widget' value='Search'/>
+<input type='submit' id='search' value='Search'/>
 </th>
 </tr>
 </thead>
@@ -78,30 +49,15 @@ View
 </tr>
 {% endfor %}
 </tbody>
+<tfoot>
+<div class='back-link-container'>
+<input id='page' name='page' disabled='{% ifequal offset 0 %} false {% else %} true {% endifequal %}' value='Previous'/>
+</div>
+<div class='big-link-container'>
+<input id='page' name='page' disabled='false' value='Next'/>
+</div>
+</tfoot>
 </table>
 </form>
 
-{% endblock %}
-{% block extra-script %}
-
-          var form = document.getElementById('list-districts-Districts');
-          var ow = document.getElementById('offset');
-          var lw = document.getElementById('limit');
-          form.addEventListener('submit', function() {
-            ow.value='0';
-          });
-
-          {% ifunequal offset 0 %}
-          document.getElementById('prev-selector').addEventListener('click', function () {
-            ow.value=(parseInt(ow.value)-parseInt(lw.value));
-            console.log('Updated offset to ' + ow.value);
-            form.submit();
-          });
-          {% endifunequal %}
-
-          document.getElementById('next-selector').addEventListener('click', function () {
-            ow.value=(parseInt(ow.value)+parseInt(lw.value));
-            console.log('Updated offset to ' + ow.value);
-            form.submit();
-          });
 {% endblock %}

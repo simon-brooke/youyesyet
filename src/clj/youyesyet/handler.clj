@@ -72,6 +72,8 @@
     (-> #'auto-selmer-routes
         (wrap-routes middleware/wrap-csrf)
         (wrap-routes middleware/wrap-formats))
+    (-> #'auto-rest-routes
+        (wrap-routes middleware/wrap-formats))
     (-> #'rest-routes
         (wrap-routes middleware/wrap-formats))
     'oauth-routes

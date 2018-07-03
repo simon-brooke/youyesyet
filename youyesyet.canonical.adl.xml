@@ -290,8 +290,11 @@
     <property name="current" type="boolean" default="true">
       <prompt prompt="Is current?" locale="en-GB"/>
     </property>
-    <list properties="listed" name="Issues"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="url"><prompt prompt="url" locale="en-GB"/></field><field property="current"><prompt prompt="Is current?" locale="en-GB"/></field></list>
-    <form properties="listed" name="Issue"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="url"><prompt prompt="url" locale="en-GB"/></field><field property="current"><prompt prompt="Is current?" locale="en-GB"/></field></form>
+    <property type="text" name="brief">
+      <prompt prompt="Brief response to issue" locale="en-GB"/>
+    </property>
+    <list properties="listed" name="Issues"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="url"><prompt prompt="url" locale="en-GB"/></field><field property="current"><prompt prompt="Is current?" locale="en-GB"/></field><field property="brief"><prompt prompt="Brief response to issue" locale="en-GB"/></field></list>
+    <form properties="listed" name="Issue"><field property="id"><prompt prompt="id" locale="en-GB"/></field><field property="url"><prompt prompt="url" locale="en-GB"/></field><field property="current"><prompt prompt="Is current?" locale="en-GB"/></field><field property="brief"><prompt prompt="Brief response to issue" locale="en-GB"/></field></form>
     <permission group="canvassers" permission="read"/>
     <permission group="teamorganisers" permission="read"/>
     <permission group="issueexperts" permission="read"/>

@@ -50,12 +50,10 @@
 (defn gender-cell
   [elector]
   (let [gender (:gender elector)
-        image (if gender (name gender) "unknown")]
+        image (if gender (name gender) "Unknown")]
     [:td {:key (str "gender-" (:id elector))}
       [:a {:href (str "#gdpr/" (:id elector))}
-       [:img {:src (str "img/gender/" image ".png") :alt image
-             ;; :on-click #(go-to-gdpr-for-elector elector)
-                                                }]]]))
+       [:img {:src (str "img/gender/" image ".png") :alt image}]]]))
 
 
 (defn genders-row

@@ -1,4 +1,4 @@
-(ns ^{:doc "Routes which handle data transfer to/from the canvasser app."
+(ns ^{:doc "Manually maintained routes which handle data transfer to/from the canvasser app."
       :author "Simon Brooke"} youyesyet.routes.rest
   (:require [clojure.core.memoize :as memo]
             [clojure.java.io :as io]
@@ -36,6 +36,7 @@
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;; See also src/clj/youyesyet/routes/auto-json.clj
 
 (def in-get-local-data
   "Local data is volatile, because hopefully canvassers are updating it as they
@@ -82,13 +83,8 @@
     (in-get-local-data here)))
 
 
-
-(defn get-issues
-  "Get current issues. No arguments expected."
-  [request])
-
 (defroutes rest-routes
-   (GET "/rest/get-local-data" request (get-local-data request))
+   (GET "/rest/get-local-data" request (route/restricted (get-local-data request)))
 ;;   (GET "/rest/get-issues" request (route/restricted (get-issues request)))
 ;;   (GET "/rest/set-intention" request (route/restricted (set-intention request)))
 ;;   (GET "/rest/request-followup" request (route/restricted (request-followup request))))

@@ -46,5 +46,5 @@
        [:div.container {:id "main-container"}
         (ui/back-link)
         [:div {:id "issue-list"}
-         (map (fn [k] (ui/big-link k :target (str "#/issue/" k))) (keys issues))]]]
+         (map (fn [i] (ui/big-link (:id i) :target (str "#issue/" (:id i)))) issues)]]]
       (ui/error-panel "No issues loaded"))))

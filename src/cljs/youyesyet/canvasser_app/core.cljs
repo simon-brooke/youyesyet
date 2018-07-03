@@ -104,8 +104,10 @@
      (if content [content]
        [:div.error (str "No content in page " @(rf/subscribe [:page]))])
      [:footer
-      [:div.error {:style [:display (if error "block" "none")]} (str error)]
-      [:div.feedback {:style [:display (if feedback :block :none)]} (str feedback)]
+      [:div.error {:style [:display (if (empty? error) :none :block)]} (apply str error)]
+      [:div.feedback
+       {:style [:display (if (empty? feedback) :none :block)]}
+       (apply str (map #(h/feedback-messages %) (distinct feedback)))]
       [:div.queue (if
                     (nil? outqueue) ""
                     (str (count outqueue) " items queued to send"))]]]))
@@ -190,6 +192,9 @@
 (defn init! []
   (rf/dispatch-sync [:initialize-db])
   (h/get-current-location)
+  (rf/dispatch [:fetch-locality])
+  (rf/dispatch [:fetch-options])
+  (rf/dispatch [:fetch-issues])
   (load-interceptors!)
   (hook-browser-navigation!)
   (mount-components))

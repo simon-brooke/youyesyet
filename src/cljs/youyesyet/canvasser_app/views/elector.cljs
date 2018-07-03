@@ -70,7 +70,7 @@
   [elector]
   [:tr
    [:td {:key (:id elector)}
-    [:a {:href (str "#/issues/" (:id elector))}
+    [:a {:href (str "#issues/" (:id elector))}
      [:img {:src "img/issues.png" :alt "Issues"}]]]])
 
 
