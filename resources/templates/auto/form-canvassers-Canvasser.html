@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-canvassers-Canvasser.html generated 2018-07-03T12:23:51.926Z by adl.to-selmer-templates.
+<!-- File form-canvassers-Canvasser.html generated 2018-07-03T23:08:20.065Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -69,7 +69,7 @@ elector_id
 <div class='select-box' farside='electors' found='true'>
 <input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in electors %}<option value='{{record.id}}'>{{record.name}} {{record.phone}} {{record.email}} {{record.gender}}</option>{% endfor %}
+{% for r in electors %}<option value='{{r.id}}' {% ifequal record.elector_id r.id%}selected{% endifequal %}>{{r.name}} {{r.phone}} {{r.email}} {{r.gender}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
@@ -92,7 +92,7 @@ address_id
 <div class='select-box' farside='addresses' found='true'>
 <input name='address_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='address_id' name='address_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in addresses %}<option value='{{record.id}}'>{{record.address}} {{record.postcode}}</option>{% endfor %}
+{% for r in addresses %}<option value='{{r.id}}' {% ifequal record.address_id r.id%}selected{% endifequal %}>{{r.address}} {{r.postcode}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
@@ -151,7 +151,7 @@ authority_id
 <div class='select-box' farside='authorities' found='true'>
 <input name='authority_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='authority_id' name='authority_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in authorities %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
+{% for r in authorities %}<option value='{{r.id}}' {% ifequal record.authority_id r.id%}selected{% endifequal %}>{{r.id}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
@@ -191,7 +191,7 @@ roles
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <div class='select-box' farside='roles' found='true'>
 <select id='roles' name='roles' multiple='multiple'>
-{% for record in roles %}<option value='{{record.role_id}}'>{{record.name}}</option>{% endfor %}
+{% for r in roles %}<option value='{{r.role_id}}' {% ifequal record.roles r.role_id%}selected{% endifequal %}>{{r.name}}</option>{% endfor %}
 </select>
 </div>
 {% else %}

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-teams-Team.html generated 2018-07-03T12:23:51.915Z by adl.to-selmer-templates.
+<!-- File form-teams-Team.html generated 2018-07-03T23:08:20.050Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -51,7 +51,7 @@ district_id
 <div class='select-box' farside='districts' found='true'>
 <input name='district_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='district_id' name='district_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in districts %}<option value='{{record.id}}'>{{record.name}}</option>{% endfor %}
+{% for r in districts %}<option value='{{r.id}}' {% ifequal record.district_id r.id%}selected{% endifequal %}>{{r.name}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
@@ -92,7 +92,7 @@ members
 <div class='select-box' farside='canvassers' found='true'>
 <input name='members-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='members' name='members' multiple='multiple' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in canvassers %}<option value='{{record.id}}'>{{record.username}} {{record.fullname}} {{record.address_id}} {{record.phone}} {{record.email}}</option>{% endfor %}
+{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.members r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
@@ -115,7 +115,7 @@ organisers
 <div class='select-box' farside='canvassers' found='true'>
 <input name='organisers-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='organisers' name='organisers' multiple='multiple' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in canvassers %}<option value='{{record.id}}'>{{record.username}} {{record.fullname}} {{record.address_id}} {{record.phone}} {{record.email}}</option>{% endfor %}
+{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.organisers r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
 </select>
 </div>
 {% else %}

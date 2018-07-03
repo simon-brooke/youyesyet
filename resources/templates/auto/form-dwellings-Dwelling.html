@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-dwellings-Dwelling.html generated 2018-07-03T12:23:51.938Z by adl.to-selmer-templates.
+<!-- File form-dwellings-Dwelling.html generated 2018-07-03T23:08:20.081Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -33,7 +33,7 @@ address_id
 <div class='select-box' farside='addresses' found='true'>
 <input name='address_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='address_id' name='address_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in addresses %}<option value='{{record.id}}'>{{record.address}} {{record.postcode}}</option>{% endfor %}
+{% for r in addresses %}<option value='{{r.id}}' {% ifequal record.address_id r.id%}selected{% endifequal %}>{{r.address}} {{r.postcode}}</option>{% endfor %}
 </select>
 </div>
 {% else %}

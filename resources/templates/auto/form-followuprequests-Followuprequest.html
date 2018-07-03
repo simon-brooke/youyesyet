@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-followuprequests-Followuprequest.html generated 2018-07-03T12:23:51.895Z by adl.to-selmer-templates.
+<!-- File form-followuprequests-Followuprequest.html generated 2018-07-03T23:08:20.025Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -33,7 +33,7 @@ elector_id
 <div class='select-box' farside='electors' found='true'>
 <input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in electors %}<option value='{{record.id}}'>{{record.name}} {{record.phone}} {{record.email}} {{record.gender}}</option>{% endfor %}
+{% for r in electors %}<option value='{{r.id}}' {% ifequal record.elector_id r.id%}selected{% endifequal %}>{{r.name}} {{r.phone}} {{r.email}} {{r.gender}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
@@ -56,7 +56,7 @@ visit_id
 <div class='select-box' farside='visits' found='true'>
 <input name='visit_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='visit_id' name='visit_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in visits %}<option value='{{record.id}}'>{{record.address_id}} {{record.date}}</option>{% endfor %}
+{% for r in visits %}<option value='{{r.id}}' {% ifequal record.visit_id r.id%}selected{% endifequal %}>{{r.address_id}} {{r.date}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
@@ -78,7 +78,7 @@ issue_id
 {% ifmemberof admin %}
 <div class='select-box' farside='issues' found='true'>
 <select id='issue_id' name='issue_id'>
-{% for record in issues %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
+{% for r in issues %}<option value='{{r.id}}' {% ifequal record.issue_id r.id%}selected{% endifequal %}>{{r.id}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
@@ -100,7 +100,7 @@ method_id
 {% ifmemberof admin %}
 <div class='select-box' farside='followupmethods' found='true'>
 <select id='method_id' name='method_id'>
-{% for record in followupmethods %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
+{% for r in followupmethods %}<option value='{{r.id}}' {% ifequal record.method_id r.id%}selected{% endifequal %}>{{r.id}}</option>{% endfor %}
 </select>
 </div>
 {% else %}

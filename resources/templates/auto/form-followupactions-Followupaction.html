@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-followupactions-Followupaction.html generated 2018-07-03T12:23:51.940Z by adl.to-selmer-templates.
+<!-- File form-followupactions-Followupaction.html generated 2018-07-03T23:08:20.084Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -33,7 +33,7 @@ request_id
 <div class='select-box' farside='followuprequests' found='true'>
 <input name='request_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='request_id' name='request_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in followuprequests %}<option value='{{record.id}}'>{{record.elector_id}} {{record.visit_id}} {{record.issue_id}}</option>{% endfor %}
+{% for r in followuprequests %}<option value='{{r.id}}' {% ifequal record.request_id r.id%}selected{% endifequal %}>{{r.elector_id}} {{r.visit_id}} {{r.issue_id}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
@@ -56,7 +56,7 @@ actor
 <div class='select-box' farside='canvassers' found='true'>
 <input name='actor-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='actor' name='actor' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in canvassers %}<option value='{{record.id}}'>{{record.username}} {{record.fullname}} {{record.address_id}} {{record.phone}} {{record.email}}</option>{% endfor %}
+{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.actor r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
 </select>
 </div>
 {% else %}

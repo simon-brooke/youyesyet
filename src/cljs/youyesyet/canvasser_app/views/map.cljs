@@ -77,6 +77,10 @@
                      (clj->js {:zoomControl false}))
                #js [@(subscribe [:latitude]) @(subscribe [:longitude])]
                @(subscribe [:zoom]))]
+    (.addTo (.tileLayer js/L osm-url
+                        (clj->js {:attribution osm-attrib
+                                  :maxZoom 18}))
+            view)
     (dispatch-sync [:set-view view])
     (refresh-map-pins)
     view))

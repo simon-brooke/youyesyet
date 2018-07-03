@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-electors-Elector.html generated 2018-07-03T12:23:51.920Z by adl.to-selmer-templates.
+<!-- File form-electors-Elector.html generated 2018-07-03T23:08:20.055Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -51,7 +51,7 @@ dwelling_id
 <div class='select-box' farside='dwellings' found='true'>
 <input name='dwelling_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
 <select id='dwelling_id' name='dwelling_id' comment='JavaScript stuff to fix up aynchronous loading'>
-{% for record in dwellings %}<option value='{{record.id}}'>{{record.address_id}} {{record.sub-address}}</option>{% endfor %}
+{% for r in dwellings %}<option value='{{r.id}}' {% ifequal record.dwelling_id r.id%}selected{% endifequal %}>{{r.address_id}} {{r.sub-address}}</option>{% endfor %}
 </select>
 </div>
 {% else %}
@@ -109,7 +109,7 @@ gender
 {% ifmemberof admin %}
 <div class='select-box' farside='genders' found='true'>
 <select id='gender' name='gender'>
-{% for record in genders %}<option value='{{record.id}}'>{{record.id}}</option>{% endfor %}
+{% for r in genders %}<option value='{{r.id}}' {% ifequal record.gender r.id%}selected{% endifequal %}>{{r.id}}</option>{% endfor %}
 </select>
 </div>
 {% else %}

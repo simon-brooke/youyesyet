@@ -29,12 +29,12 @@
   "Compute the locality index for this `latitude`/`longitude` pair."
   [latitude longitude]
   (+
-    (* 10000            ;; left-shift the latitude component four digits
+    (* 1000            ;; left-shift the latitude component three digits
        (int
-         (* latitude 1000)))
+         (* latitude 100)))
     (-                  ;; invert the sign of the longitude component, since
       (int              ;; we're interested in localities West of Greenwich.
-        (* longitude 1000)))))
+        (* longitude 100)))))
 
 (defn neighbouring-localities
   "Return this locality with the localities immediately
@@ -43,12 +43,14 @@
   ;; TODO: I'm not absolutely confident of my arithmetic here!
   [locality]
   (list
-    (- locality 9999)
-    (- locality 10000)
-    (- locality 10001)
+    (- locality 99)
+    (- locality 100)
+    (- locality 101)
     (- locality 1)
     locality
     (+ locality 1)
-    (+ locality 9999)
-    (+ locality 10000)
-    (+ locality 10001)))
+    (+ locality 99)
+    (+ locality 100)
+    (+ locality 101)))
+
+(neighbouring-localities 5482391)

@@ -151,6 +151,6 @@
     :page :home
     :view nil
     :latitude 54.82
-    :longitude -3.90
+    :longitude -3.92
     :zoom 12})
 

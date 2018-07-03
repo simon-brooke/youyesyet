@@ -25,8 +25,8 @@
 
 CREATE FUNCTION compute_locality() RETURNS trigger AS $compute_locality$
     BEGIN
-        NEW.locality = (10000 * floor (NEW.latitude * 1000)) -
-                        (NEW.longitude * 1000);
+        NEW.locality = (1000 * floor(NEW.latitude * 100)) -
+                        floor(NEW.longitude * 100);
         RETURN NEW;
     END;
 $compute_locality$ LANGUAGE plpgsql;
