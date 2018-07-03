@@ -272,6 +272,9 @@
     <property name="current" type="boolean" default="true">
       <prompt prompt="Is current?" locale="en-GB"/>
     </property>
+    <property type="text" name="brief">
+      <prompt prompt="Brief response to issue" locale="en-GB"/>
+    </property>
     <list name="Issues" properties="all"/>
     <form name="Issue" properties="all"/>
     <permission group="canvassers" permission="read"/>

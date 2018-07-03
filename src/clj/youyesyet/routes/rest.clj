@@ -1,13 +1,14 @@
 (ns ^{:doc "Routes which handle data transfer to/from the canvasser app."
       :author "Simon Brooke"} youyesyet.routes.rest
-  (:require [clojure.walk :refer [keywordize-keys]]
+  (:require [clojure.core.memoize :as memo]
+            [clojure.java.io :as io]
+            [clojure.walk :refer [keywordize-keys]]
+            [compojure.core :refer [defroutes GET POST]]
             [noir.response :as nresponse]
             [noir.util.route :as route]
-            [youyesyet.db.core :as db]
-            [compojure.core :refer [defroutes GET POST]]
             [ring.util.http-response :as response]
-            [clojure.java.io :as io]
             [youyesyet.locality :as l]
+            [youyesyet.db.core :as db]
             [youyesyet.utils :refer :all]
             ))
 
@@ -35,23 +36,50 @@
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+(def in-get-local-data
+  "Local data is volatile, because hopefully canvassers are updating it as they
+  work. So cache for only 90 seconds."
+  (memo/ttl
+    (fn [here]
+      (let [neighbourhood (l/neighbouring-localities here)
+            addresses  (flatten
+                         (map
+                           #(db/list-addresses-by-locality db/*db* {:locality %})
+                           neighbourhood))]
+        (map
+          (fn [a]
+            (assoc a
+              :dwellings
+              (map
+                (fn [d]
+                  (assoc d
+                    :electors
+                    (map
+                      (fn [e]
+                        (assoc e
+                          :intentions
+                          (db/list-intentions-by-elector db/*db* {:id (:id e)})))
+                      (db/list-electors-by-dwelling db/*db* {:id (:id d)}))))
+                (db/list-dwellings-by-address db/*db* {:id (:id a)}))))
+          addresses)))
+    :ttl/threshold
+    90000))
+
+
 (defn get-local-data
-  "Get data local to the user of the canvasser app. Expects arguments `lat` and
-  `long`. Returns a block of data for that locality"
+  "Get data local to the user of the canvasser app. Expects arguments `latitude` and
+  `longitude`, or `locality`. Returns a block of data for that locality"
   [request]
   (let
-    [{latitude :latitude longitude :longitude} (keywordize-keys (:params request))
-     neighbourhood (l/neighbouring-localities
-                     (l/locality
+    [{latitude :latitude longitude :longitude locality :locality}
+     (keywordize-keys (:params request))
+     here (if locality
+            (coerce-to-number locality)
+            (l/locality
                        (coerce-to-number latitude)
-                       (coerce-to-number longitude)))
-     addresses  (flatten
-                    (map
-                      #(db/list-addresses-by-locality db/*db* {:locality %})
-                      neighbourhood))]
-
-    addresses
-    ))
+                       (coerce-to-number longitude)))]
+    (in-get-local-data here)))
 
 
 
