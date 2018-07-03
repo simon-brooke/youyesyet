@@ -41,11 +41,11 @@
   (let [issue @(subscribe [:issue])
         issues @(subscribe [:issues])
         elector @(subscribe [:elector])
-        address @(subscribe [:address])]
+        dwelling @(subscribe [:dwelling])]
     (js/console.log (str "Issue is " issue "; elector is " elector))
     (cond
-     (nil? address)
-     (ui/error-panel "No address selected")
+     (nil? dwelling)
+     (ui/error-panel "No dwelling selected")
      (nil? issues)
      (ui/error-panel "No issues loaded")
      true
@@ -59,7 +59,7 @@
                    :on-change #(dispatch [:set-elector (.-value (.-target %))])}
           (map
            #(let []
-              [:option {:value (:id %) :key (:id %)} (:name %)]) (:electors address))]]
+              [:option {:value (:id %) :key (:id %)} (:name %)]) (:electors dwelling))]]
         [:p.widget
          [:label {:for "issue"} "Issue"]
          ;; #(reset! val (-> % .-target .-value))

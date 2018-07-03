@@ -22,7 +22,7 @@
                                     :driver-class-name "org.postgresql.Driver"})
            :stop (conman/disconnect! *db*))
 
-(conman/bind-connection *db* "sql/queries.auto.sql")
+(conman/bind-connection *db* "sql/queries.auto.sql" "sql/queries.sql")
 
 (defn to-date [^java.sql.Date sql-date]
   (-> sql-date (.getTime) (java.util.Date.)))

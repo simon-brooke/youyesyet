@@ -3,10 +3,13 @@
   (:require [clojure.walk :refer [keywordize-keys]]
             [noir.response :as nresponse]
             [noir.util.route :as route]
-            [youyesyet.db.core :as db-core]
+            [youyesyet.db.core :as db]
             [compojure.core :refer [defroutes GET POST]]
             [ring.util.http-response :as response]
-            [clojure.java.io :as io]))
+            [clojure.java.io :as io]
+            [youyesyet.locality :as l]
+            [youyesyet.utils :refer :all]
+            ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
@@ -36,14 +39,29 @@
   "Get data local to the user of the canvasser app. Expects arguments `lat` and
   `long`. Returns a block of data for that locality"
   [request]
-  )
+  (let
+    [{latitude :latitude longitude :longitude} (keywordize-keys (:params request))
+     neighbourhood (l/neighbouring-localities
+                     (l/locality
+                       (coerce-to-number latitude)
+                       (coerce-to-number longitude)))
+     addresses  (flatten
+                    (map
+                      #(db/list-addresses-by-locality db/*db* {:locality %})
+                      neighbourhood))]
+
+    addresses
+    ))
+
+
 
 (defn get-issues
   "Get current issues. No arguments expected."
   [request])
 
-;; (defroutes rest-routes
-;;   (GET "/rest/get-local-data" request (route/restricted (get-local-data request)))
+(defroutes rest-routes
+   (GET "/rest/get-local-data" request (get-local-data request))
 ;;   (GET "/rest/get-issues" request (route/restricted (get-issues request)))
 ;;   (GET "/rest/set-intention" request (route/restricted (set-intention request)))
 ;;   (GET "/rest/request-followup" request (route/restricted (request-followup request))))
+)

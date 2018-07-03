@@ -34,12 +34,10 @@
   []
   (let [elector @(subscribe [:elector])]
     [:div
-     [:h1 "GDPR Consent"]
+     [:h1 "I, " (:name elector)]
      [:div.container {:id "main-container"}
       [:table
        [:tbody
-        [:tr
-         [:th "I," (:name elector)]]
         [:tr
          [:td
           [:p "Consent to have data about my voting intention stored by "
@@ -53,13 +51,12 @@
           [:canvas {:id "signature-pad"}]]]]]]
      (ui/back-link "#dwelling")
      (ui/big-link "I consent"
-                  :handler #(fn [] (dispatch [:set-consent-and-page {:elector-id (:id elector)
-                                                                     :page :elector}])))
+                  :target (str "#elector/" (:id elector) "/true")
+                  :handler #(fn [] (dispatch [:set-consent-and-page {:elector-id (:id elector) :page :elector}])))
      ;; TODO: need to save the signature
      (ui/big-link "I DO NOT consent"
-                  :handler
-                  #(fn [] (dispatch [:set-elector-and-page {:elector-id (:id elector)
-                                                            :page :elector}])))]))
+                  :target (str "#elector/" (:id elector) "/true"))]))
+                  ;; :handler #(fn [] (dispatch [:set-elector-and-page {:elector-id (:id elector) :page :elector}])))]))
 
 
 (defn gdpr-did-mount

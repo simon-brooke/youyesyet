@@ -4,6 +4,7 @@
   (:require [cljs.reader :refer [read-string]]
             [re-frame.core :refer [dispatch reg-event-db]]
             [youyesyet.canvasser-app.state :as db]
+            [youyesyet.utils :refer :all]
             ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -36,12 +37,6 @@
   (merge state {:error nil :feedback nil}))
 
 
-(defn coerce-to-number [v]
-  (if (number? v) v
-    (try
-      (read-string (str v))
-      (catch js/Object any
-        (js/console.log (str "Could not coerce '" v "' to number: " any))))))
 
 
 (defn get-elector
@@ -169,9 +164,10 @@
   :set-consent-and-page
   (fn [db [_ args]]
     (let [page (:page args)
+          consent (:consent args)
           elector-id (coerce-to-number (:elector-id args))
           elector (get-elector elector-id db)]
-      (js/console.log (str "Setting page to " page ", consent to true for " elector))
+      (js/console.log (str "Setting page to " page ", consent to " consent " for " elector))
       (assoc (clear-messages db) :elector (assoc elector :consent true) :page page))))
 
 

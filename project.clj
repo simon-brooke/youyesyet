@@ -77,7 +77,7 @@
   :npm {:dependencies [[datatables.net "1.10.19"]
                        [datatables.net-dt "1.10.19"]
                        [jquery "3.3.1"]
-                       [leaflet "0.7.3"] ;; old version works, new ["1.3.1"] doesn't 
+                       [leaflet "0.7.3"] ;; old version works, new ["1.3.1"] doesn't
                        [signature_pad "2.3.2"]]
         :root "resources/public/js/lib"}
 

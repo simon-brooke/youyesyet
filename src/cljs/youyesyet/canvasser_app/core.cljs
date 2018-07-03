@@ -134,6 +134,18 @@
 (secretary/defroute "/building/:address" {address-id :address}
   (log-and-dispatch [:set-address address-id]))
 
+(secretary/defroute "/elector" []
+  (log-and-dispatch [:set-active-page :elector]))
+
+(secretary/defroute "/elector/:elector" {elector-id :elector}
+  (log-and-dispatch [:set-elector-and-page {:elector-id elector-id :page :elector}]))
+
+(secretary/defroute "/elector/:elector/:consent" {elector-id :elector consent :consent}
+  (log-and-dispatch [:set-consent-and-page {:elector-id elector-id :consent (and true consent) :page :elector}]))
+
+(secretary/defroute "/elector" []
+  (log-and-dispatch [:set-active-page :elector]))
+
 (secretary/defroute "/followup" []
   (log-and-dispatch [:set-active-page :followup]))
 

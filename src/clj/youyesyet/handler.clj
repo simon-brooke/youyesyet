@@ -13,6 +13,7 @@
             [youyesyet.routes.oauth :refer [oauth-routes]]
             [youyesyet.routes.auto-json :refer [auto-rest-routes]]
             [youyesyet.routes.auto :refer [auto-selmer-routes]]
+            [youyesyet.routes.rest :refer [rest-routes]]
             [youyesyet.env :refer [defaults]]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -70,6 +71,8 @@
         (wrap-routes middleware/wrap-formats))
     (-> #'auto-selmer-routes
         (wrap-routes middleware/wrap-csrf)
+        (wrap-routes middleware/wrap-formats))
+    (-> #'rest-routes
         (wrap-routes middleware/wrap-formats))
     'oauth-routes
     (route/resources "/")

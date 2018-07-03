@@ -64,6 +64,7 @@
                        [:send-intention {:elector-id (:id elector)
                                          :intention optid}])}]])]))
 
+
 (defn issue-row
   "Generate a row containing an issue cell for a particular elector"
   [elector]
@@ -76,25 +77,17 @@
 (defn panel
   "Generate the elector panel."
   []
-  (let [address @(subscribe [:address])
-        dwelling @(subscribe [:dwelling])
-        elector @(subscribe [:elector])
-        electors [elector]
-        options @(subscribe [:options])
-        sub-address (:sub-address dwelling)]
-    (if address
+  (let [elector @(subscribe [:elector])
+        options @(subscribe [:options])]
+    (if elector
       [:div
-       [:h1 (if sub-address
-              (str sub-address ", " (:address address))
-              (:address address))]
+       [:h1 (:name elector)]
        [:div.container {:id "main-container"}
         [:table
          [:tbody
-          (gender-row elector)
-          (name-row elector)
           (map
             #(option-row elector %)
             options)
           (issue-row elector)]]
-        (ui/back-link)]]
-      (ui/error-panel "No address selected"))))
+        (ui/back-link "#dwelling")]]
+      (ui/error-panel "No elector selected"))))
