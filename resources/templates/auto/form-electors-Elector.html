@@ -1,8 +1,11 @@
 {% extends "base.html" %}
-<!-- File form-electors-Elector.html generated 2018-07-03T23:08:20.055Z by adl.to-selmer-templates.
+<!-- File form-electors-Elector.html generated 2018-07-05T10:14:18.465Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
+{% block extra-head %}
+
+{% endblock %}
 {% block content %}
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-electors-Elector' method='POST'>
@@ -12,7 +15,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 id
 </label>
 {% ifmemberof admin %}
-<input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
+<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -30,7 +33,7 @@ You are not permitted to view id of electors
 name
 </label>
 {% ifmemberof admin %}
-<input id='name' name='name' type='text' value='{{record.name}}' maxlength='64' size='60'/>
+<input id='name' name='name' type='string' value='{{record.name}}' maxlength='64' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='name' name='name' class='pseudo-widget disabled'>
@@ -48,12 +51,13 @@ You are not permitted to view name of electors
 dwelling_id
 </label>
 {% ifmemberof admin %}
-<div class='select-box' farside='dwellings' found='true'>
-<input name='dwelling_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='dwelling_id' name='dwelling_id' comment='JavaScript stuff to fix up aynchronous loading'>
+<span class='select-box' farside='dwellings' found='true'>
+<input name='dwelling_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-dwellings?sub-address=" + dwelling_id_search_box.text + "&amp;address_id=" + dwelling_id_search_box.text, null, function (data) {updateMenuOptions("dwelling_id", "id", ["sub-address", "address_id"], data);})'/>
+<br/>
+<select id='dwelling_id' name='dwelling_id'>
 {% for r in dwellings %}<option value='{{r.id}}' {% ifequal record.dwelling_id r.id%}selected{% endifequal %}>{{r.address_id}} {{r.sub-address}}</option>{% endfor %}
 </select>
-</div>
+</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='dwelling_id' name='dwelling_id' class='pseudo-widget disabled'>
@@ -71,7 +75,7 @@ You are not permitted to view dwelling_id of electors
 phone
 </label>
 {% ifmemberof admin %}
-<input id='phone' name='phone' type='text' value='{{record.phone}}' maxlength='16' size='16'/>
+<input id='phone' name='phone' type='string' value='{{record.phone}}' maxlength='16' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='phone' name='phone' class='pseudo-widget disabled'>
@@ -89,7 +93,7 @@ You are not permitted to view phone of electors
 email
 </label>
 {% ifmemberof admin %}
-<input id='email' name='email' type='text' value='{{record.email}}' maxlength='128' size='60'/>
+<input id='email' name='email' type='string' value='{{record.email}}' maxlength='128' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='email' name='email' class='pseudo-widget disabled'>
@@ -107,11 +111,11 @@ You are not permitted to view email of electors
 gender
 </label>
 {% ifmemberof admin %}
-<div class='select-box' farside='genders' found='true'>
+<span class='select-box' farside='genders' found='true'>
 <select id='gender' name='gender'>
 {% for r in genders %}<option value='{{r.id}}' {% ifequal record.gender r.id%}selected{% endifequal %}>{{r.id}}</option>{% endfor %}
 </select>
-</div>
+</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='gender' name='gender' class='pseudo-widget disabled'>
@@ -124,19 +128,43 @@ You are not permitted to view gender of electors
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
+{% ifmemberof admin %}
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>
 To save this electors record
 </label>
 <input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
+{% endifmemberof %}
+{% ifmemberof admin %}
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this electors record
 </label>
 <input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
+{% endifmemberof %}
 </form>
 </div>
+
+{% endblock %}
+{% block extra-tail %}
+<script type='text/javascript'>
+        /**
+         * update the select menu with id `wid` from this `data` whose fields include
+         * this `entity_key` and these `fields`
+         */
+        function updateMenuOptions(wid, entity_key, fields, data){
+          $('#' + wid).children().filter(function(){
+            return $(this).attr('selected') === undefined;
+          }).remove().end();
+
+          $.each(data, function(key, entry){
+            $('#' + wid).append(
+              $('<option></option>').attr('value', key).text(entry));
+          });
+        }
+
+</script>
 
 {% endblock %}

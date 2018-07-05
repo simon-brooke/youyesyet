@@ -1,8 +1,11 @@
 {% extends "base.html" %}
-<!-- File form-districts-District.html generated 2018-07-03T23:08:20.021Z by adl.to-selmer-templates.
+<!-- File form-districts-District.html generated 2018-07-05T10:14:18.436Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
+{% block extra-head %}
+
+{% endblock %}
 {% block content %}
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-districts-District' method='POST'>
@@ -11,10 +14,10 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <label for='id'>
 id
 </label>
-{% ifmemberof admin admin %}
-<input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
+{% ifmemberof admin %}
+<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
-{% ifmemberof public admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
+{% ifmemberof public admin canvassers teamorganisers issueexperts analysts issueeditors %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
@@ -29,10 +32,10 @@ You are not permitted to view id of districts
 <label for='name'>
 name
 </label>
-{% ifmemberof admin admin %}
-<input id='name' name='name' type='text' value='{{record.name}}' maxlength='64' size='60'/>
+{% ifmemberof admin %}
+<input id='name' name='name' type='string' value='{{record.name}}' maxlength='64' size='60'/>
 {% else %}
-{% ifmemberof public admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
+{% ifmemberof public admin canvassers teamorganisers issueexperts analysts issueeditors %}
 <span id='name' name='name' class='pseudo-widget disabled'>
 {{record.name}}
 </span>
@@ -43,19 +46,28 @@ You are not permitted to view name of districts
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
+{% ifmemberof admin %}
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>
 To save this districts record
 </label>
 <input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
+{% endifmemberof %}
+{% ifmemberof admin %}
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this districts record
 </label>
 <input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
+{% endifmemberof %}
 </form>
 </div>
+
+{% endblock %}
+{% block extra-tail %}
+<script type='text/javascript'>
+</script>
 
 {% endblock %}

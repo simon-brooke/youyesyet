@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/yyy-site.css" />
     <link rel="stylesheet" type="text/css" href="css/spinner.css" />
     <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
+    {% script "js/lib/node_modules/jquery/dist/jquery.min.js" %}
     <title>{{site-title}}: {{title}}</title>
     {% endblock %}
     {% block extra-head %}
@@ -37,6 +38,16 @@
       </div>
       <!-- img id="site-logo" src="{{site-logo}}" alt="{{site-title}}" width="64" height="64"/ -->
       <h1>{{title}}</h1>
+      {% if message|not-empty %}
+      <div class="message">
+        {{ message }}
+      </div>
+      {% endif %}
+      {% if error|not-empty %}
+      <div class="error">
+        {{ error }}
+      </div>
+      {% endif %}
     </header>
     {% endblock %}
     <div id="main-container" class="container">

@@ -1,8 +1,12 @@
 {% extends "base.html" %}
-<!-- File form-followupactions-Followupaction.html generated 2018-07-03T23:08:20.084Z by adl.to-selmer-templates.
+<!-- File form-followupactions-Followupaction.html generated 2018-07-05T10:14:18.488Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
+{% block extra-head %}
+{% script "js/lib/node_modules/simplemde/dist/simplemde.min.js" %}
+     {% style "js/lib/node_modules/simplemde/dist/simplemde.min.css" %}
+{% endblock %}
 {% block content %}
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-followupactions-Followupaction' method='POST'>
@@ -12,7 +16,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 id
 </label>
 {% ifmemberof admin %}
-<input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
+<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -30,12 +34,13 @@ You are not permitted to view id of followupactions
 request_id
 </label>
 {% ifmemberof admin %}
-<div class='select-box' farside='followuprequests' found='true'>
-<input name='request_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='request_id' name='request_id' comment='JavaScript stuff to fix up aynchronous loading'>
+<span class='select-box' farside='followuprequests' found='true'>
+<input name='request_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-followuprequests?elector_id=" + request_id_search_box.text + "&amp;issue_id=" + request_id_search_box.text + "&amp;visit_id=" + request_id_search_box.text, null, function (data) {updateMenuOptions("request_id", "id", ["elector_id", "issue_id", "visit_id"], data);})'/>
+<br/>
+<select id='request_id' name='request_id'>
 {% for r in followuprequests %}<option value='{{r.id}}' {% ifequal record.request_id r.id%}selected{% endifequal %}>{{r.elector_id}} {{r.visit_id}} {{r.issue_id}}</option>{% endfor %}
 </select>
-</div>
+</span>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='request_id' name='request_id' class='pseudo-widget disabled'>
@@ -53,12 +58,13 @@ You are not permitted to view request_id of followupactions
 actor
 </label>
 {% ifmemberof admin %}
-<div class='select-box' farside='canvassers' found='true'>
-<input name='actor-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='actor' name='actor' comment='JavaScript stuff to fix up aynchronous loading'>
+<span class='select-box' farside='canvassers' found='true'>
+<input name='actor_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + actor_search_box.text, null, function (data) {updateMenuOptions("actor", "", [""], data);})'/>
+<br/>
+<select id='actor' name='actor'>
 {% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.actor r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
 </select>
-</div>
+</span>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='actor' name='actor' class='pseudo-widget disabled'>
@@ -76,7 +82,7 @@ You are not permitted to view actor of followupactions
 date
 </label>
 {% ifmemberof admin %}
-<input id='date' name='date' type='text' value='{{record.date}}' maxlength='' size='16'/>
+<input id='date' name='date' type='string' value='{{record.date}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='date' name='date' class='pseudo-widget disabled'>
@@ -94,7 +100,9 @@ You are not permitted to view date of followupactions
 notes
 </label>
 {% ifmemberof admin %}
-<input id='notes' name='notes' type='text' value='{{record.notes}}' maxlength='' size='16'/>
+<textarea rows='8' cols='60' id='notes' name='notes'>
+{{record.notes}}
+</textarea>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='notes' name='notes' class='pseudo-widget disabled'>
@@ -125,19 +133,61 @@ You are not permitted to view closed of followupactions
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
+{% ifmemberof admin %}
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>
 To save this followupactions record
 </label>
 <input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
+{% endifmemberof %}
+{% ifmemberof admin %}
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this followupactions record
 </label>
 <input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
+{% endifmemberof %}
 </form>
 </div>
+
+{% endblock %}
+{% block extra-tail %}
+<script type='text/javascript'>
+        /**
+         * update the select menu with id `wid` from this `data` whose fields include
+         * this `entity_key` and these `fields`
+         */
+        function updateMenuOptions(wid, entity_key, fields, data){
+          $('#' + wid).children().filter(function(){
+            return $(this).attr('selected') === undefined;
+          }).remove().end();
+
+          $.each(data, function(key, entry){
+            $('#' + wid).append(
+              $('<option></option>').attr('value', key).text(entry));
+          });
+        }
+
+          var simplemde = new SimpleMDE({
+            autosave: {
+              enabled: true,
+              uniqueId: "Smeagol-{{page}}",
+              delay: 1000,
+            },
+            indentWithTabs: true,
+            insertTexts: {
+              horizontalRule: ["", "\n\n-----\n\n"],
+              image: ["![](http://", ")"],
+              link: ["[", "](http://)"],
+              table: ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"],
+            },
+            showIcons: ["code"], //, "table"], - sadly, markdown-clj does not support tables
+	          spellChecker: true,
+	          status: ["autosave", "lines", "words", "cursor"]
+          });
+
+</script>
 
 {% endblock %}

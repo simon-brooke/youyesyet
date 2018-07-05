@@ -1,19 +1,47 @@
 {% extends "base.html" %}
 {% block big-links %}
-      <div class="big-link-container">
-        <a href="supporter" class="big-link" id="yes-link">Yes</a>
-      </div>
-      <div class="big-link-container">
-        <a href="notyet" class="big-link" id="not-yet-link">No</a>
-      </div>
+<div class="big-link-container">
+  <a href="supporter" class="big-link" id="yes-link">Yes</a>
+</div>
+<div class="big-link-container">
+  <a href="notyet" class="big-link" id="not-yet-link">No</a>
+</div>
 {% endblock %}
 {% block content %}
+<img id="site-logo" src="img/ProjectHopeLogo4.png" alt="{{site-title}}" style="float: left;" height="345" width="345"/>
 <h2>
   Alpha test code
 </h2>
 <p>
-  Although addresses in the database mostly are real, all personal data in the database
-  is randomly generated and does not represent real people.
+  This is a voter intention information system intended to be used by the 'Yes' side in the next independence referendum.
+  Design documentation is <a href="https://github.com/simon-brooke/youyesyet/blob/master/doc/specification/userspec.md">here</a>.</p>
+
+<p>Although addresses in the database mostly are real, all personal data in the database
+  is randomly generated and does not represent real people.</p>
+
+<h3>
+  The Canvasser app
+</h3>
+
+<p>Because the canvasser app now loads data from the database and uses your current location, and the database currently only holds
+  data for the Castle Douglas area, you're unlikely to see any actual data in the app. A dummy of the app in which you can see
+  data is <a href="http://www.journeyman.cc/~simon/tmp/yyy-dummy-2/">here</a>.
+</p>
+<p>
+  The app currently works on the Chrome browser, and on Android phones. I don't yet know whether it works on iPhones. It does not at
+  present work with Firefox.
+</p>
+
+<h3>
+  The Admin system
+</h3>
+
+<p>'Save' and 'Delete' buttons on administrative pages do not work; this is intentional at this stage.
+  I want you to be able to see what different roles in the project can see, without actually being able
+  to mess up the database.</p>
+
+<p>If you encounter problems, please submit a report <a href="https://github.com/simon-brooke/youyesyet/issues">here</a>.
+  General feedback on usability is also appreciated.</p>
 </p>
 {% endblock %}
 

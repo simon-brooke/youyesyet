@@ -1,8 +1,11 @@
 {% extends "base.html" %}
-<!-- File form-intentions-Intention.html generated 2018-07-03T23:08:20.075Z by adl.to-selmer-templates.
+<!-- File form-intentions-Intention.html generated 2018-07-05T10:14:18.481Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
+{% block extra-head %}
+
+{% endblock %}
 {% block content %}
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-intentions-Intention' method='POST'>
@@ -12,12 +15,13 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 visit_id
 </label>
 {% ifmemberof admin %}
-<div class='select-box' farside='visits' found='true'>
-<input name='visit_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='visit_id' name='visit_id' comment='JavaScript stuff to fix up aynchronous loading'>
+<span class='select-box' farside='visits' found='true'>
+<input name='visit_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-visits?address_id=" + visit_id_search_box.text + "&amp;date=" + visit_id_search_box.text, null, function (data) {updateMenuOptions("visit_id", "id", ["address_id", "date"], data);})'/>
+<br/>
+<select id='visit_id' name='visit_id'>
 {% for r in visits %}<option value='{{r.id}}' {% ifequal record.visit_id r.id%}selected{% endifequal %}>{{r.address_id}} {{r.date}}</option>{% endfor %}
 </select>
-</div>
+</span>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
 <span id='visit_id' name='visit_id' class='pseudo-widget disabled'>
@@ -35,12 +39,13 @@ You are not permitted to view visit_id of intentions
 elector_id
 </label>
 {% ifmemberof admin %}
-<div class='select-box' farside='electors' found='true'>
-<input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
+<span class='select-box' farside='electors' found='true'>
+<input name='elector_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-electors?gender=" + elector_id_search_box.text + "&amp;email=" + elector_id_search_box.text + "&amp;name=" + elector_id_search_box.text + "&amp;phone=" + elector_id_search_box.text, null, function (data) {updateMenuOptions("elector_id", "id", ["gender", "email", "name", "phone"], data);})'/>
+<br/>
+<select id='elector_id' name='elector_id'>
 {% for r in electors %}<option value='{{r.id}}' {% ifequal record.elector_id r.id%}selected{% endifequal %}>{{r.name}} {{r.phone}} {{r.email}} {{r.gender}}</option>{% endfor %}
 </select>
-</div>
+</span>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
 <span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
@@ -58,11 +63,11 @@ You are not permitted to view elector_id of intentions
 option_id
 </label>
 {% ifmemberof admin %}
-<div class='select-box' farside='options' found='true'>
+<span class='select-box' farside='options' found='true'>
 <select id='option_id' name='option_id'>
 {% for r in options %}<option value='{{r.id}}' {% ifequal record.option_id r.id%}selected{% endifequal %}>{{r.id}}</option>{% endfor %}
 </select>
-</div>
+</span>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
 <span id='option_id' name='option_id' class='pseudo-widget disabled'>
@@ -93,19 +98,43 @@ You are not permitted to view locality of intentions
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
+{% ifmemberof admin %}
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>
 To save this intentions record
 </label>
 <input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
+{% endifmemberof %}
+{% ifmemberof admin %}
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this intentions record
 </label>
 <input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
+{% endifmemberof %}
 </form>
 </div>
+
+{% endblock %}
+{% block extra-tail %}
+<script type='text/javascript'>
+        /**
+         * update the select menu with id `wid` from this `data` whose fields include
+         * this `entity_key` and these `fields`
+         */
+        function updateMenuOptions(wid, entity_key, fields, data){
+          $('#' + wid).children().filter(function(){
+            return $(this).attr('selected') === undefined;
+          }).remove().end();
+
+          $.each(data, function(key, entry){
+            $('#' + wid).append(
+              $('<option></option>').attr('value', key).text(entry));
+          });
+        }
+
+</script>
 
 {% endblock %}

@@ -1,55 +1,74 @@
 {% extends "base.html" %}
-<!-- File application-index.html generated 2018-07-03T23:08:20.049Z by adl.to-selmer-templates.
+<!-- File application-index.html generated 2018-07-05T10:14:18.460Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
 {% block content %}
 <dl class='index'>
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
 <a href='list-addresses-Addresses'>
 Address
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
 Addresses of all buildings which contain dwellings.
 </p>
 </dd>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
 <a href='list-authorities-Authorities'>
 Authority
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
 Authorities which may authenticate canvassers to the system.
 </p>
 </dd>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
 <a href='list-canvassers-Canvassers'>
 Canvasser
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
 Primary users of the system: those actually interviewing electors.
 </p>
 </dd>
+{% endifmemberof %}
+{% ifmemberof public admin canvassers teamorganisers issueexperts analysts issueeditors %}
 <dt>
 <a href='list-districts-Districts'>
 District
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof public admin canvassers teamorganisers issueexperts analysts issueeditors %}
 <dd>
 <p>
 Electoral districts: TODO: Shape (polygon) information will need to be added, for use in maps.
 </p>
 </dd>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
 <a href='list-dwellings-Dwellings'>
 Dwelling
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
 All dwellings within addresses in the system; a dwelling is a
@@ -60,110 +79,155 @@ All dwellings within addresses in the system; a dwelling is a
     
 </p>
 </dd>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
 <a href='list-electors-Electors'>
 Elector
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
 All electors known to the system; electors are people believed to be entitled to vote in the current campaign.
 </p>
 </dd>
+{% endifmemberof %}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <dt>
 <a href='list-followupactions-Followupactions'>
 Followupaction
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <dd>
 <p>
 Actions taken on followup requests.
 </p>
 </dd>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
 <a href='list-followupmethods-Followupmethods'>
 Followupmethod
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 </dd>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
 <a href='list-followuprequests-Followuprequests'>
 Followuprequest
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
 Requests for a followup with an issue expert
 </p>
 </dd>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
 <a href='list-genders-Genders'>
 Gender
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
 All genders which may be assigned to electors.
 </p>
 </dd>
+{% endifmemberof %}
+{% ifmemberof canvassers analysts admin %}
 <dt>
 <a href='list-intentions-Intentions'>
 Intention
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof canvassers analysts admin %}
 <dd>
 <p>
 Intentions of electors to vote for options elicited in visits.
 </p>
 </dd>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
 <a href='list-issues-Issues'>
 Issue
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
 Issues believed to be of interest to electors, about which they may have questions.
 </p>
 </dd>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
 <a href='list-options-Options'>
 Option
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
 Options in the election or referendum being canvassed on
 </p>
 </dd>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
 <a href='list-roles-Roles'>
 Role
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
 A role (essentially, the same as a group, but application layer rather than database layer) of which a user may be a member.
 </p>
 </dd>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
 <dt>
 <a href='list-teams-Teams'>
 Team
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
 <dd>
 </dd>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
 <dt>
 <a href='list-visits-Visits'>
 Visit
 </a>
 </dt>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
 <dd>
 <p>
 All visits made by canvassers to dwellings in which opinions were recorded.
 </p>
 </dd>
+{% endifmemberof %}
 </dl>
 
 {% endblock %}

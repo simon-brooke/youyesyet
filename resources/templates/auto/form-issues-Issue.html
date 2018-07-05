@@ -1,8 +1,12 @@
 {% extends "base.html" %}
-<!-- File form-issues-Issue.html generated 2018-07-03T23:08:20.039Z by adl.to-selmer-templates.
+<!-- File form-issues-Issue.html generated 2018-07-05T10:14:18.452Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
+{% block extra-head %}
+{% script "js/lib/node_modules/simplemde/dist/simplemde.min.js" %}
+     {% style "js/lib/node_modules/simplemde/dist/simplemde.min.css" %}
+{% endblock %}
 {% block content %}
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-issues-Issue' method='POST'>
@@ -12,7 +16,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 id
 </label>
 {% ifmemberof issueeditors admin %}
-<input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
+<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -30,7 +34,7 @@ You are not permitted to view id of issues
 url
 </label>
 {% ifmemberof issueeditors admin %}
-<input id='url' name='url' type='text' value='{{record.url}}' maxlength='256' size='60'/>
+<input id='url' name='url' type='string' value='{{record.url}}' maxlength='256' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='url' name='url' class='pseudo-widget disabled'>
@@ -66,7 +70,9 @@ You are not permitted to view current of issues
 brief
 </label>
 {% ifmemberof issueeditors admin %}
-<input id='brief' name='brief' type='text' value='{{record.brief}}' maxlength='' size='16'/>
+<textarea rows='8' cols='60' id='brief' name='brief'>
+{{record.brief}}
+</textarea>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='brief' name='brief' class='pseudo-widget disabled'>
@@ -79,19 +85,46 @@ You are not permitted to view brief of issues
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
+{% ifmemberof issueeditors admin %}
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>
 To save this issues record
 </label>
 <input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
+{% endifmemberof %}
+{% ifmemberof issueeditors admin %}
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this issues record
 </label>
 <input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
+{% endifmemberof %}
 </form>
 </div>
+
+{% endblock %}
+{% block extra-tail %}
+<script type='text/javascript'>
+          var simplemde = new SimpleMDE({
+            autosave: {
+              enabled: true,
+              uniqueId: "Smeagol-{{page}}",
+              delay: 1000,
+            },
+            indentWithTabs: true,
+            insertTexts: {
+              horizontalRule: ["", "\n\n-----\n\n"],
+              image: ["![](http://", ")"],
+              link: ["[", "](http://)"],
+              table: ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"],
+            },
+            showIcons: ["code"], //, "table"], - sadly, markdown-clj does not support tables
+	          spellChecker: true,
+	          status: ["autosave", "lines", "words", "cursor"]
+          });
+
+</script>
 
 {% endblock %}

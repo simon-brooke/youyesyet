@@ -1,8 +1,11 @@
 {% extends "base.html" %}
-<!-- File form-visits-Visit.html generated 2018-07-03T23:08:20.046Z by adl.to-selmer-templates.
+<!-- File form-visits-Visit.html generated 2018-07-05T10:14:18.457Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
+{% block extra-head %}
+
+{% endblock %}
 {% block content %}
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-visits-Visit' method='POST'>
@@ -11,10 +14,10 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <label for='id'>
 id
 </label>
-{% ifmemberof admin admin %}
-<input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
+{% ifmemberof admin %}
+<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
@@ -29,15 +32,16 @@ You are not permitted to view id of visits
 <label for='address_id'>
 address_id
 </label>
-{% ifmemberof admin admin %}
-<div class='select-box' farside='addresses' found='true'>
-<input name='address_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='address_id' name='address_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% ifmemberof admin %}
+<span class='select-box' farside='addresses' found='true'>
+<input name='address_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-addresses?postcode=" + address_id_search_box.text + "&amp;address=" + address_id_search_box.text, null, function (data) {updateMenuOptions("address_id", "id", ["postcode", "address"], data);})'/>
+<br/>
+<select id='address_id' name='address_id'>
 {% for r in addresses %}<option value='{{r.id}}' {% ifequal record.address_id r.id%}selected{% endifequal %}>{{r.address}} {{r.postcode}}</option>{% endfor %}
 </select>
-</div>
+</span>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
 <span id='address_id' name='address_id' class='pseudo-widget disabled'>
 {{record.address_id}}
 </span>
@@ -52,15 +56,16 @@ You are not permitted to view address_id of visits
 <label for='canvasser_id'>
 canvasser_id
 </label>
-{% ifmemberof admin admin %}
-<div class='select-box' farside='canvassers' found='true'>
-<input name='canvasser_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='canvasser_id' name='canvasser_id' comment='JavaScript stuff to fix up aynchronous loading'>
+{% ifmemberof admin %}
+<span class='select-box' farside='canvassers' found='true'>
+<input name='canvasser_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + canvasser_id_search_box.text, null, function (data) {updateMenuOptions("canvasser_id", "", [""], data);})'/>
+<br/>
+<select id='canvasser_id' name='canvasser_id'>
 {% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.canvasser_id r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
 </select>
-</div>
+</span>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
 <span id='canvasser_id' name='canvasser_id' class='pseudo-widget disabled'>
 {{record.canvasser_id}}
 </span>
@@ -75,10 +80,10 @@ You are not permitted to view canvasser_id of visits
 <label for='date'>
 date
 </label>
-{% ifmemberof admin admin %}
-<input id='date' name='date' type='text' value='{{record.date}}' maxlength='' size='16'/>
+{% ifmemberof admin %}
+<input id='date' name='date' type='string' value='{{record.date}}' maxlength='' size='16'/>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
 <span id='date' name='date' class='pseudo-widget disabled'>
 {{record.date}}
 </span>
@@ -89,19 +94,43 @@ You are not permitted to view date of visits
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
+{% ifmemberof admin %}
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>
 To save this visits record
 </label>
 <input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
+{% endifmemberof %}
+{% ifmemberof admin %}
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this visits record
 </label>
 <input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
+{% endifmemberof %}
 </form>
 </div>
+
+{% endblock %}
+{% block extra-tail %}
+<script type='text/javascript'>
+        /**
+         * update the select menu with id `wid` from this `data` whose fields include
+         * this `entity_key` and these `fields`
+         */
+        function updateMenuOptions(wid, entity_key, fields, data){
+          $('#' + wid).children().filter(function(){
+            return $(this).attr('selected') === undefined;
+          }).remove().end();
+
+          $.each(data, function(key, entry){
+            $('#' + wid).append(
+              $('<option></option>').attr('value', key).text(entry));
+          });
+        }
+
+</script>
 
 {% endblock %}

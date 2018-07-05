@@ -1,20 +1,54 @@
 {% extends "base.html" %}
-<!-- File list-genders-Genders.html generated 2018-07-03T23:08:20.008Z by adl.to-selmer-templates.
+<!-- File list-genders-Genders.html generated 2018-07-05T10:14:18.428Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
-{% block content %}
-<form id='content' class='list'>
+{% block back-links %}
+<div>
+<div class='back-link-container'>
+{% ifequal params.offset "0" %}
+<a id='back-link' class='back-link' href='{{servlet-context}}/admin'>
+Back
+</a>
+{% else %}
+<a id='prev-selector' class='back-link'>
+Previous
+</a>
+{% endifunequal %}
+</div>
+</div>
+
+{% endblock %}
+{% block big-links %}
+<div>
 <div class='big-link-container'>
-<a href='form-genders-Gender'>
+<a id='next-selector' role='button' class='big-link'>
+Next
+</a>
+</div>
+{% ifmemberof admin %}
+<div class='big-link-container'>
+<a href='form-genders-Gender' class='big-link'>
 Add a new Gender
 </a>
 </div>
+{% endifmemberof %}
+</div>
+
+{% endblock %}
+{% block content %}
+<form id='list-genders-Genders' class='list' action='{{servlet-context}}/list-genders-Genders' method='POST'>
+{% csrf-field %}
+<input id='offset' type='hidden' value='{{params.offset|default:0}}'/>
+<input id='limit' type='hidden' value='{{params.limit|default:50}}'/>
 <table caption='genders'>
 <thead>
 <tr>
 <th>
 id
+</th>
+<th>
+&nbsp;
 </th>
 </tr>
 <tr>
@@ -22,7 +56,7 @@ id
 <input id='id' type='text' name='id' value='{{ params.id }}'/>
 </th>
 <th>
-<input type='submit' id='search' value='Search'/>
+<input type='submit' id='search-widget' value='Search'/>
 </th>
 </tr>
 </thead>
@@ -40,15 +74,30 @@ View
 </tr>
 {% endfor %}
 </tbody>
-<tfoot>
-<div class='back-link-container'>
-<input id='page' name='page' disabled='{% ifequal offset 0 %} false {% else %} true {% endifequal %}' value='Previous'/>
-</div>
-<div class='big-link-container'>
-<input id='page' name='page' disabled='false' value='Next'/>
-</div>
-</tfoot>
 </table>
 </form>
 
+{% endblock %}
+{% block extra-script %}
+
+          var form = document.getElementById('list-genders-Genders');
+          var ow = document.getElementById('offset');
+          var lw = document.getElementById('limit');
+          form.addEventListener('submit', function() {
+          ow.value='0';
+          });
+
+          {% ifunequal params.offset "0" %}
+          document.getElementById('prev-selector').addEventListener('click', function () {
+          ow.value=(parseInt(ow.value)-parseInt(lw.value));
+          console.log('Updated offset to ' + ow.value);
+          form.submit();
+          });
+          {% endifunequal %}
+
+          document.getElementById('next-selector').addEventListener('click', function () {
+          ow.value=(parseInt(ow.value)+parseInt(lw.value));
+          console.log('Updated offset to ' + ow.value);
+          form.submit();
+          });
 {% endblock %}

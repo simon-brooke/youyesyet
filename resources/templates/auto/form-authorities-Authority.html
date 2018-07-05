@@ -1,8 +1,11 @@
 {% extends "base.html" %}
-<!-- File form-authorities-Authority.html generated 2018-07-03T23:08:20.060Z by adl.to-selmer-templates.
+<!-- File form-authorities-Authority.html generated 2018-07-05T10:14:18.468Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
+{% block extra-head %}
+
+{% endblock %}
 {% block content %}
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-authorities-Authority' method='POST'>
@@ -12,7 +15,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 id
 </label>
 {% ifmemberof admin %}
-<input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
+<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -26,108 +29,117 @@ You are not permitted to view id of authorities
 {% endifmemberof %}
 </p>
 <p class='widget'>
-<label for='request-token-uri'>
+<label for='request_token_uri'>
 request-token-uri
 </label>
 {% ifmemberof admin %}
-<input id='request-token-uri' name='request-token-uri' type='text' value='{{record.request-token-uri}}' maxlength='256' size='60'/>
+<input id='request_token_uri' name='request_token_uri' type='string' value='{{record.request_token_uri}}' maxlength='256' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='request-token-uri' name='request-token-uri' class='pseudo-widget disabled'>
-{{record.request-token-uri}}
+<span id='request_token_uri' name='request_token_uri' class='pseudo-widget disabled'>
+{{record.request_token_uri}}
 </span>
 {% else %}
-<span id='request-token-uri' name='request-token-uri' class='pseudo-widget not-authorised'>
-You are not permitted to view request-token-uri of authorities
+<span id='request_token_uri' name='request_token_uri' class='pseudo-widget not-authorised'>
+You are not permitted to view request_token_uri of authorities
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
 <p class='widget'>
-<label for='access-token-uri'>
+<label for='access_token_uri'>
 access-token-uri
 </label>
 {% ifmemberof admin %}
-<input id='access-token-uri' name='access-token-uri' type='text' value='{{record.access-token-uri}}' maxlength='256' size='60'/>
+<input id='access_token_uri' name='access_token_uri' type='string' value='{{record.access_token_uri}}' maxlength='256' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='access-token-uri' name='access-token-uri' class='pseudo-widget disabled'>
-{{record.access-token-uri}}
+<span id='access_token_uri' name='access_token_uri' class='pseudo-widget disabled'>
+{{record.access_token_uri}}
 </span>
 {% else %}
-<span id='access-token-uri' name='access-token-uri' class='pseudo-widget not-authorised'>
-You are not permitted to view access-token-uri of authorities
+<span id='access_token_uri' name='access_token_uri' class='pseudo-widget not-authorised'>
+You are not permitted to view access_token_uri of authorities
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
 <p class='widget'>
-<label for='authorize-uri'>
+<label for='authorize_uri'>
 authorize-uri
 </label>
 {% ifmemberof admin %}
-<input id='authorize-uri' name='authorize-uri' type='text' value='{{record.authorize-uri}}' maxlength='256' size='60'/>
+<input id='authorize_uri' name='authorize_uri' type='string' value='{{record.authorize_uri}}' maxlength='256' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='authorize-uri' name='authorize-uri' class='pseudo-widget disabled'>
-{{record.authorize-uri}}
+<span id='authorize_uri' name='authorize_uri' class='pseudo-widget disabled'>
+{{record.authorize_uri}}
 </span>
 {% else %}
-<span id='authorize-uri' name='authorize-uri' class='pseudo-widget not-authorised'>
-You are not permitted to view authorize-uri of authorities
+<span id='authorize_uri' name='authorize_uri' class='pseudo-widget not-authorised'>
+You are not permitted to view authorize_uri of authorities
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
 <p class='widget'>
-<label for='consumer-key'>
+<label for='consumer_key'>
 consumer-key
 </label>
 {% ifmemberof admin %}
-<input id='consumer-key' name='consumer-key' type='text' value='{{record.consumer-key}}' maxlength='32' size='32'/>
+<input id='consumer_key' name='consumer_key' type='string' value='{{record.consumer_key}}' maxlength='32' size='32'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='consumer-key' name='consumer-key' class='pseudo-widget disabled'>
-{{record.consumer-key}}
+<span id='consumer_key' name='consumer_key' class='pseudo-widget disabled'>
+{{record.consumer_key}}
 </span>
 {% else %}
-<span id='consumer-key' name='consumer-key' class='pseudo-widget not-authorised'>
-You are not permitted to view consumer-key of authorities
+<span id='consumer_key' name='consumer_key' class='pseudo-widget not-authorised'>
+You are not permitted to view consumer_key of authorities
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
 <p class='widget'>
-<label for='consumer-secret'>
+<label for='consumer_secret'>
 consumer-secret
 </label>
 {% ifmemberof admin %}
-<input id='consumer-secret' name='consumer-secret' type='text' value='{{record.consumer-secret}}' maxlength='256' size='60'/>
+<input id='consumer_secret' name='consumer_secret' type='string' value='{{record.consumer_secret}}' maxlength='256' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='consumer-secret' name='consumer-secret' class='pseudo-widget disabled'>
-{{record.consumer-secret}}
+<span id='consumer_secret' name='consumer_secret' class='pseudo-widget disabled'>
+{{record.consumer_secret}}
 </span>
 {% else %}
-<span id='consumer-secret' name='consumer-secret' class='pseudo-widget not-authorised'>
-You are not permitted to view consumer-secret of authorities
+<span id='consumer_secret' name='consumer_secret' class='pseudo-widget not-authorised'>
+You are not permitted to view consumer_secret of authorities
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
+{% ifmemberof admin %}
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>
 To save this authorities record
 </label>
 <input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
+{% endifmemberof %}
+{% ifmemberof admin %}
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this authorities record
 </label>
 <input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
+{% endifmemberof %}
 </form>
 </div>
+
+{% endblock %}
+{% block extra-tail %}
+<script type='text/javascript'>
+</script>
 
 {% endblock %}

@@ -1,8 +1,11 @@
 {% extends "base.html" %}
-<!-- File form-canvassers-Canvasser.html generated 2018-07-03T23:08:20.065Z by adl.to-selmer-templates.
+<!-- File form-canvassers-Canvasser.html generated 2018-07-05T10:14:18.471Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
+{% block extra-head %}
+
+{% endblock %}
 {% block content %}
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-canvassers-Canvasser' method='POST'>
@@ -12,7 +15,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 id
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
+<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -30,7 +33,7 @@ You are not permitted to view id of canvassers
 username
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='username' name='username' type='text' value='{{record.username}}' maxlength='32' size='32'/>
+<input id='username' name='username' type='string' value='{{record.username}}' maxlength='32' size='32'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='username' name='username' class='pseudo-widget disabled'>
@@ -48,7 +51,7 @@ You are not permitted to view username of canvassers
 fullname
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='fullname' name='fullname' type='text' value='{{record.fullname}}' maxlength='64' size='60'/>
+<input id='fullname' name='fullname' type='string' value='{{record.fullname}}' maxlength='64' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='fullname' name='fullname' class='pseudo-widget disabled'>
@@ -66,12 +69,13 @@ You are not permitted to view fullname of canvassers
 elector_id
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<div class='select-box' farside='electors' found='true'>
-<input name='elector_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='elector_id' name='elector_id' comment='JavaScript stuff to fix up aynchronous loading'>
+<span class='select-box' farside='electors' found='true'>
+<input name='elector_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-electors?gender=" + elector_id_search_box.text + "&amp;email=" + elector_id_search_box.text + "&amp;name=" + elector_id_search_box.text + "&amp;phone=" + elector_id_search_box.text, null, function (data) {updateMenuOptions("elector_id", "id", ["gender", "email", "name", "phone"], data);})'/>
+<br/>
+<select id='elector_id' name='elector_id'>
 {% for r in electors %}<option value='{{r.id}}' {% ifequal record.elector_id r.id%}selected{% endifequal %}>{{r.name}} {{r.phone}} {{r.email}} {{r.gender}}</option>{% endfor %}
 </select>
-</div>
+</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
@@ -89,12 +93,13 @@ You are not permitted to view elector_id of canvassers
 address_id
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<div class='select-box' farside='addresses' found='true'>
-<input name='address_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='address_id' name='address_id' comment='JavaScript stuff to fix up aynchronous loading'>
+<span class='select-box' farside='addresses' found='true'>
+<input name='address_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-addresses?postcode=" + address_id_search_box.text + "&amp;address=" + address_id_search_box.text, null, function (data) {updateMenuOptions("address_id", "id", ["postcode", "address"], data);})'/>
+<br/>
+<select id='address_id' name='address_id'>
 {% for r in addresses %}<option value='{{r.id}}' {% ifequal record.address_id r.id%}selected{% endifequal %}>{{r.address}} {{r.postcode}}</option>{% endfor %}
 </select>
-</div>
+</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='address_id' name='address_id' class='pseudo-widget disabled'>
@@ -112,7 +117,7 @@ You are not permitted to view address_id of canvassers
 phone
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='phone' name='phone' type='text' value='{{record.phone}}' maxlength='16' size='16'/>
+<input id='phone' name='phone' type='string' value='{{record.phone}}' maxlength='16' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='phone' name='phone' class='pseudo-widget disabled'>
@@ -130,7 +135,7 @@ You are not permitted to view phone of canvassers
 email
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<input id='email' name='email' type='text' value='{{record.email}}' maxlength='128' size='60'/>
+<input id='email' name='email' type='string' value='{{record.email}}' maxlength='128' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='email' name='email' class='pseudo-widget disabled'>
@@ -148,12 +153,13 @@ You are not permitted to view email of canvassers
 authority_id
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<div class='select-box' farside='authorities' found='true'>
-<input name='authority_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='authority_id' name='authority_id' comment='JavaScript stuff to fix up aynchronous loading'>
+<span class='select-box' farside='authorities' found='true'>
+<input name='authority_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-authorities?id=" + authority_id_search_box.text, null, function (data) {updateMenuOptions("authority_id", "id", ["id"], data);})'/>
+<br/>
+<select id='authority_id' name='authority_id'>
 {% for r in authorities %}<option value='{{r.id}}' {% ifequal record.authority_id r.id%}selected{% endifequal %}>{{r.id}}</option>{% endfor %}
 </select>
-</div>
+</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='authority_id' name='authority_id' class='pseudo-widget disabled'>
@@ -189,11 +195,11 @@ You are not permitted to view authorised of canvassers
 roles
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
-<div class='select-box' farside='roles' found='true'>
+<span class='select-box' farside='roles' found='true'>
 <select id='roles' name='roles' multiple='multiple'>
 {% for r in roles %}<option value='{{r.role_id}}' {% ifequal record.roles r.role_id%}selected{% endifequal %}>{{r.name}}</option>{% endfor %}
 </select>
-</div>
+</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='roles' name='roles' class='pseudo-widget disabled'>
@@ -206,19 +212,43 @@ You are not permitted to view roles of canvassers
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>
 To save this canvassers record
 </label>
 <input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this canvassers record
 </label>
 <input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
+{% endifmemberof %}
 </form>
 </div>
+
+{% endblock %}
+{% block extra-tail %}
+<script type='text/javascript'>
+        /**
+         * update the select menu with id `wid` from this `data` whose fields include
+         * this `entity_key` and these `fields`
+         */
+        function updateMenuOptions(wid, entity_key, fields, data){
+          $('#' + wid).children().filter(function(){
+            return $(this).attr('selected') === undefined;
+          }).remove().end();
+
+          $.each(data, function(key, entry){
+            $('#' + wid).append(
+              $('<option></option>').attr('value', key).text(entry));
+          });
+        }
+
+</script>
 
 {% endblock %}

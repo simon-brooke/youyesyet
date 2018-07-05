@@ -1,8 +1,11 @@
 {% extends "base.html" %}
-<!-- File form-addresses-Address.html generated 2018-07-03T23:08:20.032Z by adl.to-selmer-templates.
+<!-- File form-addresses-Address.html generated 2018-07-05T10:14:18.448Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
+{% block extra-head %}
+
+{% endblock %}
 {% block content %}
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-addresses-Address' method='POST'>
@@ -12,7 +15,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 id
 </label>
 {% ifmemberof admin %}
-<input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
+<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -30,7 +33,7 @@ You are not permitted to view id of addresses
 address
 </label>
 {% ifmemberof admin %}
-<input id='address' name='address' type='text' value='{{record.address}}' maxlength='256' size='60'/>
+<input id='address' name='address' type='string' value='{{record.address}}' maxlength='256' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='address' name='address' class='pseudo-widget disabled'>
@@ -48,7 +51,7 @@ You are not permitted to view address of addresses
 postcode
 </label>
 {% ifmemberof admin %}
-<input id='postcode' name='postcode' type='text' value='{{record.postcode}}' maxlength='16' size='16'/>
+<input id='postcode' name='postcode' type='string' value='{{record.postcode}}' maxlength='16' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='postcode' name='postcode' class='pseudo-widget disabled'>
@@ -66,7 +69,7 @@ You are not permitted to view postcode of addresses
 phone
 </label>
 {% ifmemberof admin %}
-<input id='phone' name='phone' type='text' value='{{record.phone}}' maxlength='16' size='16'/>
+<input id='phone' name='phone' type='string' value='{{record.phone}}' maxlength='16' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='phone' name='phone' class='pseudo-widget disabled'>
@@ -84,12 +87,13 @@ You are not permitted to view phone of addresses
 district_id
 </label>
 {% ifmemberof admin %}
-<div class='select-box' farside='districts' found='true'>
-<input name='district_id-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='district_id' name='district_id' comment='JavaScript stuff to fix up aynchronous loading'>
+<span class='select-box' farside='districts' found='true'>
+<input name='district_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-districts?name=" + district_id_search_box.text, null, function (data) {updateMenuOptions("district_id", "id", ["name"], data);})'/>
+<br/>
+<select id='district_id' name='district_id'>
 {% for r in districts %}<option value='{{r.id}}' {% ifequal record.district_id r.id%}selected{% endifequal %}>{{r.name}}</option>{% endfor %}
 </select>
-</div>
+</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='district_id' name='district_id' class='pseudo-widget disabled'>
@@ -138,19 +142,43 @@ You are not permitted to view longitude of addresses
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
+{% ifmemberof admin %}
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>
 To save this addresses record
 </label>
 <input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
+{% endifmemberof %}
+{% ifmemberof admin %}
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this addresses record
 </label>
 <input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
+{% endifmemberof %}
 </form>
 </div>
+
+{% endblock %}
+{% block extra-tail %}
+<script type='text/javascript'>
+        /**
+         * update the select menu with id `wid` from this `data` whose fields include
+         * this `entity_key` and these `fields`
+         */
+        function updateMenuOptions(wid, entity_key, fields, data){
+          $('#' + wid).children().filter(function(){
+            return $(this).attr('selected') === undefined;
+          }).remove().end();
+
+          $.each(data, function(key, entry){
+            $('#' + wid).append(
+              $('<option></option>').attr('value', key).text(entry));
+          });
+        }
+
+</script>
 
 {% endblock %}

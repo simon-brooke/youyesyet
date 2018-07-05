@@ -104,7 +104,7 @@ input, select {
   padding: 0.25em 1.25em;
 }
 
-input.action {
+input.action, input.action-safe {
   color: white;
   background-color: rgb( 50, 109, 177);
   font-size: 125%;
@@ -113,6 +113,7 @@ input.action {
 input.action-dangerous {
 	color: white;
 	background-color: red;
+  font-size: 125%;
 }
 
 input.required:after {
@@ -252,6 +253,10 @@ th {
 .change {
   background-color: rgb( 223, 223, 223);
   border: thin solid silver;
+}
+
+.editor-toolbar {
+  background-color: silver;
 }
 
 .error {

@@ -1,8 +1,11 @@
 {% extends "base.html" %}
-<!-- File form-roles-Role.html generated 2018-07-03T23:08:20.042Z by adl.to-selmer-templates.
+<!-- File form-roles-Role.html generated 2018-07-05T10:14:18.454Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
+{% block extra-head %}
+
+{% endblock %}
 {% block content %}
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-roles-Role' method='POST'>
@@ -12,7 +15,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 id
 </label>
 {% ifmemberof admin %}
-<input id='id' name='id' type='text' value='{{record.id}}' maxlength='' size='16'/>
+<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -30,7 +33,7 @@ You are not permitted to view id of roles
 name
 </label>
 {% ifmemberof admin %}
-<input id='name' name='name' type='text' value='{{record.name}}' maxlength='64' size='60'/>
+<input id='name' name='name' type='string' value='{{record.name}}' maxlength='64' size='60'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='name' name='name' class='pseudo-widget disabled'>
@@ -48,12 +51,13 @@ You are not permitted to view name of roles
 members
 </label>
 {% ifmemberof admin %}
-<div class='select-box' farside='canvassers' found='true'>
-<input name='members-search-box' onchange='/* javascript to repopulate the select widget */'/>
-<select id='members' name='members' multiple='multiple' comment='JavaScript stuff to fix up aynchronous loading'>
+<span class='select-box' farside='canvassers' found='true'>
+<input name='members_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + members_search_box.text, null, function (data) {updateMenuOptions("members", "", [""], data);})'/>
+<br/>
+<select id='members' name='members' multiple='multiple'>
 {% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.members r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
 </select>
-</div>
+</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='members' name='members' class='pseudo-widget disabled'>
@@ -66,19 +70,43 @@ You are not permitted to view members of roles
 {% endifmemberof %}
 {% endifmemberof %}
 </p>
+{% ifmemberof admin %}
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>
 To save this roles record
 </label>
 <input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
+{% endifmemberof %}
+{% ifmemberof admin %}
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this roles record
 </label>
 <input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>
+{% endifmemberof %}
 </form>
 </div>
+
+{% endblock %}
+{% block extra-tail %}
+<script type='text/javascript'>
+        /**
+         * update the select menu with id `wid` from this `data` whose fields include
+         * this `entity_key` and these `fields`
+         */
+        function updateMenuOptions(wid, entity_key, fields, data){
+          $('#' + wid).children().filter(function(){
+            return $(this).attr('selected') === undefined;
+          }).remove().end();
+
+          $.each(data, function(key, entry){
+            $('#' + wid).append(
+              $('<option></option>').attr('value', key).text(entry));
+          });
+        }
+
+</script>
 
 {% endblock %}
