@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-districts-District.html generated 2018-07-05T10:14:18.436Z by adl.to-selmer-templates.
+<!-- File form-districts-District.html generated 2018-07-07T08:09:49.922Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -12,7 +12,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% csrf-field %}
 <p class='widget'>
 <label for='id'>
-id
+Id
 </label>
 {% ifmemberof admin %}
 <input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
@@ -30,7 +30,7 @@ You are not permitted to view id of districts
 </p>
 <p class='widget'>
 <label for='name'>
-name
+Name
 </label>
 {% ifmemberof admin %}
 <input id='name' name='name' type='string' value='{{record.name}}' maxlength='64' size='60'/>

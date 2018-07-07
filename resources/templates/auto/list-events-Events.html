@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-followuprequests-Followuprequests.html generated 2018-07-07T08:09:49.920Z by adl.to-selmer-templates.
+<!-- File list-events-Events.html generated 2018-07-07T08:09:49.965Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -26,10 +26,10 @@ Previous
 Next
 </a>
 </div>
-{% ifmemberof admin %}
+{% ifmemberof teamorganisers admin %}
 <div class='big-link-container'>
-<a href='form-followuprequests-Followuprequest' class='big-link'>
-Add a new Followuprequest
+<a href='form-events-Events' class='big-link'>
+Add a new Event
 </a>
 </div>
 {% endifmemberof %}
@@ -37,27 +37,30 @@ Add a new Followuprequest
 
 {% endblock %}
 {% block content %}
-<form id='list-followuprequests-Followuprequests' class='list' action='{{servlet-context}}/list-followuprequests-Followuprequests' method='POST'>
+<form id='list-events-Events' class='list' action='{{servlet-context}}/list-events-Events' method='POST'>
 {% csrf-field %}
 <input id='offset' type='hidden' value='{{params.offset|default:0}}'/>
 <input id='limit' type='hidden' value='{{params.limit|default:50}}'/>
-<table caption='followuprequests'>
+<table caption='events'>
 <thead>
 <tr>
 <th>
 Id
 </th>
 <th>
-Elector_id
+Name
 </th>
 <th>
-Visit_id
+Date
 </th>
 <th>
-Issue_id
+Time
 </th>
 <th>
-Method_id
+Decription
+</th>
+<th>
+Cancelled
 </th>
 <th>
 &nbsp;
@@ -68,16 +71,19 @@ Method_id
 <input id='id' type='text' name='id' value='{{ params.id }}'/>
 </th>
 <th>
-<input id='elector_id_expanded' type='text' name='elector_id_expanded' value='{{ params.elector_id_expanded }}'/>
+<input id='name' type='text' name='name' value='{{ params.name }}'/>
 </th>
 <th>
-<input id='visit_id_expanded' type='text' name='visit_id_expanded' value='{{ params.visit_id_expanded }}'/>
+<input id='date' type='date' name='date' value='{{ params.date }}'/>
 </th>
 <th>
-<input id='issue_id_expanded' type='text' name='issue_id_expanded' value='{{ params.issue_id_expanded }}'/>
+<input id='time' type='time' name='time' value='{{ params.time }}'/>
 </th>
 <th>
-<input id='method_id_expanded' type='text' name='method_id_expanded' value='{{ params.method_id_expanded }}'/>
+<input id='decription' type='text' name='decription' value='{{ params.decription }}'/>
+</th>
+<th>
+<input id='cancelled' type='text' name='cancelled' value='{{ params.cancelled }}'/>
 </th>
 <th>
 <input type='submit' id='search-widget' value='Search'/>
@@ -91,27 +97,22 @@ Method_id
 {{ record.id }}
 </td>
 <td>
-<a href='form-electors-Elector?id={{ record.elector_id }}'>
-{{ record.elector_id_expanded }}
-</a>
+{{ record.name }}
 </td>
 <td>
-<a href='form-visits-Visit?id={{ record.visit_id }}'>
-{{ record.visit_id_expanded }}
-</a>
+{{ record.date }}
 </td>
 <td>
-<a href='form-issues-Issue?id={{ record.issue_id }}'>
-{{ record.issue_id_expanded }}
-</a>
+{{ record.time }}
 </td>
 <td>
-<a href='form-followupmethods-Followupmethod?id={{ record.method_id }}'>
-{{ record.method_id_expanded }}
-</a>
+{{ record.decription }}
 </td>
 <td>
-<a href='form-followuprequests-Followuprequest?id={{ record.id }}'>
+{{ record.cancelled }}
+</td>
+<td>
+<a href='form-events-Events?id={{ record.id }}'>
 View
 </a>
 </td>
@@ -124,7 +125,7 @@ View
 {% endblock %}
 {% block extra-script %}
 
-          var form = document.getElementById('list-followuprequests-Followuprequests');
+          var form = document.getElementById('list-events-Events');
           var ow = document.getElementById('offset');
           var lw = document.getElementById('limit');
           form.addEventListener('submit', function() {

@@ -1,0 +1,71 @@
+(ns ^{:doc "Routes/pages available to authenticated users in specific roles."
+      :author "Simon Brooke"} youyesyet.routes.roles
+  (:require [adl-support.utils :refer [safe-name]]
+            [clojure.tools.logging :as log]
+            [clojure.walk :refer [keywordize-keys]]
+            [compojure.core :refer [defroutes GET POST]]
+            [noir.util.route :as route]
+            [ring.util.http-response :as response]
+            [youyesyet.config :refer [env]]
+            [youyesyet.db.core :as db-core]
+            [youyesyet.layout :as layout]
+            [youyesyet.oauth :as oauth]
+            [youyesyet.routes.auto :as auto]))
+
+
+(defn roles-page [request]
+  "Render the routing page for the roles the currently logged in user is member of."
+  (let
+    [session (:session request)
+     user (:user session)
+     roles (if
+             user
+             (db-core/list-roles-by-canvasser db-core/*db* {:id (:id user)}))]
+    (log/info (str "Roles routing page; user is " user "; roles are " roles))
+    (cond
+      roles (layout/render "roles.html"
+                           (:session request)
+                           {:title (str "Welcome " (:fullname user) ", what do you want to do?")
+                            :user user
+                            :roles (map #(assoc % :link (safe-name (:name %) :sql)) roles)})
+      (empty? roles)(response/found "/app")
+      true (assoc (response/found "/login") :session (dissoc session :user)))))
+
+
+(defn admins-page
+  [request]
+  (response/found "/admin"))
+
+
+(defn analysts-page
+  "My expectation is that analysts will do a lot of their work through QGIS or
+  some other geographical information system; so there isn't a need to put
+  anything sophisticated here."
+  [request]
+  (response/found "/admin"))
+
+
+(defn canvassers-page
+  [request]
+  (layout/render "roles/canvasser.html" request {}))
+
+
+(defn issue-experts-page
+  [request]
+  (layout/render "roles/issue-experts.html" request {}))
+
+
+(defn team-organisers-page
+  [request]
+  (layout/render "roles/team-orgenisers.html" request {}))
+
+
+(defroutes roles-routes
+  (GET "/roles/admins" [request] (route/restricted (admins-page request)))
+  (GET "/roles/analysts" [request] (route/restricted (analysts-page request)))
+  (GET "/roles/canvassers" [request] (route/restricted (canvassers-page request)))
+  (GET "/roles/issue_editors" [request] (route/restricted (auto/list-issues-Issues request)))
+  (GET "/roles/issue_experts" [request] (route/restricted (issue-experts-page request)))
+  (GET "/roles/team_organisers" [request] (route/restricted (auto/list-teams-Teams request)))
+  (GET "/roles" request (route/restricted (roles-page request))))
+

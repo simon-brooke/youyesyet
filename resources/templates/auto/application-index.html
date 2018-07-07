@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File application-index.html generated 2018-07-05T10:14:18.460Z by adl.to-selmer-templates.
+<!-- File application-index.html generated 2018-07-07T08:09:49.942Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -15,7 +15,8 @@ Address
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
-Addresses of all buildings which contain dwellings.
+Addresses of all buildings which contain
+    dwellings.
 </p>
 </dd>
 {% endifmemberof %}
@@ -29,7 +30,8 @@ Authority
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
-Authorities which may authenticate canvassers to the system.
+Authorities which may authenticate canvassers to
+    the system.
 </p>
 </dd>
 {% endifmemberof %}
@@ -43,7 +45,8 @@ Canvasser
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
-Primary users of the system: those actually interviewing electors.
+Primary users of the system: those actually
+    interviewing electors.
 </p>
 </dd>
 {% endifmemberof %}
@@ -57,7 +60,9 @@ District
 {% ifmemberof public admin canvassers teamorganisers issueexperts analysts issueeditors %}
 <dd>
 <p>
-Electoral districts: TODO: Shape (polygon) information will need to be added, for use in maps.
+Electoral districts: TODO: Shape (polygon)
+    information will need to be added, for use in
+    maps.
 </p>
 </dd>
 {% endifmemberof %}
@@ -71,12 +76,12 @@ Dwelling
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
-All dwellings within addresses in the system; a dwelling is a
-      house, flat or appartment in which electors live. Every address should have
-      at least one dwelling; essentially, an address maps onto a street door and
-      dwellings map onto what's behind that door. So a tenement or a block of flats
-      would be one address with many dwellings.
-    
+All dwellings within addresses in the system; a
+    dwelling is a house, flat or appartment in which electors live.
+    Every address should have at least one dwelling; essentially,
+    an address maps onto a street door and dwellings map onto
+    what's behind that door. So a tenement or a block of flats
+    would be one address with many dwellings.
 </p>
 </dd>
 {% endifmemberof %}
@@ -90,7 +95,26 @@ Elector
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
-All electors known to the system; electors are people believed to be entitled to vote in the current campaign.
+All electors known to the system; electors are
+    people believed to be entitled to vote in the current
+    campaign.
+</p>
+</dd>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<dt>
+<a href='list-events-Events'>
+Event
+</a>
+</dt>
+{% endifmemberof %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<dd>
+<p>
+
+      An event to which a team or teams are invited. Typically created by the team organiser(s).
+      May be a training event, a social event or a canvassing session.
+    
 </p>
 </dd>
 {% endifmemberof %}
@@ -104,7 +128,8 @@ Followupaction
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <dd>
 <p>
-Actions taken on followup requests.
+Actions taken on followup
+    requests.
 </p>
 </dd>
 {% endifmemberof %}
@@ -129,7 +154,8 @@ Followuprequest
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
-Requests for a followup with an issue expert
+Requests for a followup with an issue
+    expert
 </p>
 </dd>
 {% endifmemberof %}
@@ -143,7 +169,8 @@ Gender
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
-All genders which may be assigned to electors.
+All genders which may be assigned to
+    electors.
 </p>
 </dd>
 {% endifmemberof %}
@@ -157,7 +184,8 @@ Intention
 {% ifmemberof canvassers analysts admin %}
 <dd>
 <p>
-Intentions of electors to vote for options elicited in visits.
+Intentions of electors to vote for options
+    elicited in visits.
 </p>
 </dd>
 {% endifmemberof %}
@@ -171,7 +199,8 @@ Issue
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
-Issues believed to be of interest to electors, about which they may have questions.
+Issues believed to be of interest to electors,
+    about which they may have questions.
 </p>
 </dd>
 {% endifmemberof %}
@@ -185,7 +214,8 @@ Option
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
-Options in the election or referendum being canvassed on
+Options in the election or referendum being
+    canvassed on
 </p>
 </dd>
 {% endifmemberof %}
@@ -199,7 +229,9 @@ Role
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
 <p>
-A role (essentially, the same as a group, but application layer rather than database layer) of which a user may be a member.
+A role (essentially, the same as a group, but
+    application layer rather than database layer) of which a user
+    may be a member.
 </p>
 </dd>
 {% endifmemberof %}
@@ -224,7 +256,8 @@ Visit
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
 <dd>
 <p>
-All visits made by canvassers to dwellings in which opinions were recorded.
+All visits made by canvassers to dwellings in
+    which opinions were recorded.
 </p>
 </dd>
 {% endifmemberof %}

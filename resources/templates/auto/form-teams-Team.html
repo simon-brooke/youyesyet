@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-teams-Team.html generated 2018-07-05T10:14:18.461Z by adl.to-selmer-templates.
+<!-- File form-teams-Team.html generated 2018-07-07T08:09:49.943Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -12,7 +12,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% csrf-field %}
 <p class='widget'>
 <label for='id'>
-id
+Id
 </label>
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
@@ -30,7 +30,7 @@ You are not permitted to view id of teams
 </p>
 <p class='widget'>
 <label for='name'>
-name
+Name
 </label>
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <input id='name' name='name' type='string' value='{{record.name}}' maxlength='64' size='60'/>
@@ -48,7 +48,7 @@ You are not permitted to view name of teams
 </p>
 <p class='widget'>
 <label for='district_id'>
-district_id
+District_id
 </label>
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <span class='select-box' farside='districts' found='true'>
@@ -72,7 +72,7 @@ You are not permitted to view district_id of teams
 </p>
 <p class='widget'>
 <label for='latitude'>
-latitude
+Latitude
 </label>
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <input id='latitude' name='latitude' type='number' value='{{record.latitude}}' maxlength='' size='16'/>
@@ -90,7 +90,7 @@ You are not permitted to view latitude of teams
 </p>
 <p class='widget'>
 <label for='members'>
-members
+Members
 </label>
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <span class='select-box' farside='canvassers' found='true'>
@@ -114,7 +114,7 @@ You are not permitted to view members of teams
 </p>
 <p class='widget'>
 <label for='organisers'>
-organisers
+Organisers
 </label>
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <span class='select-box' farside='canvassers' found='true'>
@@ -138,7 +138,7 @@ You are not permitted to view organisers of teams
 </p>
 <p class='widget'>
 <label for='longitude'>
-longitude
+Longitude
 </label>
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <input id='longitude' name='longitude' type='number' value='{{record.longitude}}' maxlength='' size='16'/>

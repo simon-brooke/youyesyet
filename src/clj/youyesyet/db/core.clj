@@ -11,7 +11,7 @@
            clojure.lang.IPersistentMap
            clojure.lang.IPersistentVector
            [java.sql
-            BatchUpdateException
+            ;;         BatchUpdateException
             Date
             Timestamp
             PreparedStatement]))

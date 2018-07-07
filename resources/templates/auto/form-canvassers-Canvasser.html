@@ -1,10 +1,11 @@
 {% extends "base.html" %}
-<!-- File form-canvassers-Canvasser.html generated 2018-07-05T10:14:18.471Z by adl.to-selmer-templates.
+<!-- File form-canvassers-Canvasser.html generated 2018-07-07T08:09:49.958Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
 {% block extra-head %}
-
+{% script "js/lib/node_modules/simplemde/dist/simplemde.min.js" %}
+     {% style "js/lib/node_modules/simplemde/dist/simplemde.min.css" %}
 {% endblock %}
 {% block content %}
 <div id='content' class='edit'>
@@ -12,7 +13,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% csrf-field %}
 <p class='widget'>
 <label for='id'>
-id
+Id
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
@@ -30,7 +31,7 @@ You are not permitted to view id of canvassers
 </p>
 <p class='widget'>
 <label for='username'>
-username
+Username
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='username' name='username' type='string' value='{{record.username}}' maxlength='32' size='32'/>
@@ -48,7 +49,7 @@ You are not permitted to view username of canvassers
 </p>
 <p class='widget'>
 <label for='fullname'>
-fullname
+Fullname
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='fullname' name='fullname' type='string' value='{{record.fullname}}' maxlength='64' size='60'/>
@@ -66,7 +67,7 @@ You are not permitted to view fullname of canvassers
 </p>
 <p class='widget'>
 <label for='elector_id'>
-elector_id
+Elector_id
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <span class='select-box' farside='electors' found='true'>
@@ -90,7 +91,7 @@ You are not permitted to view elector_id of canvassers
 </p>
 <p class='widget'>
 <label for='address_id'>
-address_id
+Address_id
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <span class='select-box' farside='addresses' found='true'>
@@ -114,7 +115,7 @@ You are not permitted to view address_id of canvassers
 </p>
 <p class='widget'>
 <label for='phone'>
-phone
+Phone
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='phone' name='phone' type='string' value='{{record.phone}}' maxlength='16' size='16'/>
@@ -132,7 +133,7 @@ You are not permitted to view phone of canvassers
 </p>
 <p class='widget'>
 <label for='email'>
-email
+Email
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='email' name='email' type='string' value='{{record.email}}' maxlength='128' size='60'/>
@@ -150,7 +151,7 @@ You are not permitted to view email of canvassers
 </p>
 <p class='widget'>
 <label for='authority_id'>
-authority_id
+Authority_id
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <span class='select-box' farside='authorities' found='true'>
@@ -174,7 +175,7 @@ You are not permitted to view authority_id of canvassers
 </p>
 <p class='widget'>
 <label for='authorised'>
-authorised
+Authorised
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <input id='authorised' name='authorised' type='checkbox' value='{{record.authorised}}' maxlength='' size='16'/>
@@ -192,7 +193,7 @@ You are not permitted to view authorised of canvassers
 </p>
 <p class='widget'>
 <label for='roles'>
-roles
+Roles
 </label>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <span class='select-box' farside='roles' found='true'>
@@ -248,6 +249,24 @@ To delete this canvassers record
               $('<option></option>').attr('value', key).text(entry));
           });
         }
+
+          var simplemde = new SimpleMDE({
+            autosave: {
+              enabled: true,
+              uniqueId: "Smeagol-{{page}}",
+              delay: 1000,
+            },
+            indentWithTabs: true,
+            insertTexts: {
+              horizontalRule: ["", "\n\n-----\n\n"],
+              image: ["![](http://", ")"],
+              link: ["[", "](http://)"],
+              table: ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"],
+            },
+            showIcons: ["code"], //, "table"], - sadly, markdown-clj does not support tables
+	          spellChecker: true,
+	          status: ["autosave", "lines", "words", "cursor"]
+          });
 
 </script>
 

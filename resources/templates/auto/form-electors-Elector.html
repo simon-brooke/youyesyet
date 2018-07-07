@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-electors-Elector.html generated 2018-07-05T10:14:18.465Z by adl.to-selmer-templates.
+<!-- File form-electors-Elector.html generated 2018-07-07T08:09:49.947Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -12,7 +12,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% csrf-field %}
 <p class='widget'>
 <label for='id'>
-id
+Id
 </label>
 {% ifmemberof admin %}
 <input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
@@ -30,7 +30,7 @@ You are not permitted to view id of electors
 </p>
 <p class='widget'>
 <label for='name'>
-name
+Name
 </label>
 {% ifmemberof admin %}
 <input id='name' name='name' type='string' value='{{record.name}}' maxlength='64' size='60'/>
@@ -48,7 +48,7 @@ You are not permitted to view name of electors
 </p>
 <p class='widget'>
 <label for='dwelling_id'>
-dwelling_id
+Dwelling_id
 </label>
 {% ifmemberof admin %}
 <span class='select-box' farside='dwellings' found='true'>
@@ -72,7 +72,7 @@ You are not permitted to view dwelling_id of electors
 </p>
 <p class='widget'>
 <label for='phone'>
-phone
+Phone
 </label>
 {% ifmemberof admin %}
 <input id='phone' name='phone' type='string' value='{{record.phone}}' maxlength='16' size='16'/>
@@ -90,7 +90,7 @@ You are not permitted to view phone of electors
 </p>
 <p class='widget'>
 <label for='email'>
-email
+Email
 </label>
 {% ifmemberof admin %}
 <input id='email' name='email' type='string' value='{{record.email}}' maxlength='128' size='60'/>
@@ -108,7 +108,7 @@ You are not permitted to view email of electors
 </p>
 <p class='widget'>
 <label for='gender'>
-gender
+Gender
 </label>
 {% ifmemberof admin %}
 <span class='select-box' farside='genders' found='true'>

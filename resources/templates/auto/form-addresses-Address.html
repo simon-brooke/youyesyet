@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-addresses-Address.html generated 2018-07-05T10:14:18.448Z by adl.to-selmer-templates.
+<!-- File form-addresses-Address.html generated 2018-07-07T08:09:49.931Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -12,7 +12,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% csrf-field %}
 <p class='widget'>
 <label for='id'>
-id
+Id
 </label>
 {% ifmemberof admin %}
 <input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
@@ -30,7 +30,7 @@ You are not permitted to view id of addresses
 </p>
 <p class='widget'>
 <label for='address'>
-address
+Address
 </label>
 {% ifmemberof admin %}
 <input id='address' name='address' type='string' value='{{record.address}}' maxlength='256' size='60'/>
@@ -48,7 +48,7 @@ You are not permitted to view address of addresses
 </p>
 <p class='widget'>
 <label for='postcode'>
-postcode
+Postcode
 </label>
 {% ifmemberof admin %}
 <input id='postcode' name='postcode' type='string' value='{{record.postcode}}' maxlength='16' size='16'/>
@@ -66,7 +66,7 @@ You are not permitted to view postcode of addresses
 </p>
 <p class='widget'>
 <label for='phone'>
-phone
+Phone
 </label>
 {% ifmemberof admin %}
 <input id='phone' name='phone' type='string' value='{{record.phone}}' maxlength='16' size='16'/>
@@ -84,7 +84,7 @@ You are not permitted to view phone of addresses
 </p>
 <p class='widget'>
 <label for='district_id'>
-district_id
+District_id
 </label>
 {% ifmemberof admin %}
 <span class='select-box' farside='districts' found='true'>
@@ -108,7 +108,7 @@ You are not permitted to view district_id of addresses
 </p>
 <p class='widget'>
 <label for='latitude'>
-latitude
+Latitude
 </label>
 {% ifmemberof admin %}
 <input id='latitude' name='latitude' type='number' value='{{record.latitude}}' maxlength='' size='16'/>
@@ -126,7 +126,7 @@ You are not permitted to view latitude of addresses
 </p>
 <p class='widget'>
 <label for='longitude'>
-longitude
+Longitude
 </label>
 {% ifmemberof admin %}
 <input id='longitude' name='longitude' type='number' value='{{record.longitude}}' maxlength='' size='16'/>

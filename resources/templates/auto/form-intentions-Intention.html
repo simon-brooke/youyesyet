@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-intentions-Intention.html generated 2018-07-05T10:14:18.481Z by adl.to-selmer-templates.
+<!-- File form-intentions-Intention.html generated 2018-07-07T08:09:49.968Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -12,7 +12,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% csrf-field %}
 <p class='widget'>
 <label for='visit_id'>
-visit_id
+Visit_id
 </label>
 {% ifmemberof admin %}
 <span class='select-box' farside='visits' found='true'>
@@ -36,7 +36,7 @@ You are not permitted to view visit_id of intentions
 </p>
 <p class='widget'>
 <label for='elector_id'>
-elector_id
+Elector_id
 </label>
 {% ifmemberof admin %}
 <span class='select-box' farside='electors' found='true'>
@@ -60,7 +60,7 @@ You are not permitted to view elector_id of intentions
 </p>
 <p class='widget'>
 <label for='option_id'>
-option_id
+Option_id
 </label>
 {% ifmemberof admin %}
 <span class='select-box' farside='options' found='true'>
@@ -82,7 +82,7 @@ You are not permitted to view option_id of intentions
 </p>
 <p class='widget'>
 <label for='locality'>
-locality
+Locality
 </label>
 {% ifmemberof admin %}
 <input id='locality' name='locality' type='number' value='{{record.locality}}' maxlength='' size='16'/>

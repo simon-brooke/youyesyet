@@ -1,9 +1,11 @@
 (ns ^{:doc "Routes/pages available to unauthenticated users."
       :author "Simon Brooke"} youyesyet.routes.home
-  (:require [clojure.java.io :as io]
+  (:require [adl-support.utils :refer [safe-name]]
+            [clojure.java.io :as io]
             [clojure.string :as s]
             [clojure.tools.logging :as log]
             [clojure.walk :refer [keywordize-keys]]
+            [markdown.core :refer [md-to-html-string]]
             [noir.util.route :as route]
             [ring.util.http-response :as response]
             [youyesyet.config :refer [env]]
@@ -36,6 +38,16 @@
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+(defn motd
+  []
+  "Message of the day data is currently being loaded from a file in resources.
+  That probably isn't the final solution, but I don't currently have a final
+  solution"
+  (let [motd (io/as-file (io/resource (env :motd)))]
+    (if (.exists motd) (slurp motd) "")))
+
+
 (defn app-page [request]
   (layout/render "app.html" {:title "Canvasser app"
                              :user (:user (:session request))}))
@@ -43,7 +55,9 @@
 
 (defn about-page []
   (layout/render "about.html" {} {:title
-                                  (str "About " (:site-title env))}))
+                                  (str "About " (:site-title env))
+
+                                 :motd (md-to-html-string (motd))}))
 
 
 (defn call-me-page [request]
@@ -58,23 +72,9 @@
                     :concerns (db-core/list-issues db-core/*db* {})})))
 
 
-(defn roles-page [request]
-  (let
-    [session (:session request)
-     user (:user session)
-     roles (if user (db-core/list-roles-by-canvasser db-core/*db* {:id (:id user)}))]
-    (cond
-     roles (layout/render "roles.html"
-                          (:session request)
-                          {:title (str "Welcome " (:fullname user) ", what do you want to do?")
-                           :user user
-                           :roles roles})
-     (empty? roles)(response/found "/app")
-     true (assoc (response/found "/login") :session (dissoc session :user)))))
-
-
 (defn home-page []
-  (layout/render "home.html" {} {:title "You yes yet?"}))
+    (layout/render "home.html" {} {:title "You yes yet?"
+                                   :motd (md-to-html-string (motd))}))
 
 
 (defn login-page
@@ -126,17 +126,23 @@
         :authorities (db-core/list-authorities db-core/*db*)}))))
 
 
+(defn handle-logout
+  [request]
+  (dissoc (response/found "home") :user :roles))
+
+
 (defroutes home-routes
   (GET "/" [] (home-page))
   (GET "/home" [] (home-page))
   (GET "/about" [] (about-page))
-  (GET "/roles" request (route/restricted (roles-page request)))
-  (GET "/canvassers" [request] (route/restricted (app-page request)))
   (GET "/call-me" [] (call-me-page nil))
   (POST "/call-me" request (call-me-page request))
-  (GET "/auth" request (login-page request))
-  (POST "/auth" request (login-page request))
+  (GET "/login" request (login-page request))
+  (POST "/login" request (login-page request))
+  (GET "/logout" request (handle-logout request))
   (GET "/notyet" [] (layout/render "notyet.html" {}
                                    {:title "Can we persuade you?"}))
   (GET "/supporter" [] (layout/render "supporter.html" {}
-                                      {:title "Have you signed up as a canvasser yet?"})))
+                                      {:title "Have you signed up as a canvasser yet?"}))
+  ;; TODO: this should move somewhere else but I'm not sure where yet
+  (GET "/app" [request] (route/restricted (app-page request))))

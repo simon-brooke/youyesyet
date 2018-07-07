@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-followuprequests-Followuprequest.html generated 2018-07-05T10:14:18.440Z by adl.to-selmer-templates.
+<!-- File form-followuprequests-Followuprequest.html generated 2018-07-07T08:09:49.925Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -12,7 +12,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% csrf-field %}
 <p class='widget'>
 <label for='id'>
-id
+Id
 </label>
 {% ifmemberof admin %}
 <input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
@@ -30,7 +30,7 @@ You are not permitted to view id of followuprequests
 </p>
 <p class='widget'>
 <label for='elector_id'>
-elector_id
+Elector_id
 </label>
 {% ifmemberof admin %}
 <span class='select-box' farside='electors' found='true'>
@@ -54,7 +54,7 @@ You are not permitted to view elector_id of followuprequests
 </p>
 <p class='widget'>
 <label for='visit_id'>
-visit_id
+Visit_id
 </label>
 {% ifmemberof admin %}
 <span class='select-box' farside='visits' found='true'>
@@ -78,7 +78,7 @@ You are not permitted to view visit_id of followuprequests
 </p>
 <p class='widget'>
 <label for='issue_id'>
-issue_id
+Issue_id
 </label>
 {% ifmemberof admin %}
 <span class='select-box' farside='issues' found='true'>
@@ -100,7 +100,7 @@ You are not permitted to view issue_id of followuprequests
 </p>
 <p class='widget'>
 <label for='method_id'>
-method_id
+Method_id
 </label>
 {% ifmemberof admin %}
 <span class='select-box' farside='followupmethods' found='true'>

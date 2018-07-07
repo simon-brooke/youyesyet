@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-dwellings-Dwelling.html generated 2018-07-05T10:14:18.485Z by adl.to-selmer-templates.
+<!-- File form-dwellings-Dwelling.html generated 2018-07-07T08:09:49.973Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -12,7 +12,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% csrf-field %}
 <p class='widget'>
 <label for='id'>
-id
+Id
 </label>
 {% ifmemberof admin %}
 <input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
@@ -30,7 +30,7 @@ You are not permitted to view id of dwellings
 </p>
 <p class='widget'>
 <label for='address_id'>
-address_id
+Address_id
 </label>
 {% ifmemberof admin %}
 <span class='select-box' farside='addresses' found='true'>
@@ -54,7 +54,7 @@ You are not permitted to view address_id of dwellings
 </p>
 <p class='widget'>
 <label for='sub_address'>
-sub-address
+Sub-address
 </label>
 {% ifmemberof admin %}
 <input id='sub_address' name='sub_address' type='string' value='{{record.sub_address}}' maxlength='32' size='32'/>

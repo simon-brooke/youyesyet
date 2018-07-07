@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-followupactions-Followupaction.html generated 2018-07-05T10:14:18.488Z by adl.to-selmer-templates.
+<!-- File form-followupactions-Followupaction.html generated 2018-07-07T08:09:49.976Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -13,7 +13,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% csrf-field %}
 <p class='widget'>
 <label for='id'>
-id
+Id
 </label>
 {% ifmemberof admin %}
 <input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
@@ -31,7 +31,7 @@ You are not permitted to view id of followupactions
 </p>
 <p class='widget'>
 <label for='request_id'>
-request_id
+Request_id
 </label>
 {% ifmemberof admin %}
 <span class='select-box' farside='followuprequests' found='true'>
@@ -55,7 +55,7 @@ You are not permitted to view request_id of followupactions
 </p>
 <p class='widget'>
 <label for='actor'>
-actor
+Actor
 </label>
 {% ifmemberof admin %}
 <span class='select-box' farside='canvassers' found='true'>
@@ -79,7 +79,7 @@ You are not permitted to view actor of followupactions
 </p>
 <p class='widget'>
 <label for='date'>
-date
+Date
 </label>
 {% ifmemberof admin %}
 <input id='date' name='date' type='string' value='{{record.date}}' maxlength='' size='16'/>
@@ -97,7 +97,7 @@ You are not permitted to view date of followupactions
 </p>
 <p class='widget'>
 <label for='notes'>
-notes
+Notes
 </label>
 {% ifmemberof admin %}
 <textarea rows='8' cols='60' id='notes' name='notes'>
@@ -117,7 +117,7 @@ You are not permitted to view notes of followupactions
 </p>
 <p class='widget'>
 <label for='closed'>
-closed
+Closed
 </label>
 {% ifmemberof admin %}
 <input id='closed' name='closed' type='checkbox' value='{{record.closed}}' maxlength='' size='16'/>
