@@ -10,10 +10,11 @@
             [youyesyet.layout :refer [error-page]]
             [youyesyet.middleware :as middleware]
             [youyesyet.routes.home :refer [home-routes]]
-            [youyesyet.routes.oauth :refer [oauth-routes]]
-            [youyesyet.routes.auto-json :refer [auto-rest-routes]]
             [youyesyet.routes.auto :refer [auto-selmer-routes]]
+            [youyesyet.routes.auto-json :refer [auto-rest-routes]]
+            [youyesyet.routes.issue-experts :refer [issue-expert-routes]]
             [youyesyet.routes.rest :refer [rest-routes]]
+            [youyesyet.routes.oauth :refer [oauth-routes]]
             [youyesyet.routes.roles :refer [roles-routes]]
             [youyesyet.routes.services :refer [service-routes]]
             [youyesyet.env :refer [defaults]]))
@@ -70,6 +71,9 @@
         (wrap-routes middleware/wrap-csrf)
         (wrap-routes middleware/wrap-formats))
     (-> #'roles-routes
+        (wrap-routes middleware/wrap-csrf)
+        (wrap-routes middleware/wrap-formats))
+    (-> #'issue-expert-routes
         (wrap-routes middleware/wrap-csrf)
         (wrap-routes middleware/wrap-formats))
     (-> #'auto-rest-routes

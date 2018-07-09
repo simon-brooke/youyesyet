@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-canvassers-Canvassers.html generated 2018-07-07T08:09:49.972Z by adl.to-selmer-templates.
+<!-- File list-canvassers-Canvassers.html generated 2018-07-09T20:55:34.545Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -28,7 +28,7 @@ Next
 </div>
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <div class='big-link-container'>
-<a href='form-canvassers-Canvasser' class='big-link'>
+<a href='{{servlet-context}}/form-canvassers-Canvasser' class='big-link'>
 Add a new Canvasser
 </a>
 </div>
@@ -121,12 +121,12 @@ Authorised
 {{ record.fullname }}
 </td>
 <td>
-<a href='form-electors-Elector?id={{ record.elector_id }}'>
+<a href='{{servlet-context}}/form-electors-Elector?id={{ record.elector_id }}'>
 {{ record.elector_id_expanded }}
 </a>
 </td>
 <td>
-<a href='form-addresses-Address?id={{ record.address_id }}'>
+<a href='{{servlet-context}}/form-addresses-Address?id={{ record.address_id }}'>
 {{ record.address_id_expanded }}
 </a>
 </td>
@@ -137,7 +137,7 @@ Authorised
 {{ record.email }}
 </td>
 <td>
-<a href='form-authorities-Authority?id={{ record.authority_id }}'>
+<a href='{{servlet-context}}/form-authorities-Authority?id={{ record.authority_id }}'>
 {{ record.authority_id_expanded }}
 </a>
 </td>
@@ -145,7 +145,7 @@ Authorised
 {{ record.authorised }}
 </td>
 <td>
-<a href='form-canvassers-Canvasser?id={{ record.id }}'>
+<a href='{{servlet-context}}/form-canvassers-Canvasser?id={{ record.id }}'>
 View
 </a>
 </td>

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File application-index.html generated 2018-07-07T08:09:49.942Z by adl.to-selmer-templates.
+<!-- File application-index.html generated 2018-07-09T20:55:34.526Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -7,7 +7,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <dl class='index'>
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
-<a href='list-addresses-Addresses'>
+<a href='{{servlet-context}}/list-addresses-Addresses'>
 Address
 </a>
 </dt>
@@ -22,7 +22,7 @@ Addresses of all buildings which contain
 {% endifmemberof %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
-<a href='list-authorities-Authorities'>
+<a href='{{servlet-context}}/list-authorities-Authorities'>
 Authority
 </a>
 </dt>
@@ -37,7 +37,7 @@ Authorities which may authenticate canvassers to
 {% endifmemberof %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
-<a href='list-canvassers-Canvassers'>
+<a href='{{servlet-context}}/list-canvassers-Canvassers'>
 Canvasser
 </a>
 </dt>
@@ -52,7 +52,7 @@ Primary users of the system: those actually
 {% endifmemberof %}
 {% ifmemberof public admin canvassers teamorganisers issueexperts analysts issueeditors %}
 <dt>
-<a href='list-districts-Districts'>
+<a href='{{servlet-context}}/list-districts-Districts'>
 District
 </a>
 </dt>
@@ -68,7 +68,7 @@ Electoral districts: TODO: Shape (polygon)
 {% endifmemberof %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
-<a href='list-dwellings-Dwellings'>
+<a href='{{servlet-context}}/list-dwellings-Dwellings'>
 Dwelling
 </a>
 </dt>
@@ -87,7 +87,7 @@ All dwellings within addresses in the system; a
 {% endifmemberof %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
-<a href='list-electors-Electors'>
+<a href='{{servlet-context}}/list-electors-Electors'>
 Elector
 </a>
 </dt>
@@ -103,7 +103,7 @@ All electors known to the system; electors are
 {% endifmemberof %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
-<a href='list-events-Events'>
+<a href='{{servlet-context}}/list-events-Events'>
 Event
 </a>
 </dt>
@@ -120,7 +120,7 @@ Event
 {% endifmemberof %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <dt>
-<a href='list-followupactions-Followupactions'>
+<a href='{{servlet-context}}/list-followupactions-Followupactions'>
 Followupaction
 </a>
 </dt>
@@ -135,7 +135,7 @@ Actions taken on followup
 {% endifmemberof %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
-<a href='list-followupmethods-Followupmethods'>
+<a href='{{servlet-context}}/list-followupmethods-Followupmethods'>
 Followupmethod
 </a>
 </dt>
@@ -146,7 +146,7 @@ Followupmethod
 {% endifmemberof %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
-<a href='list-followuprequests-Followuprequests'>
+<a href='{{servlet-context}}/list-followuprequests-Followuprequests'>
 Followuprequest
 </a>
 </dt>
@@ -161,7 +161,7 @@ Requests for a followup with an issue
 {% endifmemberof %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
-<a href='list-genders-Genders'>
+<a href='{{servlet-context}}/list-genders-Genders'>
 Gender
 </a>
 </dt>
@@ -176,7 +176,7 @@ All genders which may be assigned to
 {% endifmemberof %}
 {% ifmemberof canvassers analysts admin %}
 <dt>
-<a href='list-intentions-Intentions'>
+<a href='{{servlet-context}}/list-intentions-Intentions'>
 Intention
 </a>
 </dt>
@@ -191,7 +191,7 @@ Intentions of electors to vote for options
 {% endifmemberof %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
-<a href='list-issues-Issues'>
+<a href='{{servlet-context}}/list-issues-Issues'>
 Issue
 </a>
 </dt>
@@ -206,7 +206,7 @@ Issues believed to be of interest to electors,
 {% endifmemberof %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
-<a href='list-options-Options'>
+<a href='{{servlet-context}}/list-options-Options'>
 Option
 </a>
 </dt>
@@ -221,7 +221,7 @@ Options in the election or referendum being
 {% endifmemberof %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dt>
-<a href='list-roles-Roles'>
+<a href='{{servlet-context}}/list-roles-Roles'>
 Role
 </a>
 </dt>
@@ -237,7 +237,7 @@ A role (essentially, the same as a group, but
 {% endifmemberof %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
 <dt>
-<a href='list-teams-Teams'>
+<a href='{{servlet-context}}/list-teams-Teams'>
 Team
 </a>
 </dt>
@@ -248,7 +248,7 @@ Team
 {% endifmemberof %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
 <dt>
-<a href='list-visits-Visits'>
+<a href='{{servlet-context}}/list-visits-Visits'>
 Visit
 </a>
 </dt>

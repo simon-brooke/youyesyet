@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-teams-Teams.html generated 2018-07-07T08:09:49.917Z by adl.to-selmer-templates.
+<!-- File list-teams-Teams.html generated 2018-07-09T20:55:34.504Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -28,7 +28,7 @@ Next
 </div>
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <div class='big-link-container'>
-<a href='form-teams-Team' class='big-link'>
+<a href='{{servlet-context}}/form-teams-Team' class='big-link'>
 Add a new Team
 </a>
 </div>
@@ -94,7 +94,7 @@ Longitude
 {{ record.name }}
 </td>
 <td>
-<a href='form-districts-District?id={{ record.district_id }}'>
+<a href='{{servlet-context}}/form-districts-District?id={{ record.district_id }}'>
 {{ record.district_id_expanded }}
 </a>
 </td>
@@ -105,7 +105,7 @@ Longitude
 {{ record.longitude }}
 </td>
 <td>
-<a href='form-teams-Team?id={{ record.id }}'>
+<a href='{{servlet-context}}/form-teams-Team?id={{ record.id }}'>
 View
 </a>
 </td>

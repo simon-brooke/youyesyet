@@ -1,6 +1,7 @@
 (ns ^{:doc "Routes/pages available to authenticated users in specific roles."
       :author "Simon Brooke"} youyesyet.routes.roles
-  (:require [adl-support.utils :refer [safe-name]]
+  (:require [adl-support.core :as support]
+            [adl-support.utils :refer [safe-name]]
             [clojure.tools.logging :as log]
             [clojure.walk :refer [keywordize-keys]]
             [compojure.core :refer [defroutes GET POST]]
@@ -8,6 +9,7 @@
             [ring.util.http-response :as response]
             [youyesyet.config :refer [env]]
             [youyesyet.db.core :as db-core]
+            [youyesyet.routes.issue-experts :as expert]
             [youyesyet.layout :as layout]
             [youyesyet.oauth :as oauth]
             [youyesyet.routes.auto :as auto]))
@@ -34,7 +36,10 @@
 
 (defn admins-page
   [request]
-  (response/found "/admin"))
+  (layout/render
+    (support/resolve-template "application-index.html")
+    (:session request)
+    {:title "Administrative menu"}))
 
 
 (defn analysts-page
@@ -42,17 +47,15 @@
   some other geographical information system; so there isn't a need to put
   anything sophisticated here."
   [request]
-  (response/found "/admin"))
+  (layout/render
+    (support/resolve-template "application-index.html")
+    (:session request)
+    {:title "Administrative menu"}))
 
 
 (defn canvassers-page
   [request]
   (layout/render "roles/canvasser.html" request {}))
-
-
-(defn issue-experts-page
-  [request]
-  (layout/render "roles/issue-experts.html" request {}))
 
 
 (defn team-organisers-page
@@ -61,11 +64,11 @@
 
 
 (defroutes roles-routes
-  (GET "/roles/admins" [request] (route/restricted (admins-page request)))
-  (GET "/roles/analysts" [request] (route/restricted (analysts-page request)))
-  (GET "/roles/canvassers" [request] (route/restricted (canvassers-page request)))
-  (GET "/roles/issue_editors" [request] (route/restricted (auto/list-issues-Issues request)))
-  (GET "/roles/issue_experts" [request] (route/restricted (issue-experts-page request)))
-  (GET "/roles/team_organisers" [request] (route/restricted (auto/list-teams-Teams request)))
+  (GET "/roles/admin" request (route/restricted (admins-page request)))
+  (GET "/roles/analysts" request (route/restricted (analysts-page request)))
+  (GET "/roles/canvassers" request (route/restricted (canvassers-page request)))
+  (GET "/roles/issue_editors" request (route/restricted (auto/list-issues-Issues request)))
+  (GET "/roles/issue_experts" request (route/restricted (expert/list-page request)))
+  (GET "/roles/team_organisers" request (route/restricted (auto/list-teams-Teams request)))
   (GET "/roles" request (route/restricted (roles-page request))))
 

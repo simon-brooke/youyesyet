@@ -7,12 +7,13 @@
             [re-frame.core :refer [dispatch reg-event-db reg-event-fx subscribe]]
             [ajax.core :refer [GET]]
             [ajax.json :refer [json-request-format json-response-format]]
+            [youyesyet.canvasser-app.gis :refer [refresh-map-pins get-current-location]]
             [youyesyet.canvasser-app.state :as db]
             ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.handlers: handlers for events.
+;;;; youyesyet.canvasser-app.handlers: event handlers.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -101,111 +102,10 @@
          (:electors state) "'")))))
 
 
-;; map stuff. If we do this in canvasser-app.views.map we get circular
-;; references, so do it here.
-(defn pin-image
-  "select the name of a suitable pin image for this address"
-  [address]
-  (let [intentions
-        (set
-          (remove
-            nil?
-            (map
-              :intention
-              (mapcat :electors
-                      (:dwellings address)))))]
-    (case (count intentions)
-      0 "unknown-pin"
-      1 (str (name (first intentions)) "-pin")
-      "mixed-pin")))
-
-
-(defn map-pin-click-handler
-  "On clicking on the pin, navigate to the electors at the address.
-  This way of doing it adds an antry in the browser location history,
-  so back links work."
-  [id]
-  (js/console.log (str "Click handler for address #" id))
-  (let [view @(subscribe [:view])
-        centre (.getCenter view)]
-    (dispatch [:set-zoom (.getZoom view)])
-    (dispatch [:set-latitude (.-lat centre)])
-    (dispatch [:set-longitude (.-lng centre)]))
-  (set! window.location.href (str "#building/" id)))
-
-
-(defn add-map-pin
-  "Add a map-pin at this address in this map view"
-  [address view]
-  (let [lat (:latitude address)
-        lng (:longitude address)
-        pin (.icon js/L
-                   (clj->js
-                    {:iconAnchor [16 41]
-                     :iconSize [32 42]
-                     :iconUrl (str "img/map-pins/" (pin-image address) ".png")
-                     :riseOnHover true
-                     :shadowAnchor [16 23]
-                     :shadowSize [57 24]
-                     :shadowUrl "img/map-pins/shadow_pin.png"}))
-        marker (.marker js/L
-                        (.latLng js/L lat lng)
-                        (clj->js {:icon pin
-                                  :title (:address address)}))]
-    (.on (.addTo marker view) "click" (fn [_] (map-pin-click-handler (str (:id address)))))
-    marker))
-
-
-(defn map-remove-pins
-  "Remove all pins from this map `view`. Side-effecty; liable to be problematic."
-  [view]
-
-  (if
-    view
-    (.eachLayer
-      view
-      (fn [layer]
-        (try
-          (if
-            (instance? js/L.Marker layer)
-            (.removeLayer view layer))
-          (catch js/Object any (js/console.log (str "Failed to remove pin '" layer "' from map: " any)))))))
-  view)
-
-
-(defn refresh-map-pins
-  "Refresh the map pins on this map. Side-effecty; liable to be problematic."
-  []
-  (let [view (map-remove-pins @(subscribe [:view]))
-        addresses @(subscribe [:addresses])]
-    (if
-      view
-      (do
-        (js/console.log (str "Adding " (count addresses) " pins"))
-        (doall (map #(add-map-pin % view) addresses)))
-      (js/console.log "View is not yet ready"))
-    view))
-
-
 (reg-event-db
   :initialize-db
   (fn [_ _]
     db/default-db))
-
-
-(defn get-current-location []
-  "Get the current location from the device."
-  (try
-    (if (.-geolocation js/navigator)
-      (.getCurrentPosition
-        (.-geolocation js/navigator)
-        (fn [position]
-          (js/console.log "Current location is: " + position)
-          (dispatch [:set-latitude (.-latitude (.-coords position))])
-          (dispatch [:set-longitude (.-longitude (.-coords position))])))
-      (js/console.log "Geolocation not available"))
-    (catch js/Object any
-      (js/console.log "Exception while trying to access location: " + any))))
 
 
 ;; (reg-event-fx
@@ -255,10 +155,20 @@
 
 
 (reg-event-db
+  :get-current-location
+  (fn [db _]
+    (js/console.log "Updating current location")
+    (assoc db :froboz (get-current-location))))
+
+
+(reg-event-db
   :process-locality
   (fn
     [db [_ response]]
     (js/console.log "Updating locality data")
+    ;; loop to do it again
+    (dispatch [:dispatch-later [{:ms 5000 :dispatch [:fetch-locality]}
+                                {:ms 1000 :dispatch [:get-current-location]}]])
     (assoc
       (remove-from-feedback db :fetch-locality)
       (refresh-map-pins)
@@ -270,6 +180,9 @@
   (fn [db _]
     ;; TODO: signal something has failed? It doesn't matter very much, unless it keeps failing.
     (js/console.log "Failed to fetch locality data")
+    ;; loop to do it again
+    (dispatch [:dispatch-later [{:ms 60000 :dispatch [:fetch-locality]}
+                                {:ms 1000 :dispatch [:get-current-location]}]])
     (assoc
       (remove-from-feedback db :fetch-locality)
       :error (cons :fetch-locality (:error db)))))

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-addresses-Address.html generated 2018-07-07T08:09:49.931Z by adl.to-selmer-templates.
+<!-- File form-addresses-Address.html generated 2018-07-09T20:55:34.515Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -10,28 +10,12 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-addresses-Address' method='POST'>
 {% csrf-field %}
-<p class='widget'>
-<label for='id'>
-Id
-</label>
-{% ifmemberof admin %}
-<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='id' name='id' class='pseudo-widget disabled'>
-{{record.id}}
-</span>
-{% else %}
-<span id='id' name='id' class='pseudo-widget not-authorised'>
-You are not permitted to view id of addresses
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
+<input id='id' name='id' type='hidden' value='{{record.id}}'/>
 <p class='widget'>
 <label for='address'>
 Address
 </label>
+{% if {{record.address}} %}
 {% ifmemberof admin %}
 <input id='address' name='address' type='string' value='{{record.address}}' maxlength='256' size='60'/>
 {% else %}
@@ -45,11 +29,27 @@ You are not permitted to view address of addresses
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<input id='address' name='address' type='string' value='{{record.address}}' maxlength='256' size='60'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='address' name='address' class='pseudo-widget disabled'>
+{{record.address}}
+</span>
+{% else %}
+<span id='address' name='address' class='pseudo-widget not-authorised'>
+You are not permitted to view address of addresses
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='postcode'>
 Postcode
 </label>
+{% if {{record.postcode}} %}
 {% ifmemberof admin %}
 <input id='postcode' name='postcode' type='string' value='{{record.postcode}}' maxlength='16' size='16'/>
 {% else %}
@@ -63,11 +63,27 @@ You are not permitted to view postcode of addresses
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<input id='postcode' name='postcode' type='string' value='{{record.postcode}}' maxlength='16' size='16'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='postcode' name='postcode' class='pseudo-widget disabled'>
+{{record.postcode}}
+</span>
+{% else %}
+<span id='postcode' name='postcode' class='pseudo-widget not-authorised'>
+You are not permitted to view postcode of addresses
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='phone'>
 Phone
 </label>
+{% if {{record.phone}} %}
 {% ifmemberof admin %}
 <input id='phone' name='phone' type='string' value='{{record.phone}}' maxlength='16' size='16'/>
 {% else %}
@@ -81,11 +97,27 @@ You are not permitted to view phone of addresses
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<input id='phone' name='phone' type='string' value='{{record.phone}}' maxlength='16' size='16'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='phone' name='phone' class='pseudo-widget disabled'>
+{{record.phone}}
+</span>
+{% else %}
+<span id='phone' name='phone' class='pseudo-widget not-authorised'>
+You are not permitted to view phone of addresses
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='district_id'>
 District_id
 </label>
+{% if {{record.district_id}} %}
 {% ifmemberof admin %}
 <span class='select-box' farside='districts' found='true'>
 <input name='district_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-districts?name=" + district_id_search_box.text, null, function (data) {updateMenuOptions("district_id", "id", ["name"], data);})'/>
@@ -105,11 +137,33 @@ You are not permitted to view district_id of addresses
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<span class='select-box' farside='districts' found='true'>
+<input name='district_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-districts?name=" + district_id_search_box.text, null, function (data) {updateMenuOptions("district_id", "id", ["name"], data);})'/>
+<br/>
+<select id='district_id' name='district_id'>
+{% for r in districts %}<option value='{{r.id}}' {% ifequal record.district_id r.id%}selected{% endifequal %}>{{r.name}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='district_id' name='district_id' class='pseudo-widget disabled'>
+{{record.district_id}}
+</span>
+{% else %}
+<span id='district_id' name='district_id' class='pseudo-widget not-authorised'>
+You are not permitted to view district_id of addresses
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='latitude'>
 Latitude
 </label>
+{% if {{record.latitude}} %}
 {% ifmemberof admin %}
 <input id='latitude' name='latitude' type='number' value='{{record.latitude}}' maxlength='' size='16'/>
 {% else %}
@@ -123,11 +177,27 @@ You are not permitted to view latitude of addresses
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<input id='latitude' name='latitude' type='number' value='{{record.latitude}}' maxlength='' size='16'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='latitude' name='latitude' class='pseudo-widget disabled'>
+{{record.latitude}}
+</span>
+{% else %}
+<span id='latitude' name='latitude' class='pseudo-widget not-authorised'>
+You are not permitted to view latitude of addresses
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='longitude'>
 Longitude
 </label>
+{% if {{record.longitude}} %}
 {% ifmemberof admin %}
 <input id='longitude' name='longitude' type='number' value='{{record.longitude}}' maxlength='' size='16'/>
 {% else %}
@@ -141,6 +211,21 @@ You are not permitted to view longitude of addresses
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<input id='longitude' name='longitude' type='number' value='{{record.longitude}}' maxlength='' size='16'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='longitude' name='longitude' class='pseudo-widget disabled'>
+{{record.longitude}}
+</span>
+{% else %}
+<span id='longitude' name='longitude' class='pseudo-widget not-authorised'>
+You are not permitted to view longitude of addresses
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 {% ifmemberof admin %}
 <p class='widget action-safe'>

@@ -36,4 +36,27 @@ FROM addresses
 WHERE locality = :locality
 
 
+-- :name list-open-requests :? :*
+-- :doc lists all existing followuprequest records which have not been closed and which the :expert has expertise to answer.
+SELECT DISTINCT request.*,
+  electors.name ||', '|| electors.gender AS elector_id_expanded,
+	addresses.address ||', '|| addresses.postcode ||', '|| visits.date AS visit_id_expanded,
+  request.issue_id as issue_id_expanded,
+	request.method_id AS method_id_expanded,
+  visits.date
+FROM followuprequests as request,
+  ln_experts_issues_canvassers as expertise,
+  canvassers as experts,
+  electors,
+  addresses,
+  visits
+where not exists (select * from followupactions as action
+                  where action.request_id = request.id
+                  and action.closed = true)
+and request.elector_id = electors.id
+and request.visit_id = visits.id
+and visits.address_id = addresses.id
+and request.issue_id = expertise.issue_id
+and expertise.canvasser_id = :expert
+ORDER BY visits.date desc
 

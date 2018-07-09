@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-intentions-Intentions.html generated 2018-07-07T08:09:49.975Z by adl.to-selmer-templates.
+<!-- File list-intentions-Intentions.html generated 2018-07-09T20:55:34.548Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -28,7 +28,7 @@ Next
 </div>
 {% ifmemberof admin %}
 <div class='big-link-container'>
-<a href='form-intentions-Intention' class='big-link'>
+<a href='{{servlet-context}}/form-intentions-Intention' class='big-link'>
 Add a new Intention
 </a>
 </div>
@@ -82,17 +82,17 @@ Locality
 {% for record in records %}
 <tr>
 <td>
-<a href='form-visits-Visit?id={{ record.visit_id }}'>
+<a href='{{servlet-context}}/form-visits-Visit?id={{ record.visit_id }}'>
 {{ record.visit_id_expanded }}
 </a>
 </td>
 <td>
-<a href='form-electors-Elector?id={{ record.elector_id }}'>
+<a href='{{servlet-context}}/form-electors-Elector?id={{ record.elector_id }}'>
 {{ record.elector_id_expanded }}
 </a>
 </td>
 <td>
-<a href='form-options-Option?id={{ record.option_id }}'>
+<a href='{{servlet-context}}/form-options-Option?id={{ record.option_id }}'>
 {{ record.option_id_expanded }}
 </a>
 </td>
@@ -100,7 +100,7 @@ Locality
 {{ record.locality }}
 </td>
 <td>
-<a href='form-intentions-Intention?id={{ record.id }}'>
+<a href='{{servlet-context}}/form-intentions-Intention?id={{ record.id }}'>
 View
 </a>
 </td>

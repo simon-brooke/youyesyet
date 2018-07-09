@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-electors-Electors.html generated 2018-07-07T08:09:49.934Z by adl.to-selmer-templates.
+<!-- File list-electors-Electors.html generated 2018-07-09T20:55:34.519Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -28,7 +28,7 @@ Next
 </div>
 {% ifmemberof admin %}
 <div class='big-link-container'>
-<a href='form-electors-Elector' class='big-link'>
+<a href='{{servlet-context}}/form-electors-Elector' class='big-link'>
 Add a new Elector
 </a>
 </div>
@@ -100,7 +100,7 @@ Gender
 {{ record.name }}
 </td>
 <td>
-<a href='form-dwellings-Dwelling?id={{ record.dwelling_id }}'>
+<a href='{{servlet-context}}/form-dwellings-Dwelling?id={{ record.dwelling_id }}'>
 {{ record.dwelling_id_expanded }}
 </a>
 </td>
@@ -111,12 +111,12 @@ Gender
 {{ record.email }}
 </td>
 <td>
-<a href='form-genders-Gender?id={{ record.gender }}'>
+<a href='{{servlet-context}}/form-genders-Gender?id={{ record.gender }}'>
 {{ record.gender_expanded }}
 </a>
 </td>
 <td>
-<a href='form-electors-Elector?id={{ record.id }}'>
+<a href='{{servlet-context}}/form-electors-Elector?id={{ record.id }}'>
 View
 </a>
 </td>

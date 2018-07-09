@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-intentions-Intention.html generated 2018-07-07T08:09:49.968Z by adl.to-selmer-templates.
+<!-- File form-intentions-Intention.html generated 2018-07-09T20:55:34.543Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -14,6 +14,7 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <label for='visit_id'>
 Visit_id
 </label>
+{% if {{record.visit_id}} %}
 {% ifmemberof admin %}
 <span class='select-box' farside='visits' found='true'>
 <input name='visit_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-visits?address_id=" + visit_id_search_box.text + "&amp;date=" + visit_id_search_box.text, null, function (data) {updateMenuOptions("visit_id", "id", ["address_id", "date"], data);})'/>
@@ -33,11 +34,33 @@ You are not permitted to view visit_id of intentions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<span class='select-box' farside='visits' found='true'>
+<input name='visit_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-visits?address_id=" + visit_id_search_box.text + "&amp;date=" + visit_id_search_box.text, null, function (data) {updateMenuOptions("visit_id", "id", ["address_id", "date"], data);})'/>
+<br/>
+<select id='visit_id' name='visit_id'>
+{% for r in visits %}<option value='{{r.id}}' {% ifequal record.visit_id r.id%}selected{% endifequal %}>{{r.address_id}} {{r.date}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof canvassers analysts admin %}
+<span id='visit_id' name='visit_id' class='pseudo-widget disabled'>
+{{record.visit_id}}
+</span>
+{% else %}
+<span id='visit_id' name='visit_id' class='pseudo-widget not-authorised'>
+You are not permitted to view visit_id of intentions
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='elector_id'>
 Elector_id
 </label>
+{% if {{record.elector_id}} %}
 {% ifmemberof admin %}
 <span class='select-box' farside='electors' found='true'>
 <input name='elector_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-electors?gender=" + elector_id_search_box.text + "&amp;email=" + elector_id_search_box.text + "&amp;name=" + elector_id_search_box.text + "&amp;phone=" + elector_id_search_box.text, null, function (data) {updateMenuOptions("elector_id", "id", ["gender", "email", "name", "phone"], data);})'/>
@@ -57,11 +80,33 @@ You are not permitted to view elector_id of intentions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<span class='select-box' farside='electors' found='true'>
+<input name='elector_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-electors?gender=" + elector_id_search_box.text + "&amp;email=" + elector_id_search_box.text + "&amp;name=" + elector_id_search_box.text + "&amp;phone=" + elector_id_search_box.text, null, function (data) {updateMenuOptions("elector_id", "id", ["gender", "email", "name", "phone"], data);})'/>
+<br/>
+<select id='elector_id' name='elector_id'>
+{% for r in electors %}<option value='{{r.id}}' {% ifequal record.elector_id r.id%}selected{% endifequal %}>{{r.name}} {{r.phone}} {{r.email}} {{r.gender}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof canvassers analysts admin %}
+<span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
+{{record.elector_id}}
+</span>
+{% else %}
+<span id='elector_id' name='elector_id' class='pseudo-widget not-authorised'>
+You are not permitted to view elector_id of intentions
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='option_id'>
 Option_id
 </label>
+{% if {{record.option_id}} %}
 {% ifmemberof admin %}
 <span class='select-box' farside='options' found='true'>
 <select id='option_id' name='option_id'>
@@ -79,11 +124,31 @@ You are not permitted to view option_id of intentions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<span class='select-box' farside='options' found='true'>
+<select id='option_id' name='option_id'>
+{% for r in options %}<option value='{{r.id}}' {% ifequal record.option_id r.id%}selected{% endifequal %}>{{r.id}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof canvassers analysts admin %}
+<span id='option_id' name='option_id' class='pseudo-widget disabled'>
+{{record.option_id}}
+</span>
+{% else %}
+<span id='option_id' name='option_id' class='pseudo-widget not-authorised'>
+You are not permitted to view option_id of intentions
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='locality'>
 Locality
 </label>
+{% if {{record.locality}} %}
 {% ifmemberof admin %}
 <input id='locality' name='locality' type='number' value='{{record.locality}}' maxlength='' size='16'/>
 {% else %}
@@ -97,6 +162,21 @@ You are not permitted to view locality of intentions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<input id='locality' name='locality' type='number' value='{{record.locality}}' maxlength='' size='16'/>
+{% else %}
+{% ifmemberof canvassers analysts admin %}
+<span id='locality' name='locality' class='pseudo-widget disabled'>
+{{record.locality}}
+</span>
+{% else %}
+<span id='locality' name='locality' class='pseudo-widget not-authorised'>
+You are not permitted to view locality of intentions
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 {% ifmemberof admin %}
 <p class='widget action-safe'>

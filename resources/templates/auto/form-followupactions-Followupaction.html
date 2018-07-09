@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-followupactions-Followupaction.html generated 2018-07-07T08:09:49.976Z by adl.to-selmer-templates.
+<!-- File form-followupactions-Followupaction.html generated 2018-07-09T20:55:34.549Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -11,28 +11,12 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-followupactions-Followupaction' method='POST'>
 {% csrf-field %}
-<p class='widget'>
-<label for='id'>
-Id
-</label>
-{% ifmemberof admin %}
-<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
-{% else %}
-{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
-<span id='id' name='id' class='pseudo-widget disabled'>
-{{record.id}}
-</span>
-{% else %}
-<span id='id' name='id' class='pseudo-widget not-authorised'>
-You are not permitted to view id of followupactions
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
+<input id='id' name='id' type='hidden' value='{{record.id}}'/>
 <p class='widget'>
 <label for='request_id'>
 Request_id
 </label>
+{% if {{record.request_id}} %}
 {% ifmemberof admin %}
 <span class='select-box' farside='followuprequests' found='true'>
 <input name='request_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-followuprequests?elector_id=" + request_id_search_box.text + "&amp;issue_id=" + request_id_search_box.text + "&amp;visit_id=" + request_id_search_box.text, null, function (data) {updateMenuOptions("request_id", "id", ["elector_id", "issue_id", "visit_id"], data);})'/>
@@ -52,11 +36,33 @@ You are not permitted to view request_id of followupactions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<span class='select-box' farside='followuprequests' found='true'>
+<input name='request_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-followuprequests?elector_id=" + request_id_search_box.text + "&amp;issue_id=" + request_id_search_box.text + "&amp;visit_id=" + request_id_search_box.text, null, function (data) {updateMenuOptions("request_id", "id", ["elector_id", "issue_id", "visit_id"], data);})'/>
+<br/>
+<select id='request_id' name='request_id'>
+{% for r in followuprequests %}<option value='{{r.id}}' {% ifequal record.request_id r.id%}selected{% endifequal %}>{{r.elector_id}} {{r.visit_id}} {{r.issue_id}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
+<span id='request_id' name='request_id' class='pseudo-widget disabled'>
+{{record.request_id}}
+</span>
+{% else %}
+<span id='request_id' name='request_id' class='pseudo-widget not-authorised'>
+You are not permitted to view request_id of followupactions
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='actor'>
 Actor
 </label>
+{% if {{record.actor}} %}
 {% ifmemberof admin %}
 <span class='select-box' farside='canvassers' found='true'>
 <input name='actor_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + actor_search_box.text, null, function (data) {updateMenuOptions("actor", "", [""], data);})'/>
@@ -76,11 +82,33 @@ You are not permitted to view actor of followupactions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<span class='select-box' farside='canvassers' found='true'>
+<input name='actor_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + actor_search_box.text, null, function (data) {updateMenuOptions("actor", "", [""], data);})'/>
+<br/>
+<select id='actor' name='actor'>
+{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.actor r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
+<span id='actor' name='actor' class='pseudo-widget disabled'>
+{{record.actor}}
+</span>
+{% else %}
+<span id='actor' name='actor' class='pseudo-widget not-authorised'>
+You are not permitted to view actor of followupactions
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='date'>
 Date
 </label>
+{% if {{record.date}} %}
 {% ifmemberof admin %}
 <input id='date' name='date' type='string' value='{{record.date}}' maxlength='' size='16'/>
 {% else %}
@@ -94,11 +122,27 @@ You are not permitted to view date of followupactions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<input id='date' name='date' type='string' value='{{record.date}}' maxlength='' size='16'/>
+{% else %}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
+<span id='date' name='date' class='pseudo-widget disabled'>
+{{record.date}}
+</span>
+{% else %}
+<span id='date' name='date' class='pseudo-widget not-authorised'>
+You are not permitted to view date of followupactions
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='notes'>
 Notes
 </label>
+{% if {{record.notes}} %}
 {% ifmemberof admin %}
 <textarea rows='8' cols='60' id='notes' name='notes'>
 {{record.notes}}
@@ -114,11 +158,29 @@ You are not permitted to view notes of followupactions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<textarea rows='8' cols='60' id='notes' name='notes'>
+{{record.notes}}
+</textarea>
+{% else %}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
+<span id='notes' name='notes' class='pseudo-widget disabled'>
+{{record.notes}}
+</span>
+{% else %}
+<span id='notes' name='notes' class='pseudo-widget not-authorised'>
+You are not permitted to view notes of followupactions
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='closed'>
 Closed
 </label>
+{% if {{record.closed}} %}
 {% ifmemberof admin %}
 <input id='closed' name='closed' type='checkbox' value='{{record.closed}}' maxlength='' size='16'/>
 {% else %}
@@ -132,6 +194,21 @@ You are not permitted to view closed of followupactions
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<input id='closed' name='closed' type='checkbox' value='{{record.closed}}' maxlength='' size='16'/>
+{% else %}
+{% ifmemberof issueexperts canvassers analysts issueeditors admin %}
+<span id='closed' name='closed' class='pseudo-widget disabled'>
+{{record.closed}}
+</span>
+{% else %}
+<span id='closed' name='closed' class='pseudo-widget not-authorised'>
+You are not permitted to view closed of followupactions
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 {% ifmemberof admin %}
 <p class='widget action-safe'>

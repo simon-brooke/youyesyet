@@ -33,7 +33,7 @@
                  [org.webjars/bootstrap "4.0.0-alpha.6-1"]
                  [org.webjars/font-awesome "4.7.0"]
                  [org.webjars.bower/tether "1.4.0"]
-                 [re-frame "0.9.2"]
+                 [re-frame "0.10.5"]
                  [reagent "0.6.1"]
                  [reagent-utils "0.2.1"]
                  [ring-middleware-format "0.7.2"]
@@ -136,10 +136,10 @@
                                  [com.cemerick/piggieback "0.2.2-SNAPSHOT"]
                                  [directory-naming/naming-java "0.8"]
                                  [doo "0.1.7"]
-                                 [figwheel-sidecar "0.5.9"]]
+                                 [figwheel-sidecar "0.5.15"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.18.1"]
                                  [lein-doo "0.1.7"]
-                                 [lein-figwheel "0.5.9"]
+                                 [lein-figwheel "0.5.15"]
                                  [org.clojure/clojurescript "1.9.495"]]
                   :cljsbuild
                   {:builds

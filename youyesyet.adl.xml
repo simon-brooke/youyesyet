@@ -408,7 +408,7 @@ version="0.1.1">
     the system.</documentation>
     <key>
       <property required="true" type="string" name="id" column="id"
-      size="32" distinct="all">
+      size="32" distinct="all" immutable="true">
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
@@ -471,6 +471,7 @@ version="0.1.1">
     <property type="text" name="brief">
       <prompt prompt="Brief response to issue" locale="en-GB"/>
     </property>
+    <property type="link" name="experts" entity="canvassers"/>
     <list properties="listed" name="Issues">
       <field property="id">
         <prompt prompt="id" locale="en-GB"/>
@@ -512,7 +513,7 @@ version="0.1.1">
     <documentation>Intentions of electors to vote for options
     elicited in visits.</documentation>
     <key>
-      <property type="integer" distinct="system" required="true"
+      <property type="integer" distinct="system" required="true" immutable="true"
       name="id">
         <generator action="native"/>
       </property>
@@ -577,9 +578,7 @@ version="0.1.1">
       </field>
     </form>
   </entity>
-  <!--
-    entity canvassers already has a key - not generating one
-    -->
+
   <entity table="canvassers" name="canvassers" magnitude="5"
   volatility="4">
     <documentation>Primary users of the system: those actually
@@ -634,6 +633,10 @@ version="0.1.1">
     <property type="link" name="roles" entity="roles"
     farkey="role_id">
       <prompt prompt="Roles" locale="en-GB"/>
+    </property>
+    <property type="link" name="expertise" entity="issues">
+      <documentation>Only relevant to issue experts.</documentation>
+      <prompt prompt="Expertise" locale="en-GB"/>
     </property>
     <permission group="canvassers" permission="edit">
       <documentation>But only their own record</documentation>
@@ -716,16 +719,14 @@ version="0.1.1">
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
-    entity followuprequests already has a key - not generating one
-    -->
+
   <entity table="followuprequests" name="followuprequests"
   magnitude="7" volatility="2">
     <documentation>Requests for a followup with an issue
     expert</documentation>
     <key>
       <property required="true" type="integer" name="id"
-      column="id" distinct="system">
+      column="id" distinct="system" immutable="true">
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
@@ -787,9 +788,7 @@ version="0.1.1">
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
-    entity roles already has a key - not generating one
-    -->
+
   <entity table="roles" name="roles" magnitude="1" volatility="7">
     <documentation>A role (essentially, the same as a group, but
     application layer rather than database layer) of which a user
@@ -833,9 +832,7 @@ version="0.1.1">
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
-    entity teams already has a key - not generating one
-    -->
+
   <entity table="teams" name="teams" magnitude="4" volatility="4">
     <key>
       <property type="integer" name="id" column="id"
@@ -951,13 +948,14 @@ version="0.1.1">
     <permission permission="read" group="issueeditors"/>
     <permission permission="all" group="admin"/>
   </entity>
+
   <entity name="events" table="events" magnitude="5">
     <documentation>
       An event to which a team or teams are invited. Typically created by the team organiser(s).
       May be a training event, a social event or a canvassing session.
     </documentation>
     <key>
-      <property type="integer" distinct="system" required="true" name="id">
+      <property type="integer" distinct="system" required="true" name="id" immutable="true">
         <generator action="native"/>
       </property>
     </key>
@@ -1020,16 +1018,14 @@ version="0.1.1">
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
-    entity followupactions already has a key - not generating one
-    -->
+
   <entity table="followupactions" name="followupactions"
   magnitude="7" volatility="0">
     <documentation>Actions taken on followup
     requests.</documentation>
     <key>
       <property required="true" type="integer" name="id"
-      column="id" distinct="system">
+      column="id" distinct="system" immutable="true">
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>
@@ -1112,7 +1108,7 @@ version="0.1.1">
     canvassed on</documentation>
     <key>
       <property required="true" type="string" name="id" column="id"
-      size="32" immutable="true" distinct="all">
+      size="32" distinct="all" immutable="true">
         <prompt prompt="id" locale="en-GB"/>
       </property>
     </key>

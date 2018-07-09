@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-visits-Visit.html generated 2018-07-07T08:09:49.940Z by adl.to-selmer-templates.
+<!-- File form-visits-Visit.html generated 2018-07-09T20:55:34.524Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -14,8 +14,9 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <label for='id'>
 Id
 </label>
+{% if {{record.id}} %}
 {% ifmemberof admin %}
-<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
+<input id='id' name='id' type='number' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -27,11 +28,27 @@ You are not permitted to view id of visits
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<input id='id' name='id' type='number' value='{{record.id}}' maxlength='' size='16'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% else %}
+<span id='id' name='id' class='pseudo-widget not-authorised'>
+You are not permitted to view id of visits
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='address_id'>
 Address_id
 </label>
+{% if {{record.address_id}} %}
 {% ifmemberof admin %}
 <span class='select-box' farside='addresses' found='true'>
 <input name='address_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-addresses?postcode=" + address_id_search_box.text + "&amp;address=" + address_id_search_box.text, null, function (data) {updateMenuOptions("address_id", "id", ["postcode", "address"], data);})'/>
@@ -51,11 +68,33 @@ You are not permitted to view address_id of visits
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<span class='select-box' farside='addresses' found='true'>
+<input name='address_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-addresses?postcode=" + address_id_search_box.text + "&amp;address=" + address_id_search_box.text, null, function (data) {updateMenuOptions("address_id", "id", ["postcode", "address"], data);})'/>
+<br/>
+<select id='address_id' name='address_id'>
+{% for r in addresses %}<option value='{{r.id}}' {% ifequal record.address_id r.id%}selected{% endifequal %}>{{r.address}} {{r.postcode}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
+<span id='address_id' name='address_id' class='pseudo-widget disabled'>
+{{record.address_id}}
+</span>
+{% else %}
+<span id='address_id' name='address_id' class='pseudo-widget not-authorised'>
+You are not permitted to view address_id of visits
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='canvasser_id'>
 Canvasser_id
 </label>
+{% if {{record.canvasser_id}} %}
 {% ifmemberof admin %}
 <span class='select-box' farside='canvassers' found='true'>
 <input name='canvasser_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + canvasser_id_search_box.text, null, function (data) {updateMenuOptions("canvasser_id", "", [""], data);})'/>
@@ -75,11 +114,33 @@ You are not permitted to view canvasser_id of visits
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<span class='select-box' farside='canvassers' found='true'>
+<input name='canvasser_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + canvasser_id_search_box.text, null, function (data) {updateMenuOptions("canvasser_id", "", [""], data);})'/>
+<br/>
+<select id='canvasser_id' name='canvasser_id'>
+{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.canvasser_id r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
+<span id='canvasser_id' name='canvasser_id' class='pseudo-widget disabled'>
+{{record.canvasser_id}}
+</span>
+{% else %}
+<span id='canvasser_id' name='canvasser_id' class='pseudo-widget not-authorised'>
+You are not permitted to view canvasser_id of visits
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='date'>
 Date
 </label>
+{% if {{record.date}} %}
 {% ifmemberof admin %}
 <input id='date' name='date' type='string' value='{{record.date}}' maxlength='' size='16'/>
 {% else %}
@@ -93,6 +154,21 @@ You are not permitted to view date of visits
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<input id='date' name='date' type='string' value='{{record.date}}' maxlength='' size='16'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
+<span id='date' name='date' class='pseudo-widget disabled'>
+{{record.date}}
+</span>
+{% else %}
+<span id='date' name='date' class='pseudo-widget not-authorised'>
+You are not permitted to view date of visits
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 {% ifmemberof admin %}
 <p class='widget action-safe'>

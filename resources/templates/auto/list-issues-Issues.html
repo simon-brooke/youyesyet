@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-issues-Issues.html generated 2018-07-07T08:09:49.966Z by adl.to-selmer-templates.
+<!-- File list-issues-Issues.html generated 2018-07-09T20:55:34.541Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -28,7 +28,7 @@ Next
 </div>
 {% ifmemberof issueeditors admin %}
 <div class='big-link-container'>
-<a href='form-issues-Issue' class='big-link'>
+<a href='{{servlet-context}}/form-issues-Issue' class='big-link'>
 Add a new Issue
 </a>
 </div>
@@ -94,7 +94,7 @@ Brief
 {{ record.brief }}
 </td>
 <td>
-<a href='form-issues-Issue?id={{ record.id }}'>
+<a href='{{servlet-context}}/form-issues-Issue?id={{ record.id }}'>
 View
 </a>
 </td>

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-options-Options.html generated 2018-07-07T08:09:49.921Z by adl.to-selmer-templates.
+<!-- File list-options-Options.html generated 2018-07-09T20:55:34.507Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -28,7 +28,7 @@ Next
 </div>
 {% ifmemberof admin %}
 <div class='big-link-container'>
-<a href='form-options-Option' class='big-link'>
+<a href='{{servlet-context}}/form-options-Option' class='big-link'>
 Add a new Option
 </a>
 </div>
@@ -67,7 +67,7 @@ Id
 {{ record.id }}
 </td>
 <td>
-<a href='form-options-Option?id={{ record.id }}'>
+<a href='{{servlet-context}}/form-options-Option?id={{ record.id }}'>
 View
 </a>
 </td>

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-teams-Team.html generated 2018-07-07T08:09:49.943Z by adl.to-selmer-templates.
+<!-- File form-teams-Team.html generated 2018-07-09T20:55:34.527Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -10,28 +10,12 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-teams-Team' method='POST'>
 {% csrf-field %}
-<p class='widget'>
-<label for='id'>
-Id
-</label>
-{% ifmemberof teamorganisers admin teamorganisers admin %}
-<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
-<span id='id' name='id' class='pseudo-widget disabled'>
-{{record.id}}
-</span>
-{% else %}
-<span id='id' name='id' class='pseudo-widget not-authorised'>
-You are not permitted to view id of teams
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
+<input id='id' name='id' type='hidden' value='{{record.id}}'/>
 <p class='widget'>
 <label for='name'>
 Name
 </label>
+{% if {{record.name}} %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <input id='name' name='name' type='string' value='{{record.name}}' maxlength='64' size='60'/>
 {% else %}
@@ -45,11 +29,27 @@ You are not permitted to view name of teams
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof teamorganisers admin teamorganisers admin %}
+<input id='name' name='name' type='string' value='{{record.name}}' maxlength='64' size='60'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
+<span id='name' name='name' class='pseudo-widget disabled'>
+{{record.name}}
+</span>
+{% else %}
+<span id='name' name='name' class='pseudo-widget not-authorised'>
+You are not permitted to view name of teams
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='district_id'>
 District_id
 </label>
+{% if {{record.district_id}} %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <span class='select-box' farside='districts' found='true'>
 <input name='district_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-districts?name=" + district_id_search_box.text, null, function (data) {updateMenuOptions("district_id", "id", ["name"], data);})'/>
@@ -69,11 +69,33 @@ You are not permitted to view district_id of teams
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof teamorganisers admin teamorganisers admin %}
+<span class='select-box' farside='districts' found='true'>
+<input name='district_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-districts?name=" + district_id_search_box.text, null, function (data) {updateMenuOptions("district_id", "id", ["name"], data);})'/>
+<br/>
+<select id='district_id' name='district_id'>
+{% for r in districts %}<option value='{{r.id}}' {% ifequal record.district_id r.id%}selected{% endifequal %}>{{r.name}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
+<span id='district_id' name='district_id' class='pseudo-widget disabled'>
+{{record.district_id}}
+</span>
+{% else %}
+<span id='district_id' name='district_id' class='pseudo-widget not-authorised'>
+You are not permitted to view district_id of teams
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='latitude'>
 Latitude
 </label>
+{% if {{record.latitude}} %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <input id='latitude' name='latitude' type='number' value='{{record.latitude}}' maxlength='' size='16'/>
 {% else %}
@@ -87,11 +109,27 @@ You are not permitted to view latitude of teams
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof teamorganisers admin teamorganisers admin %}
+<input id='latitude' name='latitude' type='number' value='{{record.latitude}}' maxlength='' size='16'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
+<span id='latitude' name='latitude' class='pseudo-widget disabled'>
+{{record.latitude}}
+</span>
+{% else %}
+<span id='latitude' name='latitude' class='pseudo-widget not-authorised'>
+You are not permitted to view latitude of teams
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='members'>
 Members
 </label>
+{% if {{record.members}} %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <span class='select-box' farside='canvassers' found='true'>
 <input name='members_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + members_search_box.text, null, function (data) {updateMenuOptions("members", "", [""], data);})'/>
@@ -111,11 +149,33 @@ You are not permitted to view members of teams
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof teamorganisers admin teamorganisers admin %}
+<span class='select-box' farside='canvassers' found='true'>
+<input name='members_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + members_search_box.text, null, function (data) {updateMenuOptions("members", "", [""], data);})'/>
+<br/>
+<select id='members' name='members' multiple='multiple'>
+{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.members r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
+<span id='members' name='members' class='pseudo-widget disabled'>
+{{record.members}}
+</span>
+{% else %}
+<span id='members' name='members' class='pseudo-widget not-authorised'>
+You are not permitted to view members of teams
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='organisers'>
 Organisers
 </label>
+{% if {{record.organisers}} %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <span class='select-box' farside='canvassers' found='true'>
 <input name='organisers_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + organisers_search_box.text, null, function (data) {updateMenuOptions("organisers", "", [""], data);})'/>
@@ -135,11 +195,33 @@ You are not permitted to view organisers of teams
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof teamorganisers admin teamorganisers admin %}
+<span class='select-box' farside='canvassers' found='true'>
+<input name='organisers_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + organisers_search_box.text, null, function (data) {updateMenuOptions("organisers", "", [""], data);})'/>
+<br/>
+<select id='organisers' name='organisers' multiple='multiple'>
+{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.organisers r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
+<span id='organisers' name='organisers' class='pseudo-widget disabled'>
+{{record.organisers}}
+</span>
+{% else %}
+<span id='organisers' name='organisers' class='pseudo-widget not-authorised'>
+You are not permitted to view organisers of teams
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='longitude'>
 Longitude
 </label>
+{% if {{record.longitude}} %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <input id='longitude' name='longitude' type='number' value='{{record.longitude}}' maxlength='' size='16'/>
 {% else %}
@@ -153,6 +235,21 @@ You are not permitted to view longitude of teams
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof teamorganisers admin teamorganisers admin %}
+<input id='longitude' name='longitude' type='number' value='{{record.longitude}}' maxlength='' size='16'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
+<span id='longitude' name='longitude' class='pseudo-widget disabled'>
+{{record.longitude}}
+</span>
+{% else %}
+<span id='longitude' name='longitude' class='pseudo-widget not-authorised'>
+You are not permitted to view longitude of teams
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <p class='widget action-safe'>

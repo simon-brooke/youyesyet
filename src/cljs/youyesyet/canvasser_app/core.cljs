@@ -10,6 +10,7 @@
             [re-frame.core :as rf]
             [secretary.core :as secretary]
             [youyesyet.canvasser-app.ajax :refer [load-interceptors!]]
+            [youyesyet.canvasser-app.gis :refer [get-current-location]]
             [youyesyet.canvasser-app.handlers :as h]
             [youyesyet.canvasser-app.subscriptions]
             [youyesyet.canvasser-app.ui-utils :as ui]
@@ -74,14 +75,18 @@
 (defn issue-page []
   (issue/panel))
 
+(defn issue-experts-page []
+  (expert/panel))
+
 (defn map-page []
   (maps/panel))
 
 (def pages
   {:about #'about-page
    :building #'building-page
-   :elector #'elector-page
    :dwelling #'dwelling-page
+   :elector #'elector-page
+   :expert #'expert
    :followup #'followup-page
    :gdpr #'gdpr-page
    :issues #'issues-page
@@ -191,7 +196,7 @@
 
 (defn init! []
   (rf/dispatch-sync [:initialize-db])
-  (h/get-current-location)
+  (get-current-location)
   (rf/dispatch [:fetch-locality])
   (rf/dispatch [:fetch-options])
   (rf/dispatch [:fetch-issues])

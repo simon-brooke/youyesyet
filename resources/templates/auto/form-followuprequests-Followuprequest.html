@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-followuprequests-Followuprequest.html generated 2018-07-07T08:09:49.925Z by adl.to-selmer-templates.
+<!-- File form-followuprequests-Followuprequest.html generated 2018-07-09T20:55:34.512Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -10,28 +10,12 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-followuprequests-Followuprequest' method='POST'>
 {% csrf-field %}
-<p class='widget'>
-<label for='id'>
-Id
-</label>
-{% ifmemberof admin %}
-<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='id' name='id' class='pseudo-widget disabled'>
-{{record.id}}
-</span>
-{% else %}
-<span id='id' name='id' class='pseudo-widget not-authorised'>
-You are not permitted to view id of followuprequests
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
+<input id='id' name='id' type='hidden' value='{{record.id}}'/>
 <p class='widget'>
 <label for='elector_id'>
 Elector_id
 </label>
+{% if {{record.elector_id}} %}
 {% ifmemberof admin %}
 <span class='select-box' farside='electors' found='true'>
 <input name='elector_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-electors?gender=" + elector_id_search_box.text + "&amp;email=" + elector_id_search_box.text + "&amp;name=" + elector_id_search_box.text + "&amp;phone=" + elector_id_search_box.text, null, function (data) {updateMenuOptions("elector_id", "id", ["gender", "email", "name", "phone"], data);})'/>
@@ -51,11 +35,33 @@ You are not permitted to view elector_id of followuprequests
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<span class='select-box' farside='electors' found='true'>
+<input name='elector_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-electors?gender=" + elector_id_search_box.text + "&amp;email=" + elector_id_search_box.text + "&amp;name=" + elector_id_search_box.text + "&amp;phone=" + elector_id_search_box.text, null, function (data) {updateMenuOptions("elector_id", "id", ["gender", "email", "name", "phone"], data);})'/>
+<br/>
+<select id='elector_id' name='elector_id'>
+{% for r in electors %}<option value='{{r.id}}' {% ifequal record.elector_id r.id%}selected{% endifequal %}>{{r.name}} {{r.phone}} {{r.email}} {{r.gender}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
+{{record.elector_id}}
+</span>
+{% else %}
+<span id='elector_id' name='elector_id' class='pseudo-widget not-authorised'>
+You are not permitted to view elector_id of followuprequests
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='visit_id'>
 Visit_id
 </label>
+{% if {{record.visit_id}} %}
 {% ifmemberof admin %}
 <span class='select-box' farside='visits' found='true'>
 <input name='visit_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-visits?address_id=" + visit_id_search_box.text + "&amp;date=" + visit_id_search_box.text, null, function (data) {updateMenuOptions("visit_id", "id", ["address_id", "date"], data);})'/>
@@ -75,11 +81,33 @@ You are not permitted to view visit_id of followuprequests
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<span class='select-box' farside='visits' found='true'>
+<input name='visit_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-visits?address_id=" + visit_id_search_box.text + "&amp;date=" + visit_id_search_box.text, null, function (data) {updateMenuOptions("visit_id", "id", ["address_id", "date"], data);})'/>
+<br/>
+<select id='visit_id' name='visit_id'>
+{% for r in visits %}<option value='{{r.id}}' {% ifequal record.visit_id r.id%}selected{% endifequal %}>{{r.address_id}} {{r.date}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='visit_id' name='visit_id' class='pseudo-widget disabled'>
+{{record.visit_id}}
+</span>
+{% else %}
+<span id='visit_id' name='visit_id' class='pseudo-widget not-authorised'>
+You are not permitted to view visit_id of followuprequests
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='issue_id'>
 Issue_id
 </label>
+{% if {{record.issue_id}} %}
 {% ifmemberof admin %}
 <span class='select-box' farside='issues' found='true'>
 <select id='issue_id' name='issue_id'>
@@ -97,11 +125,31 @@ You are not permitted to view issue_id of followuprequests
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<span class='select-box' farside='issues' found='true'>
+<select id='issue_id' name='issue_id'>
+{% for r in issues %}<option value='{{r.id}}' {% ifequal record.issue_id r.id%}selected{% endifequal %}>{{r.id}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='issue_id' name='issue_id' class='pseudo-widget disabled'>
+{{record.issue_id}}
+</span>
+{% else %}
+<span id='issue_id' name='issue_id' class='pseudo-widget not-authorised'>
+You are not permitted to view issue_id of followuprequests
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='method_id'>
 Method_id
 </label>
+{% if {{record.method_id}} %}
 {% ifmemberof admin %}
 <span class='select-box' farside='followupmethods' found='true'>
 <select id='method_id' name='method_id'>
@@ -119,6 +167,25 @@ You are not permitted to view method_id of followuprequests
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<span class='select-box' farside='followupmethods' found='true'>
+<select id='method_id' name='method_id'>
+{% for r in followupmethods %}<option value='{{r.id}}' {% ifequal record.method_id r.id%}selected{% endifequal %}>{{r.id}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='method_id' name='method_id' class='pseudo-widget disabled'>
+{{record.method_id}}
+</span>
+{% else %}
+<span id='method_id' name='method_id' class='pseudo-widget not-authorised'>
+You are not permitted to view method_id of followuprequests
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 {% ifmemberof admin %}
 <p class='widget action-safe'>

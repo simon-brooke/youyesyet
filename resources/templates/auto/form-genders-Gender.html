@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-genders-Gender.html generated 2018-07-07T08:09:49.918Z by adl.to-selmer-templates.
+<!-- File form-genders-Gender.html generated 2018-07-09T20:55:34.505Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -14,8 +14,9 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <label for='id'>
 Id
 </label>
+{% if {{record.id}} %}
 {% ifmemberof admin %}
-<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
+<input id='id' name='id' type='string' value='{{record.id}}' maxlength='32' size='32'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -27,6 +28,21 @@ You are not permitted to view id of genders
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<input id='id' name='id' type='string' value='{{record.id}}' maxlength='32' size='32'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='id' name='id' class='pseudo-widget disabled'>
+{{record.id}}
+</span>
+{% else %}
+<span id='id' name='id' class='pseudo-widget not-authorised'>
+You are not permitted to view id of genders
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 {% ifmemberof admin %}
 <p class='widget action-safe'>

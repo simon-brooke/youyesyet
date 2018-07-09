@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-events-Events.html generated 2018-07-07T08:09:49.965Z by adl.to-selmer-templates.
+<!-- File list-events-Events.html generated 2018-07-09T20:55:34.539Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -28,7 +28,7 @@ Next
 </div>
 {% ifmemberof teamorganisers admin %}
 <div class='big-link-container'>
-<a href='form-events-Events' class='big-link'>
+<a href='{{servlet-context}}/form-events-Events' class='big-link'>
 Add a new Event
 </a>
 </div>
@@ -112,7 +112,7 @@ Cancelled
 {{ record.cancelled }}
 </td>
 <td>
-<a href='form-events-Events?id={{ record.id }}'>
+<a href='{{servlet-context}}/form-events-Events?id={{ record.id }}'>
 View
 </a>
 </td>

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-options-Option.html generated 2018-07-09T20:55:34.542Z by adl.to-selmer-templates.
+<!-- File form-followupmethods-Followupmethod.html generated 2018-07-09T16:38:56.477Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -8,15 +8,14 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 {% endblock %}
 {% block content %}
 <div id='content' class='edit'>
-<form action='{{servlet-context}}/form-options-Option' method='POST'>
+<form action='{{servlet-context}}/form-followupmethods-Followupmethod' method='POST'>
 {% csrf-field %}
 <p class='widget'>
 <label for='id'>
 Id
 </label>
-{% if {{record.id}} %}
 {% ifmemberof admin %}
-<input id='id' name='id' type='string' value='{{record.id}}' maxlength='32' size='32'/>
+<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
@@ -24,30 +23,15 @@ Id
 </span>
 {% else %}
 <span id='id' name='id' class='pseudo-widget not-authorised'>
-You are not permitted to view id of options
+You are not permitted to view id of followupmethods
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
-{% else %}
-{% ifmemberof admin %}
-<input id='id' name='id' type='string' value='{{record.id}}' maxlength='32' size='32'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='id' name='id' class='pseudo-widget disabled'>
-{{record.id}}
-</span>
-{% else %}
-<span id='id' name='id' class='pseudo-widget not-authorised'>
-You are not permitted to view id of options
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-{% endif %}
 </p>
 {% ifmemberof admin %}
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>
-To save this options record
+To save this followupmethods record
 </label>
 <input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
@@ -55,7 +39,7 @@ To save this options record
 {% ifmemberof admin %}
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
-To delete this options record
+To delete this followupmethods record
 </label>
 <input id='delete-button' name='delete-button' class='action-dangerous' type='submit' value='Delete!'/>
 </p>

@@ -3,7 +3,7 @@
   youyesyet.canvasser-app.views.map
   (:require [re-frame.core :refer [reg-sub subscribe dispatch dispatch-sync]]
             [reagent.core :as reagent]
-            [youyesyet.canvasser-app.handlers :refer [get-current-location refresh-map-pins]]))
+            [youyesyet.canvasser-app.gis :refer [refresh-map-pins get-current-location]]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
@@ -27,7 +27,6 @@
 ;;;; Copyright (C) 2016 Simon Brooke for Radical Independence Campaign
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 
 ;;; The pattern from the re-com demo (https://github.com/Day8/re-com) is to have
 ;;; one source file/namespace per view. Each namespace contains a function 'panel'

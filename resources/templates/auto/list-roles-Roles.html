@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-roles-Roles.html generated 2018-07-07T08:09:49.939Z by adl.to-selmer-templates.
+<!-- File list-roles-Roles.html generated 2018-07-09T20:55:34.523Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -28,7 +28,7 @@ Next
 </div>
 {% ifmemberof admin %}
 <div class='big-link-container'>
-<a href='form-roles-Role' class='big-link'>
+<a href='{{servlet-context}}/form-roles-Role' class='big-link'>
 Add a new Role
 </a>
 </div>
@@ -76,7 +76,7 @@ Name
 {{ record.name }}
 </td>
 <td>
-<a href='form-roles-Role?id={{ record.id }}'>
+<a href='{{servlet-context}}/form-roles-Role?id={{ record.id }}'>
 View
 </a>
 </td>

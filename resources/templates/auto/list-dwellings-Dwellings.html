@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-dwellings-Dwellings.html generated 2018-07-07T08:09:49.950Z by adl.to-selmer-templates.
+<!-- File list-dwellings-Dwellings.html generated 2018-07-09T20:55:34.531Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -28,7 +28,7 @@ Next
 </div>
 {% ifmemberof admin %}
 <div class='big-link-container'>
-<a href='form-dwellings-Dwelling' class='big-link'>
+<a href='{{servlet-context}}/form-dwellings-Dwelling' class='big-link'>
 Add a new Dwelling
 </a>
 </div>
@@ -79,7 +79,7 @@ Sub-address
 {{ record.id }}
 </td>
 <td>
-<a href='form-addresses-Address?id={{ record.address_id }}'>
+<a href='{{servlet-context}}/form-addresses-Address?id={{ record.address_id }}'>
 {{ record.address_id_expanded }}
 </a>
 </td>
@@ -87,7 +87,7 @@ Sub-address
 {{ record.sub_address }}
 </td>
 <td>
-<a href='form-dwellings-Dwelling?id={{ record.id }}'>
+<a href='{{servlet-context}}/form-dwellings-Dwelling?id={{ record.id }}'>
 View
 </a>
 </td>

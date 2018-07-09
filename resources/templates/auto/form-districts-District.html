@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-districts-District.html generated 2018-07-07T08:09:49.922Z by adl.to-selmer-templates.
+<!-- File form-districts-District.html generated 2018-07-09T20:55:34.509Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -10,28 +10,12 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-districts-District' method='POST'>
 {% csrf-field %}
-<p class='widget'>
-<label for='id'>
-Id
-</label>
-{% ifmemberof admin %}
-<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
-{% else %}
-{% ifmemberof public admin canvassers teamorganisers issueexperts analysts issueeditors %}
-<span id='id' name='id' class='pseudo-widget disabled'>
-{{record.id}}
-</span>
-{% else %}
-<span id='id' name='id' class='pseudo-widget not-authorised'>
-You are not permitted to view id of districts
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
+<input id='id' name='id' type='hidden' value='{{record.id}}'/>
 <p class='widget'>
 <label for='name'>
 Name
 </label>
+{% if {{record.name}} %}
 {% ifmemberof admin %}
 <input id='name' name='name' type='string' value='{{record.name}}' maxlength='64' size='60'/>
 {% else %}
@@ -45,6 +29,21 @@ You are not permitted to view name of districts
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof admin %}
+<input id='name' name='name' type='string' value='{{record.name}}' maxlength='64' size='60'/>
+{% else %}
+{% ifmemberof public admin canvassers teamorganisers issueexperts analysts issueeditors %}
+<span id='name' name='name' class='pseudo-widget disabled'>
+{{record.name}}
+</span>
+{% else %}
+<span id='name' name='name' class='pseudo-widget not-authorised'>
+You are not permitted to view name of districts
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 {% ifmemberof admin %}
 <p class='widget action-safe'>

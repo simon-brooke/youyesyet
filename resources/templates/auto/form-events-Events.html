@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-events-Events.html generated 2018-07-07T08:09:49.954Z by adl.to-selmer-templates.
+<!-- File form-events-Events.html generated 2018-07-09T20:55:34.534Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -11,28 +11,12 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 <div id='content' class='edit'>
 <form action='{{servlet-context}}/form-events-Events' method='POST'>
 {% csrf-field %}
-<p class='widget'>
-<label for='id'>
-Id
-</label>
-{% ifmemberof teamorganisers admin %}
-<input id='id' name='id' type='string' value='{{record.id}}' maxlength='' size='16'/>
-{% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-<span id='id' name='id' class='pseudo-widget disabled'>
-{{record.id}}
-</span>
-{% else %}
-<span id='id' name='id' class='pseudo-widget not-authorised'>
-You are not permitted to view id of events
-</span>
-{% endifmemberof %}
-{% endifmemberof %}
-</p>
+<input id='id' name='id' type='hidden' value='{{record.id}}'/>
 <p class='widget'>
 <label for='name'>
 Name
 </label>
+{% if {{record.name}} %}
 {% ifmemberof teamorganisers admin %}
 <input id='name' name='name' type='string' value='{{record.name}}' maxlength='64' size='60'/>
 {% else %}
@@ -46,11 +30,27 @@ You are not permitted to view name of events
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof teamorganisers admin %}
+<input id='name' name='name' type='string' value='{{record.name}}' maxlength='64' size='60'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='name' name='name' class='pseudo-widget disabled'>
+{{record.name}}
+</span>
+{% else %}
+<span id='name' name='name' class='pseudo-widget not-authorised'>
+You are not permitted to view name of events
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='teams'>
 Teams
 </label>
+{% if {{record.teams}} %}
 {% ifmemberof teamorganisers admin %}
 <span class='select-box' farside='teams' found='true'>
 <input name='teams_search_box' onchange='$.getJSON("/auto/json/seach-strings-teams?name=" + teams_search_box.text, null, function (data) {updateMenuOptions("teams", "id", ["name"], data);})'/>
@@ -70,11 +70,33 @@ You are not permitted to view teams of events
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof teamorganisers admin %}
+<span class='select-box' farside='teams' found='true'>
+<input name='teams_search_box' onchange='$.getJSON("/auto/json/seach-strings-teams?name=" + teams_search_box.text, null, function (data) {updateMenuOptions("teams", "id", ["name"], data);})'/>
+<br/>
+<select id='teams' name='teams' multiple='multiple'>
+{% for r in teams %}<option value='{{r.id}}' {% ifequal record.teams r.id%}selected{% endifequal %}>{{r.name}}</option>{% endfor %}
+</select>
+</span>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='teams' name='teams' class='pseudo-widget disabled'>
+{{record.teams}}
+</span>
+{% else %}
+<span id='teams' name='teams' class='pseudo-widget not-authorised'>
+You are not permitted to view teams of events
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='date'>
 Date
 </label>
+{% if {{record.date}} %}
 {% ifmemberof teamorganisers admin %}
 <input id='date' name='date' type='date' value='{{record.date}}' maxlength='' size='16'/>
 {% else %}
@@ -88,11 +110,27 @@ You are not permitted to view date of events
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof teamorganisers admin %}
+<input id='date' name='date' type='date' value='{{record.date}}' maxlength='' size='16'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='date' name='date' class='pseudo-widget disabled'>
+{{record.date}}
+</span>
+{% else %}
+<span id='date' name='date' class='pseudo-widget not-authorised'>
+You are not permitted to view date of events
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='time'>
 Time
 </label>
+{% if {{record.time}} %}
 {% ifmemberof teamorganisers admin %}
 <input id='time' name='time' type='time' value='{{record.time}}' maxlength='' size='16'/>
 {% else %}
@@ -106,11 +144,27 @@ You are not permitted to view time of events
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof teamorganisers admin %}
+<input id='time' name='time' type='time' value='{{record.time}}' maxlength='' size='16'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='time' name='time' class='pseudo-widget disabled'>
+{{record.time}}
+</span>
+{% else %}
+<span id='time' name='time' class='pseudo-widget not-authorised'>
+You are not permitted to view time of events
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='decription'>
 Decription
 </label>
+{% if {{record.decription}} %}
 {% ifmemberof teamorganisers admin %}
 <textarea rows='8' cols='60' id='decription' name='decription'>
 {{record.decription}}
@@ -126,11 +180,29 @@ You are not permitted to view decription of events
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof teamorganisers admin %}
+<textarea rows='8' cols='60' id='decription' name='decription'>
+{{record.decription}}
+</textarea>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='decription' name='decription' class='pseudo-widget disabled'>
+{{record.decription}}
+</span>
+{% else %}
+<span id='decription' name='decription' class='pseudo-widget not-authorised'>
+You are not permitted to view decription of events
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 <p class='widget'>
 <label for='cancelled'>
 Cancelled
 </label>
+{% if {{record.cancelled}} %}
 {% ifmemberof teamorganisers admin %}
 <input id='cancelled' name='cancelled' type='checkbox' value='{{record.cancelled}}' maxlength='' size='16'/>
 {% else %}
@@ -144,6 +216,21 @@ You are not permitted to view cancelled of events
 </span>
 {% endifmemberof %}
 {% endifmemberof %}
+{% else %}
+{% ifmemberof teamorganisers admin %}
+<input id='cancelled' name='cancelled' type='checkbox' value='{{record.cancelled}}' maxlength='' size='16'/>
+{% else %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+<span id='cancelled' name='cancelled' class='pseudo-widget disabled'>
+{{record.cancelled}}
+</span>
+{% else %}
+<span id='cancelled' name='cancelled' class='pseudo-widget not-authorised'>
+You are not permitted to view cancelled of events
+</span>
+{% endifmemberof %}
+{% endifmemberof %}
+{% endif %}
 </p>
 {% ifmemberof teamorganisers admin %}
 <p class='widget action-safe'>
