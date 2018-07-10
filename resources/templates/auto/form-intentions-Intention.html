@@ -1,10 +1,12 @@
 {% extends "base.html" %}
-<!-- File form-intentions-Intention.html generated 2018-07-09T20:55:34.543Z by adl.to-selmer-templates.
+<!-- File form-intentions-Intention.html generated 2018-07-10T15:25:24.214Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
 {% block extra-head %}
 
+           {% script "/js/lib/node_modules/selectize/dist/js/standalone/selectize.min.js" %}
+           {% style "/js/lib/node_modules/selectize/dist/css/selectize.css" %}
 {% endblock %}
 {% block content %}
 <div id='content' class='edit'>
@@ -15,14 +17,10 @@ See [Application Description Language](https://github.com/simon-brooke/adl).-->
 Visit_id
 </label>
 {% if {{record.visit_id}} %}
-{% ifmemberof admin %}
-<span class='select-box' farside='visits' found='true'>
-<input name='visit_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-visits?address_id=" + visit_id_search_box.text + "&amp;date=" + visit_id_search_box.text, null, function (data) {updateMenuOptions("visit_id", "id", ["address_id", "date"], data);})'/>
-<br/>
+{% ifmemberof %}
 <select id='visit_id' name='visit_id'>
-{% for r in visits %}<option value='{{r.id}}' {% ifequal record.visit_id r.id%}selected{% endifequal %}>{{r.address_id}} {{r.date}}</option>{% endfor %}
+{% for option in visit_id %}<option value='{{option.id}}' {% ifequal record.visit_id option.id%}selected{% endifequal %}>{{option.address_id}} {{option.date}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
 <span id='visit_id' name='visit_id' class='pseudo-widget disabled'>
@@ -35,14 +33,10 @@ You are not permitted to view visit_id of intentions
 {% endifmemberof %}
 {% endifmemberof %}
 {% else %}
-{% ifmemberof admin %}
-<span class='select-box' farside='visits' found='true'>
-<input name='visit_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-visits?address_id=" + visit_id_search_box.text + "&amp;date=" + visit_id_search_box.text, null, function (data) {updateMenuOptions("visit_id", "id", ["address_id", "date"], data);})'/>
-<br/>
+{% ifmemberof %}
 <select id='visit_id' name='visit_id'>
-{% for r in visits %}<option value='{{r.id}}' {% ifequal record.visit_id r.id%}selected{% endifequal %}>{{r.address_id}} {{r.date}}</option>{% endfor %}
+{% for option in visit_id %}<option value='{{option.id}}' {% ifequal record.visit_id option.id%}selected{% endifequal %}>{{option.address_id}} {{option.date}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
 <span id='visit_id' name='visit_id' class='pseudo-widget disabled'>
@@ -61,14 +55,10 @@ You are not permitted to view visit_id of intentions
 Elector_id
 </label>
 {% if {{record.elector_id}} %}
-{% ifmemberof admin %}
-<span class='select-box' farside='electors' found='true'>
-<input name='elector_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-electors?gender=" + elector_id_search_box.text + "&amp;email=" + elector_id_search_box.text + "&amp;name=" + elector_id_search_box.text + "&amp;phone=" + elector_id_search_box.text, null, function (data) {updateMenuOptions("elector_id", "id", ["gender", "email", "name", "phone"], data);})'/>
-<br/>
+{% ifmemberof %}
 <select id='elector_id' name='elector_id'>
-{% for r in electors %}<option value='{{r.id}}' {% ifequal record.elector_id r.id%}selected{% endifequal %}>{{r.name}} {{r.phone}} {{r.email}} {{r.gender}}</option>{% endfor %}
+{% for option in elector_id %}<option value='{{option.id}}' {% ifequal record.elector_id option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
 <span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
@@ -81,14 +71,10 @@ You are not permitted to view elector_id of intentions
 {% endifmemberof %}
 {% endifmemberof %}
 {% else %}
-{% ifmemberof admin %}
-<span class='select-box' farside='electors' found='true'>
-<input name='elector_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-electors?gender=" + elector_id_search_box.text + "&amp;email=" + elector_id_search_box.text + "&amp;name=" + elector_id_search_box.text + "&amp;phone=" + elector_id_search_box.text, null, function (data) {updateMenuOptions("elector_id", "id", ["gender", "email", "name", "phone"], data);})'/>
-<br/>
+{% ifmemberof %}
 <select id='elector_id' name='elector_id'>
-{% for r in electors %}<option value='{{r.id}}' {% ifequal record.elector_id r.id%}selected{% endifequal %}>{{r.name}} {{r.phone}} {{r.email}} {{r.gender}}</option>{% endfor %}
+{% for option in elector_id %}<option value='{{option.id}}' {% ifequal record.elector_id option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
 <span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
@@ -107,12 +93,10 @@ You are not permitted to view elector_id of intentions
 Option_id
 </label>
 {% if {{record.option_id}} %}
-{% ifmemberof admin %}
-<span class='select-box' farside='options' found='true'>
+{% ifmemberof %}
 <select id='option_id' name='option_id'>
-{% for r in options %}<option value='{{r.id}}' {% ifequal record.option_id r.id%}selected{% endifequal %}>{{r.id}}</option>{% endfor %}
+{% for option in option_id %}<option value='{{option.id}}' {% ifequal record.option_id option.id%}selected{% endifequal %}>{{option.id}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
 <span id='option_id' name='option_id' class='pseudo-widget disabled'>
@@ -125,12 +109,10 @@ You are not permitted to view option_id of intentions
 {% endifmemberof %}
 {% endifmemberof %}
 {% else %}
-{% ifmemberof admin %}
-<span class='select-box' farside='options' found='true'>
+{% ifmemberof %}
 <select id='option_id' name='option_id'>
-{% for r in options %}<option value='{{r.id}}' {% ifequal record.option_id r.id%}selected{% endifequal %}>{{r.id}}</option>{% endfor %}
+{% for option in option_id %}<option value='{{option.id}}' {% ifequal record.option_id option.id%}selected{% endifequal %}>{{option.id}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
 <span id='option_id' name='option_id' class='pseudo-widget disabled'>
@@ -149,7 +131,7 @@ You are not permitted to view option_id of intentions
 Locality
 </label>
 {% if {{record.locality}} %}
-{% ifmemberof admin %}
+{% ifmemberof %}
 <input id='locality' name='locality' type='number' value='{{record.locality}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
@@ -163,7 +145,7 @@ You are not permitted to view locality of intentions
 {% endifmemberof %}
 {% endifmemberof %}
 {% else %}
-{% ifmemberof admin %}
+{% ifmemberof %}
 <input id='locality' name='locality' type='number' value='{{record.locality}}' maxlength='' size='16'/>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
@@ -178,7 +160,7 @@ You are not permitted to view locality of intentions
 {% endifmemberof %}
 {% endif %}
 </p>
-{% ifmemberof admin %}
+{% ifmemberof %}
 <p class='widget action-safe'>
 <label for='save-button' class='action-safe'>
 To save this intentions record
@@ -186,7 +168,7 @@ To save this intentions record
 <input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
 </p>
 {% endifmemberof %}
-{% ifmemberof admin %}
+{% ifmemberof %}
 <p class='widget action-dangerous'>
 <label for='delete-button' class='action-dangerous'>
 To delete this intentions record
@@ -200,20 +182,63 @@ To delete this intentions record
 {% endblock %}
 {% block extra-tail %}
 <script type='text/javascript'>
-        /**
-         * update the select menu with id `wid` from this `data` whose fields include
-         * this `entity_key` and these `fields`
-         */
-        function updateMenuOptions(wid, entity_key, fields, data){
-          $('#' + wid).children().filter(function(){
-            return $(this).attr('selected') === undefined;
-          }).remove().end();
+/**
+ * selectize one select widget. Substitute the actual id of the widget for `visit_id`.
+ */
+$('#visit_id').selectize({
+  valueField: 'id',
+  labelField: 'name',
+  searchField: 'name',
+  options: [],
+  create: false,
 
-          $.each(data, function(key, entry){
-            $('#' + wid).append(
-              $('<option></option>').attr('value', key).text(entry));
-          });
-        }
+  load: function(query, callback) {
+    console.log('Desperately seeking ' + query);
+    if (query === null || !query.length) return callback();
+    $.ajax({
+      url: '/json/auto/search-strings-electors?name=' + query,
+      type: 'GET',
+      dataType: 'jsonp',
+      error: function() {
+        console.log( 'Query ' + query + ' failed.');
+        callback();
+      },
+      success: function(res) {
+        console.log('Received ' + res + ' records for ' + query);
+        callback(res);
+      }
+    });
+  }
+});
+
+/**
+ * selectize one select widget. Substitute the actual id of the widget for `elector_id`.
+ */
+$('#elector_id').selectize({
+  valueField: 'id',
+  labelField: 'name',
+  searchField: 'name',
+  options: [],
+  create: false,
+
+  load: function(query, callback) {
+    console.log('Desperately seeking ' + query);
+    if (query === null || !query.length) return callback();
+    $.ajax({
+      url: '/json/auto/search-strings-electors?name=' + query,
+      type: 'GET',
+      dataType: 'jsonp',
+      error: function() {
+        console.log( 'Query ' + query + ' failed.');
+        callback();
+      },
+      success: function(res) {
+        console.log('Received ' + res + ' records for ' + query);
+        callback(res);
+      }
+    });
+  }
+});
 
 </script>
 

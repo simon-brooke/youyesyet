@@ -53,22 +53,15 @@
   :main ^:skip-aot youyesyet.core
   :migratus {:store :database :db ~(get (System/getenv) "DATABASE_URL")}
 
-  :plugins [[lein-bower "0.5.1"]
-            [lein-cljsbuild "1.1.4"]
+  :plugins [[lein-cljsbuild "1.1.4"]
             [lein-codox "0.10.3"]
             [lein-cprop "1.0.1"]
             [lein-less "1.7.5"]
             [lein-npm "0.6.2"]
             [lein-uberwar "0.2.0"]
             [migratus-lein "0.4.2"]
-            [org.clojars.punkisdead/lein-cucumber "1.0.5"]
-             ]
+            [org.clojars.punkisdead/lein-cucumber "1.0.5"]]
 
-  :bower-dependencies [[leaflet "0.7.3"]
-                       [jquery "3.3.1"]
-                       [datatables.net "1.10.19"]
-                       [datatables.net-dt "1.10.19"]]
-  :bower {:directory "resources/public/js/lib"}
 
   :cucumber-feature-paths ["test/clj/features"]
 

@@ -1,11 +1,14 @@
 {% extends "base.html" %}
-<!-- File form-events-Events.html generated 2018-07-09T20:55:34.534Z by adl.to-selmer-templates.
+<!-- File form-events-Events.html generated 2018-07-10T15:25:24.209Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
 {% block extra-head %}
-{% script "js/lib/node_modules/simplemde/dist/simplemde.min.js" %}
-     {% style "js/lib/node_modules/simplemde/dist/simplemde.min.css" %}
+
+           {% script "js/lib/node_modules/simplemde/dist/simplemde.min.js" %}
+           {% style "js/lib/node_modules/simplemde/dist/simplemde.min.css" %}
+           {% script "/js/lib/node_modules/selectize/dist/js/standalone/selectize.min.js" %}
+           {% style "/js/lib/node_modules/selectize/dist/css/selectize.css" %}
 {% endblock %}
 {% block content %}
 <div id='content' class='edit'>
@@ -52,13 +55,9 @@ Teams
 </label>
 {% if {{record.teams}} %}
 {% ifmemberof teamorganisers admin %}
-<span class='select-box' farside='teams' found='true'>
-<input name='teams_search_box' onchange='$.getJSON("/auto/json/seach-strings-teams?name=" + teams_search_box.text, null, function (data) {updateMenuOptions("teams", "id", ["name"], data);})'/>
-<br/>
 <select id='teams' name='teams' multiple='multiple'>
-{% for r in teams %}<option value='{{r.id}}' {% ifequal record.teams r.id%}selected{% endifequal %}>{{r.name}}</option>{% endfor %}
+{% for option in teams %}<option value='{{option.id}}' {% ifequal record.teams option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='teams' name='teams' class='pseudo-widget disabled'>
@@ -72,13 +71,9 @@ You are not permitted to view teams of events
 {% endifmemberof %}
 {% else %}
 {% ifmemberof teamorganisers admin %}
-<span class='select-box' farside='teams' found='true'>
-<input name='teams_search_box' onchange='$.getJSON("/auto/json/seach-strings-teams?name=" + teams_search_box.text, null, function (data) {updateMenuOptions("teams", "id", ["name"], data);})'/>
-<br/>
 <select id='teams' name='teams' multiple='multiple'>
-{% for r in teams %}<option value='{{r.id}}' {% ifequal record.teams r.id%}selected{% endifequal %}>{{r.name}}</option>{% endfor %}
+{% for option in teams %}<option value='{{option.id}}' {% ifequal record.teams option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='teams' name='teams' class='pseudo-widget disabled'>
@@ -254,21 +249,6 @@ To delete this events record
 {% endblock %}
 {% block extra-tail %}
 <script type='text/javascript'>
-        /**
-         * update the select menu with id `wid` from this `data` whose fields include
-         * this `entity_key` and these `fields`
-         */
-        function updateMenuOptions(wid, entity_key, fields, data){
-          $('#' + wid).children().filter(function(){
-            return $(this).attr('selected') === undefined;
-          }).remove().end();
-
-          $.each(data, function(key, entry){
-            $('#' + wid).append(
-              $('<option></option>').attr('value', key).text(entry));
-          });
-        }
-
           var simplemde = new SimpleMDE({
             autosave: {
               enabled: true,

@@ -1,10 +1,12 @@
 {% extends "base.html" %}
-<!-- File form-electors-Elector.html generated 2018-07-09T20:55:34.529Z by adl.to-selmer-templates.
+<!-- File form-electors-Elector.html generated 2018-07-10T15:25:24.205Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
 {% block extra-head %}
 
+           {% script "/js/lib/node_modules/selectize/dist/js/standalone/selectize.min.js" %}
+           {% style "/js/lib/node_modules/selectize/dist/css/selectize.css" %}
 {% endblock %}
 {% block content %}
 <div id='content' class='edit'>
@@ -51,13 +53,9 @@ Dwelling_id
 </label>
 {% if {{record.dwelling_id}} %}
 {% ifmemberof admin %}
-<span class='select-box' farside='dwellings' found='true'>
-<input name='dwelling_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-dwellings?sub-address=" + dwelling_id_search_box.text + "&amp;address_id=" + dwelling_id_search_box.text, null, function (data) {updateMenuOptions("dwelling_id", "id", ["sub-address", "address_id"], data);})'/>
-<br/>
 <select id='dwelling_id' name='dwelling_id'>
-{% for r in dwellings %}<option value='{{r.id}}' {% ifequal record.dwelling_id r.id%}selected{% endifequal %}>{{r.address_id}} {{r.sub-address}}</option>{% endfor %}
+{% for option in dwelling_id %}<option value='{{option.id}}' {% ifequal record.dwelling_id option.id%}selected{% endifequal %}>{{option.address_id}} {{option.sub-address}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='dwelling_id' name='dwelling_id' class='pseudo-widget disabled'>
@@ -71,13 +69,9 @@ You are not permitted to view dwelling_id of electors
 {% endifmemberof %}
 {% else %}
 {% ifmemberof admin %}
-<span class='select-box' farside='dwellings' found='true'>
-<input name='dwelling_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-dwellings?sub-address=" + dwelling_id_search_box.text + "&amp;address_id=" + dwelling_id_search_box.text, null, function (data) {updateMenuOptions("dwelling_id", "id", ["sub-address", "address_id"], data);})'/>
-<br/>
 <select id='dwelling_id' name='dwelling_id'>
-{% for r in dwellings %}<option value='{{r.id}}' {% ifequal record.dwelling_id r.id%}selected{% endifequal %}>{{r.address_id}} {{r.sub-address}}</option>{% endfor %}
+{% for option in dwelling_id %}<option value='{{option.id}}' {% ifequal record.dwelling_id option.id%}selected{% endifequal %}>{{option.address_id}} {{option.sub-address}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='dwelling_id' name='dwelling_id' class='pseudo-widget disabled'>
@@ -165,11 +159,9 @@ Gender
 </label>
 {% if {{record.gender}} %}
 {% ifmemberof admin %}
-<span class='select-box' farside='genders' found='true'>
 <select id='gender' name='gender'>
-{% for r in genders %}<option value='{{r.id}}' {% ifequal record.gender r.id%}selected{% endifequal %}>{{r.id}}</option>{% endfor %}
+{% for option in gender %}<option value='{{option.id}}' {% ifequal record.gender option.id%}selected{% endifequal %}>{{option.id}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='gender' name='gender' class='pseudo-widget disabled'>
@@ -183,11 +175,9 @@ You are not permitted to view gender of electors
 {% endifmemberof %}
 {% else %}
 {% ifmemberof admin %}
-<span class='select-box' farside='genders' found='true'>
 <select id='gender' name='gender'>
-{% for r in genders %}<option value='{{r.id}}' {% ifequal record.gender r.id%}selected{% endifequal %}>{{r.id}}</option>{% endfor %}
+{% for option in gender %}<option value='{{option.id}}' {% ifequal record.gender option.id%}selected{% endifequal %}>{{option.id}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='gender' name='gender' class='pseudo-widget disabled'>
@@ -223,20 +213,34 @@ To delete this electors record
 {% endblock %}
 {% block extra-tail %}
 <script type='text/javascript'>
-        /**
-         * update the select menu with id `wid` from this `data` whose fields include
-         * this `entity_key` and these `fields`
-         */
-        function updateMenuOptions(wid, entity_key, fields, data){
-          $('#' + wid).children().filter(function(){
-            return $(this).attr('selected') === undefined;
-          }).remove().end();
+/**
+ * selectize one select widget. Substitute the actual id of the widget for `dwelling_id`.
+ */
+$('#dwelling_id').selectize({
+  valueField: 'id',
+  labelField: 'name',
+  searchField: 'name',
+  options: [],
+  create: false,
 
-          $.each(data, function(key, entry){
-            $('#' + wid).append(
-              $('<option></option>').attr('value', key).text(entry));
-          });
-        }
+  load: function(query, callback) {
+    console.log('Desperately seeking ' + query);
+    if (query === null || !query.length) return callback();
+    $.ajax({
+      url: '/json/auto/search-strings-electors?name=' + query,
+      type: 'GET',
+      dataType: 'jsonp',
+      error: function() {
+        console.log( 'Query ' + query + ' failed.');
+        callback();
+      },
+      success: function(res) {
+        console.log('Received ' + res + ' records for ' + query);
+        callback(res);
+      }
+    });
+  }
+});
 
 </script>
 

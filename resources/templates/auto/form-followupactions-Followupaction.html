@@ -1,11 +1,14 @@
 {% extends "base.html" %}
-<!-- File form-followupactions-Followupaction.html generated 2018-07-09T20:55:34.549Z by adl.to-selmer-templates.
+<!-- File form-followupactions-Followupaction.html generated 2018-07-10T15:25:24.218Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
 {% block extra-head %}
-{% script "js/lib/node_modules/simplemde/dist/simplemde.min.js" %}
-     {% style "js/lib/node_modules/simplemde/dist/simplemde.min.css" %}
+
+           {% script "js/lib/node_modules/simplemde/dist/simplemde.min.js" %}
+           {% style "js/lib/node_modules/simplemde/dist/simplemde.min.css" %}
+           {% script "/js/lib/node_modules/selectize/dist/js/standalone/selectize.min.js" %}
+           {% style "/js/lib/node_modules/selectize/dist/css/selectize.css" %}
 {% endblock %}
 {% block content %}
 <div id='content' class='edit'>
@@ -18,13 +21,9 @@ Request_id
 </label>
 {% if {{record.request_id}} %}
 {% ifmemberof admin %}
-<span class='select-box' farside='followuprequests' found='true'>
-<input name='request_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-followuprequests?elector_id=" + request_id_search_box.text + "&amp;issue_id=" + request_id_search_box.text + "&amp;visit_id=" + request_id_search_box.text, null, function (data) {updateMenuOptions("request_id", "id", ["elector_id", "issue_id", "visit_id"], data);})'/>
-<br/>
 <select id='request_id' name='request_id'>
-{% for r in followuprequests %}<option value='{{r.id}}' {% ifequal record.request_id r.id%}selected{% endifequal %}>{{r.elector_id}} {{r.visit_id}} {{r.issue_id}}</option>{% endfor %}
+{% for option in request_id %}<option value='{{option.id}}' {% ifequal record.request_id option.id%}selected{% endifequal %}>{{option.elector_id}} {{option.visit_id}} {{option.issue_id}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='request_id' name='request_id' class='pseudo-widget disabled'>
@@ -38,13 +37,9 @@ You are not permitted to view request_id of followupactions
 {% endifmemberof %}
 {% else %}
 {% ifmemberof admin %}
-<span class='select-box' farside='followuprequests' found='true'>
-<input name='request_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-followuprequests?elector_id=" + request_id_search_box.text + "&amp;issue_id=" + request_id_search_box.text + "&amp;visit_id=" + request_id_search_box.text, null, function (data) {updateMenuOptions("request_id", "id", ["elector_id", "issue_id", "visit_id"], data);})'/>
-<br/>
 <select id='request_id' name='request_id'>
-{% for r in followuprequests %}<option value='{{r.id}}' {% ifequal record.request_id r.id%}selected{% endifequal %}>{{r.elector_id}} {{r.visit_id}} {{r.issue_id}}</option>{% endfor %}
+{% for option in request_id %}<option value='{{option.id}}' {% ifequal record.request_id option.id%}selected{% endifequal %}>{{option.elector_id}} {{option.visit_id}} {{option.issue_id}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='request_id' name='request_id' class='pseudo-widget disabled'>
@@ -64,13 +59,9 @@ Actor
 </label>
 {% if {{record.actor}} %}
 {% ifmemberof admin %}
-<span class='select-box' farside='canvassers' found='true'>
-<input name='actor_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + actor_search_box.text, null, function (data) {updateMenuOptions("actor", "", [""], data);})'/>
-<br/>
 <select id='actor' name='actor'>
-{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.actor r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
+{% for option in actor %}<option value='{{option.id}}' {% ifequal record.actor option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='actor' name='actor' class='pseudo-widget disabled'>
@@ -84,13 +75,9 @@ You are not permitted to view actor of followupactions
 {% endifmemberof %}
 {% else %}
 {% ifmemberof admin %}
-<span class='select-box' farside='canvassers' found='true'>
-<input name='actor_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + actor_search_box.text, null, function (data) {updateMenuOptions("actor", "", [""], data);})'/>
-<br/>
 <select id='actor' name='actor'>
-{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.actor r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
+{% for option in actor %}<option value='{{option.id}}' {% ifequal record.actor option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
 <span id='actor' name='actor' class='pseudo-widget disabled'>
@@ -232,20 +219,63 @@ To delete this followupactions record
 {% endblock %}
 {% block extra-tail %}
 <script type='text/javascript'>
-        /**
-         * update the select menu with id `wid` from this `data` whose fields include
-         * this `entity_key` and these `fields`
-         */
-        function updateMenuOptions(wid, entity_key, fields, data){
-          $('#' + wid).children().filter(function(){
-            return $(this).attr('selected') === undefined;
-          }).remove().end();
+/**
+ * selectize one select widget. Substitute the actual id of the widget for `request_id`.
+ */
+$('#request_id').selectize({
+  valueField: 'id',
+  labelField: 'name',
+  searchField: 'name',
+  options: [],
+  create: false,
 
-          $.each(data, function(key, entry){
-            $('#' + wid).append(
-              $('<option></option>').attr('value', key).text(entry));
-          });
-        }
+  load: function(query, callback) {
+    console.log('Desperately seeking ' + query);
+    if (query === null || !query.length) return callback();
+    $.ajax({
+      url: '/json/auto/search-strings-electors?name=' + query,
+      type: 'GET',
+      dataType: 'jsonp',
+      error: function() {
+        console.log( 'Query ' + query + ' failed.');
+        callback();
+      },
+      success: function(res) {
+        console.log('Received ' + res + ' records for ' + query);
+        callback(res);
+      }
+    });
+  }
+});
+
+/**
+ * selectize one select widget. Substitute the actual id of the widget for `actor`.
+ */
+$('#actor').selectize({
+  valueField: 'id',
+  labelField: 'name',
+  searchField: 'name',
+  options: [],
+  create: false,
+
+  load: function(query, callback) {
+    console.log('Desperately seeking ' + query);
+    if (query === null || !query.length) return callback();
+    $.ajax({
+      url: '/json/auto/search-strings-electors?name=' + query,
+      type: 'GET',
+      dataType: 'jsonp',
+      error: function() {
+        console.log( 'Query ' + query + ' failed.');
+        callback();
+      },
+      success: function(res) {
+        console.log('Received ' + res + ' records for ' + query);
+        callback(res);
+      }
+    });
+  }
+});
 
           var simplemde = new SimpleMDE({
             autosave: {

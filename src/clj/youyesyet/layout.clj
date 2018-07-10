@@ -63,9 +63,12 @@
 (defn render
   "renders the HTML `template` located relative to resources/templates in
   the context of this session and with these parameters."
+  ;; TODO: I'm passing `session` through into render. The default luminus
+  ;; setup doesn't do this, and Dmitri is an awful lot better at this stuff
+  ;; than me so there's almost certainly a reason it doesn't.
   [template session & [params]]
   (let [user (:user session)]
-    (log/debug (str "layout/render: template: '" template "'; user: '" user "'."))
+    (log/debug (str "layout/render: template: '" template "'; user: '" (:username user)))
     (content-type
       (ok
         (parser/render-file

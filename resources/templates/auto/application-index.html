@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File application-index.html generated 2018-07-09T20:55:34.526Z by adl.to-selmer-templates.
+<!-- File application-index.html generated 2018-07-10T15:25:24.202Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -142,6 +142,9 @@ Followupmethod
 {% endifmemberof %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <dd>
+<p>
+Methods which may be used to follow up a followup request. Reference data.
+</p>
 </dd>
 {% endifmemberof %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -246,14 +249,14 @@ Team
 <dd>
 </dd>
 {% endifmemberof %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers admin %}
 <dt>
 <a href='{{servlet-context}}/list-visits-Visits'>
 Visit
 </a>
 </dt>
 {% endifmemberof %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers admin %}
 <dd>
 <p>
 All visits made by canvassers to dwellings in

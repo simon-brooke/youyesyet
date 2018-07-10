@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File list-canvassers-Canvassers.html generated 2018-07-09T20:55:34.545Z by adl.to-selmer-templates.
+<!-- File list-canvassers-Canvassers.html generated 2018-07-10T15:25:24.216Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -54,16 +54,7 @@ Username
 Fullname
 </th>
 <th>
-Elector_id
-</th>
-<th>
 Address_id
-</th>
-<th>
-Phone
-</th>
-<th>
-Email
 </th>
 <th>
 Authority_id
@@ -86,16 +77,7 @@ Authorised
 <input id='fullname' type='text' name='fullname' value='{{ params.fullname }}'/>
 </th>
 <th>
-<input id='elector_id_expanded' type='text' name='elector_id_expanded' value='{{ params.elector_id_expanded }}'/>
-</th>
-<th>
 <input id='address_id_expanded' type='text' name='address_id_expanded' value='{{ params.address_id_expanded }}'/>
-</th>
-<th>
-<input id='phone' type='text' name='phone' value='{{ params.phone }}'/>
-</th>
-<th>
-<input id='email' type='text' name='email' value='{{ params.email }}'/>
 </th>
 <th>
 <input id='authority_id_expanded' type='text' name='authority_id_expanded' value='{{ params.authority_id_expanded }}'/>
@@ -121,20 +103,9 @@ Authorised
 {{ record.fullname }}
 </td>
 <td>
-<a href='{{servlet-context}}/form-electors-Elector?id={{ record.elector_id }}'>
-{{ record.elector_id_expanded }}
-</a>
-</td>
-<td>
 <a href='{{servlet-context}}/form-addresses-Address?id={{ record.address_id }}'>
 {{ record.address_id_expanded }}
 </a>
-</td>
-<td>
-{{ record.phone }}
-</td>
-<td>
-{{ record.email }}
 </td>
 <td>
 <a href='{{servlet-context}}/form-authorities-Authority?id={{ record.authority_id }}'>

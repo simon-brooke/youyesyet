@@ -1,10 +1,12 @@
 {% extends "base.html" %}
-<!-- File form-visits-Visit.html generated 2018-07-09T20:55:34.524Z by adl.to-selmer-templates.
+<!-- File form-visits-Visit.html generated 2018-07-10T15:25:24.201Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
 {% block extra-head %}
 
+           {% script "/js/lib/node_modules/selectize/dist/js/standalone/selectize.min.js" %}
+           {% style "/js/lib/node_modules/selectize/dist/css/selectize.css" %}
 {% endblock %}
 {% block content %}
 <div id='content' class='edit'>
@@ -18,7 +20,7 @@ Id
 {% ifmemberof admin %}
 <input id='id' name='id' type='number' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
@@ -32,7 +34,7 @@ You are not permitted to view id of visits
 {% ifmemberof admin %}
 <input id='id' name='id' type='number' value='{{record.id}}' maxlength='' size='16'/>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers admin %}
 <span id='id' name='id' class='pseudo-widget disabled'>
 {{record.id}}
 </span>
@@ -50,15 +52,11 @@ Address_id
 </label>
 {% if {{record.address_id}} %}
 {% ifmemberof admin %}
-<span class='select-box' farside='addresses' found='true'>
-<input name='address_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-addresses?postcode=" + address_id_search_box.text + "&amp;address=" + address_id_search_box.text, null, function (data) {updateMenuOptions("address_id", "id", ["postcode", "address"], data);})'/>
-<br/>
 <select id='address_id' name='address_id'>
-{% for r in addresses %}<option value='{{r.id}}' {% ifequal record.address_id r.id%}selected{% endifequal %}>{{r.address}} {{r.postcode}}</option>{% endfor %}
+{% for option in address_id %}<option value='{{option.id}}' {% ifequal record.address_id option.id%}selected{% endifequal %}>{{option.address}} {{option.postcode}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers admin %}
 <span id='address_id' name='address_id' class='pseudo-widget disabled'>
 {{record.address_id}}
 </span>
@@ -70,15 +68,11 @@ You are not permitted to view address_id of visits
 {% endifmemberof %}
 {% else %}
 {% ifmemberof admin %}
-<span class='select-box' farside='addresses' found='true'>
-<input name='address_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-addresses?postcode=" + address_id_search_box.text + "&amp;address=" + address_id_search_box.text, null, function (data) {updateMenuOptions("address_id", "id", ["postcode", "address"], data);})'/>
-<br/>
 <select id='address_id' name='address_id'>
-{% for r in addresses %}<option value='{{r.id}}' {% ifequal record.address_id r.id%}selected{% endifequal %}>{{r.address}} {{r.postcode}}</option>{% endfor %}
+{% for option in address_id %}<option value='{{option.id}}' {% ifequal record.address_id option.id%}selected{% endifequal %}>{{option.address}} {{option.postcode}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers admin %}
 <span id='address_id' name='address_id' class='pseudo-widget disabled'>
 {{record.address_id}}
 </span>
@@ -96,15 +90,11 @@ Canvasser_id
 </label>
 {% if {{record.canvasser_id}} %}
 {% ifmemberof admin %}
-<span class='select-box' farside='canvassers' found='true'>
-<input name='canvasser_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + canvasser_id_search_box.text, null, function (data) {updateMenuOptions("canvasser_id", "", [""], data);})'/>
-<br/>
 <select id='canvasser_id' name='canvasser_id'>
-{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.canvasser_id r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
+{% for option in canvasser_id %}<option value='{{option.id}}' {% ifequal record.canvasser_id option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers admin %}
 <span id='canvasser_id' name='canvasser_id' class='pseudo-widget disabled'>
 {{record.canvasser_id}}
 </span>
@@ -116,15 +106,11 @@ You are not permitted to view canvasser_id of visits
 {% endifmemberof %}
 {% else %}
 {% ifmemberof admin %}
-<span class='select-box' farside='canvassers' found='true'>
-<input name='canvasser_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + canvasser_id_search_box.text, null, function (data) {updateMenuOptions("canvasser_id", "", [""], data);})'/>
-<br/>
 <select id='canvasser_id' name='canvasser_id'>
-{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.canvasser_id r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
+{% for option in canvasser_id %}<option value='{{option.id}}' {% ifequal record.canvasser_id option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers admin %}
 <span id='canvasser_id' name='canvasser_id' class='pseudo-widget disabled'>
 {{record.canvasser_id}}
 </span>
@@ -144,7 +130,7 @@ Date
 {% ifmemberof admin %}
 <input id='date' name='date' type='string' value='{{record.date}}' maxlength='' size='16'/>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers admin %}
 <span id='date' name='date' class='pseudo-widget disabled'>
 {{record.date}}
 </span>
@@ -158,7 +144,7 @@ You are not permitted to view date of visits
 {% ifmemberof admin %}
 <input id='date' name='date' type='string' value='{{record.date}}' maxlength='' size='16'/>
 {% else %}
-{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers %}
+{% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin canvassers teamorganisers admin %}
 <span id='date' name='date' class='pseudo-widget disabled'>
 {{record.date}}
 </span>
@@ -192,20 +178,63 @@ To delete this visits record
 {% endblock %}
 {% block extra-tail %}
 <script type='text/javascript'>
-        /**
-         * update the select menu with id `wid` from this `data` whose fields include
-         * this `entity_key` and these `fields`
-         */
-        function updateMenuOptions(wid, entity_key, fields, data){
-          $('#' + wid).children().filter(function(){
-            return $(this).attr('selected') === undefined;
-          }).remove().end();
+/**
+ * selectize one select widget. Substitute the actual id of the widget for `address_id`.
+ */
+$('#address_id').selectize({
+  valueField: 'id',
+  labelField: 'name',
+  searchField: 'name',
+  options: [],
+  create: false,
 
-          $.each(data, function(key, entry){
-            $('#' + wid).append(
-              $('<option></option>').attr('value', key).text(entry));
-          });
-        }
+  load: function(query, callback) {
+    console.log('Desperately seeking ' + query);
+    if (query === null || !query.length) return callback();
+    $.ajax({
+      url: '/json/auto/search-strings-electors?name=' + query,
+      type: 'GET',
+      dataType: 'jsonp',
+      error: function() {
+        console.log( 'Query ' + query + ' failed.');
+        callback();
+      },
+      success: function(res) {
+        console.log('Received ' + res + ' records for ' + query);
+        callback(res);
+      }
+    });
+  }
+});
+
+/**
+ * selectize one select widget. Substitute the actual id of the widget for `canvasser_id`.
+ */
+$('#canvasser_id').selectize({
+  valueField: 'id',
+  labelField: 'name',
+  searchField: 'name',
+  options: [],
+  create: false,
+
+  load: function(query, callback) {
+    console.log('Desperately seeking ' + query);
+    if (query === null || !query.length) return callback();
+    $.ajax({
+      url: '/json/auto/search-strings-electors?name=' + query,
+      type: 'GET',
+      dataType: 'jsonp',
+      error: function() {
+        console.log( 'Query ' + query + ' failed.');
+        callback();
+      },
+      success: function(res) {
+        console.log('Received ' + res + ' records for ' + query);
+        callback(res);
+      }
+    });
+  }
+});
 
 </script>
 

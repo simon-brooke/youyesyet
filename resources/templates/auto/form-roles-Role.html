@@ -1,10 +1,12 @@
 {% extends "base.html" %}
-<!-- File form-roles-Role.html generated 2018-07-09T20:55:34.522Z by adl.to-selmer-templates.
+<!-- File form-roles-Role.html generated 2018-07-10T15:25:24.199Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
 {% block extra-head %}
 
+           {% script "/js/lib/node_modules/selectize/dist/js/standalone/selectize.min.js" %}
+           {% style "/js/lib/node_modules/selectize/dist/css/selectize.css" %}
 {% endblock %}
 {% block content %}
 <div id='content' class='edit'>
@@ -51,13 +53,9 @@ Members
 </label>
 {% if {{record.members}} %}
 {% ifmemberof admin %}
-<span class='select-box' farside='canvassers' found='true'>
-<input name='members_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + members_search_box.text, null, function (data) {updateMenuOptions("members", "", [""], data);})'/>
-<br/>
 <select id='members' name='members' multiple='multiple'>
-{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.members r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
+{% for option in members %}<option value='{{option.id}}' {% ifequal record.members option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='members' name='members' class='pseudo-widget disabled'>
@@ -71,13 +69,9 @@ You are not permitted to view members of roles
 {% endifmemberof %}
 {% else %}
 {% ifmemberof admin %}
-<span class='select-box' farside='canvassers' found='true'>
-<input name='members_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + members_search_box.text, null, function (data) {updateMenuOptions("members", "", [""], data);})'/>
-<br/>
 <select id='members' name='members' multiple='multiple'>
-{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.members r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
+{% for option in members %}<option value='{{option.id}}' {% ifequal record.members option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
 <span id='members' name='members' class='pseudo-widget disabled'>
@@ -113,21 +107,6 @@ To delete this roles record
 {% endblock %}
 {% block extra-tail %}
 <script type='text/javascript'>
-        /**
-         * update the select menu with id `wid` from this `data` whose fields include
-         * this `entity_key` and these `fields`
-         */
-        function updateMenuOptions(wid, entity_key, fields, data){
-          $('#' + wid).children().filter(function(){
-            return $(this).attr('selected') === undefined;
-          }).remove().end();
-
-          $.each(data, function(key, entry){
-            $('#' + wid).append(
-              $('<option></option>').attr('value', key).text(entry));
-          });
-        }
-
 </script>
 
 {% endblock %}

@@ -1,10 +1,12 @@
 {% extends "base.html" %}
-<!-- File form-teams-Team.html generated 2018-07-09T20:55:34.527Z by adl.to-selmer-templates.
+<!-- File form-teams-Team.html generated 2018-07-10T15:25:24.204Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
 {% block extra-head %}
 
+           {% script "/js/lib/node_modules/selectize/dist/js/standalone/selectize.min.js" %}
+           {% style "/js/lib/node_modules/selectize/dist/css/selectize.css" %}
 {% endblock %}
 {% block content %}
 <div id='content' class='edit'>
@@ -51,13 +53,9 @@ District_id
 </label>
 {% if {{record.district_id}} %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
-<span class='select-box' farside='districts' found='true'>
-<input name='district_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-districts?name=" + district_id_search_box.text, null, function (data) {updateMenuOptions("district_id", "id", ["name"], data);})'/>
-<br/>
 <select id='district_id' name='district_id'>
-{% for r in districts %}<option value='{{r.id}}' {% ifequal record.district_id r.id%}selected{% endifequal %}>{{r.name}}</option>{% endfor %}
+{% for option in district_id %}<option value='{{option.id}}' {% ifequal record.district_id option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
 <span id='district_id' name='district_id' class='pseudo-widget disabled'>
@@ -71,13 +69,9 @@ You are not permitted to view district_id of teams
 {% endifmemberof %}
 {% else %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
-<span class='select-box' farside='districts' found='true'>
-<input name='district_id_search_box' onchange='$.getJSON("/auto/json/seach-strings-districts?name=" + district_id_search_box.text, null, function (data) {updateMenuOptions("district_id", "id", ["name"], data);})'/>
-<br/>
 <select id='district_id' name='district_id'>
-{% for r in districts %}<option value='{{r.id}}' {% ifequal record.district_id r.id%}selected{% endifequal %}>{{r.name}}</option>{% endfor %}
+{% for option in district_id %}<option value='{{option.id}}' {% ifequal record.district_id option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
 <span id='district_id' name='district_id' class='pseudo-widget disabled'>
@@ -131,13 +125,9 @@ Members
 </label>
 {% if {{record.members}} %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
-<span class='select-box' farside='canvassers' found='true'>
-<input name='members_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + members_search_box.text, null, function (data) {updateMenuOptions("members", "", [""], data);})'/>
-<br/>
 <select id='members' name='members' multiple='multiple'>
-{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.members r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
+{% for option in members %}<option value='{{option.id}}' {% ifequal record.members option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
 <span id='members' name='members' class='pseudo-widget disabled'>
@@ -151,13 +141,9 @@ You are not permitted to view members of teams
 {% endifmemberof %}
 {% else %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
-<span class='select-box' farside='canvassers' found='true'>
-<input name='members_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + members_search_box.text, null, function (data) {updateMenuOptions("members", "", [""], data);})'/>
-<br/>
 <select id='members' name='members' multiple='multiple'>
-{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.members r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
+{% for option in members %}<option value='{{option.id}}' {% ifequal record.members option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
 <span id='members' name='members' class='pseudo-widget disabled'>
@@ -177,13 +163,9 @@ Organisers
 </label>
 {% if {{record.organisers}} %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
-<span class='select-box' farside='canvassers' found='true'>
-<input name='organisers_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + organisers_search_box.text, null, function (data) {updateMenuOptions("organisers", "", [""], data);})'/>
-<br/>
 <select id='organisers' name='organisers' multiple='multiple'>
-{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.organisers r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
+{% for option in organisers %}<option value='{{option.id}}' {% ifequal record.organisers option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
 <span id='organisers' name='organisers' class='pseudo-widget disabled'>
@@ -197,13 +179,9 @@ You are not permitted to view organisers of teams
 {% endifmemberof %}
 {% else %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
-<span class='select-box' farside='canvassers' found='true'>
-<input name='organisers_search_box' onchange='$.getJSON("/auto/json/seach-strings-canvassers?=" + organisers_search_box.text, null, function (data) {updateMenuOptions("organisers", "", [""], data);})'/>
-<br/>
 <select id='organisers' name='organisers' multiple='multiple'>
-{% for r in canvassers %}<option value='{{r.id}}' {% ifequal record.organisers r.id%}selected{% endifequal %}>{{r.username}} {{r.fullname}} {{r.address_id}} {{r.phone}} {{r.email}}</option>{% endfor %}
+{% for option in organisers %}<option value='{{option.id}}' {% ifequal record.organisers option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
-</span>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
 <span id='organisers' name='organisers' class='pseudo-widget disabled'>
@@ -268,25 +246,137 @@ To delete this teams record
 </p>
 {% endifmemberof %}
 </form>
+<div class='auxlist'>
+<h2>
+Organisers
+</h2>
+<table>
+<thead>
+<tr>
+<th>
+Id
+</th>
+<th>
+Fullname
+</th>
+<th>
+Email
+</th>
+<th>
+Phone
+</th>
+<th>
+&nbsp;
+</th>
+</tr>
+</thead>
+<tbody>
+{% for record in organisers %}
+<tr>
+<td>
+{{ record.id }}
+</td>
+<td>
+{{ record.fullname }}
+</td>
+<td>
+{{ record.email }}
+</td>
+<td>
+{{ record.phone }}
+</td>
+<td>
+<a href='{{servlet-context}}/form-canvassers-Canvasser?id={{ record.id }}'>
+View
+</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+<div class='auxlist'>
+<h2>
+Members
+</h2>
+<table>
+<thead>
+<tr>
+<th>
+Id
+</th>
+<th>
+Fullname
+</th>
+<th>
+Email
+</th>
+<th>
+Phone
+</th>
+<th>
+&nbsp;
+</th>
+</tr>
+</thead>
+<tbody>
+{% for record in members %}
+<tr>
+<td>
+{{ record.id }}
+</td>
+<td>
+{{ record.fullname }}
+</td>
+<td>
+{{ record.email }}
+</td>
+<td>
+{{ record.phone }}
+</td>
+<td>
+<a href='{{servlet-context}}/form-canvassers-Canvasser?id={{ record.id }}'>
+View
+</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
 </div>
 
 {% endblock %}
 {% block extra-tail %}
 <script type='text/javascript'>
-        /**
-         * update the select menu with id `wid` from this `data` whose fields include
-         * this `entity_key` and these `fields`
-         */
-        function updateMenuOptions(wid, entity_key, fields, data){
-          $('#' + wid).children().filter(function(){
-            return $(this).attr('selected') === undefined;
-          }).remove().end();
+/**
+ * selectize one select widget. Substitute the actual id of the widget for `district_id`.
+ */
+$('#district_id').selectize({
+  valueField: 'id',
+  labelField: 'name',
+  searchField: 'name',
+  options: [],
+  create: false,
 
-          $.each(data, function(key, entry){
-            $('#' + wid).append(
-              $('<option></option>').attr('value', key).text(entry));
-          });
-        }
+  load: function(query, callback) {
+    console.log('Desperately seeking ' + query);
+    if (query === null || !query.length) return callback();
+    $.ajax({
+      url: '/json/auto/search-strings-electors?name=' + query,
+      type: 'GET',
+      dataType: 'jsonp',
+      error: function() {
+        console.log( 'Query ' + query + ' failed.');
+        callback();
+      },
+      success: function(res) {
+        console.log('Received ' + res + ' records for ' + query);
+        callback(res);
+      }
+    });
+  }
+});
 
 </script>
 
