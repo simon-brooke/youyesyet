@@ -274,11 +274,11 @@ version="0.1.1">
       <field property="id">
         <prompt prompt="id" locale="en-GB"/>
       </field>
-      <field property="Address">
-        <prompt prompt="address" locale="en-GB"/>
+      <field property="address">
+        <prompt prompt="Address" locale="en-GB"/>
       </field>
-      <field property="Postcode">
-        <prompt prompt="postcode" locale="en-GB"/>
+      <field property="postcode">
+        <prompt prompt="Postcode" locale="en-GB"/>
       </field>
       <field property="phone">
         <prompt prompt="Phone" locale="en-GB"/>

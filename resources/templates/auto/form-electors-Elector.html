@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-electors-Elector.html generated 2018-07-10T15:25:24.205Z by adl.to-selmer-templates.
+<!-- File form-electors-Elector.html generated 2018-07-15T11:36:36.880Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -54,7 +54,7 @@ Dwelling_id
 {% if {{record.dwelling_id}} %}
 {% ifmemberof admin %}
 <select id='dwelling_id' name='dwelling_id'>
-{% for option in dwelling_id %}<option value='{{option.id}}' {% ifequal record.dwelling_id option.id%}selected{% endifequal %}>{{option.address_id}} {{option.sub-address}}</option>{% endfor %}
+{% for option in dwelling_id %}<option value='{{option.id}}' {% ifequal record.dwelling_id option.id%}selected='selected'{% endifequal %}>{{option.address_id_expanded}} {{option.sub-address}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -70,7 +70,7 @@ You are not permitted to view dwelling_id of electors
 {% else %}
 {% ifmemberof admin %}
 <select id='dwelling_id' name='dwelling_id'>
-{% for option in dwelling_id %}<option value='{{option.id}}' {% ifequal record.dwelling_id option.id%}selected{% endifequal %}>{{option.address_id}} {{option.sub-address}}</option>{% endfor %}
+{% for option in dwelling_id %}<option value='{{option.id}}' {% ifequal record.dwelling_id option.id%}selected='selected'{% endifequal %}>{{option.address_id_expanded}} {{option.sub-address}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -160,7 +160,7 @@ Gender
 {% if {{record.gender}} %}
 {% ifmemberof admin %}
 <select id='gender' name='gender'>
-{% for option in gender %}<option value='{{option.id}}' {% ifequal record.gender option.id%}selected{% endifequal %}>{{option.id}}</option>{% endfor %}
+{% for option in gender %}<option value='{{option.id}}' {% ifequal record.gender option.id%}selected='selected'{% endifequal %}>{{option.id}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -176,7 +176,7 @@ You are not permitted to view gender of electors
 {% else %}
 {% ifmemberof admin %}
 <select id='gender' name='gender'>
-{% for option in gender %}<option value='{{option.id}}' {% ifequal record.gender option.id%}selected{% endifequal %}>{{option.id}}</option>{% endfor %}
+{% for option in gender %}<option value='{{option.id}}' {% ifequal record.gender option.id%}selected='selected'{% endifequal %}>{{option.id}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -214,13 +214,14 @@ To delete this electors record
 {% block extra-tail %}
 <script type='text/javascript'>
 /**
- * selectize one select widget. Substitute the actual id of the widget for `dwelling_id`.
+ * selectize one select widget. Substitute the actual id of the widget for `dwelling_id`,
+ * and the current value for {{record.dwelling_id}}.
  */
 $('#dwelling_id').selectize({
   valueField: 'id',
   labelField: 'name',
   searchField: 'name',
-  options: [],
+  hideSelected: false,
   create: false,
 
   load: function(query, callback) {
@@ -240,7 +241,7 @@ $('#dwelling_id').selectize({
       }
     });
   }
-});
+})[0].selectize.setValue({{record.dwelling_id}}, true);
 
 </script>
 

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-followuprequests-Followuprequest.html generated 2018-07-10T15:25:24.194Z by adl.to-selmer-templates.
+<!-- File form-followuprequests-Followuprequest.html generated 2018-07-15T11:36:36.866Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -20,7 +20,7 @@ Elector_id
 {% if {{record.elector_id}} %}
 {% ifmemberof %}
 <select id='elector_id' name='elector_id'>
-{% for option in elector_id %}<option value='{{option.id}}' {% ifequal record.elector_id option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
+{% for option in elector_id %}<option value='{{option.id}}' {% ifequal record.elector_id option.id%}selected='selected'{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -36,7 +36,7 @@ You are not permitted to view elector_id of followuprequests
 {% else %}
 {% ifmemberof %}
 <select id='elector_id' name='elector_id'>
-{% for option in elector_id %}<option value='{{option.id}}' {% ifequal record.elector_id option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
+{% for option in elector_id %}<option value='{{option.id}}' {% ifequal record.elector_id option.id%}selected='selected'{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -58,7 +58,7 @@ Visit_id
 {% if {{record.visit_id}} %}
 {% ifmemberof %}
 <select id='visit_id' name='visit_id'>
-{% for option in visit_id %}<option value='{{option.id}}' {% ifequal record.visit_id option.id%}selected{% endifequal %}>{{option.address_id}} {{option.date}}</option>{% endfor %}
+{% for option in visit_id %}<option value='{{option.id}}' {% ifequal record.visit_id option.id%}selected='selected'{% endifequal %}>{{option.address_id_expanded}} {{option.date}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -74,7 +74,7 @@ You are not permitted to view visit_id of followuprequests
 {% else %}
 {% ifmemberof %}
 <select id='visit_id' name='visit_id'>
-{% for option in visit_id %}<option value='{{option.id}}' {% ifequal record.visit_id option.id%}selected{% endifequal %}>{{option.address_id}} {{option.date}}</option>{% endfor %}
+{% for option in visit_id %}<option value='{{option.id}}' {% ifequal record.visit_id option.id%}selected='selected'{% endifequal %}>{{option.address_id_expanded}} {{option.date}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -96,7 +96,7 @@ Issue_id
 {% if {{record.issue_id}} %}
 {% ifmemberof %}
 <select id='issue_id' name='issue_id'>
-{% for option in issue_id %}<option value='{{option.id}}' {% ifequal record.issue_id option.id%}selected{% endifequal %}>{{option.id}}</option>{% endfor %}
+{% for option in issue_id %}<option value='{{option.id}}' {% ifequal record.issue_id option.id%}selected='selected'{% endifequal %}>{{option.id}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -112,7 +112,7 @@ You are not permitted to view issue_id of followuprequests
 {% else %}
 {% ifmemberof %}
 <select id='issue_id' name='issue_id'>
-{% for option in issue_id %}<option value='{{option.id}}' {% ifequal record.issue_id option.id%}selected{% endifequal %}>{{option.id}}</option>{% endfor %}
+{% for option in issue_id %}<option value='{{option.id}}' {% ifequal record.issue_id option.id%}selected='selected'{% endifequal %}>{{option.id}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -134,7 +134,7 @@ Method_id
 {% if {{record.method_id}} %}
 {% ifmemberof %}
 <select id='method_id' name='method_id'>
-{% for option in method_id %}<option value='{{option.id}}' {% ifequal record.method_id option.id%}selected{% endifequal %}>{{option.id}}</option>{% endfor %}
+{% for option in method_id %}<option value='{{option.id}}' {% ifequal record.method_id option.id%}selected='selected'{% endifequal %}>{{option.id}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -150,7 +150,7 @@ You are not permitted to view method_id of followuprequests
 {% else %}
 {% ifmemberof %}
 <select id='method_id' name='method_id'>
-{% for option in method_id %}<option value='{{option.id}}' {% ifequal record.method_id option.id%}selected{% endifequal %}>{{option.id}}</option>{% endfor %}
+{% for option in method_id %}<option value='{{option.id}}' {% ifequal record.method_id option.id%}selected='selected'{% endifequal %}>{{option.id}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -188,13 +188,14 @@ To delete this followuprequests record
 {% block extra-tail %}
 <script type='text/javascript'>
 /**
- * selectize one select widget. Substitute the actual id of the widget for `elector_id`.
+ * selectize one select widget. Substitute the actual id of the widget for `elector_id`,
+ * and the current value for {{record.elector_id}}.
  */
 $('#elector_id').selectize({
   valueField: 'id',
   labelField: 'name',
   searchField: 'name',
-  options: [],
+  hideSelected: false,
   create: false,
 
   load: function(query, callback) {
@@ -214,16 +215,17 @@ $('#elector_id').selectize({
       }
     });
   }
-});
+})[0].selectize.setValue({{record.elector_id}}, true);
 
 /**
- * selectize one select widget. Substitute the actual id of the widget for `visit_id`.
+ * selectize one select widget. Substitute the actual id of the widget for `visit_id`,
+ * and the current value for {{record.visit_id}}.
  */
 $('#visit_id').selectize({
   valueField: 'id',
   labelField: 'name',
   searchField: 'name',
-  options: [],
+  hideSelected: false,
   create: false,
 
   load: function(query, callback) {
@@ -243,7 +245,7 @@ $('#visit_id').selectize({
       }
     });
   }
-});
+})[0].selectize.setValue({{record.visit_id}}, true);
 
 </script>
 

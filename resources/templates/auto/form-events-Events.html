@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-events-Events.html generated 2018-07-10T15:25:24.209Z by adl.to-selmer-templates.
+<!-- File form-events-Events.html generated 2018-07-15T11:36:36.884Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -56,7 +56,7 @@ Teams
 {% if {{record.teams}} %}
 {% ifmemberof teamorganisers admin %}
 <select id='teams' name='teams' multiple='multiple'>
-{% for option in teams %}<option value='{{option.id}}' {% ifequal record.teams option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
+{% for option in teams %}<option value='{{option.id}}' {% ifequal record.teams option.id%}selected='selected'{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -72,7 +72,7 @@ You are not permitted to view teams of events
 {% else %}
 {% ifmemberof teamorganisers admin %}
 <select id='teams' name='teams' multiple='multiple'>
-{% for option in teams %}<option value='{{option.id}}' {% ifequal record.teams option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
+{% for option in teams %}<option value='{{option.id}}' {% ifequal record.teams option.id%}selected='selected'{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}

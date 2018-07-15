@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-roles-Role.html generated 2018-07-10T15:25:24.199Z by adl.to-selmer-templates.
+<!-- File form-roles-Role.html generated 2018-07-15T11:36:36.874Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -54,7 +54,7 @@ Members
 {% if {{record.members}} %}
 {% ifmemberof admin %}
 <select id='members' name='members' multiple='multiple'>
-{% for option in members %}<option value='{{option.id}}' {% ifequal record.members option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
+{% for option in members %}<option value='{{option.id}}' {% ifequal record.members option.id%}selected='selected'{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id_expanded}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -70,7 +70,7 @@ You are not permitted to view members of roles
 {% else %}
 {% ifmemberof admin %}
 <select id='members' name='members' multiple='multiple'>
-{% for option in members %}<option value='{{option.id}}' {% ifequal record.members option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
+{% for option in members %}<option value='{{option.id}}' {% ifequal record.members option.id%}selected='selected'{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id_expanded}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}

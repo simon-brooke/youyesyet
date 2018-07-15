@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-canvassers-Canvasser.html generated 2018-07-10T15:25:24.210Z by adl.to-selmer-templates.
+<!-- File form-canvassers-Canvasser.html generated 2018-07-15T11:36:36.886Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -162,7 +162,7 @@ Elector_id
 {% if {{record.elector_id}} %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <select id='elector_id' name='elector_id'>
-{% for option in elector_id %}<option value='{{option.id}}' {% ifequal record.elector_id option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
+{% for option in elector_id %}<option value='{{option.id}}' {% ifequal record.elector_id option.id%}selected='selected'{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -178,7 +178,7 @@ You are not permitted to view elector_id of canvassers
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <select id='elector_id' name='elector_id'>
-{% for option in elector_id %}<option value='{{option.id}}' {% ifequal record.elector_id option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
+{% for option in elector_id %}<option value='{{option.id}}' {% ifequal record.elector_id option.id%}selected='selected'{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -200,7 +200,7 @@ Address_id
 {% if {{record.address_id}} %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <select id='address_id' name='address_id'>
-{% for option in address_id %}<option value='{{option.id}}' {% ifequal record.address_id option.id%}selected{% endifequal %}>{{option.address}} {{option.postcode}}</option>{% endfor %}
+{% for option in address_id %}<option value='{{option.id}}' {% ifequal record.address_id option.id%}selected='selected'{% endifequal %}>{{option.address}} {{option.postcode}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -216,7 +216,7 @@ You are not permitted to view address_id of canvassers
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <select id='address_id' name='address_id'>
-{% for option in address_id %}<option value='{{option.id}}' {% ifequal record.address_id option.id%}selected{% endifequal %}>{{option.address}} {{option.postcode}}</option>{% endfor %}
+{% for option in address_id %}<option value='{{option.id}}' {% ifequal record.address_id option.id%}selected='selected'{% endifequal %}>{{option.address}} {{option.postcode}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -306,7 +306,7 @@ Authority_id
 {% if {{record.authority_id}} %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <select id='authority_id' name='authority_id'>
-{% for option in authority_id %}<option value='{{option.id}}' {% ifequal record.authority_id option.id%}selected{% endifequal %}>{{option.id}}</option>{% endfor %}
+{% for option in authority_id %}<option value='{{option.id}}' {% ifequal record.authority_id option.id%}selected='selected'{% endifequal %}>{{option.id}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -322,7 +322,7 @@ You are not permitted to view authority_id of canvassers
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <select id='authority_id' name='authority_id'>
-{% for option in authority_id %}<option value='{{option.id}}' {% ifequal record.authority_id option.id%}selected{% endifequal %}>{{option.id}}</option>{% endfor %}
+{% for option in authority_id %}<option value='{{option.id}}' {% ifequal record.authority_id option.id%}selected='selected'{% endifequal %}>{{option.id}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -378,7 +378,7 @@ Roles
 {% if {{record.roles}} %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <select id='roles' name='roles' multiple='multiple'>
-{% for option in roles %}<option value='{{option.role_id}}' {% ifequal record.roles option.role_id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
+{% for option in roles %}<option value='{{option.role_id}}' {% ifequal record.roles option.role_id%}selected='selected'{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -394,7 +394,7 @@ You are not permitted to view roles of canvassers
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers admin %}
 <select id='roles' name='roles' multiple='multiple'>
-{% for option in roles %}<option value='{{option.role_id}}' {% ifequal record.roles option.role_id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
+{% for option in roles %}<option value='{{option.role_id}}' {% ifequal record.roles option.role_id%}selected='selected'{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers admin canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -432,13 +432,14 @@ To delete this canvassers record
 {% block extra-tail %}
 <script type='text/javascript'>
 /**
- * selectize one select widget. Substitute the actual id of the widget for `elector_id`.
+ * selectize one select widget. Substitute the actual id of the widget for `elector_id`,
+ * and the current value for {{record.elector_id}}.
  */
 $('#elector_id').selectize({
   valueField: 'id',
   labelField: 'name',
   searchField: 'name',
-  options: [],
+  hideSelected: false,
   create: false,
 
   load: function(query, callback) {
@@ -458,16 +459,17 @@ $('#elector_id').selectize({
       }
     });
   }
-});
+})[0].selectize.setValue({{record.elector_id}}, true);
 
 /**
- * selectize one select widget. Substitute the actual id of the widget for `address_id`.
+ * selectize one select widget. Substitute the actual id of the widget for `address_id`,
+ * and the current value for {{record.address_id}}.
  */
 $('#address_id').selectize({
   valueField: 'id',
   labelField: 'name',
   searchField: 'name',
-  options: [],
+  hideSelected: false,
   create: false,
 
   load: function(query, callback) {
@@ -487,7 +489,7 @@ $('#address_id').selectize({
       }
     });
   }
-});
+})[0].selectize.setValue({{record.address_id}}, true);
 
           var simplemde = new SimpleMDE({
             autosave: {

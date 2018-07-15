@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-intentions-Intention.html generated 2018-07-10T15:25:24.214Z by adl.to-selmer-templates.
+<!-- File form-intentions-Intention.html generated 2018-07-15T11:36:36.892Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -19,7 +19,7 @@ Visit_id
 {% if {{record.visit_id}} %}
 {% ifmemberof %}
 <select id='visit_id' name='visit_id'>
-{% for option in visit_id %}<option value='{{option.id}}' {% ifequal record.visit_id option.id%}selected{% endifequal %}>{{option.address_id}} {{option.date}}</option>{% endfor %}
+{% for option in visit_id %}<option value='{{option.id}}' {% ifequal record.visit_id option.id%}selected='selected'{% endifequal %}>{{option.address_id_expanded}} {{option.date}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
@@ -35,7 +35,7 @@ You are not permitted to view visit_id of intentions
 {% else %}
 {% ifmemberof %}
 <select id='visit_id' name='visit_id'>
-{% for option in visit_id %}<option value='{{option.id}}' {% ifequal record.visit_id option.id%}selected{% endifequal %}>{{option.address_id}} {{option.date}}</option>{% endfor %}
+{% for option in visit_id %}<option value='{{option.id}}' {% ifequal record.visit_id option.id%}selected='selected'{% endifequal %}>{{option.address_id_expanded}} {{option.date}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
@@ -57,7 +57,7 @@ Elector_id
 {% if {{record.elector_id}} %}
 {% ifmemberof %}
 <select id='elector_id' name='elector_id'>
-{% for option in elector_id %}<option value='{{option.id}}' {% ifequal record.elector_id option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
+{% for option in elector_id %}<option value='{{option.id}}' {% ifequal record.elector_id option.id%}selected='selected'{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
@@ -73,7 +73,7 @@ You are not permitted to view elector_id of intentions
 {% else %}
 {% ifmemberof %}
 <select id='elector_id' name='elector_id'>
-{% for option in elector_id %}<option value='{{option.id}}' {% ifequal record.elector_id option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
+{% for option in elector_id %}<option value='{{option.id}}' {% ifequal record.elector_id option.id%}selected='selected'{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
@@ -95,7 +95,7 @@ Option_id
 {% if {{record.option_id}} %}
 {% ifmemberof %}
 <select id='option_id' name='option_id'>
-{% for option in option_id %}<option value='{{option.id}}' {% ifequal record.option_id option.id%}selected{% endifequal %}>{{option.id}}</option>{% endfor %}
+{% for option in option_id %}<option value='{{option.id}}' {% ifequal record.option_id option.id%}selected='selected'{% endifequal %}>{{option.id}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
@@ -111,7 +111,7 @@ You are not permitted to view option_id of intentions
 {% else %}
 {% ifmemberof %}
 <select id='option_id' name='option_id'>
-{% for option in option_id %}<option value='{{option.id}}' {% ifequal record.option_id option.id%}selected{% endifequal %}>{{option.id}}</option>{% endfor %}
+{% for option in option_id %}<option value='{{option.id}}' {% ifequal record.option_id option.id%}selected='selected'{% endifequal %}>{{option.id}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers analysts admin %}
@@ -183,13 +183,14 @@ To delete this intentions record
 {% block extra-tail %}
 <script type='text/javascript'>
 /**
- * selectize one select widget. Substitute the actual id of the widget for `visit_id`.
+ * selectize one select widget. Substitute the actual id of the widget for `visit_id`,
+ * and the current value for {{record.visit_id}}.
  */
 $('#visit_id').selectize({
   valueField: 'id',
   labelField: 'name',
   searchField: 'name',
-  options: [],
+  hideSelected: false,
   create: false,
 
   load: function(query, callback) {
@@ -209,16 +210,17 @@ $('#visit_id').selectize({
       }
     });
   }
-});
+})[0].selectize.setValue({{record.visit_id}}, true);
 
 /**
- * selectize one select widget. Substitute the actual id of the widget for `elector_id`.
+ * selectize one select widget. Substitute the actual id of the widget for `elector_id`,
+ * and the current value for {{record.elector_id}}.
  */
 $('#elector_id').selectize({
   valueField: 'id',
   labelField: 'name',
   searchField: 'name',
-  options: [],
+  hideSelected: false,
   create: false,
 
   load: function(query, callback) {
@@ -238,7 +240,7 @@ $('#elector_id').selectize({
       }
     });
   }
-});
+})[0].selectize.setValue({{record.elector_id}}, true);
 
 </script>
 

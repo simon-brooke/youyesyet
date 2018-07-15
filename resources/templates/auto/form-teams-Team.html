@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-teams-Team.html generated 2018-07-10T15:25:24.204Z by adl.to-selmer-templates.
+<!-- File form-teams-Team.html generated 2018-07-15T11:36:36.878Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -54,7 +54,7 @@ District_id
 {% if {{record.district_id}} %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <select id='district_id' name='district_id'>
-{% for option in district_id %}<option value='{{option.id}}' {% ifequal record.district_id option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
+{% for option in district_id %}<option value='{{option.id}}' {% ifequal record.district_id option.id%}selected='selected'{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
@@ -70,7 +70,7 @@ You are not permitted to view district_id of teams
 {% else %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <select id='district_id' name='district_id'>
-{% for option in district_id %}<option value='{{option.id}}' {% ifequal record.district_id option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
+{% for option in district_id %}<option value='{{option.id}}' {% ifequal record.district_id option.id%}selected='selected'{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
@@ -126,7 +126,7 @@ Members
 {% if {{record.members}} %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <select id='members' name='members' multiple='multiple'>
-{% for option in members %}<option value='{{option.id}}' {% ifequal record.members option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
+{% for option in members %}<option value='{{option.id}}' {% ifequal record.members option.id%}selected='selected'{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id_expanded}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
@@ -142,7 +142,7 @@ You are not permitted to view members of teams
 {% else %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <select id='members' name='members' multiple='multiple'>
-{% for option in members %}<option value='{{option.id}}' {% ifequal record.members option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
+{% for option in members %}<option value='{{option.id}}' {% ifequal record.members option.id%}selected='selected'{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id_expanded}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
@@ -164,7 +164,7 @@ Organisers
 {% if {{record.organisers}} %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <select id='organisers' name='organisers' multiple='multiple'>
-{% for option in organisers %}<option value='{{option.id}}' {% ifequal record.organisers option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
+{% for option in organisers %}<option value='{{option.id}}' {% ifequal record.organisers option.id%}selected='selected'{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id_expanded}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
@@ -180,7 +180,7 @@ You are not permitted to view organisers of teams
 {% else %}
 {% ifmemberof teamorganisers admin teamorganisers admin %}
 <select id='organisers' name='organisers' multiple='multiple'>
-{% for option in organisers %}<option value='{{option.id}}' {% ifequal record.organisers option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
+{% for option in organisers %}<option value='{{option.id}}' {% ifequal record.organisers option.id%}selected='selected'{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id_expanded}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin teamorganisers admin %}
@@ -350,13 +350,14 @@ View
 {% block extra-tail %}
 <script type='text/javascript'>
 /**
- * selectize one select widget. Substitute the actual id of the widget for `district_id`.
+ * selectize one select widget. Substitute the actual id of the widget for `district_id`,
+ * and the current value for {{record.district_id}}.
  */
 $('#district_id').selectize({
   valueField: 'id',
   labelField: 'name',
   searchField: 'name',
-  options: [],
+  hideSelected: false,
   create: false,
 
   load: function(query, callback) {
@@ -376,7 +377,7 @@ $('#district_id').selectize({
       }
     });
   }
-});
+})[0].selectize.setValue({{record.district_id}}, true);
 
 </script>
 

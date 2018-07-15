@@ -86,7 +86,6 @@
    :building #'building-page
    :dwelling #'dwelling-page
    :elector #'elector-page
-   :expert #'expert
    :followup #'followup-page
    :gdpr #'gdpr-page
    :issues #'issues-page

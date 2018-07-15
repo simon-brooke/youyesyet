@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-dwellings-Dwelling.html generated 2018-07-10T15:25:24.216Z by adl.to-selmer-templates.
+<!-- File form-dwellings-Dwelling.html generated 2018-07-15T11:36:36.894Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -20,7 +20,7 @@ Address_id
 {% if {{record.address_id}} %}
 {% ifmemberof admin %}
 <select id='address_id' name='address_id'>
-{% for option in address_id %}<option value='{{option.id}}' {% ifequal record.address_id option.id%}selected{% endifequal %}>{{option.address}} {{option.postcode}}</option>{% endfor %}
+{% for option in address_id %}<option value='{{option.id}}' {% ifequal record.address_id option.id%}selected='selected'{% endifequal %}>{{option.address}} {{option.postcode}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -36,7 +36,7 @@ You are not permitted to view address_id of dwellings
 {% else %}
 {% ifmemberof admin %}
 <select id='address_id' name='address_id'>
-{% for option in address_id %}<option value='{{option.id}}' {% ifequal record.address_id option.id%}selected{% endifequal %}>{{option.address}} {{option.postcode}}</option>{% endfor %}
+{% for option in address_id %}<option value='{{option.id}}' {% ifequal record.address_id option.id%}selected='selected'{% endifequal %}>{{option.address}} {{option.postcode}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -108,13 +108,14 @@ To delete this dwellings record
 {% block extra-tail %}
 <script type='text/javascript'>
 /**
- * selectize one select widget. Substitute the actual id of the widget for `address_id`.
+ * selectize one select widget. Substitute the actual id of the widget for `address_id`,
+ * and the current value for {{record.address_id}}.
  */
 $('#address_id').selectize({
   valueField: 'id',
   labelField: 'name',
   searchField: 'name',
-  options: [],
+  hideSelected: false,
   create: false,
 
   load: function(query, callback) {
@@ -134,7 +135,7 @@ $('#address_id').selectize({
       }
     });
   }
-});
+})[0].selectize.setValue({{record.address_id}}, true);
 
 </script>
 

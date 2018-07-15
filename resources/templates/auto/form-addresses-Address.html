@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-addresses-Address.html generated 2018-07-10T15:25:24.196Z by adl.to-selmer-templates.
+<!-- File form-addresses-Address.html generated 2018-07-15T11:36:36.868Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -122,7 +122,7 @@ District_id
 {% if {{record.district_id}} %}
 {% ifmemberof admin %}
 <select id='district_id' name='district_id'>
-{% for option in district_id %}<option value='{{option.id}}' {% ifequal record.district_id option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
+{% for option in district_id %}<option value='{{option.id}}' {% ifequal record.district_id option.id%}selected='selected'{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -138,7 +138,7 @@ You are not permitted to view district_id of addresses
 {% else %}
 {% ifmemberof admin %}
 <select id='district_id' name='district_id'>
-{% for option in district_id %}<option value='{{option.id}}' {% ifequal record.district_id option.id%}selected{% endifequal %}>{{option.name}}</option>{% endfor %}
+{% for option in district_id %}<option value='{{option.id}}' {% ifequal record.district_id option.id%}selected='selected'{% endifequal %}>{{option.name}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
@@ -244,13 +244,14 @@ To delete this addresses record
 {% block extra-tail %}
 <script type='text/javascript'>
 /**
- * selectize one select widget. Substitute the actual id of the widget for `district_id`.
+ * selectize one select widget. Substitute the actual id of the widget for `district_id`,
+ * and the current value for {{record.district_id}}.
  */
 $('#district_id').selectize({
   valueField: 'id',
   labelField: 'name',
   searchField: 'name',
-  options: [],
+  hideSelected: false,
   create: false,
 
   load: function(query, callback) {
@@ -270,7 +271,7 @@ $('#district_id').selectize({
       }
     });
   }
-});
+})[0].selectize.setValue({{record.district_id}}, true);
 
 </script>
 

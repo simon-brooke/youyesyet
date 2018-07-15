@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!-- File form-followupactions-Followupaction.html generated 2018-07-10T15:25:24.218Z by adl.to-selmer-templates.
+<!-- File form-followupactions-Followupaction.html generated 2018-07-15T11:36:36.896Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
@@ -22,7 +22,7 @@ Request_id
 {% if {{record.request_id}} %}
 {% ifmemberof admin %}
 <select id='request_id' name='request_id'>
-{% for option in request_id %}<option value='{{option.id}}' {% ifequal record.request_id option.id%}selected{% endifequal %}>{{option.elector_id}} {{option.visit_id}} {{option.issue_id}}</option>{% endfor %}
+{% for option in request_id %}<option value='{{option.id}}' {% ifequal record.request_id option.id%}selected='selected'{% endifequal %}>{{option.elector_id_expanded}} {{option.visit_id_expanded}} {{option.issue_id_expanded}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
@@ -38,7 +38,7 @@ You are not permitted to view request_id of followupactions
 {% else %}
 {% ifmemberof admin %}
 <select id='request_id' name='request_id'>
-{% for option in request_id %}<option value='{{option.id}}' {% ifequal record.request_id option.id%}selected{% endifequal %}>{{option.elector_id}} {{option.visit_id}} {{option.issue_id}}</option>{% endfor %}
+{% for option in request_id %}<option value='{{option.id}}' {% ifequal record.request_id option.id%}selected='selected'{% endifequal %}>{{option.elector_id_expanded}} {{option.visit_id_expanded}} {{option.issue_id_expanded}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
@@ -60,7 +60,7 @@ Actor
 {% if {{record.actor}} %}
 {% ifmemberof admin %}
 <select id='actor' name='actor'>
-{% for option in actor %}<option value='{{option.id}}' {% ifequal record.actor option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
+{% for option in actor %}<option value='{{option.id}}' {% ifequal record.actor option.id%}selected='selected'{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id_expanded}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
@@ -76,7 +76,7 @@ You are not permitted to view actor of followupactions
 {% else %}
 {% ifmemberof admin %}
 <select id='actor' name='actor'>
-{% for option in actor %}<option value='{{option.id}}' {% ifequal record.actor option.id%}selected{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id}} {{option.phone}} {{option.email}}</option>{% endfor %}
+{% for option in actor %}<option value='{{option.id}}' {% ifequal record.actor option.id%}selected='selected'{% endifequal %}>{{option.username}} {{option.fullname}} {{option.address_id_expanded}} {{option.phone}} {{option.email}}</option>{% endfor %}
 </select>
 {% else %}
 {% ifmemberof issueexperts canvassers analysts issueeditors admin %}
@@ -220,13 +220,14 @@ To delete this followupactions record
 {% block extra-tail %}
 <script type='text/javascript'>
 /**
- * selectize one select widget. Substitute the actual id of the widget for `request_id`.
+ * selectize one select widget. Substitute the actual id of the widget for `request_id`,
+ * and the current value for {{record.request_id}}.
  */
 $('#request_id').selectize({
   valueField: 'id',
   labelField: 'name',
   searchField: 'name',
-  options: [],
+  hideSelected: false,
   create: false,
 
   load: function(query, callback) {
@@ -246,16 +247,17 @@ $('#request_id').selectize({
       }
     });
   }
-});
+})[0].selectize.setValue({{record.request_id}}, true);
 
 /**
- * selectize one select widget. Substitute the actual id of the widget for `actor`.
+ * selectize one select widget. Substitute the actual id of the widget for `actor`,
+ * and the current value for {{record.actor}}.
  */
 $('#actor').selectize({
   valueField: 'id',
   labelField: 'name',
   searchField: 'name',
-  options: [],
+  hideSelected: false,
   create: false,
 
   load: function(query, callback) {
@@ -275,7 +277,7 @@ $('#actor').selectize({
       }
     });
   }
-});
+})[0].selectize.setValue({{record.actor}}, true);
 
           var simplemde = new SimpleMDE({
             autosave: {
