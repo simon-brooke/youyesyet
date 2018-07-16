@@ -38,7 +38,10 @@
 (defn panel
   "Generate the issue panel."
   []
-  (let [issue @(subscribe [:issue])]
+  (let [id @(subscribe [:issue])
+        issues @(subscribe [:issues])
+        issue (id issues)]
+    (js/console.log (str "Id: " id "; issue: " issue))
     [:div
      [:h1 (:id issue)]
      [:div.container {:id "main-container"}

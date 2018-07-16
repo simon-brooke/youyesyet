@@ -1,12 +1,13 @@
 (ns ^{:doc "Canvasser app event handlers."
       :author "Simon Brooke"}
   youyesyet.canvasser-app.handlers
-  (:require [cljs.reader :refer [read-string]]
+  (:require [ajax.core :refer [GET]]
+            [ajax.json :refer [json-request-format json-response-format]]
             [cemerick.url :refer (url url-encode)]
+            [cljs.reader :refer [read-string]]
+            [clojure.walk :refer [keywordize-keys]]
             [day8.re-frame.http-fx]
             [re-frame.core :refer [dispatch reg-event-db reg-event-fx subscribe]]
-            [ajax.core :refer [GET]]
-            [ajax.json :refer [json-request-format json-response-format]]
             [youyesyet.canvasser-app.gis :refer [refresh-map-pins get-current-location]]
             [youyesyet.canvasser-app.state :as db]
             ))
@@ -206,10 +207,11 @@
   :process-options
   (fn
     [db [_ response]]
-    (js/console.log "Updating options")
-    (assoc
-      (remove-from-feedback db :fetch-options)
-      :options (js->clj response))))
+    (let [options (js->clj response)]
+      (js/console.log (str "Updating options: " options))
+      (assoc
+        (remove-from-feedback db :fetch-options)
+        :options options))))
 
 
 (reg-event-db
@@ -239,10 +241,15 @@
   :process-issues
   (fn
     [db [_ response]]
-    (js/console.log "Updating issues")
-    (assoc
-      (remove-from-feedback db :fetch-issues)
-      :issues (js->clj response))))
+    (let [issues (reduce
+                   merge {}
+                   (map
+                     #(hash-map (keyword (:id %)) %)
+                     (js->clj response)))]
+      (js/console.log (str "Updating issues: " issues))
+      (assoc
+        (remove-from-feedback db :fetch-issues)
+        :issues issues))))
 
 
 (reg-event-db
@@ -380,8 +387,8 @@
 (reg-event-db
  :set-and-go-to-issue
  (fn [db [_ issue]]
-   (js/console.log (str "Setting page to :issue, issue to " issue))
-   (assoc (assoc (clear-messages db) :issue issue) :page :issue)))
+   (js/console.log (str "Setting page to :issue, issue to " issue ", issues are " (:issues db)))
+   (assoc (assoc (clear-messages db) :issue (keyword issue)) :page :issue)))
 
 
 (reg-event-db
@@ -406,7 +413,7 @@
  :set-issue
  (fn [db [_ issue]]
    (js/console.log (str "Setting issue to " issue))
-   (assoc (clear-messages db) :issue issue)))
+   (assoc (clear-messages db) :issue (keyword issue))))
 
 
 (reg-event-db

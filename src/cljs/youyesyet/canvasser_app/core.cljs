@@ -75,9 +75,6 @@
 (defn issue-page []
   (issue/panel))
 
-(defn issue-experts-page []
-  (expert/panel))
-
 (defn map-page []
   (maps/panel))
 
