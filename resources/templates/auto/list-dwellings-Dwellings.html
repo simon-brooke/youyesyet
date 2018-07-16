@@ -1,20 +1,14 @@
 {% extends "base.html" %}
-<!-- File list-dwellings-Dwellings.html generated 2018-07-15T11:36:36.881Z by adl.to-selmer-templates.
+<!-- File list-dwellings-Dwellings.html generated 2018-07-15T19:59:46.655Z by adl.to-selmer-templates.
 See [Application Description Language](https://github.com/simon-brooke/adl).-->
 
 
 {% block back-links %}
 <div>
 <div class='back-link-container'>
-{% ifequal params.offset "0" %}
-<a id='back-link' class='back-link' href='{{servlet-context}}/admin'>
-Back
-</a>
-{% else %}
 <a id='prev-selector' class='back-link'>
 Previous
 </a>
-{% endifunequal %}
 </div>
 </div>
 
@@ -39,8 +33,8 @@ Add a new Dwelling
 {% block content %}
 <form id='list-dwellings-Dwellings' class='list' action='{{servlet-context}}/list-dwellings-Dwellings' method='POST'>
 {% csrf-field %}
-<input id='offset' type='hidden' value='{{params.offset|default:0}}'/>
-<input id='limit' type='hidden' value='{{params.limit|default:50}}'/>
+<input id='offset' name='offset' type='text' value='{{params.offset|default:0}}'/>
+<input id='limit' name='limit' type='text' value='{{params.limit|default:50}}'/>
 <table caption='dwellings'>
 <thead>
 <tr>
@@ -62,7 +56,7 @@ Sub-address
 <input id='id' type='text' name='id' value='{{ params.id }}'/>
 </th>
 <th>
-<input id='address_id_expanded' type='text' name='address_id_expanded' value='{{ params.address_id_expanded }}'/>
+<input id='address_id' type='text' name='address_id' value='{{ params.address_id }}'/>
 </th>
 <th>
 <input id='sub_address' type='text' name='sub_address' value='{{ params.sub_address }}'/>
@@ -104,20 +98,25 @@ View
           var ow = document.getElementById('offset');
           var lw = document.getElementById('limit');
           form.addEventListener('submit', function() {
-          ow.value='0';
+            ow.value='0';
           });
 
-          {% ifunequal params.offset "0" %}
-          document.getElementById('prev-selector').addEventListener('click', function () {
-          ow.value=(parseInt(ow.value)-parseInt(lw.value));
-          console.log('Updated offset to ' + ow.value);
-          form.submit();
-          });
-          {% endifunequal %}
+          var prevSelector = document.getElementById('prev-selector');
+          if (prevSelector != null) {
+            prevSelector.addEventListener('click', function () {
+              if (parseInt(ow.value)===0) {
+                window.location = '{{servlet-context}}/admin';
+              } else {
+                ow.value=(parseInt(ow.value)-parseInt(lw.value));
+                console.log('Updated offset to ' + ow.value);
+                form.submit();
+              }
+            });
+          }
 
           document.getElementById('next-selector').addEventListener('click', function () {
-          ow.value=(parseInt(ow.value)+parseInt(lw.value));
-          console.log('Updated offset to ' + ow.value);
-          form.submit();
+            ow.value=(parseInt(ow.value)+parseInt(lw.value));
+            console.log('Updated offset to ' + ow.value);
+            form.submit();
           });
 {% endblock %}

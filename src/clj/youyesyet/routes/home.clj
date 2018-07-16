@@ -48,11 +48,6 @@
     (if (.exists motd) (slurp motd) "")))
 
 
-(defn app-page [request]
-  (layout/render "app.html" {:title "Canvasser app"
-                             :user (:user (:session request))}))
-
-
 (defn about-page []
   (layout/render "about.html" {} {:title
                                   (str "About " (:site-title env))
@@ -126,11 +121,6 @@
         :authorities (db-core/list-authorities db-core/*db*)}))))
 
 
-(defn handle-logout
-  [request]
-  (dissoc (response/found "home") :user :roles))
-
-
 (defroutes home-routes
   (GET "/" [] (home-page))
   (GET "/home" [] (home-page))
@@ -139,10 +129,7 @@
   (POST "/call-me" request (call-me-page request))
   (GET "/login" request (login-page request))
   (POST "/login" request (login-page request))
-  (GET "/logout" request (handle-logout request))
   (GET "/notyet" [] (layout/render "notyet.html" {}
                                    {:title "Can we persuade you?"}))
   (GET "/supporter" [] (layout/render "supporter.html" {}
-                                      {:title "Have you signed up as a canvasser yet?"}))
-  ;; TODO: this should move somewhere else but I'm not sure where yet
-  (GET "/app" [request] (route/restricted (app-page request))))
+                                      {:title "Have you signed up as a canvasser yet?"})))

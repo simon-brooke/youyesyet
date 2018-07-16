@@ -68,18 +68,18 @@
   ;; than me so there's almost certainly a reason it doesn't.
   [template session & [params]]
   (let [user (:user session)]
-    (log/debug (str "layout/render: template: '" template "'; user: '" (:username user)))
+    (log/debug (str "layout/render: template: '" template "'; session: '" session "'; params: '" params "'"))
     (content-type
       (ok
         (parser/render-file
           template
-          (assoc params
-            :page template
+          (merge params
+            {:page template
             :csrf-token *anti-forgery-token*
             :user user
             :user-roles (get-user-roles user)
             :site-title (:site-title env)
-            :version (System/getProperty "youyesyet.version"))))
+            :version (System/getProperty "youyesyet.version")})))
       "text/html; charset=utf-8")))
 
 

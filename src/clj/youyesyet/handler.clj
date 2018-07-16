@@ -13,8 +13,9 @@
             [youyesyet.routes.auto :refer [auto-selmer-routes]]
             [youyesyet.routes.auto-json :refer [auto-rest-routes]]
             [youyesyet.routes.issue-experts :refer [issue-expert-routes]]
-            [youyesyet.routes.rest :refer [rest-routes]]
+            [youyesyet.routes.logged-in :refer [logged-in-routes]]
             [youyesyet.routes.oauth :refer [oauth-routes]]
+            [youyesyet.routes.rest :refer [rest-routes]]
             [youyesyet.routes.roles :refer [roles-routes]]
             [youyesyet.routes.services :refer [service-routes]]
             [youyesyet.env :refer [defaults]]))
@@ -68,6 +69,9 @@
 (def app-routes
   (routes
     (-> #'home-routes
+        (wrap-routes middleware/wrap-csrf)
+        (wrap-routes middleware/wrap-formats))
+    (-> #'logged-in-routes
         (wrap-routes middleware/wrap-csrf)
         (wrap-routes middleware/wrap-formats))
     (-> #'roles-routes

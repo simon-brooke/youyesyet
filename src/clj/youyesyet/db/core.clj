@@ -4,6 +4,7 @@
     [cheshire.core :refer [generate-string parse-string]]
     [clojure.java.jdbc :as jdbc]
     [conman.core :as conman]
+    [hugsql.core :as hugsql]
     [mount.core :refer [defstate]]
     [youyesyet.config :refer [env]])
   (:import org.postgresql.util.PGobject
@@ -23,6 +24,7 @@
            :stop (conman/disconnect! *db*))
 
 (conman/bind-connection *db* "sql/queries.auto.sql" "sql/queries.sql")
+(hugsql/def-sqlvec-fns "sql/queries.auto.sql")
 
 (defn to-date [^java.sql.Date sql-date]
   (-> sql-date (.getTime) (java.util.Date.)))

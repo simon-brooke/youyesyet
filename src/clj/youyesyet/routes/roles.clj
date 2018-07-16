@@ -55,7 +55,7 @@
 
 (defn canvassers-page
   [request]
-  (layout/render "roles/canvasser.html" request {}))
+  (layout/render "roles/canvasser.html" (:session request) {}))
 
 
 (defn team-organisers-page
