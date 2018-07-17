@@ -68,7 +68,7 @@
   ;; than me so there's almost certainly a reason it doesn't.
   [template session & [params]]
   (let [user (:user session)]
-    (log/debug (str "layout/render: template: '" template "'; session: '" session "'; params: '" params "'"))
+    (log/debug (str "layout/render: template: '" template "'"))
     (content-type
       (ok
         (parser/render-file

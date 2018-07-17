@@ -23,7 +23,7 @@ version="0.1.1">
     <documentation>See
     https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/488478/Bulk_Data_Transfer_-_additional_validation_valid_from_12_November_2015.pdf,
     section 3</documentation>
-    <help locale="en-GB">A valid postcode.</help>
+    <help locale="en_GB.UTF-8">A valid postcode.</help>
   </typedef>
   <group name="public">
     <documentation>All users</documentation>
@@ -63,6 +63,7 @@ version="0.1.1">
     records; able to add and update reference data
     generally.</documentation>
   </group>
+
   <entity table="electors" name="electors" magnitude="6"
   volatility="5">
     <documentation>All electors known to the system; electors are
@@ -71,65 +72,70 @@ version="0.1.1">
     <key>
       <property required="true" type="integer" name="id"
       column="id" immutable="true" distinct="system">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <property size="64" required="true" type="string" name="name"
     column="name" distinct="user">
-      <prompt prompt="Name" locale="en-GB"/>
+      <prompt prompt="Name" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="entity" name="dwelling_id"
     column="dwelling_id" entity="dwellings" farkey="id">
-      <prompt prompt="Home" locale="en-GB"/>
+      <prompt prompt="Home" locale="en_GB.UTF-8"/>
     </property>
     <property size="16" type="string" name="phone" column="phone">
-      <prompt prompt="Phone" locale="en-GB"/>
+      <prompt prompt="Phone" locale="en_GB.UTF-8"/>
     </property>
     <property size="128" type="string" name="email" column="email">
-      <prompt prompt="Email" locale="en-GB"/>
+      <prompt prompt="Email" locale="en_GB.UTF-8"/>
     </property>
     <property name="gender" type="entity" column="gender"
     entity="genders" farkey="id" default="Unknown">
-      <prompt prompt="Gender" locale="en-GB"/>
+      <prompt prompt="Gender" locale="en_GB.UTF-8"/>
+    </property>
+    <property name="signature" type="text">
+    <documentation>The signature of this elector, captured as SVG text,
+      as evidence they have consented to us holding data on them.
+      Null if they have not.</documentation>
     </property>
     <list properties="listed" name="Electors">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="name">
-        <prompt prompt="Name" locale="en-GB"/>
+        <prompt prompt="Name" locale="en_GB.UTF-8"/>
       </field>
       <field property="dwelling_id">
-        <prompt prompt="Home" locale="en-GB"/>
+        <prompt prompt="Home" locale="en_GB.UTF-8"/>
       </field>
       <field property="phone">
-        <prompt prompt="Phone" locale="en-GB"/>
+        <prompt prompt="Phone" locale="en_GB.UTF-8"/>
       </field>
       <field property="email">
-        <prompt prompt="eMail" locale="en-GB"/>
+        <prompt prompt="eMail" locale="en_GB.UTF-8"/>
       </field>
       <field property="gender">
-        <prompt prompt="Gender" locale="en-GB"/>
+        <prompt prompt="Gender" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Elector">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="name">
-        <prompt prompt="Name" locale="en-GB"/>
+        <prompt prompt="Name" locale="en_GB.UTF-8"/>
       </field>
       <field property="dwelling_id">
-        <prompt prompt="Home" locale="en-GB"/>
+        <prompt prompt="Home" locale="en_GB.UTF-8"/>
       </field>
       <field property="phone">
-        <prompt prompt="Phone" locale="en-GB"/>
+        <prompt prompt="Phone" locale="en_GB.UTF-8"/>
       </field>
       <field property="email">
-        <prompt prompt="eMail" locale="en-GB"/>
+        <prompt prompt="eMail" locale="en_GB.UTF-8"/>
       </field>
       <field property="gender">
-        <prompt prompt="Gender" locale="en-GB"/>
+        <prompt prompt="Gender" locale="en_GB.UTF-8"/>
       </field>
     </form>
     <permission group="canvassers" permission="read"/>
@@ -148,17 +154,17 @@ version="0.1.1">
     electors.</documentation>
     <key>
       <property name="id" type="string" size="32" distinct="all">
-        <prompt prompt="Gender" locale="en-GB"/>
+        <prompt prompt="Gender" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <list properties="listed" name="Genders">
       <field property="id">
-        <prompt prompt="Gender" locale="en-GB"/>
+        <prompt prompt="Gender" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Gender">
       <field property="id">
-        <prompt prompt="Gender" locale="en-GB"/>
+        <prompt prompt="Gender" locale="en_GB.UTF-8"/>
       </field>
     </form>
     <permission group="canvassers" permission="read"/>
@@ -180,13 +186,13 @@ version="0.1.1">
     <key>
       <property required="true" type="integer" name="id"
       column="id" immutable="true" distinct="system">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <property required="true" type="entity" name="address_id"
     column="address_id" entity="addresses" farkey="id"
     distinct="user">
-      <prompt prompt="Building Address" locale="en-GB"/>
+      <prompt prompt="Building Address" locale="en_GB.UTF-8"/>
     </property>
     <property required="false" type="string" size="32"
     name="sub-address" distinct="user">
@@ -198,24 +204,24 @@ version="0.1.1">
     </property>
     <list properties="listed" name="Dwellings">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="address_id">
-        <prompt prompt="Building Address" locale="en-GB"/>
+        <prompt prompt="Building Address" locale="en_GB.UTF-8"/>
       </field>
       <field property="sub-address">
-        <prompt prompt="Sub address" locale="en-GB"/>
+        <prompt prompt="Sub address" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Dwelling">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="address_id">
-        <prompt prompt="Building Address" locale="en-GB"/>
+        <prompt prompt="Building Address" locale="en_GB.UTF-8"/>
       </field>
       <field property="sub-address" >
-        <prompt prompt="Sub address (e.g. flat number)" locale="en-GB"/>
+        <prompt prompt="Sub address (e.g. flat number)" locale="en_GB.UTF-8"/>
       </field>
     </form>
     <permission group="canvassers" permission="read"/>
@@ -233,29 +239,29 @@ version="0.1.1">
     <key>
       <property required="true" type="integer" name="id"
       column="id" immutable="true" distinct="system">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <property required="true" type="string" name="address"
     column="address" size="256" distinct="user">
-      <prompt prompt="Address" locale="en-GB"/>
+      <prompt prompt="Address" locale="en_GB.UTF-8"/>
     </property>
     <property type="defined" typedef="postcode" name="postcode"
     column="postcode" size="16" distinct="user">
-      <prompt prompt="Postcode" locale="en-GB"/>
+      <prompt prompt="Postcode" locale="en_GB.UTF-8"/>
     </property>
     <property type="string" name="phone" column="phone" size="16">
-      <prompt prompt="Phone" locale="en-GB"/>
+      <prompt prompt="Phone" locale="en_GB.UTF-8"/>
     </property>
     <property type="entity" name="district_id" column="district_id"
     entity="districts" farkey="id">
-      <prompt prompt="District" locale="en-GB"/>
+      <prompt prompt="District" locale="en_GB.UTF-8"/>
     </property>
     <property type="real" name="latitude" column="latitude">
-      <prompt prompt="Latitude" locale="en-GB"/>
+      <prompt prompt="Latitude" locale="en_GB.UTF-8"/>
     </property>
     <property type="real" name="longitude" column="longitude">
-      <prompt prompt="Longitude" locale="en-GB"/>
+      <prompt prompt="Longitude" locale="en_GB.UTF-8"/>
     </property>
     <!-- property name="dwellings" type="link" entity="dwelling"/ -->
     <property type="integer" name="locality" column="locality">
@@ -272,48 +278,48 @@ version="0.1.1">
     </property>
     <list properties="listed" name="Addresses">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="address">
-        <prompt prompt="Address" locale="en-GB"/>
+        <prompt prompt="Address" locale="en_GB.UTF-8"/>
       </field>
       <field property="postcode">
-        <prompt prompt="Postcode" locale="en-GB"/>
+        <prompt prompt="Postcode" locale="en_GB.UTF-8"/>
       </field>
       <field property="phone">
-        <prompt prompt="Phone" locale="en-GB"/>
+        <prompt prompt="Phone" locale="en_GB.UTF-8"/>
       </field>
       <field property="district_id">
-        <prompt prompt="District" locale="en-GB"/>
+        <prompt prompt="District" locale="en_GB.UTF-8"/>
       </field>
       <field property="latitude">
-        <prompt prompt="Latitude" locale="en-GB"/>
+        <prompt prompt="Latitude" locale="en_GB.UTF-8"/>
       </field>
       <field property="longitude">
-        <prompt prompt="Longitude" locale="en-GB"/>
+        <prompt prompt="Longitude" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Address">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="address">
-        <prompt prompt="Address" locale="en-GB"/>
+        <prompt prompt="Address" locale="en_GB.UTF-8"/>
       </field>
       <field property="postcode">
-        <prompt prompt="Postcode" locale="en-GB"/>
+        <prompt prompt="Postcode" locale="en_GB.UTF-8"/>
       </field>
       <field property="phone">
-        <prompt prompt="Phone" locale="en-GB"/>
+        <prompt prompt="Phone" locale="en_GB.UTF-8"/>
       </field>
       <field property="district_id">
-        <prompt prompt="District" locale="en-GB"/>
+        <prompt prompt="District" locale="en_GB.UTF-8"/>
       </field>
       <field property="latitude">
-        <prompt prompt="Latitude" locale="en-GB"/>
+        <prompt prompt="Latitude" locale="en_GB.UTF-8"/>
       </field>
       <field property="longitude">
-        <prompt prompt="Longitude" locale="en-GB"/>
+        <prompt prompt="Longitude" locale="en_GB.UTF-8"/>
       </field>
       <auxlist property="dwellings">
         <field name="sub-address"/>
@@ -336,22 +342,22 @@ version="0.1.1">
     <key>
       <property required="true" type="integer" name="id"
       column="id" distinct="system">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <!-- TODO: should visit be keyed against dwelling rather than address? -->
     <property required="true" type="entity" name="address_id"
     column="address_id" entity="addresses" farkey="id"
     distinct="user">
-      <prompt prompt="Address" locale="en-GB"/>
+      <prompt prompt="Address" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="entity" name="canvasser_id"
     column="canvasser_id" entity="canvassers" farkey="id">
-      <prompt prompt="Canvasser" locale="en-GB"/>
+      <prompt prompt="Canvasser" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="timestamp" name="date"
     column="date" default="now()" distinct="user">
-      <prompt prompt="Date" locale="en-GB"/>
+      <prompt prompt="Date" locale="en_GB.UTF-8"/>
     </property>
     <permission group="canvassers" permission="noedit">
       <documentation>But only in their immediate
@@ -364,30 +370,30 @@ version="0.1.1">
     <permission group="admin" permission="noedit"/>
     <list properties="listed" name="Visits">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="address_id">
-        <prompt prompt="Address" locale="en-GB"/>
+        <prompt prompt="Address" locale="en_GB.UTF-8"/>
       </field>
       <field property="canvasser_id">
-        <prompt prompt="Canvasser" locale="en-GB"/>
+        <prompt prompt="Canvasser" locale="en_GB.UTF-8"/>
       </field>
       <field property="date">
-        <prompt prompt="Date" locale="en-GB"/>
+        <prompt prompt="Date" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Visit">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="address_id">
-        <prompt prompt="Address" locale="en-GB"/>
+        <prompt prompt="Address" locale="en_GB.UTF-8"/>
       </field>
       <field property="canvasser_id">
-        <prompt prompt="Canvasser" locale="en-GB"/>
+        <prompt prompt="Canvasser" locale="en_GB.UTF-8"/>
       </field>
       <field property="date">
-        <prompt prompt="Date" locale="en-GB"/>
+        <prompt prompt="Date" locale="en_GB.UTF-8"/>
       </field>
     </form>
     <permission permission="none" group="public"/>
@@ -408,7 +414,7 @@ version="0.1.1">
     <key>
       <property required="true" type="string" name="id" column="id"
       size="32" distinct="all" immutable="true">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <property name="request-token-uri" type="string" size="256"
@@ -423,14 +429,14 @@ version="0.1.1">
     required="true"/>
     <list name="Authorities" properties="listed">
     <field property="id">
-      <prompt prompt="id" locale="en-GB"/>
+      <prompt prompt="id" locale="en_GB.UTF-8"/>
     </field>#
     <field property="request-token-uri"/>
     <field property="access-token-uri"/>
     <field property="authorize-uri"/></list>
     <form properties="listed" name="Authority">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="request-token-uri"/>
       <field property="access-token-uri"/>
@@ -458,45 +464,45 @@ version="0.1.1">
     <key>
       <property required="true" type="string" name="id" column="id"
       size="32" immutable="true" distinct="all">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <property type="string" name="url" column="url" size="256">
-      <prompt prompt="url" locale="en-GB"/>
+      <prompt prompt="url" locale="en_GB.UTF-8"/>
     </property>
     <property name="current" type="boolean" default="true">
-      <prompt prompt="Is current?" locale="en-GB"/>
+      <prompt prompt="Is current?" locale="en_GB.UTF-8"/>
     </property>
     <property type="text" name="brief">
-      <prompt prompt="Brief response to issue" locale="en-GB"/>
+      <prompt prompt="Brief response to issue" locale="en_GB.UTF-8"/>
     </property>
     <property type="link" name="experts" entity="canvassers"/>
     <list properties="listed" name="Issues">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="url">
-        <prompt prompt="url" locale="en-GB"/>
+        <prompt prompt="url" locale="en_GB.UTF-8"/>
       </field>
       <field property="current">
-        <prompt prompt="Is current?" locale="en-GB"/>
+        <prompt prompt="Is current?" locale="en_GB.UTF-8"/>
       </field>
       <field property="brief">
-        <prompt prompt="Brief response to issue" locale="en-GB"/>
+        <prompt prompt="Brief response to issue" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Issue">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="url">
-        <prompt prompt="url" locale="en-GB"/>
+        <prompt prompt="url" locale="en_GB.UTF-8"/>
       </field>
       <field property="current">
-        <prompt prompt="Is current?" locale="en-GB"/>
+        <prompt prompt="Is current?" locale="en_GB.UTF-8"/>
       </field>
       <field property="brief">
-        <prompt prompt="Brief response to issue" locale="en-GB"/>
+        <prompt prompt="Brief response to issue" locale="en_GB.UTF-8"/>
       </field>
     </form>
     <permission group="canvassers" permission="read"/>
@@ -519,15 +525,15 @@ version="0.1.1">
     </key>
     <property required="true" type="entity" entity="visits"
     farkey="id" name="visit_id" column="visit_id">
-      <prompt prompt="visit_id" locale="en-GB"/>
+      <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
     </property>
     <property type="entity" entity="electors" farkey="id"
     name="elector_id" column="elector_id">
-      <prompt prompt="elector_id" locale="en-GB"/>
+      <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="entity" entity="options"
     farkey="id" name="option_id" column="option_id">
-      <prompt prompt="option_id" locale="en-GB"/>
+      <prompt prompt="option_id" locale="en_GB.UTF-8"/>
     </property>
     <property name="locality" type="integer" required="true">
       <documentation>The locality at which the intention was
@@ -544,13 +550,13 @@ version="0.1.1">
     <permission group="admin" permission="noedit"/>
     <list properties="listed" name="Intentions">
       <field property="visit_id">
-        <prompt prompt="visit_id" locale="en-GB"/>
+        <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="elector_id">
-        <prompt prompt="elector_id" locale="en-GB"/>
+        <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="option_id">
-        <prompt prompt="option_id" locale="en-GB"/>
+        <prompt prompt="option_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="locality">
         <documentation>The locality at which the intention was
@@ -561,13 +567,13 @@ version="0.1.1">
     </list>
     <form properties="listed" name="Intention">
       <field property="visit_id">
-        <prompt prompt="visit_id" locale="en-GB"/>
+        <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="elector_id">
-        <prompt prompt="elector_id" locale="en-GB"/>
+        <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="option_id">
-        <prompt prompt="option_id" locale="en-GB"/>
+        <prompt prompt="option_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="locality">
         <documentation>The locality at which the intention was
@@ -585,57 +591,57 @@ version="0.1.1">
     <key>
       <property type="integer" name="id" column="id"
       distinct="system" immutable="true">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <property required="true" type="string" name="username"
     column="username" size="32" distinct="all">
-      <prompt prompt="username" locale="en-GB"/>
+      <prompt prompt="username" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="string" name="fullname"
     column="fullname" size="64" distinct="user">
-      <prompt prompt="fullname" locale="en-GB"/>
+      <prompt prompt="fullname" locale="en_GB.UTF-8"/>
     </property>
     <property name="avatar" type="image">
       <documentation>An image of the canvasser, so that other members of their
         team can recognise them.</documentation>
-      <prompt prompt="Avatar" locale="en-GB"/>
+      <prompt prompt="Avatar" locale="en_GB.UTF-8"/>
     </property>
     <property name="bio" type="text">
       <documentation>Information the canvasser supplies about themselves; an introduction.</documentation>
-      <prompt prompt="Bio" locale="en-GB"/>
+      <prompt prompt="Bio" locale="en_GB.UTF-8"/>
     </property>
     <property type="entity" name="elector_id" column="elector_id"
     entity="electors" farkey="id">
-      <prompt prompt="Electoral roll entry" locale="en-GB"/>
+      <prompt prompt="Electoral roll entry" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="entity" name="address_id"
     column="address_id" entity="addresses" farkey="id"
     distinct="user">
-      <prompt prompt="address" locale="en-GB"/>
+      <prompt prompt="address" locale="en_GB.UTF-8"/>
     </property>
     <property type="string" name="phone" column="phone" size="16"
     distinct="user">
-      <prompt prompt="phone" locale="en-GB"/>
+      <prompt prompt="phone" locale="en_GB.UTF-8"/>
     </property>
     <property type="string" name="email" column="email" size="128"
     distinct="user">
-      <prompt prompt="email" locale="en-GB"/>
+      <prompt prompt="email" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="entity" name="authority_id"
     entity="authorities" farkey="id">
-      <prompt prompt="authority_id" locale="en-GB"/>
+      <prompt prompt="authority_id" locale="en_GB.UTF-8"/>
     </property>
     <property type="boolean" name="authorised" column="authorised">
-      <prompt prompt="authorised" locale="en-GB"/>
+      <prompt prompt="authorised" locale="en_GB.UTF-8"/>
     </property>
     <property type="link" name="roles" entity="roles"
     farkey="role_id">
-      <prompt prompt="Roles" locale="en-GB"/>
+      <prompt prompt="Roles" locale="en_GB.UTF-8"/>
     </property>
     <property type="link" name="expertise" entity="issues">
       <documentation>Only relevant to issue experts.</documentation>
-      <prompt prompt="Expertise" locale="en-GB"/>
+      <prompt prompt="Expertise" locale="en_GB.UTF-8"/>
     </property>
     <permission group="canvassers" permission="edit">
       <documentation>But only their own record</documentation>
@@ -649,56 +655,56 @@ version="0.1.1">
     </permission>
     <list properties="listed" name="Canvassers">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="username">
-        <prompt prompt="username" locale="en-GB"/>
+        <prompt prompt="username" locale="en_GB.UTF-8"/>
       </field>
       <field property="fullname">
-        <prompt prompt="fullname" locale="en-GB"/>
+        <prompt prompt="fullname" locale="en_GB.UTF-8"/>
       </field>
       <field property="address_id">
-        <prompt prompt="address" locale="en-GB"/>
+        <prompt prompt="address" locale="en_GB.UTF-8"/>
       </field>
       <field property="authority_id">
-        <prompt prompt="authority_id" locale="en-GB"/>
+        <prompt prompt="authority_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="authorised">
-        <prompt prompt="authorised" locale="en-GB"/>
+        <prompt prompt="authorised" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Canvasser">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="username">
-        <prompt prompt="username" locale="en-GB"/>
+        <prompt prompt="username" locale="en_GB.UTF-8"/>
       </field>
       <field property="fullname">
-        <prompt prompt="fullname" locale="en-GB"/>
+        <prompt prompt="fullname" locale="en_GB.UTF-8"/>
       </field>
       <field property="avatar"/>
       <field property="bio"/>
       <field property="elector_id">
-        <prompt prompt="Electoral roll entry" locale="en-GB"/>
+        <prompt prompt="Electoral roll entry" locale="en_GB.UTF-8"/>
       </field>
       <field property="address_id">
-        <prompt prompt="address" locale="en-GB"/>
+        <prompt prompt="address" locale="en_GB.UTF-8"/>
       </field>
       <field property="phone">
-        <prompt prompt="phone" locale="en-GB"/>
+        <prompt prompt="phone" locale="en_GB.UTF-8"/>
       </field>
       <field property="email">
-        <prompt prompt="email" locale="en-GB"/>
+        <prompt prompt="email" locale="en_GB.UTF-8"/>
       </field>
       <field property="authority_id">
-        <prompt prompt="authority_id" locale="en-GB"/>
+        <prompt prompt="authority_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="authorised">
-        <prompt prompt="authorised" locale="en-GB"/>
+        <prompt prompt="authorised" locale="en_GB.UTF-8"/>
       </field>
       <field property="roles">
-        <prompt prompt="Roles" locale="en-GB"/>
+        <prompt prompt="Roles" locale="en_GB.UTF-8"/>
       </field>
     </form>
     <permission group="canvassers" permission="edit">
@@ -719,58 +725,58 @@ version="0.1.1">
     <key>
       <property required="true" type="integer" name="id"
       column="id" distinct="system" immutable="true">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <property required="true" type="entity" name="elector_id"
     column="elector_id" entity="electors" farkey="id"
     distinct="user">
-      <prompt prompt="elector_id" locale="en-GB"/>
+      <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="entity" name="visit_id"
     column="visit_id" entity="visits" farkey="id" distinct="user">
-      <prompt prompt="visit_id" locale="en-GB"/>
+      <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="entity" name="issue_id"
     column="issue_id" entity="issues" farkey="id" distinct="user">
-      <prompt prompt="issue_id" locale="en-GB"/>
+      <prompt prompt="issue_id" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="entity" name="method_id"
     column="method_id" entity="followupmethods" farkey="id">
-      <prompt prompt="method_id" locale="en-GB"/>
+      <prompt prompt="method_id" locale="en_GB.UTF-8"/>
     </property>
     <list properties="listed" name="Followuprequests">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="elector_id">
-        <prompt prompt="elector_id" locale="en-GB"/>
+        <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="visit_id">
-        <prompt prompt="visit_id" locale="en-GB"/>
+        <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="issue_id">
-        <prompt prompt="issue_id" locale="en-GB"/>
+        <prompt prompt="issue_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="method_id">
-        <prompt prompt="method_id" locale="en-GB"/>
+        <prompt prompt="method_id" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Followuprequest">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="elector_id">
-        <prompt prompt="elector_id" locale="en-GB"/>
+        <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="visit_id">
-        <prompt prompt="visit_id" locale="en-GB"/>
+        <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="issue_id">
-        <prompt prompt="issue_id" locale="en-GB"/>
+        <prompt prompt="issue_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="method_id">
-        <prompt prompt="method_id" locale="en-GB"/>
+        <prompt prompt="method_id" locale="en_GB.UTF-8"/>
       </field>
     </form>
     <permission group="canvassers" permission="noedit"/>
@@ -788,33 +794,33 @@ version="0.1.1">
     <key>
       <property type="integer" name="id" column="id"
       immutable="true" distinct="system">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <property required="true" type="string" name="name"
     column="name" size="64" distinct="all" immutable="true">
-      <prompt prompt="name" locale="en-GB"/>
+      <prompt prompt="name" locale="en_GB.UTF-8"/>
     </property>
     <property type="link" entity="canvassers" name="members">
-      <prompt prompt="Members" locale="en-GB"/>
+      <prompt prompt="Members" locale="en_GB.UTF-8"/>
     </property>
     <list properties="listed" name="Roles">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="name">
-        <prompt prompt="name" locale="en-GB"/>
+        <prompt prompt="name" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Role">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="name">
-        <prompt prompt="name" locale="en-GB"/>
+        <prompt prompt="name" locale="en_GB.UTF-8"/>
       </field>
       <field property="members">
-        <prompt prompt="Members" locale="en-GB"/>
+        <prompt prompt="Members" locale="en_GB.UTF-8"/>
       </field>
     </form>
     <permission group="canvassers" permission="read"/>
@@ -829,28 +835,28 @@ version="0.1.1">
     <key>
       <property type="integer" name="id" column="id"
       distinct="system" immutable="true">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <property required="true" type="string" name="name"
     column="name" size="64" distinct="user">
-      <prompt prompt="name" locale="en-GB"/>
+      <prompt prompt="name" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="entity" entity="districts"
     farkey="id" name="district_id" column="district_id">
-      <prompt prompt="district_id" locale="en-GB"/>
+      <prompt prompt="district_id" locale="en_GB.UTF-8"/>
     </property>
     <property type="real" name="latitude" column="latitude">
-      <prompt prompt="latitude" locale="en-GB"/>
+      <prompt prompt="latitude" locale="en_GB.UTF-8"/>
     </property>
     <property type="link" entity="canvassers" name="members">
-      <prompt prompt="Members" locale="en-GB"/>
+      <prompt prompt="Members" locale="en_GB.UTF-8"/>
     </property>
     <property type="link" entity="canvassers" name="organisers">
-      <prompt prompt="Organisers" locale="en-GB"/>
+      <prompt prompt="Organisers" locale="en_GB.UTF-8"/>
     </property>
     <property type="real" name="longitude" column="longitude">
-      <prompt prompt="longitude" locale="en-GB"/>
+      <prompt prompt="longitude" locale="en_GB.UTF-8"/>
     </property>
     <permission group="canvassers" permission="read"/>
     <permission group="teamorganisers" permission="edit">
@@ -864,69 +870,69 @@ version="0.1.1">
     </permission>
     <list properties="listed" name="Teams">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="name">
-        <prompt prompt="name" locale="en-GB"/>
+        <prompt prompt="name" locale="en_GB.UTF-8"/>
       </field>
       <field property="district_id">
-        <prompt prompt="district_id" locale="en-GB"/>
+        <prompt prompt="district_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="latitude">
-        <prompt prompt="latitude" locale="en-GB"/>
+        <prompt prompt="latitude" locale="en_GB.UTF-8"/>
       </field>
       <field property="longitude">
-        <prompt prompt="longitude" locale="en-GB"/>
+        <prompt prompt="longitude" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Team">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="name">
-        <prompt prompt="name" locale="en-GB"/>
+        <prompt prompt="name" locale="en_GB.UTF-8"/>
       </field>
       <field property="district_id">
-        <prompt prompt="district_id" locale="en-GB"/>
+        <prompt prompt="district_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="latitude">
-        <prompt prompt="latitude" locale="en-GB"/>
+        <prompt prompt="latitude" locale="en_GB.UTF-8"/>
       </field>
       <field property="members">
-        <prompt prompt="Members" locale="en-GB"/>
+        <prompt prompt="Members" locale="en_GB.UTF-8"/>
       </field>
       <field property="organisers">
-        <prompt prompt="Organisers" locale="en-GB"/>
+        <prompt prompt="Organisers" locale="en_GB.UTF-8"/>
       </field>
       <field property="longitude">
-        <prompt prompt="longitude" locale="en-GB"/>
+        <prompt prompt="longitude" locale="en_GB.UTF-8"/>
       </field>
       <auxlist property="organisers">
-        <prompt prompt="Organisers" locale="en-GB"/>
+        <prompt prompt="Organisers" locale="en_GB.UTF-8"/>
         <field property="id">
         </field>
         <field property="fullname">
-          <prompt prompt="name" locale="en-GB"/>
+          <prompt prompt="name" locale="en_GB.UTF-8"/>
         </field>
         <field property="email">
-          <prompt prompt="email" locale="en-GB"/>
+          <prompt prompt="email" locale="en_GB.UTF-8"/>
         </field>
         <field property="phone">
-          <prompt prompt="phone" locale="en-GB"/>
+          <prompt prompt="phone" locale="en_GB.UTF-8"/>
         </field>
       </auxlist>
       <auxlist property="members">
-        <prompt prompt="Members" locale="en-GB"/>
+        <prompt prompt="Members" locale="en_GB.UTF-8"/>
         <field property="id">
         </field>
         <field property="fullname">
-          <prompt prompt="name" locale="en-GB"/>
+          <prompt prompt="name" locale="en_GB.UTF-8"/>
         </field>
         <field property="email">
-          <prompt prompt="email" locale="en-GB"/>
+          <prompt prompt="email" locale="en_GB.UTF-8"/>
         </field>
         <field property="phone">
-          <prompt prompt="phone" locale="en-GB"/>
+          <prompt prompt="phone" locale="en_GB.UTF-8"/>
         </field>
       </auxlist>
       <auxlist property="events">
@@ -953,7 +959,7 @@ version="0.1.1">
     </key>
     <property required="true" type="string" name="name"
     column="name" size="64" distinct="user">
-      <prompt prompt="name" locale="en-GB"/>
+      <prompt prompt="name" locale="en_GB.UTF-8"/>
     </property>
     <property name="teams" type="link" entity="teams"/>
     <property name="date" type="date" distinct="user"/>
@@ -978,29 +984,29 @@ version="0.1.1">
     <key>
       <property required="true" type="integer" name="id"
       column="id" immutable="true" distinct="system">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <property required="true" type="string" name="name"
     column="name" size="64" distinct="user">
-      <prompt prompt="name" locale="en-GB"/>
+      <prompt prompt="name" locale="en_GB.UTF-8"/>
     </property>
     <permission group="public" permission="read"/>
     <permission group="admin" permission="all"/>
     <list properties="listed" name="Districts">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="name">
-        <prompt prompt="name" locale="en-GB"/>
+        <prompt prompt="name" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="District">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="name">
-        <prompt prompt="name" locale="en-GB"/>
+        <prompt prompt="name" locale="en_GB.UTF-8"/>
       </field>
     </form>
     <permission group="canvassers" permission="read"/>
@@ -1018,64 +1024,64 @@ version="0.1.1">
     <key>
       <property required="true" type="integer" name="id"
       column="id" distinct="system" immutable="true">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <property required="true" type="entity" name="request_id"
     column="request_id" entity="followuprequests" farkey="id">
-      <prompt prompt="request_id" locale="en-GB"/>
+      <prompt prompt="request_id" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="entity" name="actor"
     column="actor" entity="canvassers" farkey="id">
-      <prompt prompt="actor" locale="en-GB"/>
+      <prompt prompt="actor" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" default="now()" type="timestamp"
     name="date" column="date" distinct="user">
-      <prompt prompt="date" locale="en-GB"/>
+      <prompt prompt="date" locale="en_GB.UTF-8"/>
     </property>
     <property type="text" name="notes" column="notes"
     distinct="user">
-      <prompt prompt="notes" locale="en-GB"/>
+      <prompt prompt="notes" locale="en_GB.UTF-8"/>
     </property>
     <property type="boolean" name="closed" column="closed"
     default="false">
-      <prompt prompt="closed" locale="en-GB"/>
+      <prompt prompt="closed" locale="en_GB.UTF-8"/>
     </property>
     <list properties="listed" name="Followupactions">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="request_id">
-        <prompt prompt="request_id" locale="en-GB"/>
+        <prompt prompt="request_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="actor">
-        <prompt prompt="actor" locale="en-GB"/>
+        <prompt prompt="actor" locale="en_GB.UTF-8"/>
       </field>
       <field property="date">
-        <prompt prompt="date" locale="en-GB"/>
+        <prompt prompt="date" locale="en_GB.UTF-8"/>
       </field>
       <field property="closed">
-        <prompt prompt="closed" locale="en-GB"/>
+        <prompt prompt="closed" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Followupaction">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
       <field property="request_id">
-        <prompt prompt="request_id" locale="en-GB"/>
+        <prompt prompt="request_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="actor">
-        <prompt prompt="actor" locale="en-GB"/>
+        <prompt prompt="actor" locale="en_GB.UTF-8"/>
       </field>
       <field property="date">
-        <prompt prompt="date" locale="en-GB"/>
+        <prompt prompt="date" locale="en_GB.UTF-8"/>
       </field>
       <field property="notes">
-        <prompt prompt="notes" locale="en-GB"/>
+        <prompt prompt="notes" locale="en_GB.UTF-8"/>
       </field>
       <field property="closed">
-        <prompt prompt="closed" locale="en-GB"/>
+        <prompt prompt="closed" locale="en_GB.UTF-8"/>
       </field>
     </form>
     <permission group="issueexperts" permission="noedit"/>
@@ -1098,17 +1104,17 @@ version="0.1.1">
     <key>
       <property required="true" type="string" name="id" column="id"
       size="32" distinct="all" immutable="true">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <list properties="listed" name="Options">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Option">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
     </form>
     <permission group="canvassers" permission="read"/>
@@ -1127,17 +1133,17 @@ version="0.1.1">
     <key>
       <property required="true" type="string" size="32" name="id"
       column="id" immutable="true" distinct="all">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <list properties="listed" name="Followupmethods">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Followupmethod">
       <field property="id">
-        <prompt prompt="id" locale="en-GB"/>
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </field>
     </form>
     <permission group="canvassers" permission="read"/>
