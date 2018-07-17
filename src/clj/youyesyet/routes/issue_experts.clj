@@ -1,6 +1,7 @@
 (ns ^{:doc "Routes/pages available to issue experts."
       :author "Simon Brooke"} youyesyet.routes.issue-experts
-  (:require [adl-support.utils :refer [safe-name]]
+  (:require [adl-support.core :as support]
+            [adl-support.utils :refer [safe-name]]
             [clojure.java.io :as io]
             [clojure.string :as s]
             [clojure.tools.logging :as log]
@@ -40,7 +41,7 @@
 
 (defn list-page [request]
   (layout/render
-    "auto/list-followuprequests-Followuprequests.html"
+    "issue-expert/list.html"
     (:session request)
     (let [user (:user (:session request))]
     {:title "Open requests"
@@ -49,14 +50,44 @@
 
 
 (defn followup-request-page [request]
-  (layout/render
-    "issue-expert/request.html"
-    (:session request)
-    {:title "Open requests"
-             :user (:user (:session request))
-             :request (db/get-followuprequest
-                        db/*db*
-                        {:id (:id (keywordize-keys (:params request)))})}))
+  (let
+    [params (support/massage-params
+              (keywordize-keys (:params request))
+              (keywordize-keys (:form-params request))
+              #{:id})
+     id (:id (keywordize-keys params))
+     record (db/get-followuprequest db/*db* {:id id})
+     elector (if
+               record
+               (first
+                 (db/search-strings-electors
+                   db/*db* {:id (:elector_id record)})))
+     visit (if
+             record
+             (first
+               (db/search-strings-visits
+                 db/*db* {:id (:visit_id record)})))]
+    (layout/render
+      "issue-expert/request.html"
+      (:session request)
+      {:title (str "Request from " (:name elector) " at " (:date visit))
+       :user (:user (:session request))
+       :visit visit
+       :actions (map
+                  ;; HTML-ise the notes in each action record
+                  #(merge % {:notes (md-to-html-string (:notes %))})
+                  (db/list-followupactions-by-followuprequest
+                    db/*db* {:id id}))
+       :record record
+       :elector elector
+       :issue (let
+                [raw-issue (if
+                             record
+                             (db/get-issue db/*db* {:id (:issue_id record)}))]
+                (if raw-issue
+                  (merge
+                    raw-issue
+                    {:brief (md-to-html-string (:brief raw-issue))})))})))
 
 
 (defroutes issue-expert-routes

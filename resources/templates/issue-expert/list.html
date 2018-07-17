@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+<!-- File list-followuprequests-Followuprequests.html generated 2018-07-17T07:58:11.329Z by adl.to-selmer-templates.
+See [Application Description Language](https://github.com/simon-brooke/adl).-->
+
+
+{% block back-links %}
+<div>
+<div class='back-link-container'>
+<a id='prev-selector' class='back-link'>
+Previous
+</a>
+</div>
+</div>
+
+{% endblock %}
+{% block big-links %}
+<div>
+<div class='big-link-container'>
+<a id='next-selector' role='button' class='big-link'>
+Next
+</a>
+</div>
+{% ifmemberof %}
+<div class='big-link-container'>
+<a href='{{servlet-context}}/form-followuprequests-Followuprequest' class='big-link'>
+Add a new Followuprequest
+</a>
+</div>
+{% endifmemberof %}
+</div>
+
+{% endblock %}
+{% block content %}
+<form id='list-followuprequests-Followuprequests' class='list' action='{{servlet-context}}/list-followuprequests-Followuprequests' method='POST'>
+{% csrf-field %}
+<input id='offset' name='offset' type='hidden' value='{{params.offset|default:0}}'/>
+<input id='limit' name='limit' type='hidden' value='{{params.limit|default:50}}'/>
+<table caption='followuprequests'>
+<thead>
+<tr>
+<th>
+Id
+</th>
+<th>
+Elector_id
+</th>
+<th>
+Visit_id
+</th>
+<th>
+Issue_id
+</th>
+<th>
+Method_id
+</th>
+<th>
+&nbsp;
+</th>
+</tr>
+<tr>
+<th>
+<input id='id' type='text' name='id' value='{{ params.id }}'/>
+</th>
+<th>
+<input id='elector_id' type='text' name='elector_id' value='{{ params.elector_id }}'/>
+</th>
+<th>
+<input id='visit_id' type='text' name='visit_id' value='{{ params.visit_id }}'/>
+</th>
+<th>
+<input id='issue_id' type='text' name='issue_id' value='{{ params.issue_id }}'/>
+</th>
+<th>
+<input id='method_id' type='text' name='method_id' value='{{ params.method_id }}'/>
+</th>
+<th>
+<input type='submit' id='search-widget' value='Search'/>
+</th>
+</tr>
+</thead>
+<tbody>
+{% for record in records %}
+<tr>
+<td>
+{{ record.id }}
+</td>
+<td>
+<a href='{{servlet-context}}/form-electors-Elector?id={{ record.elector_id }}'>
+{{ record.elector_id_expanded }}
+</a>
+</td>
+<td>
+<a href='{{servlet-context}}/form-visits-Visit?id={{ record.visit_id }}'>
+{{ record.visit_id_expanded }}
+</a>
+</td>
+<td>
+<a href='{{servlet-context}}/form-issues-Issue?id={{ record.issue_id }}'>
+{{ record.issue_id_expanded }}
+</a>
+</td>
+<td>
+<a href='{{servlet-context}}/form-followupmethods-Followupmethod?id={{ record.method_id }}'>
+{{ record.method_id_expanded }}
+</a>
+</td>
+<td>
+<a href='{{servlet-context}}/issue-expert/followup-request?id={{ record.id }}'>
+View
+</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</form>
+
+{% endblock %}
+{% block extra-script %}
+
+          var form = document.getElementById('list-followuprequests-Followuprequests');
+          var ow = document.getElementById('offset');
+          var lw = document.getElementById('limit');
+          form.addEventListener('submit', function() {
+            ow.value='0';
+          });
+
+          var prevSelector = document.getElementById('prev-selector');
+          if (prevSelector != null) {
+            prevSelector.addEventListener('click', function () {
+              if (parseInt(ow.value)===0) {
+                window.location = '{{servlet-context}}/admin';
+              } else {
+                ow.value=(parseInt(ow.value)-parseInt(lw.value));
+                console.log('Updated offset to ' + ow.value);
+                form.submit();
+              }
+            });
+          }
+
+          document.getElementById('next-selector').addEventListener('click', function () {
+            ow.value=(parseInt(ow.value)+parseInt(lw.value));
+            console.log('Updated offset to ' + ow.value);
+            form.submit();
+          });
+{% endblock %}
