@@ -99,23 +99,11 @@ version="0.1.1">
       Null if they have not.</documentation>
     </property>
     <list properties="listed" name="Electors">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="name">
         <prompt prompt="Name" locale="en_GB.UTF-8"/>
       </field>
       <field property="dwelling_id">
         <prompt prompt="Home" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="phone">
-        <prompt prompt="Phone" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="email">
-        <prompt prompt="eMail" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="gender">
-        <prompt prompt="Gender" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Elector">
@@ -203,9 +191,6 @@ version="0.1.1">
       </documentation>
     </property>
     <list properties="listed" name="Dwellings">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="address_id">
         <prompt prompt="Building Address" locale="en_GB.UTF-8"/>
       </field>
@@ -214,9 +199,6 @@ version="0.1.1">
       </field>
     </list>
     <form properties="listed" name="Dwelling">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="address_id">
         <prompt prompt="Building Address" locale="en_GB.UTF-8"/>
       </field>
@@ -277,26 +259,14 @@ version="0.1.1">
       users.</documentation>
     </property>
     <list properties="listed" name="Addresses">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="address">
         <prompt prompt="Address" locale="en_GB.UTF-8"/>
       </field>
       <field property="postcode">
         <prompt prompt="Postcode" locale="en_GB.UTF-8"/>
       </field>
-      <field property="phone">
-        <prompt prompt="Phone" locale="en_GB.UTF-8"/>
-      </field>
       <field property="district_id">
         <prompt prompt="District" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="latitude">
-        <prompt prompt="Latitude" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="longitude">
-        <prompt prompt="Longitude" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Address">
@@ -369,9 +339,6 @@ version="0.1.1">
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="noedit"/>
     <list properties="listed" name="Visits">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="address_id">
         <prompt prompt="Address" locale="en_GB.UTF-8"/>
       </field>
@@ -428,12 +395,10 @@ version="0.1.1">
     <property name="consumer-secret" type="string" size="256"
     required="true"/>
     <list name="Authorities" properties="listed">
-    <field property="id">
-      <prompt prompt="id" locale="en_GB.UTF-8"/>
-    </field>#
-    <field property="request-token-uri"/>
-    <field property="access-token-uri"/>
-    <field property="authorize-uri"/></list>
+      <field property="id">
+        <prompt prompt="id" locale="en_GB.UTF-8"/>
+      </field>
+    </list>
     <form properties="listed" name="Authority">
       <field property="id">
         <prompt prompt="id" locale="en_GB.UTF-8"/>
@@ -550,13 +515,13 @@ version="0.1.1">
     <permission group="admin" permission="noedit"/>
     <list properties="listed" name="Intentions">
       <field property="visit_id">
-        <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
+        <prompt prompt="visit" locale="en_GB.UTF-8"/>
       </field>
       <field property="elector_id">
-        <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
+        <prompt prompt="elector" locale="en_GB.UTF-8"/>
       </field>
       <field property="option_id">
-        <prompt prompt="option_id" locale="en_GB.UTF-8"/>
+        <prompt prompt="option" locale="en_GB.UTF-8"/>
       </field>
       <field property="locality">
         <documentation>The locality at which the intention was
@@ -654,20 +619,14 @@ version="0.1.1">
       <documentation>All canvassers</documentation>
     </permission>
     <list properties="listed" name="Canvassers">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="username">
         <prompt prompt="username" locale="en_GB.UTF-8"/>
       </field>
       <field property="fullname">
-        <prompt prompt="fullname" locale="en_GB.UTF-8"/>
+        <prompt prompt="full name" locale="en_GB.UTF-8"/>
       </field>
       <field property="address_id">
         <prompt prompt="address" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="authority_id">
-        <prompt prompt="authority_id" locale="en_GB.UTF-8"/>
       </field>
       <field property="authorised">
         <prompt prompt="authorised" locale="en_GB.UTF-8"/>
@@ -746,20 +705,17 @@ version="0.1.1">
       <prompt prompt="method_id" locale="en_GB.UTF-8"/>
     </property>
     <list properties="listed" name="Followuprequests">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="elector_id">
-        <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
+        <prompt prompt="elector" locale="en_GB.UTF-8"/>
       </field>
       <field property="visit_id">
-        <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
+        <prompt prompt="visit" locale="en_GB.UTF-8"/>
       </field>
       <field property="issue_id">
-        <prompt prompt="issue_id" locale="en_GB.UTF-8"/>
+        <prompt prompt="issue" locale="en_GB.UTF-8"/>
       </field>
       <field property="method_id">
-        <prompt prompt="method_id" locale="en_GB.UTF-8"/>
+        <prompt prompt="method" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Followuprequest">
@@ -805,9 +761,6 @@ version="0.1.1">
       <prompt prompt="Members" locale="en_GB.UTF-8"/>
     </property>
     <list properties="listed" name="Roles">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="name">
         <prompt prompt="name" locale="en_GB.UTF-8"/>
       </field>
@@ -869,20 +822,11 @@ version="0.1.1">
       <documentation>All groups</documentation>
     </permission>
     <list properties="listed" name="Teams">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="name">
         <prompt prompt="name" locale="en_GB.UTF-8"/>
       </field>
       <field property="district_id">
         <prompt prompt="district_id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="latitude">
-        <prompt prompt="latitude" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="longitude">
-        <prompt prompt="longitude" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Team">
@@ -974,7 +918,12 @@ version="0.1.1">
     <permission permission="read" group="issueeditors"/>
     <permission permission="all" group="admin"/>
     <form properties="all" name="Events"/>
-    <list properties="all" name="Events"/>
+    <list properties="listed" name="Events">
+      <field property="name"><prompt prompt="name" locale="en_GB.UTF-8"/></field>
+      <field property="date"/>
+      <field property="time"/>
+      <field property="cancelled"/>
+    </list>
   </entity>
   <entity table="districts" name="districts" magnitude="4"
   volatility="7">
@@ -994,17 +943,11 @@ version="0.1.1">
     <permission group="public" permission="read"/>
     <permission group="admin" permission="all"/>
     <list properties="listed" name="Districts">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="name">
         <prompt prompt="name" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="District">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="name">
         <prompt prompt="name" locale="en_GB.UTF-8"/>
       </field>
@@ -1048,11 +991,8 @@ version="0.1.1">
       <prompt prompt="closed" locale="en_GB.UTF-8"/>
     </property>
     <list properties="listed" name="Followupactions">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="request_id">
-        <prompt prompt="request_id" locale="en_GB.UTF-8"/>
+        <prompt prompt="Request" locale="en_GB.UTF-8"/>
       </field>
       <field property="actor">
         <prompt prompt="actor" locale="en_GB.UTF-8"/>
@@ -1094,9 +1034,7 @@ version="0.1.1">
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
-    entity options already has a key - not generating one
-    -->
+
   <entity table="options" name="options" magnitude="1"
   volatility="7">
     <documentation>Options in the election or referendum being
