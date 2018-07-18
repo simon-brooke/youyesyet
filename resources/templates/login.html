@@ -1,11 +1,26 @@
-{% extends "base-unauthenticated.html" %}
+{% extends "base.html" %}
+{% block big-links %}
+     {% for authority in authorities %}
+      <div class="big-link-container">
+        <a href="auth?authority={{authority.id}}" class="big-link" id="{{authority.id}}-link">
+          <img src="img/authorities/{{authority.id}}.png" width="32" height="32" alt="{{authority.id}}"/>
+          {{authority.id}}
+        </a>
+      </div>
+      {% endfor %}
+{% endblock %}
+
 {% block content %}
-      <p>
-        We're not going to do login in the long term; we're going to use oauth.
-        This is a temporary login form.
-      </p>
-      <form action="auth" method="post">
+      <form action="login" method="post">
         {% csrf-field %}
+        <h2>
+          Or use a test username and password
+        </h2>
+        <p>
+          We're not going to do login in the long term; we're going to use
+          <a href="https://oauth.net/2/">oauth</a>.
+          This is a temporary login form.
+        </p>
         <p class="widget">
           <label for="username">Username</label>
           <input type="text" id="username" name="username"/>

@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+<!--
+  Form for issue experts to handle a request from an elector.
+-->
+
+
+{% block extra-head %}
+           {% script "/js/lib/node_modules/simplemde/dist/simplemde.min.js" %}
+           {% style "/js/lib/node_modules/simplemde/dist/simplemde.min.css" %}
+{% endblock %}
+{% block content %}
+<div id='content' class='edit'>
+  <form action='{{servlet-context}}/issue-expert/followup-action' method='POST'>
+    {% csrf-field %}
+    <input id='id' name='id' type='hidden' value='{{record.id}}'/>
+    <p class='widget'>
+      <label for='elector_id'>
+        Elector
+      </label>
+      {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
+      <span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
+        {{elector.name}} ({{elector.gender}})
+      </span>
+      {% else %}
+      <span id='elector_id' name='elector_id' class='pseudo-widget not-authorised'>
+        You are not permitted to view elector of followuprequests
+      </span>
+      {% endifmemberof %}
+    </p>
+    <p class='widget'>
+      <label for='visit'>
+        Visit
+      </label>
+      {% ifmemberof issueexperts analysts issueeditors admin %}
+      <span id='visit' name='visit' class='pseudo-widget disabled'>
+        by {{visit.canvasser_id_expanded}} at {{visit.date}}
+      </span>
+      {% else %}
+      <span id='visit_id' name='visit_id' class='pseudo-widget not-authorised'>
+        You are not permitted to view visit of followuprequests
+      </span>
+      {% endifmemberof %}
+    </p>
+    <p class='widget'>
+      <label for='issue_id'>
+        {{issue.id}}
+      </label>
+      {% ifmemberof issueexperts admin %}
+      <div id="issue-brief">
+        {{issue.brief|safe}}
+      </div>
+      {% else %}
+      <span id='issue_id' name='issue_id' class='pseudo-widget not-authorised'>
+        You are not permitted to view issue of followuprequests
+      </span>
+      {% endifmemberof %}
+    </p>
+    <p class='widget'>
+      <label for='method_id'>
+        {{record.method_id}}
+      </label>
+      {% ifmemberof issueexperts admin %}
+      <span id='method_id' name='method_id' class='pseudo-widget disabled'>
+        {% ifequal record.method_id "Phone" %}{{elector.phone}}{% endifequal %}
+        {% ifequal record.method_id "eMail" %}<a href="mailto:{{elector.email}}">{{elector.email}}</a>{% endifequal %}
+      </span>
+      {% else %}
+      <span id='method_id' name='method_id' class='pseudo-widget not-authorised'>
+        You are not permitted to view method of followuprequests
+      </span>
+      {% endifmemberof %}
+    </p>
+    {% if actions|length > 0 %}
+    <p>
+      <label for='history'>
+        History
+      </label>
+      <table id='history'>
+        <thead>
+          <tr>
+            <th>
+              Actor
+            </th>
+            <th>
+              Date
+            </th>
+            <th>
+              Closed?
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for action in actions %}
+          <tr>
+            <td>{{action.actor}}</td>
+            <td>{{action.date}}</td>
+            <td>{{action.closed}}</td>
+          </tr>
+          <tr>
+            <td colspan="3">{{action.notes|safe}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </p>
+    {% endif %}
+    <p class='widget'>
+      <label for='notes'>
+        Your notes
+      </label>
+      {% ifmemberof admin issueexperts %}
+      <textarea rows='8' cols='60' id='notes' name='notes'>
+      </textarea>
+      {% endifmemberof %}
+    </p>
+    <p class='widget'>
+      <label for='closed'>
+        Has the elector's query been satisfied?
+      </label>
+      {% ifmemberof admin issueexperts %}
+        <input id='closed' name='closed' type='checkbox' maxlength='' size='16'/>
+      {% endifmemberof %}
+    </p>
+
+    {% ifmemberof admin issueexperts %}
+    <p class='widget action-safe'>
+    <label for='save-button' class='action-safe'>
+    To save this followuprequests record
+    </label>
+    <input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
+    </p>
+    {% endifmemberof %}
+  </form>
+</div>
+
+{% endblock %}
+{% block extra-tail %}
+<script type='text/javascript'>
+  var simplemde = new SimpleMDE({
+    autosave: {
+      enabled: true,
+      uniqueId: "adl-generated-{{page}}",
+      delay: 1000,
+    },
+    indentWithTabs: true,
+    insertTexts: {
+      horizontalRule: ["", "\n\n-----\n\n"],
+      image: ["![](http://", ")"],
+      link: ["[", "](http://)"],
+      table: ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"],
+    },
+    showIcons: ["code"], //, "table"], - sadly, markdown-clj does not support tables
+    spellChecker: true,
+    status: ["autosave", "lines", "words", "cursor"]
+  });
+</script>
+{% endblock %}

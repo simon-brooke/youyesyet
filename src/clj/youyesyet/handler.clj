@@ -1,17 +1,24 @@
 (ns ^{:doc "Handlers for starting and stopping the webapp."
       :author "Simon Brooke"}
   youyesyet.handler
-  (:require [compojure.core :refer [routes wrap-routes]]
-            [youyesyet.layout :refer [error-page]]
-            [youyesyet.routes.authenticated :refer [authenticated-routes]]
-            [youyesyet.routes.home :refer [home-routes]]
-            [youyesyet.routes.oauth :refer [oauth-routes]]
+  (:require [clojure.tools.logging :as log]
+            [compojure.core :refer [routes wrap-routes]]
             [compojure.route :as route]
-            [youyesyet.env :refer [defaults]]
             [mount.core :as mount]
+            [noir.session :as session]
+            [youyesyet.config :refer [env]]
+            [youyesyet.layout :refer [error-page]]
             [youyesyet.middleware :as middleware]
-            [clojure.tools.logging :as log]
-            [youyesyet.config :refer [env]]))
+            [youyesyet.routes.home :refer [home-routes]]
+            [youyesyet.routes.auto :refer [auto-selmer-routes]]
+            [youyesyet.routes.auto-json :refer [auto-rest-routes]]
+            [youyesyet.routes.issue-experts :refer [issue-expert-routes]]
+            [youyesyet.routes.logged-in :refer [logged-in-routes]]
+            [youyesyet.routes.oauth :refer [oauth-routes]]
+            [youyesyet.routes.rest :refer [rest-routes]]
+            [youyesyet.routes.roles :refer [roles-routes]]
+            [youyesyet.routes.services :refer [service-routes]]
+            [youyesyet.env :refer [defaults]]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
@@ -58,17 +65,40 @@
   (shutdown-agents)
   (log/info "youyesyet has shut down!"))
 
+
 (def app-routes
   (routes
     (-> #'home-routes
         (wrap-routes middleware/wrap-csrf)
         (wrap-routes middleware/wrap-formats))
-    #'oauth-routes
-    #'authenticated-routes
+    (-> #'logged-in-routes
+        (wrap-routes middleware/wrap-csrf)
+        (wrap-routes middleware/wrap-formats))
+    (-> #'roles-routes
+        (wrap-routes middleware/wrap-csrf)
+        (wrap-routes middleware/wrap-formats))
+    (-> #'issue-expert-routes
+        (wrap-routes middleware/wrap-csrf)
+        (wrap-routes middleware/wrap-formats))
+    (-> #'auto-rest-routes
+        (wrap-routes middleware/wrap-csrf)
+        (wrap-routes middleware/wrap-formats))
+    (-> #'auto-selmer-routes
+        (wrap-routes middleware/wrap-csrf)
+        (wrap-routes middleware/wrap-formats))
+    (-> #'auto-rest-routes
+        (wrap-routes middleware/wrap-formats))
+    (-> #'rest-routes
+        (wrap-routes middleware/wrap-formats))
+    (-> #'service-routes
+        (wrap-routes middleware/wrap-formats)) ;; TODO: and authentication, but let's not sweat the small stuff.
+    'oauth-routes
+    (route/resources "/")
     (route/not-found
       (:body
         (error-page {:status 404
-                     :title "page not found"})))))
+                     :title "Page not found"
+                     :message "The page you requested has not yet been implemented"})))))
 
 
 (def app (middleware/wrap-base #'app-routes))

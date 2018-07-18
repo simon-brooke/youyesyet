@@ -1,9 +1,15 @@
-{% extends "base-unauthenticated.html" %}
+{% extends "base.html" %}
 {% block big-links %}
-      <div class="big-link-container">
-        <a href="supporter" class="big-link" id="yes-link">Yes</a>
-      </div>
-      <div class="big-link-container">
-        <a href="notyet" class="big-link" id="not-yet-link">No</a>
-      </div>
+<div class="big-link-container">
+  <a href="supporter" class="big-link" id="yes-link">Yes</a>
+</div>
+<div class="big-link-container">
+  <a href="notyet" class="big-link" id="not-yet-link">No</a>
+</div>
 {% endblock %}
+{% block content %}
+<img id="site-logo" src="img/ProjectHopeLogo4.png" alt="{{site-title}}" style="float: left;" height="345" width="345"/>
+{{motd|safe}}
+
+{% endblock %}
+

@@ -1,16 +1,16 @@
-(ns ^{:doc "Plumbing, mainly boilerplate from Luminus."
-      :author "Simon Brooke"}
+(ns ^{:doc "Plumbing, mainly boilerplate from Luminus."}
   youyesyet.middleware
-  (:require [youyesyet.env :refer [defaults]]
-            [clojure.tools.logging :as log]
-            [youyesyet.layout :refer [*app-context* error-page]]
+  (:require [clojure.tools.logging :as log]
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
-            [ring.middleware.webjars :refer [wrap-webjars]]
+            [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
             [ring.middleware.format :refer [wrap-restful-format]]
-            [youyesyet.config :refer [env]]
+            [ring.middleware.webjars :refer [wrap-webjars]]
             [ring-ttl-session.core :refer [ttl-memory-store]]
-            [ring.middleware.defaults :refer [site-defaults wrap-defaults]])
+            [youyesyet.env :refer [defaults]]
+            [youyesyet.config :refer [env]]
+            [youyesyet.layout :refer [*app-context* error-page]])
   (:import [javax.servlet ServletContext]))
+
 
 (defn wrap-context [handler]
   (fn [request]
@@ -27,6 +27,7 @@
                 (:app-context env))]
       (handler request))))
 
+
 (defn wrap-internal-error [handler]
   (fn [req]
     (try
@@ -37,6 +38,7 @@
                      :title "Something very bad has happened!"
                      :message "We've dispatched a team of highly trained gnomes to take care of the problem."})))))
 
+
 (defn wrap-csrf [handler]
   (wrap-anti-forgery
     handler
@@ -44,6 +46,7 @@
      (error-page
        {:status 403
         :title "Invalid anti-forgery token"})}))
+
 
 (defn wrap-formats [handler]
   (let [wrapped (wrap-restful-format
@@ -53,6 +56,7 @@
       ;; disable wrap-formats for websockets
       ;; since they're not compatible with this middleware
       ((if (:websocket? request) handler wrapped) request))))
+
 
 (defn wrap-base [handler]
   (-> ((:middleware defaults) handler)

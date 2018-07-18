@@ -1,4 +1,5 @@
-(ns youyesyet.core
+(ns ^{:doc "Devalopment launcher, entirely boilerplate from Luminus."}
+  youyesyet.core
   (:require [youyesyet.handler :as handler]
             [luminus.repl-server :as repl]
             [luminus.http-server :as http]
@@ -46,7 +47,9 @@
                         mount/start-with-args
                         :started)]
     (log/info component "started"))
-  (.addShutdownHook (Runtime/getRuntime) (Thread. handler/destroy)))
+  (.addShutdownHook (Runtime/getRuntime)
+                    (Thread. handler/destroy)))
+
 
 (defn -main [& args]
   (cond
@@ -57,4 +60,9 @@
       (System/exit 0))
     :else
     (start-app args)))
-  
+
+;; (mount/start)
+;; (mount/stop)
+
+
+

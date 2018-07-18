@@ -10,13 +10,16 @@
             [re-frame.core :as rf]
             [secretary.core :as secretary]
             [youyesyet.canvasser-app.ajax :refer [load-interceptors!]]
-            [youyesyet.canvasser-app.handlers]
+            [youyesyet.canvasser-app.gis :refer [get-current-location]]
+            [youyesyet.canvasser-app.handlers :as h]
             [youyesyet.canvasser-app.subscriptions]
             [youyesyet.canvasser-app.ui-utils :as ui]
             [youyesyet.canvasser-app.views.about :as about]
             [youyesyet.canvasser-app.views.building :as building]
-            [youyesyet.canvasser-app.views.electors :as electors]
+            [youyesyet.canvasser-app.views.dwelling :as dwelling]
+            [youyesyet.canvasser-app.views.elector :as elector]
             [youyesyet.canvasser-app.views.followup :as followup]
+            [youyesyet.canvasser-app.views.gdpr :as gdpr]
             [youyesyet.canvasser-app.views.issue :as issue]
             [youyesyet.canvasser-app.views.issues :as issues]
             [youyesyet.canvasser-app.views.map :as maps])
@@ -54,8 +57,14 @@
 (defn building-page []
   (building/panel))
 
-(defn electors-page []
-  (electors/panel))
+(defn dwelling-page []
+  (dwelling/panel))
+
+(defn elector-page []
+  (elector/panel))
+
+(defn gdpr-page []
+  (gdpr/panel))
 
 (defn followup-page []
   (followup/panel))
@@ -72,8 +81,10 @@
 (def pages
   {:about #'about-page
    :building #'building-page
-   :electors #'electors-page
+   :dwelling #'dwelling-page
+   :elector #'elector-page
    :followup #'followup-page
+   :gdpr #'gdpr-page
    :issues #'issues-page
    :issue #'issue-page
    :map #'map-page
@@ -92,10 +103,12 @@
      [:header
       [ui/navbar]]
      (if content [content]
-       [:div.error (str "No content in page " :page)])
+       [:div.error (str "No content in page " @(rf/subscribe [:page]))])
      [:footer
-      [:div.error {:style [:display (if error "block" "none")]} (str error)]
-      [:div.feedback {:style [:display (if feedback :block :none)]} (str feedback)]
+      [:div.error {:style [:display (if (empty? error) :none :block)]} (apply str error)]
+      [:div.feedback
+       {:style [:display (if (empty? feedback) :none :block)]}
+       (apply str (map #(h/feedback-messages %) (distinct feedback)))]
       [:div.queue (if
                     (nil? outqueue) ""
                     (str (count outqueue) " items queued to send"))]]]))
@@ -104,35 +117,61 @@
 ;; Routes
 (secretary/set-config! :prefix "#")
 
+(defn log-and-dispatch [arg]
+  (js/console.log (str "Dispatching " arg))
+  (rf/dispatch arg))
+
 (secretary/defroute "/" []
-  (rf/dispatch [:set-active-page :map]))
+  (log-and-dispatch [:set-active-page :map]))
 
 (secretary/defroute "/about" []
-  (rf/dispatch [:set-active-page :about]))
+  (log-and-dispatch [:set-active-page :about]))
 
-(secretary/defroute "/electors/:dwelling" {dwelling-id :dwelling}
-  (rf/dispatch [:set-dwelling dwelling-id]))
+(secretary/defroute "/dwelling" []
+  (log-and-dispatch [:set-active-page :dwelling]))
+
+(secretary/defroute "/dwelling/:dwelling" {dwelling-id :dwelling}
+  (log-and-dispatch [:set-dwelling dwelling-id])
+  (log-and-dispatch [:set-active-page :dwelling]))
 
 (secretary/defroute "/building/:address" {address-id :address}
-  (rf/dispatch [:set-address address-id]))
+  (log-and-dispatch [:set-address address-id]))
+
+(secretary/defroute "/elector" []
+  (log-and-dispatch [:set-active-page :elector]))
+
+(secretary/defroute "/elector/:elector" {elector-id :elector}
+  (log-and-dispatch [:set-elector-and-page {:elector-id elector-id :page :elector}]))
+
+(secretary/defroute "/elector/:elector/:consent" {elector-id :elector consent :consent}
+  (log-and-dispatch [:set-consent-and-page {:elector-id elector-id :consent (and true consent) :page :elector}]))
+
+(secretary/defroute "/elector" []
+  (log-and-dispatch [:set-active-page :elector]))
 
 (secretary/defroute "/followup" []
-  (rf/dispatch [:set-active-page :followup]))
+  (log-and-dispatch [:set-active-page :followup]))
+
+(secretary/defroute "/gdpr" []
+  (log-and-dispatch [:set-active-page :gdpr]))
+
+(secretary/defroute "/gdpr/:elector" {elector-id :elector}
+  (log-and-dispatch [:set-elector-and-page {:elector-id elector-id :page :gdpr}]))
 
 (secretary/defroute "/issues" []
-  (rf/dispatch [:set-active-page :issues]))
+  (log-and-dispatch [:set-active-page :issues]))
 
 (secretary/defroute "/issues/:elector" {elector-id :elector}
-  (rf/dispatch [:set-elector-and-page {:elector-id elector-id :page :issues}]))
+  (log-and-dispatch [:set-elector-and-page {:elector-id elector-id :page :issues}]))
 
 (secretary/defroute "/issue/:issue" {issue :issue}
-  (rf/dispatch [:set-and-go-to-issue issue]))
+  (log-and-dispatch [:set-and-go-to-issue issue]))
 
 (secretary/defroute "/map" []
-  (rf/dispatch [:set-active-page :map]))
+  (log-and-dispatch [:set-active-page :map]))
 
 (secretary/defroute "/set-intention/:elector/:intention" {elector-id :elector intention :intention}
-  (rf/dispatch [:set-intention {:elector-id elector-id :intention intention}]))
+  (log-and-dispatch [:set-intention {:elector-id elector-id :intention intention}]))
 
 ;; -------------------------
 ;; History
@@ -153,6 +192,11 @@
 
 (defn init! []
   (rf/dispatch-sync [:initialize-db])
+  (get-current-location)
+  (rf/dispatch [:fetch-locality])
+  (rf/dispatch [:fetch-options])
+  (rf/dispatch [:fetch-issues])
   (load-interceptors!)
   (hook-browser-navigation!)
   (mount-components))
+

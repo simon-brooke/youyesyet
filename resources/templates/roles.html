@@ -1,14 +1,11 @@
-{% extends "base-authenticated.html" %}
+{% extends "base.html" %}
 {% block title %}
   {{ user }}
 {% endblock %}
 {% block big-links %}
-      <div class="big-link-container">
-        <a href="app" class="big-link" id="big-link">Canvasser</a>
-      </div>
       {% for role in roles %}
       <div class="big-link-container">
-        <a href="{{role.name|lower}}" class="big-link" id="big-link">{{role.name}}</a>
+        <a href="roles/{{role.link|lower}}" class="big-link" id="big-link">{{role.name}}</a>
       </div>
       {% endfor %}
 {% endblock %}

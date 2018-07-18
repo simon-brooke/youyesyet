@@ -39,7 +39,7 @@
   [:div
    [:h1 "You Yes Yet?"]
    [:div.container {:id "main-container"}
-    [:h2 "Pre-alpha/proof of concept"]
+    [:h2 "Alpha test code"]
     [:p.motd {:dangerouslySetInnerHTML
               {:__html (md->html motd)}}]
     [:p

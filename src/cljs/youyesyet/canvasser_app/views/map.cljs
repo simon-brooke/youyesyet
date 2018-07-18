@@ -1,8 +1,9 @@
 (ns ^{:doc "Canvasser app map view panel."
       :author "Simon Brooke"}
   youyesyet.canvasser-app.views.map
-  (:require [re-frame.core :refer [reg-sub subscribe dispatch]]
-            [reagent.core :as reagent]))
+  (:require [re-frame.core :refer [reg-sub subscribe dispatch dispatch-sync]]
+            [reagent.core :as reagent]
+            [youyesyet.canvasser-app.gis :refer [refresh-map-pins get-current-location]]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
@@ -26,7 +27,6 @@
 ;;;; Copyright (C) 2016 Simon Brooke for Radical Independence Campaign
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 
 ;;; The pattern from the re-com demo (https://github.com/Day8/re-com) is to have
 ;;; one source file/namespace per view. Each namespace contains a function 'panel'
@@ -53,102 +53,46 @@
 (def osm-url "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
 (def osm-attrib "Map data &copy; <a href='http://openstreetmap.org'>OpenStreetMap</a> contributors")
 
-
-(defn pin-image
-  "select the name of a suitable pin image for this address"
-  [address]
-  (let [intentions
-        (set
-          (remove
-            nil?
-            (map
-              :intention
-              (mapcat :electors
-                      (:dwellings address)))))]
-    (case (count intentions)
-      0 "unknown-pin"
-      1 (str (name (first intentions)) "-pin")
-      "mixed-pin")))
-
-
-(defn map-pin-click-handler
-  "On clicking on the pin, navigate to the electors at the address.
-  This way of doing it adds an antry in the browser location history,
-  so back links work."
-  [id]
-  (js/console.log (str "Click handler for address #" id))
-  (let [view @(subscribe [:view])
-        centre (.getCenter view)]
-    (dispatch [:set-zoom (.getZoom view)])
-    (dispatch [:set-latitude (.-lat centre)])
-    (dispatch [:set-longitude (.-lng centre)]))
-  (set! window.location.href (str "#building/" id)))
-;; This way is probably more idiomatic React, but history doesn't work:
-;; (defn map-pin-click-handler
-;;  [id]
-;;  (dispatch [:set-address id]))
-
-
-(defn add-map-pin
-  "Add a map-pin at this address in this map view"
-  [address view]
-  (let [lat (:latitude address)
-        lng (:longitude address)
-        pin (.icon js/L
-                   (clj->js
-                    {:iconUrl (str "img/map-pins/" (pin-image address) ".png")
-                     :shadowUrl "img/map-pins/shadow_pin.png"
-                     :iconSize [32 42]
-                     :shadowSize [57 24]
-                     :iconAnchor [16 41]
-                     :shadowAnchor [16 23]}))
-        marker (.marker js/L
-                        (.latLng js/L lat lng)
-                        (clj->js {:icon pin
-                                  :title (:address address)}))
-        ]
-    (.on marker "click" (fn [_] (map-pin-click-handler (str (:id address)))))
-    (.addTo marker view)))
-
-
 ;; My gods mapbox is user-hostile!
 (defn map-did-mount-mapbox
   "Did-mount function loading map tile data from MapBox (proprietary)."
   []
+  (get-current-location)
   (let [view (.setView (.map js/L "map" (clj->js {:zoomControl "false"})) #js [55.82 -4.25] 40)]
     ;; NEED TO REPLACE FIXME with your mapID!
     (.addTo (.tileLayer js/L "http://{s}.tiles.mapbox.com/v3/FIXME/{z}/{x}/{y}.png"
                         (clj->js {:attribution "Map data &copy; [...]"
-                                  :maxZoom 18}))
-            view)))
+                                  :maxZoom 18})))
+    view))
 
 
 (defn map-did-mount-osm
   "Did-mount function loading map tile data from Open Street Map."
   []
+  (get-current-location)
   (let [view (.setView
-               (.map js/L "map" (clj->js {:zoomControl false}))
+               (.map js/L
+                     "map"
+                     (clj->js {:zoomControl false}))
                #js [@(subscribe [:latitude]) @(subscribe [:longitude])]
-               @(subscribe [:zoom]))
-        addresses @(subscribe [:addresses])]
-    (js/console.log (str "Adding " (count addresses) " pins"))
-    (doall (map #(add-map-pin % view) addresses))
+               @(subscribe [:zoom]))]
     (.addTo (.tileLayer js/L osm-url
                         (clj->js {:attribution osm-attrib
                                   :maxZoom 18}))
             view)
-    (dispatch [:set-view view])
+    (dispatch-sync [:set-view view])
+    (refresh-map-pins)
     view))
 
 
 (defn map-did-mount
   "Select the actual map provider to use."
   []
-  (case *map-provider*
-    :mapbox (map-did-mount-mapbox)
-    :osm (map-did-mount-osm))
-  ;; potentially others
-  )
+  (dispatch-sync [:set-view (case *map-provider*
+                              :mapbox (map-did-mount-mapbox)
+                              :osm (map-did-mount-osm)
+                              ;; potentially others
+                              )]))
 
 
 (defn map-render

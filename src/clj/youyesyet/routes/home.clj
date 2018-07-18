@@ -1,13 +1,19 @@
 (ns ^{:doc "Routes/pages available to unauthenticated users."
       :author "Simon Brooke"} youyesyet.routes.home
-  (:require [clojure.walk :refer [keywordize-keys]]
-            [noir.response :as nresponse]
+  (:require [adl-support.utils :refer [safe-name]]
+            [clojure.java.io :as io]
+            [clojure.string :as s]
+            [clojure.tools.logging :as log]
+            [clojure.walk :refer [keywordize-keys]]
+            [markdown.core :refer [md-to-html-string]]
             [noir.util.route :as route]
-            [youyesyet.layout :as layout]
-            [youyesyet.db.core :as db-core]
-            [compojure.core :refer [defroutes GET POST]]
             [ring.util.http-response :as response]
-            [clojure.java.io :as io]))
+            [youyesyet.config :refer [env]]
+            [youyesyet.db.core :as db-core]
+            [youyesyet.layout :as layout]
+            [youyesyet.oauth :as oauth]
+            [compojure.core :refer [defroutes GET POST]]
+            ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
@@ -32,12 +38,21 @@
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn app-page []
-  (layout/render "app.html"))
+
+(defn motd
+  []
+  "Message of the day data is currently being loaded from a file in resources.
+  That probably isn't the final solution, but I don't currently have a final
+  solution"
+  (let [motd (io/as-file (io/resource (env :motd)))]
+    (if (.exists motd) (slurp motd) "")))
 
 
 (defn about-page []
-  (layout/render "about.html"))
+  (layout/render "about.html" {} {:title
+                                  (str "About " (:site-title env))
+
+                                 :motd (md-to-html-string (motd))}))
 
 
 (defn call-me-page [request]
@@ -45,65 +60,76 @@
     request
     (do
       ;; do something to store it in the database
-      (layout/render "call-me-accepted.html" (:params request)))
-    (layout/render "call-me.html"
+      (layout/render "call-me-accepted.html" (:session request) (:params request)))
+    (layout/render "call-me.html" (:session request)
                    {:title "Please call me!"
                     ;; TODO: Issues need to be fetched from the database
-                    :concerns nil})))
-
-
-(defn roles-page [request]
-  (let
-    [session (:session request)
-     username (:user session)
-     user (if username (db-core/get-canvasser-by-username db-core/*db* {:username username}))
-     roles (if user (db-core/get-roles-by-canvasser db-core/*db* {:canvasser (:id user)}))]
-    (cond
-      roles (layout/render "roles.html"
-                           {:title (str "Welcome " (:fullname user) ", what do you want to do?")
-                            :user user
-                            :roles roles})
-      (empty? roles)(response/found "/app")
-      true (assoc (response/found "/login") :session (dissoc session :user))
-      )))
+                    :concerns (db-core/list-issues db-core/*db* {})})))
 
 
 (defn home-page []
-  (layout/render "home.html" {:title "You Yes Yet?"}))
+    (layout/render "home.html" {} {:title "You yes yet?"
+                                   :motd (md-to-html-string (motd))}))
 
 
 (defn login-page
   "This is very temporary. We're going to do authentication by oauth."
   [request]
-  (let [params (keywordize-keys (:form-params request))
+  (let [params (keywordize-keys (:params request))
         session (:session request)
         username (:username params)
         user (if username (db-core/get-canvasser-by-username db-core/*db* {:username username}))
         password (:password params)
         redirect-to (or (:redirect-to params) "roles")]
     (cond
-      ;; this is obviously, ABSURDLY, insecure. I don't want to put just-about-good-enough,
-      ;; it-will-do-for-now security in place; instead, I want this to be test code only
-      ;; until we have o-auth properly working.
-      (and user (= username password))
-      (assoc (response/found redirect-to) :session (assoc session :user username))
-      user
-      (layout/render "login.html" {:title (str "User " username " is unknown") :redirect-to redirect-to})
-      true
-      (layout/render "login.html" {:title "Please log in" :redirect-to redirect-to}))))
+     (:authority params)
+     (let [auth (oauth/authority! (:authority params))]
+       (if auth
+         (do
+           (log/info "Attempting to authorise with authority " (:authority params))
+           (oauth/fetch-request-token
+            (assoc request :session (assoc session :authority auth))
+            auth))
+         (throw (Exception. (str "No such authority: " (:authority params))))))
+     ;; this is obviously, ABSURDLY, insecure. I don't want to put just-about-good-enough,
+     ;; it-will-do-for-now security in place; instead, I want this to be test code only
+     ;; until we have o-auth properly working.
+     (and user (= username password))
+     (let
+       [roles (layout/get-user-roles user)]
+       (log/info (str "Logged in user '" username "' with roles " roles))
+       (assoc
+         (response/found redirect-to)
+         :session
+         (assoc session :user user :roles roles)))
+     ;; if we've got a username but either no user object or else
+     ;; the password doesn't match
+     username
+      (layout/render
+       "login.html"
+       session
+       {:title (str "User " username " is unknown")
+        :redirect-to redirect-to
+        :warnings ["Your user name was not recognised or your password did not match"]})
+     ;; if we've no username, just invite the user to log in
+     true
+      (layout/render
+       "login.html"
+       session
+       {:title "Please log in"
+        :redirect-to redirect-to
+        :authorities (db-core/list-authorities db-core/*db*)}))))
 
 
 (defroutes home-routes
   (GET "/" [] (home-page))
   (GET "/home" [] (home-page))
   (GET "/about" [] (about-page))
-  (GET "/roles" request (route/restricted (roles-page request)))
-  (GET "/app" [] (route/restricted (app-page)))
   (GET "/call-me" [] (call-me-page nil))
   (POST "/call-me" request (call-me-page request))
-  (GET "/auth" request (login-page request))
-  (POST "/auth" request (login-page request))
-  (GET "/notyet" [] (layout/render "notyet.html"
-                                      {:title "Can we persuade you?"}))
-  (GET "/supporter" [] (layout/render "supporter.html"
+  (GET "/login" request (login-page request))
+  (POST "/login" request (login-page request))
+  (GET "/notyet" [] (layout/render "notyet.html" {}
+                                   {:title "Can we persuade you?"}))
+  (GET "/supporter" [] (layout/render "supporter.html" {}
                                       {:title "Have you signed up as a canvasser yet?"})))

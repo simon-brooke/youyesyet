@@ -28,20 +28,30 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defn back-link []
-  [:div.back-link-container {:id "back-link-container"}
-   [:a {:href "javascript:history.back()" :id "back-link"} "Back"]])
+(defn back-link
+  "Generate a back link to the preceding page, or, if `target` is specified,
+  to a particular page."
+  ([]
+   (back-link "javascript:history.back()"))
+  ([target]
+   [:div.back-link-container {:key (gensym "back-link")}
+    [:a.back-link {:href target} "Back"]]))
 
 
-(defn big-link [text target]
-  [:div.big-link-container {:key target}
-   [:a.big-link {:href target} text]])
+(defn big-link
+  [text & {:keys [target handler]}]
+  [:div.big-link-container {:key (gensym "big-link")}
+   [:a.big-link (merge
+                  (if target {:href target}{})
+                  (if handler {:on-click handler}{}))
+    text]])
 
 
 (defn nav-link [uri title page collapsed?]
-  (let [selected-page (rf/subscribe [:page])]
+  (let [selected-page @(rf/subscribe [:page])]
     [:li.nav-item
-     {:class (when (= page @selected-page) "active")}
+     {:class (when (= page selected-page) "active")
+      :key (gensym "nav-link")}
      [:a.nav-link
       {:href uri
        :on-click #(reset! collapsed? true)} title]]))
@@ -63,6 +73,6 @@
             :on-click #(swap! collapsed? not)}]
      [:menu.nav {:id "nav-menu" :class (if @collapsed? "hidden" "shown")}
       (nav-link "#/map" "Map" :map collapsed?)
-      (nav-link "#/electors" "Electors" :electors collapsed?)
+      (nav-link "#/dwelling" "Electors" :dwelling collapsed?)
       (nav-link "#/issues" "Issues" :issues collapsed?)
       (nav-link "#/about" "About" :about collapsed?)]]))

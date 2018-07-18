@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% block head %}
+    <!-- head: if you want entire custom head content, override this block. -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    {% style "/css/yyy-common.css" %}
+    {% style "/css/yyy-site.css" %}
+    {% style "/css/spinner.css" %}
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
+    {% script "/js/lib/node_modules/jquery/dist/jquery.min.js" %}
+    <title>{{site-title}}: {{title}}</title>
+    {% endblock %}
+    {% block extra-head %}
+    <!-- extra-head: put any additional markup to go into the head of your document into this block -->
+    <!-- e.g. script tags, link tags -->
+    {% endblock %}
+  </head>
+  <body>
+    {% block whole-page %}
+    <!-- whole-page: if you want an entire custom page layout, override this block. -->
+    {% block top %}
+    <header>
+      <div id="nav">
+        <img id="nav-icon" src="{{servlet-context}}/img/threelines.png" alt="Menu"/>
+        <menu id="nav-menu" class="nav">
+          <li class=""><a href="{{servlet-context}}/home">Home</a></li>
+          <li class=""><a href="{{servlet-context}}/library">Library</a></li>
+          <li class=""><a href="{{servlet-context}}/register">Register</a></li>
+          <li class="">{% if user %}<a href="{{servlet-context}}/logout">Logout</a>
+            {% else %}<a href="{{servlet-context}}/login">Login</a>{% endif %}</li>
+          <li class=""><a href="{{servlet-context}}/about">About</a></li>
+          {% if user %}
+          <li id="user"><a href="{{servlet-context}}/profile">Logged in as {{user.username}}</a></li>
+          {% endif %}
+        </menu>
+      </div>
+      <h1>{{title}}</h1>
+      {% if message|not-empty %}
+      <div class="message">
+        {{ message }}
+      </div>
+      {% endif %}
+      {% if error|not-empty %}
+      <div class="error">
+        {{ error }}
+      </div>
+      {% endif %}
+    </header>
+    {% endblock %}
+    <div id="main-container" class="container">
+      <div class="back-link-container">
+        <a href="javascript:history.back()" class="back-link">Back</a>
+      </div>
+      <div id="big-links">
+        {% block big-links %}
+        <!-- big-links: put any main navigation links into this block -->
+        {% endblock %}
+      </div>
+      <div id="content">
+        {% block content %}
+        <!-- content: put your main page content into this block -->
+        {% endblock %}
+      </div>
+      <br clear="both"/>
+    </div>
+    {% block foot %}
+    <!-- foot: override this block if you don't want the standard footer -->
+    <footer>
+      <div id="credits">
+        <div>
+          <img src="{{servlet-context}}/img/credits/ric-logo.png" width="24" height="24"/>
+          A project of the
+          <a href="https://radical.scot/">Radical Independence Campaign</a> ||
+          Version {{version}}
+        </div>
+        <div>
+          <img height="16" width="16" alt="Clojure" src="{{servlet-context}}/img/credits/luminus-logo.png"/>Built with <a href="http://www.luminusweb.net/">LuminusWeb</a> ||
+          <img height="16" width="16" alt="Clojure" src="{{servlet-context}}/img/credits/clojure-icon.gif"/> Powered by <a href="http://clojure.org">Clojure</a> ||
+          <img height="16" width="16" alt="GitHub" src="{{servlet-context}}/img/credits/github-logo-transparent.png"/>Find me/fork me on <a href="https://github.com/simon-brooke/youyesyet">Github</a> ||
+          <img height="16" width="16" alt="Free Software Foundation" src="{{servlet-context}}/img/credits/gnu.small.png"/>Licensed under the <a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License version 2.0</a>
+        </div>
+      </div>
+    </footer>
+    {% endblock %}
+    {% endblock %}
+    <script type="text/javascript">
+        var context = "{{servlet-context}}";
+        var csrfToken = "{{csrf-token}}";
+        {% block extra-script %}
+        /* extra-script: put any actual javascript source text you need into this block */
+        {% endblock %}
+    </script>
+    {% block extra-tail %}
+    <!-- extra-tail: put markup here which needs to be at the very end of the body -->
+    <!-- e.g. some javascript script tags, some link tags -->
+    {% endblock %}
+  </body>
+</html>
+
+
+
+

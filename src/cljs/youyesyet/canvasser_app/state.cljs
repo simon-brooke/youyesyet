@@ -27,63 +27,130 @@
 
 ;;; This is the constructor for the atom in which the state of the user interface is held.
 ;;; The atom gets updated by 'events' registered in handler.cljs, q.v.
-;;;
-;;; not wonderfully happy with 'db' as a name for this namespace; will probably change to
-;;; 'client-state'.
 
 (def default-db
-  {;;; the currently selected address, if any.
-    :address {:id 1 :address "13 Imaginary Terrace, IM1 3TE" :latitude 55.8253043 :longitude -4.2569057
-              :dwellings [{:id 1
-                           :electors [{:id 1 :name "Alan Anderson" :gender :male :intention :no}
-                                      {:id 2 :name "Ann Anderson" :gender :female}
-                                      {:id 3 :name "Alex Anderson" :gender :fluid :intention :yes}
-                                      {:id 4 :name "Andy Anderson" :intention :yes}]}]}
-    ;;; a list of the addresses in the current location at which there
-    ;;; are electors registered.
-    :addresses [{:id 1 :address "13 Imaginary Terrace, IM1 3TE" :latitude 55.8253043 :longitude -4.2569057
-                 :dwellings [{:id 1
-                              :electors [{:id 1 :name "Alan Anderson" :gender :male :intention :no}
-                                         {:id 2 :name "Ann Anderson" :gender :female}
-                                         {:id 3 :name "Alex Anderson" :gender :fluid :intention :yes}
-                                         {:id 4 :name "Andy Anderson" :intention :yes}]}]}
-                {:id 2  :address "15 Imaginary Terrace, IM1 3TE" :latitude 55.8252354 :longitude -4.2569077
-                 :dwellings [{:id 2
-                              :electors [{:id 1 :name "Beryl Brown" :gender :female}
-                                         {:id 2 :name "Betty Black" :gender :female}]}]}
+  {
+    :addresses
+    [{:locality 548223905,
+  :address
+  "HAZELFIELD HOUSE, CASTLE DOUGLAS, DG7 1RF",
+  :phone nil,
+  :postcode "DG7 1RF",
+  :longitude -3.905045374625994,
+  :district_id 1,
+  :dwellings
+  [{:address_id_expanded
+    "HAZELFIELD HOUSE, CASTLE DOUGLAS, DG7 1RF, DG7 1RF",
+    :address_id 18,
+    :sub_address "",
+    :id 17,
+    :id_2 17,
+    :address_id_2 18,
+    :sub_address_2 "",
+    :electors
+    [{:email nil,
+      :dwelling_id_2 17,
+      :dwelling_id_expanded
+      "HAZELFIELD HOUSE, CASTLE DOUGLAS, DG7 1RF, DG7 1RF, ",
+      :intentions
+      [{:locality 548223905,
+        :visit_id_expanded
+        "HAZELFIELD HOUSE, CASTLE DOUGLAS, DG7 1RF, DG7 1RF, 2018-06-14 20:29:34.721522",
+        :option_id_expanded "Yes",
+        :option_id "Yes",
+        :option_id_2 "Yes",
+        :visit_id_2 1,
+        :elector_id_2 61,
+        :visit_id 1,
+        :elector_id 61,
+        :id 1,
+        :elector_id_expanded nil,
+        :id_2 1}],
+      :phone nil,
+      :phone_2 nil,
+      :gender_expanded "Female",
+      :name "Alice Sutherland",
+      :dwelling_id 17,
+      :id 61,
+      :gender "Female",
+      :gender_2 "Female",
+      :name_2 "Alice Sutherland",
+      :email_2 nil,
+      :id_2 61}
+     {:email nil,
+      :dwelling_id_2 17,
+      :dwelling_id_expanded
+      "HAZELFIELD HOUSE, CASTLE DOUGLAS, DG7 1RF, DG7 1RF, ",
+      :intentions [],
+      :phone nil,
+      :phone_2 nil,
+      :gender_expanded "Female",
+      :name "Charlie Sutherland",
+      :dwelling_id 17,
+      :id 62,
+      :gender "Female",
+      :gender_2 "Female",
+      :name_2 "Charlie Sutherland",
+      :email_2 nil,
+      :id_2 62}
+     {:email nil,
+      :dwelling_id_2 17,
+      :dwelling_id_expanded
+      "HAZELFIELD HOUSE, CASTLE DOUGLAS, DG7 1RF, DG7 1RF, ",
+      :intentions [],
+      :phone nil,
+      :phone_2 nil,
+      :gender_expanded "Male",
+      :name "Keith Sutherland",
+      :dwelling_id 17,
+      :id 64,
+      :gender "Male",
+      :gender_2 "Male",
+      :name_2 "Keith Sutherland",
+      :email_2 nil,
+      :id_2 64}
+     {:email nil,
+      :dwelling_id_2 17,
+      :dwelling_id_expanded
+      "HAZELFIELD HOUSE, CASTLE DOUGLAS, DG7 1RF, DG7 1RF, ",
+      :intentions [],
+      :phone nil,
+      :phone_2 nil,
+      :gender_expanded "Female",
+      :name "Lucy Sutherland",
+      :dwelling_id 17,
+      :id 63,
+      :gender "Female",
+      :gender_2 "Female",
+      :name_2 "Lucy Sutherland",
+      :email_2 nil,
+      :id_2 63}]}],
+  :id 18,
+  :latitude 54.8222716877376}]
 
-                {:id 3 :address "17 Imaginary Terrace, IM1 3TE" :latitude 55.825166 :longitude -4.256926
-                 :dwellings [{:id 3 :sub-address "Flat 1"
-                              :electors [{:id 1 :name "Catriona Crathie" :gender :female :intention :yes}
-                                         {:id 2 :name "Colin Caruthers" :gender :male :intention :yes}
-                                         {:id 3 :name "Calum Crathie" :intention :yes}]}
-                             {:id 4 :sub-address "Flat 2"
-                              :electors [{:id 1 :name "David Dewar" :gender :male :intention :no}]}]}]
+    ;;; the currently selected address, if any.
+    :address nil
     ;;; electors at the currently selected dwelling
-    :electors [{:id 1 :name "Alan Anderson" :gender :male :intention :no}
-               {:id 2 :name "Ann Anderson" :gender :female}
-               {:id 3 :name "Alex Anderson" :gender :fluid :intention :yes}
-               {:id 4 :name "Andy Anderson" :intention :yes}]
+    :electors nil
     ;;; any error to display
     :error nil
     ;;; the issue from among the issues which is currently selected.
     ;;; any confirmation message to display
-    :feedback nil
+    :feedback '()
     ;;; the currently selected issue
-    :issue "Currency"
+    :issue nil
     ;;; the issues selected for the issues page on this day.
-    :issues {"Currency" "Scotland could keep the Pound, or use the Euro. But we could also set up a new currency of our own. Yada yada yada"
-             "Monarchy" "Scotland could keep the Queen. This is an issue to be decided after independence. Yada yada yada"
-             "Defence" "Scotland will not have nuclear weapons, and will probably not choose to engage in far-off wars. But we could remain members of NATO"}
+    :issues nil
     ;;; message of the day
     :motd "This is a test version only. There is no real data."
     ;;; the options from among which electors can select.
-    :options [{:id :yes :description "Yes"} {:id :no :description "No"}]
+    :options nil
     ;;; the queue of items waiting to be transmitted.
     :outqueue ()
     ;;; the currently displayed page within the app.
     :page :home
     :view nil
-    :latitude 55.82
-    :longitude -4.25
+    :latitude 54.82
+    :longitude -3.92
     :zoom 12})
+

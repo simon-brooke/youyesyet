@@ -1,28 +1,30 @@
-(ns ^{:doc "Database access functions."
-      :author "Simon Brooke"}
+(ns ^{:doc "Database access functions, mostly from Luminus template."}
   youyesyet.db.core
   (:require
     [cheshire.core :refer [generate-string parse-string]]
     [clojure.java.jdbc :as jdbc]
     [conman.core :as conman]
-    [youyesyet.config :refer [env]]
-    [mount.core :refer [defstate]])
+    [hugsql.core :as hugsql]
+    [mount.core :refer [defstate]]
+    [youyesyet.config :refer [env]])
   (:import org.postgresql.util.PGobject
            java.sql.Array
            clojure.lang.IPersistentMap
            clojure.lang.IPersistentVector
            [java.sql
-            BatchUpdateException
+            ;;         BatchUpdateException
             Date
             Timestamp
             PreparedStatement]))
 
 (defstate ^:dynamic *db*
-            :start (conman/connect! {:jdbc-url (env :database-url)
-                                     :driver-class-name "org.postgresql.Driver"})
-            :stop (conman/disconnect! *db*))
+           :start (conman/connect! {:jdbc-url-env (env :database-url)
+                                    :jdbc-url "jdbc:postgresql://127.0.0.1/youyesyet_dev?user=youyesyet&password=thisisnotsecure"
+                                    :driver-class-name "org.postgresql.Driver"})
+           :stop (conman/disconnect! *db*))
 
-(conman/bind-connection *db* "sql/queries.sql")
+(conman/bind-connection *db* "sql/queries.auto.sql" "sql/queries.sql")
+(hugsql/def-sqlvec-fns "sql/queries.auto.sql")
 
 (defn to-date [^java.sql.Date sql-date]
   (-> sql-date (.getTime) (java.util.Date.)))

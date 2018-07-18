@@ -1,0 +1,23 @@
+#%RAML 0.8
+  ---
+  title: YouYesYet API
+  baseUri: https://api.yyy.scot/{version}
+  version: v1
+
+
+/canvassers:
+  get:
+  put:
+
+/electors:
+  get:
+  /{id}:
+  get:
+  /{address_id}:
+  get:
+
+# Location isn't a real entity in the database, but it is a means of searching for
+# addresses and electors.
+/location:
+  /{lat}/{long}/{radius}:
+    get:

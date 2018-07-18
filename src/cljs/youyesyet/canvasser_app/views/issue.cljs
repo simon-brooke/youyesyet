@@ -38,14 +38,16 @@
 (defn panel
   "Generate the issue panel."
   []
-  (let [issue @(subscribe [:issue])
-        issues @(subscribe [:issues])]
+  (let [id @(subscribe [:issue])
+        issues @(subscribe [:issues])
+        issue (id issues)]
+    (js/console.log (str "Id: " id "; issue: " issue))
     [:div
-     [:h1 issue]
+     [:h1 (:id issue)]
      [:div.container {:id "main-container"}
       [:div {:id "issue"}
        [:div {:id "issue-text"
               :dangerouslySetInnerHTML
-              {:__html (md->html (issues issue))}}]]
-      (ui/big-link "Request call" "#/followup")
+              {:__html (md->html (:brief issue))}}]]
+      (ui/big-link "Request call" :target "#/followup")
       (ui/back-link)]]))

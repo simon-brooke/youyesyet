@@ -1,14 +1,10 @@
-{% extends "base-unauthenticated.html" %}
-{% block big-links %}
-      <div id="back-link-container">
-        <a href="javascript:history.back()" id="back-link">Back</a>
-      </div>
-{% endblock %}
+{% extends "base.html" %}
 {% block content %}
       <p>
         Use this form to request someone to phone you to discuss your concerns about independence.
       </p>
       <form action="call-me" method="post">
+        {% csrf-field %}
         <p class="widget">
           <label for="name">Your name</label>
           <input type="text" id="name" name="name"/>
@@ -25,7 +21,7 @@
           <label for="concern">Your concerns</label>
           <select name="concern" id="concern">
             {% for concern in concerns %}
-            <option>{{concern.title}}</option>
+            <option>{{concern.id}}</option>
             {% endfor %}
           </select>
         </p>
