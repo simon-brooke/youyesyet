@@ -1,8 +1,7 @@
-(ns ^{:doc "Development launcher, entirely boilerplate from Luminus."}
+(ns ^{:doc "Production launcher, entirely boilerplate from Luminus."}
   youyesyet.core
   (:require [clojure.tools.cli :refer [parse-opts]]
             [clojure.tools.logging :as log]
-            [luminus.repl-server :as repl]
             [luminus.http-server :as http]
             [luminus-migrations.core :as migrations]
             [mount.core :as mount]
@@ -33,14 +32,10 @@
                 (http/stop http-server))
 
 
-(mount/defstate ^{:on-reload :noop}
-                repl-server
-                :start
-                (when-let [nrepl-port (env :nrepl-port)]
-                  (repl/start {:port nrepl-port}))
-                :stop
-                (when repl-server
-                  (repl/stop repl-server)))
+(defn stop-app []
+  (doseq [component (:stopped (mount/stop))]
+    (log/info component "stopped"))
+  (shutdown-agents))
 
 
 (defn init-jndi []
@@ -70,9 +65,3 @@
       (System/exit 0))
     :else
     (start-app args)))
-
-;; (mount/start)
-;; (mount/stop)
-
-
-

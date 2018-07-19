@@ -19,6 +19,7 @@
                  [luminus/ring-ttl-session "0.3.1"]
                  [luminus-nrepl "0.1.4"]
                  [luminus-migrations "0.3.0"]
+                 [luminus-immutant "0.2.4"]
                  [markdown-clj "0.9.98"]
                  [metosin/compojure-api "1.1.10"]
                  [metosin/ring-http-response "0.8.2"]
@@ -73,7 +74,7 @@
                        [datatables.net-dt "1.10.19"]
                        [jquery "3.3.1"]
                        [leaflet "0.7.3"] ;; old version works, new ["1.3.1"] doesn't
-                       [selectize "0.12.5"]
+                       [selectize "0.12.6"]
                        [signature_pad "2.3.2"]
                        [simplemde "1.11.2"]]
         :root "resources/public/js/lib"}

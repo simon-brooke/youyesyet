@@ -1,4 +1,5 @@
 {:production true
- :port 3000
+ :port 8765
  :site-title "Project Hope"
- :site-logo "img/ProjectHopeLogo.png"}
+ :site-logo "img/ProjectHopeLogo.png"
+ :motd "motd.md"}
