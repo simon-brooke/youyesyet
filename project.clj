@@ -59,6 +59,7 @@
             [lein-cprop "1.0.1"]
             [lein-less "1.7.5"]
             [lein-npm "0.6.2"]
+            [lein-release "1.0.5"]
             [lein-uberwar "0.2.0"]
             [migratus-lein "0.4.2"]
             [org.clojars.punkisdead/lein-cucumber "1.0.5"]]
@@ -78,6 +79,18 @@
                        [signature_pad "2.3.2"]
                        [simplemde "1.11.2"]]
         :root "resources/public/js/lib"}
+
+  :release-tasks [["vcs" "assert-committed"]
+                  ["change" "version" "leiningen.release/bump-version" "release"]
+                  ["vcs" "commit"]
+                  ;; ["vcs" "tag"] -- not working, problems with secret key
+                  ["clean"]
+                  ["npm" "install"]
+                  ["ring" "uberjar"]
+                  ["docker" "build"]
+                  ["docker" "push"]
+                  ["change" "version" "leiningen.release/bump-version"]
+                  ["vcs" "commit"]]
 
   :uberwar
   {:handler youyesyet.handler/app
