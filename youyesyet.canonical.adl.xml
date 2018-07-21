@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!-- DOCTYPE application PUBLIC "-//JOURNEYMAN//DTD ADL 1.4.1//EN"
-"http://www.journeyman.cc/adl/stable/adl/schemas/adl-1.4.1.dtd" -->
-<application xmlns="http://bowyer.journeyman.cc/adl/1.4.1/" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:adl="http://bowyer.journeyman.cc/adl/1.4.1/" name="youyesyet" version="0.1.1">
-  <!--
+"http://www.journeyman.cc/adl/stable/adl/schemas/adl-1.4.1.dtd" --><application xmlns="http://bowyer.journeyman.cc/adl/1.4.1/"
+             xmlns:html="http://www.w3.org/1999/xhtml"
+             xmlns:adl="http://bowyer.journeyman.cc/adl/1.4.1/"
+             name="youyesyet"
+             version="0.1.1"><!--
     ***************************************************************************
     *
     *   Application Description Language Framework
@@ -31,8 +32,8 @@
     section 3</documentation>
     <help locale="en_GB.UTF-8">A valid postcode.</help>
   </typedef>
-  <group name="public">
-    <documentation>All users</documentation>
+   <group name="public">
+      <documentation>All users</documentation>
   </group>
   <group name="canvassers" parent="public">
     <documentation>All users of the canvasser app Able to read and
@@ -69,7 +70,7 @@
     records; able to add and update reference data
     generally.</documentation>
   </group>
-  <!--
+   <!--
     entity electors already has a key - not generating one
     -->
   <entity table="electors" name="electors" magnitude="6" volatility="5">
@@ -136,7 +137,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
+   <!--
     entity genders already has a key - not generating one
     -->
   <entity table="genders" name="genders" magnitude="1" volatility="6">
@@ -164,7 +165,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
+   <!--
     entity dwellings already has a key - not generating one
     -->
   <entity table="dwellings" name="dwellings" magnitude="6" volatility="6">
@@ -212,7 +213,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
+   <!--
     entity addresses already has a key - not generating one
     -->
   <entity table="addresses" name="addresses" magnitude="6" volatility="6">
@@ -298,7 +299,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
+   <!--
     entity visits already has a key - not generating one
     -->
   <entity table="visits" name="visits" magnitude="7" volatility="2">
@@ -361,7 +362,7 @@
     <permission permission="read" group="issueeditors"/>
     <permission permission="all" group="admin"/>
   </entity>
-  <!--
+   <!--
     entity authorities already has a key - not generating one
     -->
   <entity table="authorities" name="authorities" magnitude="2" volatility="7">
@@ -405,7 +406,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
+   <!--
     entity issues already has a key - not generating one
     -->
   <entity table="issues" name="issues" magnitude="1" volatility="3">
@@ -648,7 +649,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
+   <!--
     entity followuprequests already has a key - not generating one
     -->
   <entity table="followuprequests" name="followuprequests" magnitude="7" volatility="2">
@@ -709,7 +710,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="noedit"/>
   </entity>
-  <!--
+   <!--
     entity roles already has a key - not generating one
     -->
   <entity table="roles" name="roles" magnitude="1" volatility="7">
@@ -750,7 +751,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
+   <!--
     entity teams already has a key - not generating one
     -->
   <entity table="teams" name="teams" magnitude="4" volatility="4">
@@ -926,7 +927,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
+   <!--
     entity followupactions already has a key - not generating one
     -->
   <entity table="followupactions" name="followupactions" magnitude="7" volatility="0">
@@ -996,7 +997,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
+   <!--
     entity options already has a key - not generating one
     -->
   <entity table="options" name="options" magnitude="1" volatility="7">
@@ -1024,7 +1025,7 @@
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
+   <!--
     entity followupmethods already has a key - not generating one
     -->
   <entity table="followupmethods" name="followupmethods" magnitude="1" volatility="7">
