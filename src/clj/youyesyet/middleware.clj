@@ -20,14 +20,17 @@
                 ;; (for example when using mock requests), then
                 ;; .getContextPath might not exist
                 (try (.getContextPath ^ServletContext context)
-                     (catch IllegalArgumentException err
-                       (log/warn "Failed to initialise servlet-context: " (.getMessage err))
-                       context))
+                  (catch IllegalArgumentException err
+                    (log/warn "Failed to initialise *app-context*: " (.getMessage err))
+                    context))
                 ;; if the context is not specified in the request
                 ;; we check if one has been specified in the environment
                 ;; instead
-                (:app-context env))]
-      (handler request))))
+                (do
+                  (log/info "Taking '" (:app-context env) "' as *app-context* from env")
+                  (:app-context env)))]
+      (log/debug "Using '" *app-context* "' as *app-context*")
+      (handler (assoc request :servlet-context *app-context*)))))
 
 
 (defn wrap-internal-error [handler]

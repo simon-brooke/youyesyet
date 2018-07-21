@@ -2,4 +2,5 @@
  :port 8765
  :site-title "Project Hope"
  :site-logo "img/ProjectHopeLogo.png"
- :motd "motd.md"}
+ :motd "motd.md"
+ :app-context "/youyesyet"}
