@@ -14,8 +14,7 @@
     *   Generated using adl2canonical.xslt 1.10 $
 	  *
 	  ***************************************************************************
-			-->
-  <documentation>A web-app intended to be used by canvassers
+			--><documentation>A web-app intended to be used by canvassers
   campaigning for a 'Yes' vote in the second independence
   referendum. The web-app will be delivered to canvassers out
   knocking doors primarily through an HTML5/React single-page app
@@ -26,225 +25,236 @@
   set the system up and authorise canvassers, and a 'followup'
   interface through which issue-expert specialist canvassers can
   address particular electors' queries.</documentation>
-  <typedef name="postcode" type="string" pattern="^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))[0-9][A-Za-z]{2})$" size="16">
-    <documentation>See
+   <typedef name="postcode" type="string"
+            pattern="^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))[0-9][A-Za-z]{2})$"
+            size="16">
+      <documentation>See
     https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/488478/Bulk_Data_Transfer_-_additional_validation_valid_from_12_November_2015.pdf,
     section 3</documentation>
-    <help locale="en_GB.UTF-8">A valid postcode.</help>
+      <help locale="en_GB.UTF-8">A valid postcode.</help>
   </typedef>
    <group name="public">
       <documentation>All users</documentation>
   </group>
-  <group name="canvassers" parent="public">
-    <documentation>All users of the canvasser app Able to read and
+   <group name="canvassers" parent="public">
+      <documentation>All users of the canvasser app Able to read and
     add canvassing data in a limited radius around their current
     position.</documentation>
   </group>
-  <group name="teamorganisers" parent="canvassers">
-    <documentation>Organisers of canvassing teams Able to see and
+   <group name="teamorganisers" parent="canvassers">
+      <documentation>Organisers of canvassing teams Able to see and
     modify data on the canvassers in the team(s) they organise;
     able to add canvassers to their team; able to update canvassers
     in their team, including resetting passwords and locking
     accounts; able to see canvass data over the whole area in which
     their team operates.</documentation>
   </group>
-  <group name="issueexperts" parent="public">
-    <documentation>People expert on particular issues. Able to read
+   <group name="issueexperts" parent="public">
+      <documentation>People expert on particular issues. Able to read
     followup requests, and the electors to which they relate; able
     to access (read/write) the issues wiki; able to write followuop
     action records.</documentation>
   </group>
-  <group name="analysts" parent="public">
-    <documentation>Users entitled to see an overview of the
+   <group name="analysts" parent="public">
+      <documentation>Users entitled to see an overview of the
     canvassing data collected. Able to read canvassing data over
     the whole map, including historical data.</documentation>
   </group>
-  <group name="issueeditors" parent="analysts">
-    <documentation>Users responsible for determining what issues
+   <group name="issueeditors" parent="analysts">
+      <documentation>Users responsible for determining what issues
     should be current at any time. Able to set current issues; able
     to add issues.</documentation>
   </group>
-  <group name="admin" parent="public">
-    <documentation>Able to read and update canvasser records, team
+   <group name="admin" parent="public">
+      <documentation>Able to read and update canvasser records, team
     membership records, team organisership records, issue expertise
     records; able to add and update reference data
     generally.</documentation>
   </group>
    <!--
     entity electors already has a key - not generating one
-    -->
-  <entity table="electors" name="electors" magnitude="6" volatility="5">
-    <documentation>All electors known to the system; electors are
+    --><entity table="electors" name="electors" magnitude="6" volatility="5">
+      <documentation>All electors known to the system; electors are
     people believed to be entitled to vote in the current
     campaign.</documentation>
-    <key>
-      <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+      <key>
+         <property required="true" type="integer" name="id" column="id" immutable="true"
+                   distinct="system">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </property>
+      </key>
+      <property size="64" required="true" type="string" name="name" column="name"
+                distinct="user">
+         <prompt prompt="Name" locale="en_GB.UTF-8"/>
       </property>
-    </key>
-    <property size="64" required="true" type="string" name="name" column="name" distinct="user">
-      <prompt prompt="Name" locale="en_GB.UTF-8"/>
-    </property>
-    <property required="true" type="entity" name="dwelling_id" column="dwelling_id" entity="dwellings" farkey="id">
-      <prompt prompt="Home" locale="en_GB.UTF-8"/>
-    </property>
-    <property size="16" type="string" name="phone" column="phone">
-      <prompt prompt="Phone" locale="en_GB.UTF-8"/>
-    </property>
-    <property size="128" type="string" name="email" column="email">
-      <prompt prompt="Email" locale="en_GB.UTF-8"/>
-    </property>
-    <property name="gender" type="entity" column="gender" entity="genders" farkey="id" default="Unknown">
-      <prompt prompt="Gender" locale="en_GB.UTF-8"/>
-    </property>
-    <property name="signature" type="text">
-    <documentation>The signature of this elector, captured as SVG text,
+      <property required="true" type="entity" name="dwelling_id" column="dwelling_id"
+                entity="dwellings"
+                farkey="id">
+         <prompt prompt="Home" locale="en_GB.UTF-8"/>
+      </property>
+      <property size="16" type="string" name="phone" column="phone">
+         <prompt prompt="Phone" locale="en_GB.UTF-8"/>
+      </property>
+      <property size="128" type="string" name="email" column="email">
+         <prompt prompt="Email" locale="en_GB.UTF-8"/>
+      </property>
+      <property name="gender" type="entity" column="gender" entity="genders" farkey="id"
+                default="Unknown">
+         <prompt prompt="Gender" locale="en_GB.UTF-8"/>
+      </property>
+      <property name="signature" type="text">
+         <documentation>The signature of this elector, captured as SVG text,
       as evidence they have consented to us holding data on them.
       Null if they have not.</documentation>
-    </property>
-    <list properties="listed" name="Electors">
-      <field property="name">
-        <prompt prompt="Name" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="dwelling_id">
-        <prompt prompt="Home" locale="en_GB.UTF-8"/>
-      </field>
-    </list>
-    <form properties="listed" name="Elector">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="name">
-        <prompt prompt="Name" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="dwelling_id">
-        <prompt prompt="Home" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="phone">
-        <prompt prompt="Phone" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="email">
-        <prompt prompt="eMail" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="gender">
-        <prompt prompt="Gender" locale="en_GB.UTF-8"/>
-      </field>
-    </form>
-    <permission group="canvassers" permission="read"/>
-    <permission group="teamorganisers" permission="read"/>
-    <permission group="issueexperts" permission="read"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="read"/>
-    <permission group="admin" permission="all"/>
+      </property>
+      <list properties="listed" name="Electors">
+         <field property="name">
+            <prompt prompt="Name" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="dwelling_id">
+            <prompt prompt="Home" locale="en_GB.UTF-8"/>
+         </field>
+      </list>
+      <form properties="listed" name="Elector">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="name">
+            <prompt prompt="Name" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="dwelling_id">
+            <prompt prompt="Home" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="phone">
+            <prompt prompt="Phone" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="email">
+            <prompt prompt="eMail" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="gender">
+            <prompt prompt="Gender" locale="en_GB.UTF-8"/>
+         </field>
+      </form>
+      <permission group="canvassers" permission="read"/>
+      <permission group="teamorganisers" permission="read"/>
+      <permission group="issueexperts" permission="read"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="read"/>
+      <permission group="admin" permission="all"/>
   </entity>
    <!--
     entity genders already has a key - not generating one
-    -->
-  <entity table="genders" name="genders" magnitude="1" volatility="6">
-    <documentation>All genders which may be assigned to
+    --><entity table="genders" name="genders" magnitude="1" volatility="6">
+      <documentation>All genders which may be assigned to
     electors.</documentation>
-    <key>
-      <property name="id" type="string" size="32" distinct="all">
-        <prompt prompt="Gender" locale="en_GB.UTF-8"/>
-      </property>
-    </key>
-    <list properties="listed" name="Genders">
-      <field property="id">
-        <prompt prompt="Gender" locale="en_GB.UTF-8"/>
-      </field>
-    </list>
-    <form properties="listed" name="Gender">
-      <field property="id">
-        <prompt prompt="Gender" locale="en_GB.UTF-8"/>
-      </field>
-    </form>
-    <permission group="canvassers" permission="read"/>
-    <permission group="teamorganisers" permission="read"/>
-    <permission group="issueexperts" permission="read"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="read"/>
-    <permission group="admin" permission="all"/>
+      <key>
+         <property name="id" type="string" size="32" distinct="all">
+            <prompt prompt="Gender" locale="en_GB.UTF-8"/>
+         </property>
+      </key>
+      <list properties="listed" name="Genders">
+         <field property="id">
+            <prompt prompt="Gender" locale="en_GB.UTF-8"/>
+         </field>
+      </list>
+      <form properties="listed" name="Gender">
+         <field property="id">
+            <prompt prompt="Gender" locale="en_GB.UTF-8"/>
+         </field>
+      </form>
+      <permission group="canvassers" permission="read"/>
+      <permission group="teamorganisers" permission="read"/>
+      <permission group="issueexperts" permission="read"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="read"/>
+      <permission group="admin" permission="all"/>
   </entity>
    <!--
     entity dwellings already has a key - not generating one
-    -->
-  <entity table="dwellings" name="dwellings" magnitude="6" volatility="6">
-    <documentation>All dwellings within addresses in the system; a
+    --><entity table="dwellings" name="dwellings" magnitude="6" volatility="6">
+      <documentation>All dwellings within addresses in the system; a
     dwelling is a house, flat or appartment in which electors live.
     Every address should have at least one dwelling; essentially,
     an address maps onto a street door and dwellings map onto
     what's behind that door. So a tenement or a block of flats
     would be one address with many dwellings.</documentation>
-    <key>
-      <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+      <key>
+         <property required="true" type="integer" name="id" column="id" immutable="true"
+                   distinct="system">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </property>
+      </key>
+      <property required="true" type="entity" name="address_id" column="address_id"
+                entity="addresses"
+                farkey="id"
+                distinct="user">
+         <prompt prompt="Building Address" locale="en_GB.UTF-8"/>
       </property>
-    </key>
-    <property required="true" type="entity" name="address_id" column="address_id" entity="addresses" farkey="id" distinct="user">
-      <prompt prompt="Building Address" locale="en_GB.UTF-8"/>
-    </property>
-    <property required="false" type="string" size="32" name="sub-address" distinct="user">
-      <documentation>
+      <property required="false" type="string" size="32" name="sub-address" distinct="user">
+         <documentation>
         The part of the address which identifies the flat or
         apartment within the building, if in a multiple occupancy
         building.
       </documentation>
-    </property>
-    <list properties="listed" name="Dwellings">
-      <field property="address_id">
-        <prompt prompt="Building Address" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="sub-address">
-        <prompt prompt="Sub address" locale="en_GB.UTF-8"/>
-      </field>
-    </list>
-    <form properties="listed" name="Dwelling">
-      <field property="address_id">
-        <prompt prompt="Building Address" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="sub-address">
-        <prompt prompt="Sub address (e.g. flat number)" locale="en_GB.UTF-8"/>
-      </field>
-    </form>
-    <permission group="canvassers" permission="read"/>
-    <permission group="teamorganisers" permission="read"/>
-    <permission group="issueexperts" permission="read"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="read"/>
-    <permission group="admin" permission="all"/>
+      </property>
+      <list properties="listed" name="Dwellings">
+         <field property="address_id">
+            <prompt prompt="Building Address" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="sub-address">
+            <prompt prompt="Sub address" locale="en_GB.UTF-8"/>
+         </field>
+      </list>
+      <form properties="listed" name="Dwelling">
+         <field property="address_id">
+            <prompt prompt="Building Address" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="sub-address">
+            <prompt prompt="Sub address (e.g. flat number)" locale="en_GB.UTF-8"/>
+         </field>
+      </form>
+      <permission group="canvassers" permission="read"/>
+      <permission group="teamorganisers" permission="read"/>
+      <permission group="issueexperts" permission="read"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="read"/>
+      <permission group="admin" permission="all"/>
   </entity>
    <!--
     entity addresses already has a key - not generating one
-    -->
-  <entity table="addresses" name="addresses" magnitude="6" volatility="6">
-    <documentation>Addresses of all buildings which contain
+    --><entity table="addresses" name="addresses" magnitude="6" volatility="6">
+      <documentation>Addresses of all buildings which contain
     dwellings.</documentation>
-    <key>
-      <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+      <key>
+         <property required="true" type="integer" name="id" column="id" immutable="true"
+                   distinct="system">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </property>
+      </key>
+      <property required="true" type="string" name="address" column="address" size="256"
+                distinct="user">
+         <prompt prompt="Address" locale="en_GB.UTF-8"/>
       </property>
-    </key>
-    <property required="true" type="string" name="address" column="address" size="256" distinct="user">
-      <prompt prompt="Address" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="defined" typedef="postcode" name="postcode" column="postcode" size="16" distinct="user">
-      <prompt prompt="Postcode" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="string" name="phone" column="phone" size="16">
-      <prompt prompt="Phone" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="entity" name="district_id" column="district_id" entity="districts" farkey="id">
-      <prompt prompt="District" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="real" name="latitude" column="latitude">
-      <prompt prompt="Latitude" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="real" name="longitude" column="longitude">
-      <prompt prompt="Longitude" locale="en_GB.UTF-8"/>
-    </property>
-    <!-- property name="dwellings" type="link" entity="dwelling"/ -->
+      <property type="defined" typedef="postcode" name="postcode" column="postcode" size="16"
+                distinct="user">
+         <prompt prompt="Postcode" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="string" name="phone" column="phone" size="16">
+         <prompt prompt="Phone" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="entity" name="district_id" column="district_id" entity="districts"
+                farkey="id">
+         <prompt prompt="District" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="real" name="latitude" column="latitude">
+         <prompt prompt="Latitude" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="real" name="longitude" column="longitude">
+         <prompt prompt="Longitude" locale="en_GB.UTF-8"/>
+      </property>
+      <!-- property name="dwellings" type="link" entity="dwelling"/ -->
     <property type="integer" name="locality" column="locality">
-      <documentation>Locality indexing; see issue #44. Note that
+         <documentation>Locality indexing; see issue #44. Note that
       this property should be generated automatically from the
       latitude and longitude: (+ (* 10000 ;; left-shift the
       latitude component four digits (integer (* latitude 1000)))
@@ -254,802 +264,845 @@
       don't think it will ever appear in the user interface; it's
       an implementation detail, not of interest to
       users.</documentation>
-    </property>
-    <list properties="listed" name="Addresses">
-      <field property="address">
-        <prompt prompt="Address" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="postcode">
-        <prompt prompt="Postcode" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="district_id">
-        <prompt prompt="District" locale="en_GB.UTF-8"/>
-      </field>
-    </list>
-    <form properties="listed" name="Address">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="address">
-        <prompt prompt="Address" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="postcode">
-        <prompt prompt="Postcode" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="phone">
-        <prompt prompt="Phone" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="district_id">
-        <prompt prompt="District" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="latitude">
-        <prompt prompt="Latitude" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="longitude">
-        <prompt prompt="Longitude" locale="en_GB.UTF-8"/>
-      </field>
-      <auxlist property="dwellings">
-        <field name="sub-address"/>
-      </auxlist>
-    </form>
-    <permission group="canvassers" permission="read"/>
-    <permission group="teamorganisers" permission="read"/>
-    <permission group="issueexperts" permission="read"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="read"/>
-    <permission group="admin" permission="all"/>
+      </property>
+      <list properties="listed" name="Addresses">
+         <field property="address">
+            <prompt prompt="Address" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="postcode">
+            <prompt prompt="Postcode" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="district_id">
+            <prompt prompt="District" locale="en_GB.UTF-8"/>
+         </field>
+      </list>
+      <form properties="listed" name="Address">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="address">
+            <prompt prompt="Address" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="postcode">
+            <prompt prompt="Postcode" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="phone">
+            <prompt prompt="Phone" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="district_id">
+            <prompt prompt="District" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="latitude">
+            <prompt prompt="Latitude" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="longitude">
+            <prompt prompt="Longitude" locale="en_GB.UTF-8"/>
+         </field>
+         <auxlist property="dwellings">
+            <field name="sub-address"/>
+         </auxlist>
+      </form>
+      <permission group="canvassers" permission="read"/>
+      <permission group="teamorganisers" permission="read"/>
+      <permission group="issueexperts" permission="read"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="read"/>
+      <permission group="admin" permission="all"/>
   </entity>
    <!--
     entity visits already has a key - not generating one
-    -->
-  <entity table="visits" name="visits" magnitude="7" volatility="2">
-    <documentation>All visits made by canvassers to dwellings in
+    --><entity table="visits" name="visits" magnitude="7" volatility="2">
+      <documentation>All visits made by canvassers to dwellings in
     which opinions were recorded.</documentation>
-    <key>
-      <property required="true" type="integer" name="id" column="id" distinct="system">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+      <key>
+         <property required="true" type="integer" name="id" column="id" distinct="system">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </property>
+      </key>
+      <!-- TODO: should visit be keyed against dwelling rather than address? -->
+    <property required="true" type="entity" name="address_id" column="address_id"
+                entity="addresses"
+                farkey="id"
+                distinct="user">
+         <prompt prompt="Address" locale="en_GB.UTF-8"/>
       </property>
-    </key>
-    <!-- TODO: should visit be keyed against dwelling rather than address? -->
-    <property required="true" type="entity" name="address_id" column="address_id" entity="addresses" farkey="id" distinct="user">
-      <prompt prompt="Address" locale="en_GB.UTF-8"/>
-    </property>
-    <property required="true" type="entity" name="canvasser_id" column="canvasser_id" entity="canvassers" farkey="id">
-      <prompt prompt="Canvasser" locale="en_GB.UTF-8"/>
-    </property>
-    <property required="true" type="timestamp" name="date" column="date" default="now()" distinct="user">
-      <prompt prompt="Date" locale="en_GB.UTF-8"/>
-    </property>
-    <permission group="canvassers" permission="noedit">
-      <documentation>But only in their immediate
+      <property required="true" type="entity" name="canvasser_id" column="canvasser_id"
+                entity="canvassers"
+                farkey="id">
+         <prompt prompt="Canvasser" locale="en_GB.UTF-8"/>
+      </property>
+      <property required="true" type="timestamp" name="date" column="date" default="now()"
+                distinct="user">
+         <prompt prompt="Date" locale="en_GB.UTF-8"/>
+      </property>
+      <permission group="canvassers" permission="noedit">
+         <documentation>But only in their immediate
       area.</documentation>
-    </permission>
-    <permission group="teamorganisers" permission="read"/>
-    <permission group="issueexperts" permission="read"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="read"/>
-    <permission group="admin" permission="noedit"/>
-    <list properties="listed" name="Visits">
-      <field property="address_id">
-        <prompt prompt="Address" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="canvasser_id">
-        <prompt prompt="Canvasser" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="date">
-        <prompt prompt="Date" locale="en_GB.UTF-8"/>
-      </field>
-    </list>
-    <form properties="listed" name="Visit">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="address_id">
-        <prompt prompt="Address" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="canvasser_id">
-        <prompt prompt="Canvasser" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="date">
-        <prompt prompt="Date" locale="en_GB.UTF-8"/>
-      </field>
-    </form>
-    <permission permission="none" group="public"/>
-    <permission permission="noedit" group="canvassers"/>
-    <permission permission="noedit" group="teamorganisers"/>
-    <permission permission="read" group="issueexperts"/>
-    <permission permission="read" group="analysts"/>
-    <permission permission="read" group="issueeditors"/>
-    <permission permission="all" group="admin"/>
+      </permission>
+      <permission group="teamorganisers" permission="read"/>
+      <permission group="issueexperts" permission="read"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="read"/>
+      <permission group="admin" permission="noedit"/>
+      <list properties="listed" name="Visits">
+         <field property="address_id">
+            <prompt prompt="Address" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="canvasser_id">
+            <prompt prompt="Canvasser" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="date">
+            <prompt prompt="Date" locale="en_GB.UTF-8"/>
+         </field>
+      </list>
+      <form properties="listed" name="Visit">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="address_id">
+            <prompt prompt="Address" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="canvasser_id">
+            <prompt prompt="Canvasser" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="date">
+            <prompt prompt="Date" locale="en_GB.UTF-8"/>
+         </field>
+      </form>
+      <permission permission="none" group="public"/>
+      <permission permission="noedit" group="canvassers"/>
+      <permission permission="noedit" group="teamorganisers"/>
+      <permission permission="read" group="issueexperts"/>
+      <permission permission="read" group="analysts"/>
+      <permission permission="read" group="issueeditors"/>
+      <permission permission="all" group="admin"/>
   </entity>
    <!--
     entity authorities already has a key - not generating one
-    -->
-  <entity table="authorities" name="authorities" magnitude="2" volatility="7">
-    <documentation>Authorities which may authenticate canvassers to
+    --><entity table="authorities" name="authorities" magnitude="2" volatility="7">
+      <documentation>Authorities which may authenticate canvassers to
     the system.</documentation>
-    <key>
-      <property required="true" type="string" name="id" column="id" size="32" distinct="all" immutable="true">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </property>
-    </key>
-    <property name="request-token-uri" type="string" size="256" required="true"/>
-    <property name="access-token-uri" type="string" size="256" required="true"/>
-    <property name="authorize-uri" type="string" size="256" required="true"/>
-    <property name="consumer-key" type="string" size="32" required="true" default="youyesyet"/>
-    <property name="consumer-secret" type="string" size="256" required="true"/>
-    <list name="Authorities" properties="listed">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-    </list>
-    <form properties="listed" name="Authority">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="request-token-uri"/>
-      <field property="access-token-uri"/>
-      <field property="authorize-uri"/>
-      <field property="consumer-key"/>
-      <field property="consumer-secret"/>
-      <permission group="canvassers" permission="none"/>
-      <permission group="teamorganisers" permission="none"/>
-      <permission group="issueexperts" permission="none"/>
-      <permission group="analysts" permission="none"/>
-      <permission group="issueeditors" permission="none"/>
+      <key>
+         <property required="true" type="string" name="id" column="id" size="32" distinct="all"
+                   immutable="true">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </property>
+      </key>
+      <property name="request-token-uri" type="string" size="256" required="true"/>
+      <property name="access-token-uri" type="string" size="256" required="true"/>
+      <property name="authorize-uri" type="string" size="256" required="true"/>
+      <property name="consumer-key" type="string" size="32" required="true" default="youyesyet"/>
+      <property name="consumer-secret" type="string" size="256" required="true"/>
+      <list name="Authorities" properties="listed">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+      </list>
+      <form properties="listed" name="Authority">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="request-token-uri"/>
+         <field property="access-token-uri"/>
+         <field property="authorize-uri"/>
+         <field property="consumer-key"/>
+         <field property="consumer-secret"/>
+         <permission group="canvassers" permission="none"/>
+         <permission group="teamorganisers" permission="none"/>
+         <permission group="issueexperts" permission="none"/>
+         <permission group="analysts" permission="none"/>
+         <permission group="issueeditors" permission="none"/>
+         <permission group="admin" permission="all"/>
+      </form>
+      <permission group="canvassers" permission="read"/>
+      <permission group="teamorganisers" permission="read"/>
+      <permission group="issueexperts" permission="read"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="read"/>
       <permission group="admin" permission="all"/>
-    </form>
-    <permission group="canvassers" permission="read"/>
-    <permission group="teamorganisers" permission="read"/>
-    <permission group="issueexperts" permission="read"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="read"/>
-    <permission group="admin" permission="all"/>
   </entity>
    <!--
     entity issues already has a key - not generating one
-    -->
-  <entity table="issues" name="issues" magnitude="1" volatility="3">
-    <documentation>Issues believed to be of interest to electors,
+    --><entity table="issues" name="issues" magnitude="1" volatility="3">
+      <documentation>Issues believed to be of interest to electors,
     about which they may have questions.</documentation>
-    <key>
-      <property required="true" type="string" name="id" column="id" size="32" immutable="true" distinct="all">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+      <key>
+         <property required="true" type="string" name="id" column="id" size="32" immutable="true"
+                   distinct="all">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </property>
+      </key>
+      <property type="string" name="url" column="url" size="256">
+         <prompt prompt="url" locale="en_GB.UTF-8"/>
       </property>
-    </key>
-    <property type="string" name="url" column="url" size="256">
-      <prompt prompt="url" locale="en_GB.UTF-8"/>
-    </property>
-    <property name="current" type="boolean" default="true">
-      <prompt prompt="Is current?" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="text" name="brief">
-      <prompt prompt="Brief response to issue" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="link" name="experts" entity="canvassers"/>
-    <list properties="listed" name="Issues">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="url">
-        <prompt prompt="url" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="current">
-        <prompt prompt="Is current?" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="brief">
-        <prompt prompt="Brief response to issue" locale="en_GB.UTF-8"/>
-      </field>
-    </list>
-    <form properties="listed" name="Issue">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="url">
-        <prompt prompt="url" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="current">
-        <prompt prompt="Is current?" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="brief">
-        <prompt prompt="Brief response to issue" locale="en_GB.UTF-8"/>
-      </field>
-    </form>
-    <permission group="canvassers" permission="read"/>
-    <permission group="teamorganisers" permission="read"/>
-    <permission group="issueexperts" permission="read"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="edit"/>
-    <permission group="admin" permission="all"/>
+      <property name="current" type="boolean" default="true">
+         <prompt prompt="Is current?" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="text" name="brief">
+         <prompt prompt="Brief response to issue" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="link" name="experts" entity="canvassers"/>
+      <list properties="listed" name="Issues">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="url">
+            <prompt prompt="url" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="current">
+            <prompt prompt="Is current?" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="brief">
+            <prompt prompt="Brief response to issue" locale="en_GB.UTF-8"/>
+         </field>
+      </list>
+      <form properties="listed" name="Issue">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="url">
+            <prompt prompt="url" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="current">
+            <prompt prompt="Is current?" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="brief">
+            <prompt prompt="Brief response to issue" locale="en_GB.UTF-8"/>
+         </field>
+      </form>
+      <permission group="canvassers" permission="read"/>
+      <permission group="teamorganisers" permission="read"/>
+      <permission group="issueexperts" permission="read"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="edit"/>
+      <permission group="admin" permission="all"/>
   </entity>
-  <!--
+   <!--
     entity intentions already has a key - not generating one
-    -->
-  <entity table="intentions" name="intentions" magnitude="6" volatility="2">
-    <documentation>Intentions of electors to vote for options
+    --><entity table="intentions" name="intentions" magnitude="6" volatility="2">
+      <documentation>Intentions of electors to vote for options
     elicited in visits.</documentation>
-    <key>
-      <property type="integer" distinct="system" required="true" immutable="true" name="id">
-        <generator action="native"/>
+      <key>
+         <property type="integer" distinct="system" required="true" immutable="true" name="id">
+            <generator action="native"/>
+         </property>
+      </key>
+      <property required="true" type="entity" entity="visits" farkey="id" name="visit_id"
+                column="visit_id">
+         <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
       </property>
-    </key>
-    <property required="true" type="entity" entity="visits" farkey="id" name="visit_id" column="visit_id">
-      <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="entity" entity="electors" farkey="id" name="elector_id" column="elector_id">
-      <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
-    </property>
-    <property required="true" type="entity" entity="options" farkey="id" name="option_id" column="option_id">
-      <prompt prompt="option_id" locale="en_GB.UTF-8"/>
-    </property>
-    <property name="locality" type="integer" required="true">
-      <documentation>The locality at which the intention was
+      <property type="entity" entity="electors" farkey="id" name="elector_id"
+                column="elector_id">
+         <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
+      </property>
+      <property required="true" type="entity" entity="options" farkey="id" name="option_id"
+                column="option_id">
+         <prompt prompt="option_id" locale="en_GB.UTF-8"/>
+      </property>
+      <property name="locality" type="integer" required="true">
+         <documentation>The locality at which the intention was
       recorded; used where an elector does not consent to have
       polling intention stored against them. This is a locality as
       described in</documentation>
-    </property>
-    <permission permission="none" group="public"/>
-    <permission group="canvassers" permission="noedit"/>
-    <permission group="teamorganisers" permission="none"/>
-    <permission group="issueexperts" permission="none"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="none"/>
-    <permission group="admin" permission="noedit"/>
-    <list properties="listed" name="Intentions">
-      <field property="visit_id">
-        <prompt prompt="visit" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="elector_id">
-        <prompt prompt="elector" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="option_id">
-        <prompt prompt="option" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="locality">
-        <documentation>The locality at which the intention was
-        recorded; used where an elector does not consent to have
-        polling intention stored against them. This is a locality
-        as described in</documentation>
-      </field>
-    </list>
-    <form properties="listed" name="Intention">
-      <field property="visit_id">
-        <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="elector_id">
-        <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="option_id">
-        <prompt prompt="option_id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="locality">
-        <documentation>The locality at which the intention was
-        recorded; used where an elector does not consent to have
-        polling intention stored against them. This is a locality
-        as described in</documentation>
-      </field>
-    </form>
-  </entity>
-  <!--
-    entity canvassers already has a key - not generating one
-    -->
-  <entity table="canvassers" name="canvassers" magnitude="5" volatility="4">
-    <documentation>Primary users of the system: those actually
-    interviewing electors.</documentation>
-    <key>
-      <property type="integer" name="id" column="id" distinct="system" immutable="true">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
-    </key>
-    <property required="true" type="string" name="username" column="username" size="32" distinct="all">
-      <prompt prompt="username" locale="en_GB.UTF-8"/>
-    </property>
-    <property required="true" type="string" name="fullname" column="fullname" size="64" distinct="user">
-      <prompt prompt="fullname" locale="en_GB.UTF-8"/>
-    </property>
-    <property name="avatar" type="image">
-      <documentation>An image of the canvasser, so that other members of their
+      <permission permission="none" group="public"/>
+      <permission group="canvassers" permission="noedit"/>
+      <permission group="teamorganisers" permission="none"/>
+      <permission group="issueexperts" permission="none"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="none"/>
+      <permission group="admin" permission="noedit"/>
+      <list properties="listed" name="Intentions">
+         <field property="visit_id">
+            <prompt prompt="visit" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="elector_id">
+            <prompt prompt="elector" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="option_id">
+            <prompt prompt="option" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="locality">
+            <documentation>The locality at which the intention was
+        recorded; used where an elector does not consent to have
+        polling intention stored against them. This is a locality
+        as described in</documentation>
+         </field>
+      </list>
+      <form properties="listed" name="Intention">
+         <field property="visit_id">
+            <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="elector_id">
+            <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="option_id">
+            <prompt prompt="option_id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="locality">
+            <documentation>The locality at which the intention was
+        recorded; used where an elector does not consent to have
+        polling intention stored against them. This is a locality
+        as described in</documentation>
+         </field>
+      </form>
+  </entity>
+   <!--
+    entity canvassers already has a key - not generating one
+    --><entity table="canvassers" name="canvassers" magnitude="5" volatility="4">
+      <documentation>Primary users of the system: those actually
+    interviewing electors.</documentation>
+      <key>
+         <property type="integer" name="id" column="id" distinct="system" immutable="true">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </property>
+      </key>
+      <property required="true" type="string" name="username" column="username" size="32"
+                distinct="all">
+         <prompt prompt="username" locale="en_GB.UTF-8"/>
+      </property>
+      <property required="true" type="string" name="fullname" column="fullname" size="64"
+                distinct="user">
+         <prompt prompt="fullname" locale="en_GB.UTF-8"/>
+      </property>
+      <property name="avatar" type="image">
+         <documentation>An image of the canvasser, so that other members of their
         team can recognise them.</documentation>
-      <prompt prompt="Avatar" locale="en_GB.UTF-8"/>
-    </property>
-    <property name="bio" type="text">
-      <documentation>Information the canvasser supplies about themselves; an introduction.</documentation>
-      <prompt prompt="Bio" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="entity" name="elector_id" column="elector_id" entity="electors" farkey="id">
-      <prompt prompt="Electoral roll entry" locale="en_GB.UTF-8"/>
-    </property>
-    <property required="true" type="entity" name="address_id" column="address_id" entity="addresses" farkey="id" distinct="user">
-      <prompt prompt="address" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="string" name="phone" column="phone" size="16" distinct="user">
-      <prompt prompt="phone" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="string" name="email" column="email" size="128" distinct="user">
-      <prompt prompt="email" locale="en_GB.UTF-8"/>
-    </property>
-    <property required="true" type="entity" name="authority_id" entity="authorities" farkey="id">
-      <prompt prompt="authority_id" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="boolean" name="authorised" column="authorised">
-      <prompt prompt="authorised" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="link" name="roles" entity="roles" farkey="role_id">
-      <prompt prompt="Roles" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="link" name="expertise" entity="issues">
-      <documentation>Only relevant to issue experts.</documentation>
-      <prompt prompt="Expertise" locale="en_GB.UTF-8"/>
-    </property>
-    <permission group="canvassers" permission="edit">
-      <documentation>But only their own record</documentation>
-    </permission>
-    <permission group="teamorganisers" permission="edit">
-      <documentation>But only canvassers in their own
+         <prompt prompt="Avatar" locale="en_GB.UTF-8"/>
+      </property>
+      <property name="bio" type="text">
+         <documentation>Information the canvasser supplies about themselves; an introduction.</documentation>
+         <prompt prompt="Bio" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="entity" name="elector_id" column="elector_id" entity="electors"
+                farkey="id">
+         <prompt prompt="Electoral roll entry" locale="en_GB.UTF-8"/>
+      </property>
+      <property required="true" type="entity" name="address_id" column="address_id"
+                entity="addresses"
+                farkey="id"
+                distinct="user">
+         <prompt prompt="address" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="string" name="phone" column="phone" size="16" distinct="user">
+         <prompt prompt="phone" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="string" name="email" column="email" size="128" distinct="user">
+         <prompt prompt="email" locale="en_GB.UTF-8"/>
+      </property>
+      <property required="true" type="entity" name="authority_id" entity="authorities"
+                farkey="id">
+         <prompt prompt="authority_id" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="boolean" name="authorised" column="authorised">
+         <prompt prompt="authorised" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="link" name="roles" entity="roles" farkey="role_id">
+         <prompt prompt="Roles" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="link" name="expertise" entity="issues">
+         <documentation>Only relevant to issue experts.</documentation>
+         <prompt prompt="Expertise" locale="en_GB.UTF-8"/>
+      </property>
+      <permission group="canvassers" permission="edit">
+         <documentation>But only their own record</documentation>
+      </permission>
+      <permission group="teamorganisers" permission="edit">
+         <documentation>But only canvassers in their own
       team.</documentation>
-    </permission>
-    <permission group="admin" permission="all">
-      <documentation>All canvassers</documentation>
-    </permission>
-    <list properties="listed" name="Canvassers">
-      <field property="username">
-        <prompt prompt="username" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="fullname">
-        <prompt prompt="full name" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="address_id">
-        <prompt prompt="address" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="authorised">
-        <prompt prompt="authorised" locale="en_GB.UTF-8"/>
-      </field>
-    </list>
-    <form properties="listed" name="Canvasser">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="username">
-        <prompt prompt="username" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="fullname">
-        <prompt prompt="fullname" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="avatar"/>
-      <field property="bio"/>
-      <field property="elector_id">
-        <prompt prompt="Electoral roll entry" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="address_id">
-        <prompt prompt="address" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="phone">
-        <prompt prompt="phone" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="email">
-        <prompt prompt="email" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="authority_id">
-        <prompt prompt="authority_id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="authorised">
-        <prompt prompt="authorised" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="roles">
-        <prompt prompt="Roles" locale="en_GB.UTF-8"/>
-      </field>
-    </form>
-    <permission group="canvassers" permission="edit">
-      <documentation>But should only be able to edit their own
+      </permission>
+      <permission group="admin" permission="all">
+         <documentation>All canvassers</documentation>
+      </permission>
+      <list properties="listed" name="Canvassers">
+         <field property="username">
+            <prompt prompt="username" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="fullname">
+            <prompt prompt="full name" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="address_id">
+            <prompt prompt="address" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="authorised">
+            <prompt prompt="authorised" locale="en_GB.UTF-8"/>
+         </field>
+      </list>
+      <form properties="listed" name="Canvasser">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="username">
+            <prompt prompt="username" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="fullname">
+            <prompt prompt="fullname" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="avatar"/>
+         <field property="bio"/>
+         <field property="elector_id">
+            <prompt prompt="Electoral roll entry" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="address_id">
+            <prompt prompt="address" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="phone">
+            <prompt prompt="phone" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="email">
+            <prompt prompt="email" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="authority_id">
+            <prompt prompt="authority_id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="authorised">
+            <prompt prompt="authorised" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="roles">
+            <prompt prompt="Roles" locale="en_GB.UTF-8"/>
+         </field>
+      </form>
+      <permission group="canvassers" permission="edit">
+         <documentation>But should only be able to edit their own
       record.</documentation>
-    </permission>
-    <permission group="teamorganisers" permission="edit"/>
-    <permission group="issueexperts" permission="read"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="read"/>
-    <permission group="admin" permission="all"/>
+      </permission>
+      <permission group="teamorganisers" permission="edit"/>
+      <permission group="issueexperts" permission="read"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="read"/>
+      <permission group="admin" permission="all"/>
   </entity>
    <!--
     entity followuprequests already has a key - not generating one
-    -->
-  <entity table="followuprequests" name="followuprequests" magnitude="7" volatility="2">
-    <documentation>Requests for a followup with an issue
+    --><entity table="followuprequests" name="followuprequests" magnitude="7" volatility="2">
+      <documentation>Requests for a followup with an issue
     expert</documentation>
-    <key>
-      <property required="true" type="integer" name="id" column="id" distinct="system" immutable="true">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+      <key>
+         <property required="true" type="integer" name="id" column="id" distinct="system"
+                   immutable="true">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </property>
+      </key>
+      <property required="true" type="entity" name="elector_id" column="elector_id"
+                entity="electors"
+                farkey="id"
+                distinct="user">
+         <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
       </property>
-    </key>
-    <property required="true" type="entity" name="elector_id" column="elector_id" entity="electors" farkey="id" distinct="user">
-      <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
-    </property>
-    <property required="true" type="entity" name="visit_id" column="visit_id" entity="visits" farkey="id" distinct="user">
-      <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
-    </property>
-    <property required="true" type="entity" name="issue_id" column="issue_id" entity="issues" farkey="id" distinct="user">
-      <prompt prompt="issue_id" locale="en_GB.UTF-8"/>
-    </property>
-    <property required="true" type="entity" name="method_id" column="method_id" entity="followupmethods" farkey="id">
-      <prompt prompt="method_id" locale="en_GB.UTF-8"/>
-    </property>
-    <list properties="listed" name="Followuprequests">
-      <field property="elector_id">
-        <prompt prompt="elector" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="visit_id">
-        <prompt prompt="visit" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="issue_id">
-        <prompt prompt="issue" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="method_id">
-        <prompt prompt="method" locale="en_GB.UTF-8"/>
-      </field>
-    </list>
-    <form properties="listed" name="Followuprequest">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="elector_id">
-        <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="visit_id">
-        <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="issue_id">
-        <prompt prompt="issue_id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="method_id">
-        <prompt prompt="method_id" locale="en_GB.UTF-8"/>
-      </field>
-    </form>
-    <permission group="canvassers" permission="noedit"/>
-    <permission group="teamorganisers" permission="read"/>
-    <permission group="issueexperts" permission="read"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="read"/>
-    <permission group="admin" permission="noedit"/>
+      <property required="true" type="entity" name="visit_id" column="visit_id" entity="visits"
+                farkey="id"
+                distinct="user">
+         <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
+      </property>
+      <property required="true" type="entity" name="issue_id" column="issue_id" entity="issues"
+                farkey="id"
+                distinct="user">
+         <prompt prompt="issue_id" locale="en_GB.UTF-8"/>
+      </property>
+      <property required="true" type="entity" name="method_id" column="method_id"
+                entity="followupmethods"
+                farkey="id">
+         <prompt prompt="method_id" locale="en_GB.UTF-8"/>
+      </property>
+      <list properties="listed" name="Followuprequests">
+         <field property="elector_id">
+            <prompt prompt="elector" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="visit_id">
+            <prompt prompt="visit" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="issue_id">
+            <prompt prompt="issue" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="method_id">
+            <prompt prompt="method" locale="en_GB.UTF-8"/>
+         </field>
+      </list>
+      <form properties="listed" name="Followuprequest">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="elector_id">
+            <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="visit_id">
+            <prompt prompt="visit_id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="issue_id">
+            <prompt prompt="issue_id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="method_id">
+            <prompt prompt="method_id" locale="en_GB.UTF-8"/>
+         </field>
+      </form>
+      <permission group="canvassers" permission="noedit"/>
+      <permission group="teamorganisers" permission="read"/>
+      <permission group="issueexperts" permission="read"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="read"/>
+      <permission group="admin" permission="noedit"/>
   </entity>
    <!--
     entity roles already has a key - not generating one
-    -->
-  <entity table="roles" name="roles" magnitude="1" volatility="7">
-    <documentation>A role (essentially, the same as a group, but
+    --><entity table="roles" name="roles" magnitude="1" volatility="7">
+      <documentation>A role (essentially, the same as a group, but
     application layer rather than database layer) of which a user
     may be a member.</documentation>
-    <key>
-      <property type="integer" name="id" column="id" immutable="true" distinct="system">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+      <key>
+         <property type="integer" name="id" column="id" immutable="true" distinct="system">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </property>
+      </key>
+      <property required="true" type="string" name="name" column="name" size="64"
+                distinct="all"
+                immutable="true">
+         <prompt prompt="name" locale="en_GB.UTF-8"/>
       </property>
-    </key>
-    <property required="true" type="string" name="name" column="name" size="64" distinct="all" immutable="true">
-      <prompt prompt="name" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="link" entity="canvassers" name="members">
-      <prompt prompt="Members" locale="en_GB.UTF-8"/>
-    </property>
-    <list properties="listed" name="Roles">
-      <field property="name">
-        <prompt prompt="name" locale="en_GB.UTF-8"/>
-      </field>
-    </list>
-    <form properties="listed" name="Role">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="name">
-        <prompt prompt="name" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="members">
-        <prompt prompt="Members" locale="en_GB.UTF-8"/>
-      </field>
-    </form>
-    <permission group="canvassers" permission="read"/>
-    <permission group="teamorganisers" permission="read"/>
-    <permission group="issueexperts" permission="read"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="read"/>
-    <permission group="admin" permission="all"/>
+      <property type="link" entity="canvassers" name="members">
+         <prompt prompt="Members" locale="en_GB.UTF-8"/>
+      </property>
+      <list properties="listed" name="Roles">
+         <field property="name">
+            <prompt prompt="name" locale="en_GB.UTF-8"/>
+         </field>
+      </list>
+      <form properties="listed" name="Role">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="name">
+            <prompt prompt="name" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="members">
+            <prompt prompt="Members" locale="en_GB.UTF-8"/>
+         </field>
+      </form>
+      <permission group="canvassers" permission="read"/>
+      <permission group="teamorganisers" permission="read"/>
+      <permission group="issueexperts" permission="read"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="read"/>
+      <permission group="admin" permission="all"/>
   </entity>
    <!--
     entity teams already has a key - not generating one
-    -->
-  <entity table="teams" name="teams" magnitude="4" volatility="4">
-    <key>
-      <property type="integer" name="id" column="id" distinct="system" immutable="true">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+    --><entity table="teams" name="teams" magnitude="4" volatility="4">
+      <key>
+         <property type="integer" name="id" column="id" distinct="system" immutable="true">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </property>
+      </key>
+      <property required="true" type="string" name="name" column="name" size="64"
+                distinct="user">
+         <prompt prompt="name" locale="en_GB.UTF-8"/>
       </property>
-    </key>
-    <property required="true" type="string" name="name" column="name" size="64" distinct="user">
-      <prompt prompt="name" locale="en_GB.UTF-8"/>
-    </property>
-    <property required="true" type="entity" entity="districts" farkey="id" name="district_id" column="district_id">
-      <prompt prompt="district_id" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="real" name="latitude" column="latitude">
-      <prompt prompt="latitude" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="link" entity="canvassers" name="members">
-      <prompt prompt="Members" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="link" entity="canvassers" name="organisers">
-      <prompt prompt="Organisers" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="real" name="longitude" column="longitude">
-      <prompt prompt="longitude" locale="en_GB.UTF-8"/>
-    </property>
-    <permission group="canvassers" permission="read"/>
-    <permission group="teamorganisers" permission="edit">
-      <documentation>But only their own group(s)</documentation>
-    </permission>
-    <permission group="issueexperts" permission="read"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="read"/>
-    <permission group="admin" permission="all">
-      <documentation>All groups</documentation>
-    </permission>
-    <list properties="listed" name="Teams">
-      <field property="name">
-        <prompt prompt="name" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="district_id">
-        <prompt prompt="district_id" locale="en_GB.UTF-8"/>
-      </field>
-    </list>
-    <form properties="listed" name="Team">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="name">
-        <prompt prompt="name" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="district_id">
-        <prompt prompt="district_id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="latitude">
-        <prompt prompt="latitude" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="members">
-        <prompt prompt="Members" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="organisers">
-        <prompt prompt="Organisers" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="longitude">
-        <prompt prompt="longitude" locale="en_GB.UTF-8"/>
-      </field>
-      <auxlist property="organisers">
-        <prompt prompt="Organisers" locale="en_GB.UTF-8"/>
-        <field property="id">
+      <property required="true" type="entity" entity="districts" farkey="id" name="district_id"
+                column="district_id">
+         <prompt prompt="district_id" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="real" name="latitude" column="latitude">
+         <prompt prompt="latitude" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="link" entity="canvassers" name="members">
+         <prompt prompt="Members" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="link" entity="canvassers" name="organisers">
+         <prompt prompt="Organisers" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="real" name="longitude" column="longitude">
+         <prompt prompt="longitude" locale="en_GB.UTF-8"/>
+      </property>
+      <permission group="canvassers" permission="read"/>
+      <permission group="teamorganisers" permission="edit">
+         <documentation>But only their own group(s)</documentation>
+      </permission>
+      <permission group="issueexperts" permission="read"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="read"/>
+      <permission group="admin" permission="all">
+         <documentation>All groups</documentation>
+      </permission>
+      <list properties="listed" name="Teams">
+         <field property="name">
+            <prompt prompt="name" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="district_id">
+            <prompt prompt="district_id" locale="en_GB.UTF-8"/>
+         </field>
+      </list>
+      <form properties="listed" name="Team">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="name">
+            <prompt prompt="name" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="district_id">
+            <prompt prompt="district_id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="latitude">
+            <prompt prompt="latitude" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="members">
+            <prompt prompt="Members" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="organisers">
+            <prompt prompt="Organisers" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="longitude">
+            <prompt prompt="longitude" locale="en_GB.UTF-8"/>
+         </field>
+         <auxlist property="organisers">
+            <prompt prompt="Organisers" locale="en_GB.UTF-8"/>
+            <field property="id">
         </field>
-        <field property="fullname">
-          <prompt prompt="name" locale="en_GB.UTF-8"/>
+            <field property="fullname">
+               <prompt prompt="name" locale="en_GB.UTF-8"/>
+            </field>
+            <field property="email">
+               <prompt prompt="email" locale="en_GB.UTF-8"/>
+            </field>
+            <field property="phone">
+               <prompt prompt="phone" locale="en_GB.UTF-8"/>
+            </field>
+         </auxlist>
+         <auxlist property="members">
+            <prompt prompt="Members" locale="en_GB.UTF-8"/>
+            <field property="id">
         </field>
-        <field property="email">
-          <prompt prompt="email" locale="en_GB.UTF-8"/>
-        </field>
-        <field property="phone">
-          <prompt prompt="phone" locale="en_GB.UTF-8"/>
-        </field>
+            <field property="fullname">
+               <prompt prompt="name" locale="en_GB.UTF-8"/>
+            </field>
+            <field property="email">
+               <prompt prompt="email" locale="en_GB.UTF-8"/>
+            </field>
+            <field property="phone">
+               <prompt prompt="phone" locale="en_GB.UTF-8"/>
+            </field>
+         </auxlist>
+         <auxlist property="events">
       </auxlist>
-      <auxlist property="members">
-        <prompt prompt="Members" locale="en_GB.UTF-8"/>
-        <field property="id">
-        </field>
-        <field property="fullname">
-          <prompt prompt="name" locale="en_GB.UTF-8"/>
-        </field>
-        <field property="email">
-          <prompt prompt="email" locale="en_GB.UTF-8"/>
-        </field>
-        <field property="phone">
-          <prompt prompt="phone" locale="en_GB.UTF-8"/>
-        </field>
-      </auxlist>
-      <auxlist property="events">
-      </auxlist>
-    </form>
-    <permission permission="none" group="public"/>
-    <permission permission="read" group="canvassers"/>
-    <permission permission="edit" group="teamorganisers"/>
-    <permission permission="read" group="issueexperts"/>
-    <permission permission="read" group="analysts"/>
-    <permission permission="read" group="issueeditors"/>
-    <permission permission="all" group="admin"/>
+      </form>
+      <permission permission="none" group="public"/>
+      <permission permission="read" group="canvassers"/>
+      <permission permission="edit" group="teamorganisers"/>
+      <permission permission="read" group="issueexperts"/>
+      <permission permission="read" group="analysts"/>
+      <permission permission="read" group="issueeditors"/>
+      <permission permission="all" group="admin"/>
   </entity>
-  <!--
+   <!--
     entity events already has a key - not generating one
-    -->
-  <entity volatility="0" name="events" table="events" magnitude="5">
-    <documentation>
+    --><entity volatility="0" name="events" table="events" magnitude="5">
+      <documentation>
       An event to which a team or teams are invited. Typically created by the team organiser(s).
       May be a training event, a social event or a canvassing session.
     </documentation>
-    <key>
-      <property type="integer" distinct="system" required="true" name="id" immutable="true">
-        <generator action="native"/>
+      <key>
+         <property type="integer" distinct="system" required="true" name="id" immutable="true">
+            <generator action="native"/>
+         </property>
+      </key>
+      <property required="true" type="string" name="name" column="name" size="64"
+                distinct="user">
+         <prompt prompt="name" locale="en_GB.UTF-8"/>
       </property>
-    </key>
-    <property required="true" type="string" name="name" column="name" size="64" distinct="user">
-      <prompt prompt="name" locale="en_GB.UTF-8"/>
-    </property>
-    <property name="teams" type="link" entity="teams"/>
-    <property name="date" type="date" distinct="user"/>
-    <property name="time" type="time" distinct="user"/>
-    <property name="decription" type="text"/>
-    <property name="cancelled" type="boolean" default="false"/>
-    <permission permission="none" group="public"/>
-    <permission permission="read" group="canvassers"/>
-    <permission permission="edit" group="teamorganisers"/>
-    <permission permission="read" group="issueexperts"/>
-    <permission permission="read" group="analysts"/>
-    <permission permission="read" group="issueeditors"/>
-    <permission permission="all" group="admin"/>
-    <form properties="listed" name="Events"><field property="id"><generator action="native"/></field><field property="name"><prompt prompt="name" locale="en_GB.UTF-8"/></field><field property="teams"/><field property="date"/><field property="time"/><field property="decription"/><field property="cancelled"/></form>
-    <list properties="listed" name="Events">
-      <field property="name"><prompt prompt="name" locale="en_GB.UTF-8"/></field>
-      <field property="date"/>
-      <field property="time"/>
-      <field property="cancelled"/>
-    </list>
+      <property name="teams" type="link" entity="teams"/>
+      <property name="date" type="date" distinct="user"/>
+      <property name="time" type="time" distinct="user"/>
+      <property name="decription" type="text"/>
+      <property name="cancelled" type="boolean" default="false"/>
+      <permission permission="none" group="public"/>
+      <permission permission="read" group="canvassers"/>
+      <permission permission="edit" group="teamorganisers"/>
+      <permission permission="read" group="issueexperts"/>
+      <permission permission="read" group="analysts"/>
+      <permission permission="read" group="issueeditors"/>
+      <permission permission="all" group="admin"/>
+      <form properties="listed" name="Events">
+         <field property="id">
+            <generator action="native"/>
+         </field>
+         <field property="name">
+            <prompt prompt="name" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="teams"/>
+         <field property="date"/>
+         <field property="time"/>
+         <field property="decription"/>
+         <field property="cancelled"/>
+      </form>
+      <list properties="listed" name="Events">
+         <field property="name">
+            <prompt prompt="name" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="date"/>
+         <field property="time"/>
+         <field property="cancelled"/>
+      </list>
   </entity>
-  <!--
+   <!--
     entity districts already has a key - not generating one
-    -->
-  <entity table="districts" name="districts" magnitude="4" volatility="7">
-    <documentation>Electoral districts: TODO: Shape (polygon)
+    --><entity table="districts" name="districts" magnitude="4" volatility="7">
+      <documentation>Electoral districts: TODO: Shape (polygon)
     information will need to be added, for use in
     maps.</documentation>
-    <key>
-      <property required="true" type="integer" name="id" column="id" immutable="true" distinct="system">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+      <key>
+         <property required="true" type="integer" name="id" column="id" immutable="true"
+                   distinct="system">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </property>
+      </key>
+      <property required="true" type="string" name="name" column="name" size="64"
+                distinct="user">
+         <prompt prompt="name" locale="en_GB.UTF-8"/>
       </property>
-    </key>
-    <property required="true" type="string" name="name" column="name" size="64" distinct="user">
-      <prompt prompt="name" locale="en_GB.UTF-8"/>
-    </property>
-    <permission group="public" permission="read"/>
-    <permission group="admin" permission="all"/>
-    <list properties="listed" name="Districts">
-      <field property="name">
-        <prompt prompt="name" locale="en_GB.UTF-8"/>
-      </field>
-    </list>
-    <form properties="listed" name="District">
-      <field property="name">
-        <prompt prompt="name" locale="en_GB.UTF-8"/>
-      </field>
-    </form>
-    <permission group="canvassers" permission="read"/>
-    <permission group="teamorganisers" permission="read"/>
-    <permission group="issueexperts" permission="read"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="read"/>
-    <permission group="admin" permission="all"/>
+      <permission group="public" permission="read"/>
+      <permission group="admin" permission="all"/>
+      <list properties="listed" name="Districts">
+         <field property="name">
+            <prompt prompt="name" locale="en_GB.UTF-8"/>
+         </field>
+      </list>
+      <form properties="listed" name="District">
+         <field property="name">
+            <prompt prompt="name" locale="en_GB.UTF-8"/>
+         </field>
+      </form>
+      <permission group="canvassers" permission="read"/>
+      <permission group="teamorganisers" permission="read"/>
+      <permission group="issueexperts" permission="read"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="read"/>
+      <permission group="admin" permission="all"/>
   </entity>
    <!--
     entity followupactions already has a key - not generating one
-    -->
-  <entity table="followupactions" name="followupactions" magnitude="7" volatility="0">
-    <documentation>Actions taken on followup
+    --><entity table="followupactions" name="followupactions" magnitude="7" volatility="0">
+      <documentation>Actions taken on followup
     requests.</documentation>
-    <key>
-      <property required="true" type="integer" name="id" column="id" distinct="system" immutable="true">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+      <key>
+         <property required="true" type="integer" name="id" column="id" distinct="system"
+                   immutable="true">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </property>
+      </key>
+      <property required="true" type="entity" name="request_id" column="request_id"
+                entity="followuprequests"
+                farkey="id">
+         <prompt prompt="request_id" locale="en_GB.UTF-8"/>
       </property>
-    </key>
-    <property required="true" type="entity" name="request_id" column="request_id" entity="followuprequests" farkey="id">
-      <prompt prompt="request_id" locale="en_GB.UTF-8"/>
-    </property>
-    <property required="true" type="entity" name="actor" column="actor" entity="canvassers" farkey="id">
-      <prompt prompt="actor" locale="en_GB.UTF-8"/>
-    </property>
-    <property required="true" default="now()" type="timestamp" name="date" column="date" distinct="user">
-      <prompt prompt="date" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="text" name="notes" column="notes" distinct="user">
-      <prompt prompt="notes" locale="en_GB.UTF-8"/>
-    </property>
-    <property type="boolean" name="closed" column="closed" default="false">
-      <prompt prompt="closed" locale="en_GB.UTF-8"/>
-    </property>
-    <list properties="listed" name="Followupactions">
-      <field property="request_id">
-        <prompt prompt="Request" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="actor">
-        <prompt prompt="actor" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="date">
-        <prompt prompt="date" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="closed">
-        <prompt prompt="closed" locale="en_GB.UTF-8"/>
-      </field>
-    </list>
-    <form properties="listed" name="Followupaction">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="request_id">
-        <prompt prompt="request_id" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="actor">
-        <prompt prompt="actor" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="date">
-        <prompt prompt="date" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="notes">
-        <prompt prompt="notes" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="closed">
-        <prompt prompt="closed" locale="en_GB.UTF-8"/>
-      </field>
-    </form>
-    <permission group="issueexperts" permission="noedit"/>
-    <permission group="canvassers" permission="read">
-      <documentation>But only for electors in their immediate
+      <property required="true" type="entity" name="actor" column="actor" entity="canvassers"
+                farkey="id">
+         <prompt prompt="actor" locale="en_GB.UTF-8"/>
+      </property>
+      <property required="true" default="now()" type="timestamp" name="date" column="date"
+                distinct="user">
+         <prompt prompt="date" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="text" name="notes" column="notes" distinct="user">
+         <prompt prompt="notes" locale="en_GB.UTF-8"/>
+      </property>
+      <property type="boolean" name="closed" column="closed" default="false">
+         <prompt prompt="closed" locale="en_GB.UTF-8"/>
+      </property>
+      <list properties="listed" name="Followupactions">
+         <field property="request_id">
+            <prompt prompt="Request" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="actor">
+            <prompt prompt="actor" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="date">
+            <prompt prompt="date" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="closed">
+            <prompt prompt="closed" locale="en_GB.UTF-8"/>
+         </field>
+      </list>
+      <form properties="listed" name="Followupaction">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="request_id">
+            <prompt prompt="request_id" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="actor">
+            <prompt prompt="actor" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="date">
+            <prompt prompt="date" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="notes">
+            <prompt prompt="notes" locale="en_GB.UTF-8"/>
+         </field>
+         <field property="closed">
+            <prompt prompt="closed" locale="en_GB.UTF-8"/>
+         </field>
+      </form>
+      <permission group="issueexperts" permission="noedit"/>
+      <permission group="canvassers" permission="read">
+         <documentation>But only for electors in their immediate
       vicinity</documentation>
-    </permission>
-    <permission group="teamorganisers" permission="none"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="read"/>
-    <permission group="admin" permission="all"/>
+      </permission>
+      <permission group="teamorganisers" permission="none"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="read"/>
+      <permission group="admin" permission="all"/>
   </entity>
    <!--
     entity options already has a key - not generating one
-    -->
-  <entity table="options" name="options" magnitude="1" volatility="7">
-    <documentation>Options in the election or referendum being
+    --><entity table="options" name="options" magnitude="1" volatility="7">
+      <documentation>Options in the election or referendum being
     canvassed on</documentation>
-    <key>
-      <property required="true" type="string" name="id" column="id" size="32" distinct="all" immutable="true">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </property>
-    </key>
-    <list properties="listed" name="Options">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-    </list>
-    <form properties="listed" name="Option">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-    </form>
-    <permission group="canvassers" permission="read"/>
-    <permission group="teamorganisers" permission="read"/>
-    <permission group="issueexperts" permission="read"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="read"/>
-    <permission group="admin" permission="all"/>
+      <key>
+         <property required="true" type="string" name="id" column="id" size="32" distinct="all"
+                   immutable="true">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </property>
+      </key>
+      <list properties="listed" name="Options">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+      </list>
+      <form properties="listed" name="Option">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+      </form>
+      <permission group="canvassers" permission="read"/>
+      <permission group="teamorganisers" permission="read"/>
+      <permission group="issueexperts" permission="read"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="read"/>
+      <permission group="admin" permission="all"/>
   </entity>
    <!--
     entity followupmethods already has a key - not generating one
-    -->
-  <entity table="followupmethods" name="followupmethods" magnitude="1" volatility="7">
-    <documentation>Methods which may be used to follow up a followup request. Reference data.</documentation>
-    <key>
-      <property required="true" type="string" size="32" name="id" column="id" immutable="true" distinct="all">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </property>
-    </key>
-    <list properties="listed" name="Followupmethods">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-    </list>
-    <form properties="listed" name="Followupmethod">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
-    </form>
-    <permission group="canvassers" permission="read"/>
-    <permission group="teamorganisers" permission="read"/>
-    <permission group="issueexperts" permission="read"/>
-    <permission group="analysts" permission="read"/>
-    <permission group="issueeditors" permission="read"/>
-    <permission group="admin" permission="all"/>
+    --><entity table="followupmethods" name="followupmethods" magnitude="1" volatility="7">
+      <documentation>Methods which may be used to follow up a followup request. Reference data.</documentation>
+      <key>
+         <property required="true" type="string" size="32" name="id" column="id" immutable="true"
+                   distinct="all">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </property>
+      </key>
+      <list properties="listed" name="Followupmethods">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+      </list>
+      <form properties="listed" name="Followupmethod">
+         <field property="id">
+            <prompt prompt="id" locale="en_GB.UTF-8"/>
+         </field>
+      </form>
+      <permission group="canvassers" permission="read"/>
+      <permission group="teamorganisers" permission="read"/>
+      <permission group="issueexperts" permission="read"/>
+      <permission group="analysts" permission="read"/>
+      <permission group="issueeditors" permission="read"/>
+      <permission group="admin" permission="all"/>
   </entity>
 </application>

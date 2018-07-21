@@ -54,7 +54,7 @@
   :main ^:skip-aot youyesyet.core
   :migratus {:store :database :db ~(get (System/getenv) "DATABASE_URL")}
 
-  :plugins [[lein-adl ["0.1.1"]]
+  :plugins [;;[lein-adl ["0.1.1"]]
             [lein-cljsbuild "1.1.4"]
             [lein-codox "0.10.3"]
             [lein-cprop "1.0.1"]

@@ -39,28 +39,29 @@
 
 
 (declare ^:dynamic *app-context*)
+(def ^:dynamic *user* nil)
+
 (parser/set-resource-path!  (clojure.java.io/resource "templates"))
 (parser/add-tag! :csrf-field (fn [_ _] (anti-forgery-field)))
 (filters/add-filter! :markdown (fn [content] [:safe (md-to-html-string content)]))
 (tags/add-tags)
 
-(defn raw-get-user-roles [user]
-  "Return, as a set, the names of the roles of which this user is a member."
-  (if
-    user
-    (do
-      (log/debug (str "seeking roles for user " user))
-      (let [roles
-      (set (map #(lower-case (:name %)) (db/list-roles-by-canvasser db/*db* user)))]
-        (log/debug (str "found roles " roles " for user " user))
-        roles))))
-
-
 ;; role assignments change only rarely.
-(def get-user-roles (memoize raw-get-user-roles))
+(def get-user-roles
+  "Return, as a set, the names of the roles of which this `user` is a member."
+  (memoize
+   (fn [user]
+     (if
+       user
+       (do
+         (log/debug (str "seeking roles for user " user))
+         (let [roles
+               (set (map #(lower-case (:name %)) (db/list-roles-by-canvasser db/*db* user)))]
+           (log/debug (str "found roles " roles " for user " user))
+           roles))))))
 
 
-(defn render
+(defn render-with-session
   "renders the HTML `template` located relative to resources/templates in
   the context of this session and with these parameters."
   ;; TODO: I'm passing `session` through into render. The default luminus
@@ -68,7 +69,7 @@
   ;; than me so there's almost certainly a reason it doesn't.
   [template session & [params]]
   (let [user (:user session)]
-    (log/debug (str "layout/render: template: '" template "'"))
+    (log/debug (str "layout/render-with-session: template: '" template "'"))
     (content-type
       (ok
         (parser/render-file
@@ -81,6 +82,26 @@
             :site-title (:site-title env)
             :version (System/getProperty "youyesyet.version")})))
       "text/html; charset=utf-8")))
+
+
+(defn render
+  "renders the HTML `template` located relative to resources/templates in
+  the context of this session and with these parameters."
+  [template & [params]]
+    (log/debug (str "layout/render: template: '" template "'"))
+    (content-type
+      (ok
+        (parser/render-file
+          template
+          (merge params
+            {:page template
+            :csrf-token *anti-forgery-token*
+            :user *user*
+            :user-roles (get-user-roles *user*)
+            :site-title (:site-title env)
+            :version (System/getProperty "youyesyet.version")})))
+      "text/html; charset=utf-8"))
+
 
 
 (defn error-page

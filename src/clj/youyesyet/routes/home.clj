@@ -49,7 +49,7 @@
 
 
 (defn about-page []
-  (layout/render "about.html" {} {:title
+  (layout/render "about.html" {:title
                                   (str "About " (:site-title env))
                                   :motd (md-to-html-string (slurp (io/resource "about.md")))}))
 
@@ -67,7 +67,7 @@
 
 
 (defn home-page []
-    (layout/render "home.html" {} {:title "You yes yet?"
+    (layout/render "home.html" {:title "You yes yet?"
                                    :motd (md-to-html-string (motd))}))
 
 
@@ -100,13 +100,12 @@
        (assoc
          (response/found redirect-to)
          :session
-         (assoc session :user user :roles roles)))
+         (assoc session :user (assoc user :roles roles))))
      ;; if we've got a username but either no user object or else
      ;; the password doesn't match
      username
       (layout/render
        "login.html"
-       session
        {:title (str "User " username " is unknown")
         :redirect-to redirect-to
         :warnings ["Your user name was not recognised or your password did not match"]})
@@ -114,7 +113,6 @@
      true
       (layout/render
        "login.html"
-       session
        {:title "Please log in"
         :redirect-to redirect-to
         :authorities (db-core/list-authorities db-core/*db*)}))))

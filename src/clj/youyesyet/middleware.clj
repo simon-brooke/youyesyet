@@ -8,7 +8,7 @@
             [ring-ttl-session.core :refer [ttl-memory-store]]
             [youyesyet.env :refer [defaults]]
             [youyesyet.config :refer [env]]
-            [youyesyet.layout :refer [*app-context* error-page]])
+            [youyesyet.layout :refer [*app-context* *user* error-page]])
   (:import [javax.servlet ServletContext]))
 
 
@@ -63,6 +63,17 @@
       ((if (:websocket? request) handler wrapped) request))))
 
 
+(defn wrap-user
+  "Dynamically bind *user* to the user in the session, if any, so that it
+  is available in layout/render, q.v."
+  [handler]
+  (fn [request]
+    (if-let [user (-> request :session :user)]
+      (binding [*user* user]
+        (handler request))
+      (handler request))))
+
+
 (defn wrap-base [handler]
   (-> ((:middleware defaults) handler)
       wrap-webjars
@@ -71,4 +82,6 @@
             (assoc-in [:security :anti-forgery] false)
             (assoc-in  [:session :store] (ttl-memory-store (* 60 30)))))
       wrap-context
-      wrap-internal-error))
+      wrap-internal-error
+      wrap-user))
+

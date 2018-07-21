@@ -19,14 +19,14 @@
   "Render the routing page for the roles the currently logged in user is member of."
   (let
     [session (:session request)
-     user (:user session)
+     user (-> request :session :user)
      roles (if
              user
              (db-core/list-roles-by-canvasser db-core/*db* {:id (:id user)}))]
     (log/info (str "Roles routing page; user is " user "; roles are " roles))
     (cond
       roles (layout/render "roles.html"
-                           (:session request)
+;;                        ;;    (:session request)
                            {:title (str "Welcome " (:fullname user) ", what do you want to do?")
                             :user user
                             :roles (map #(assoc % :link (safe-name (:name %) :sql)) roles)})
@@ -38,7 +38,7 @@
   [request]
   (layout/render
     (support/resolve-template "application-index.html")
-    (:session request)
+;;    (:session request)
     {:title "Administrative menu"}))
 
 
@@ -49,18 +49,24 @@
   [request]
   (layout/render
     (support/resolve-template "application-index.html")
-    (:session request)
+;;    (:session request)
     {:title "Administrative menu"}))
 
 
 (defn canvassers-page
   [request]
-  (layout/render "roles/canvasser.html" (:session request) {}))
+  (layout/render
+   "roles/canvasser.html"
+;;    (:session request)
+   {}))
 
 
 (defn team-organisers-page
   [request]
-  (layout/render "roles/team-orgenisers.html" request {}))
+  (layout/render
+   "roles/team-orgenisers.html"
+;;   request
+   {}))
 
 
 (defroutes roles-routes

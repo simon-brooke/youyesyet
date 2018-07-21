@@ -42,7 +42,6 @@
 
 (defn app-page [request]
   (layout/render "app.html"
-                 (:session request)
                  {:title "Canvasser app"}))
 
 
@@ -51,7 +50,7 @@
   (let [record (-> request :session :user)]
   (layout/render
     "auto/form-canvassers-Canvasser.html"
-    (:session request)
+;;    (:session request)
     {:title (str "Profile for " (-> request :session :user :fullname))
      :record record
      :elector_id
