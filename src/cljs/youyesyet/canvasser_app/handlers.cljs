@@ -10,6 +10,7 @@
             [re-frame.core :refer [dispatch reg-event-db reg-event-fx subscribe]]
             [youyesyet.canvasser-app.gis :refer [refresh-map-pins get-current-location]]
             [youyesyet.canvasser-app.state :as db]
+            [youyesyet.locality :refer [locality]]
             ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -140,11 +141,10 @@
 (reg-event-fx
  :fetch-locality
  (fn [{db :db} _]
-   (let [uri (str source-host
-                  "rest/get-local-data?latitude="
-                  (:latitude db)
-                  "&longitude="
-                  (or (:longitude db) -4))]
+   (let [locality (locality (:latitude db) (:longitude db))
+          uri (str source-host
+                  "rest/get-local-data?locality="
+                  locality)]
      (js/console.log
       (str
        "Fetching locality data: " uri))
@@ -157,7 +157,6 @@
                    :on-failure      [:bad-locality]}
       :db  (add-to-feedback db :fetch-locality)})))
 
-;; http://localhost:3000/rest/get-local-data?latitude=54.85131525968606&longitude=
 
 (reg-event-db
   :get-current-location
@@ -170,7 +169,7 @@
   :process-locality
   (fn
     [db [_ response]]
-    (js/console.log "Updating locality data")
+    (js/console.log (str "Updating locality data: " (count response) " addresses"))
     ;; loop to do it again
     (dispatch [:dispatch-later [{:ms 5000 :dispatch [:fetch-locality]}
                                 {:ms 1000 :dispatch [:get-current-location]}]])

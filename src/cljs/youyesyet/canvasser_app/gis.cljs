@@ -111,25 +111,20 @@
   [view]
   (if
     view
-    (doall
-     (.eachLayer
-      view
-      (fn [layer]
-        (try
-          (if
-            (instance? js/L.Marker layer)
-            (.removeLayer view layer))
-          (catch js/Object any
-            (js/console.log
-             (str "Failed to remove pin '"
-                  layer "' from map: " any))))))))
+    (let [layers (.eachLayer view (fn [l] l))]
+      (doall
+        (map
+          #(if
+             (instance? js/L.Marker %)
+             (.removeLayer view %))
+          layers))))
   view)
 
 
 (defn refresh-map-pins
   "Refresh the map pins on this map. Side-effecty; liable to be problematic."
   []
-  (let [view (map-remove-pins @(subscribe [:view]))
+  (let [view @(subscribe [:view]) ;; (map-remove-pins @(subscribe [:view]))
         addresses @(subscribe [:addresses])]
     (if
       view
