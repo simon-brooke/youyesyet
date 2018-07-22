@@ -79,7 +79,9 @@
         username (:username params)
         user (if username (db-core/get-canvasser-by-username db-core/*db* {:username username}))
         password (:password params)
-        redirect-to (or (:redirect-to params) "roles")]
+        redirect-to (or
+                     (:redirect-to params)
+                     (str (:servlet-context request) "/roles"))]
     (cond
      (:authority params)
      (let [auth (oauth/authority! (:authority params))]
@@ -126,7 +128,7 @@
   (POST "/call-me" request (call-me-page request))
   (GET "/login" request (login-page request))
   (POST "/login" request (login-page request))
-  (GET "/notyet" [] (layout/render "notyet.html" {}
+  (GET "/notyet" [] (layout/render "notyet.html"
                                    {:title "Can we persuade you?"}))
-  (GET "/supporter" [] (layout/render "supporter.html" {}
+  (GET "/supporter" [] (layout/render "supporter.html"
                                       {:title "Have you signed up as a canvasser yet?"})))
