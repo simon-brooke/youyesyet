@@ -27,9 +27,8 @@
                 ;; we check if one has been specified in the environment
                 ;; instead
                 (do
-                  (log/info "Taking '" (:app-context env) "' as *app-context* from env")
+                  (log/debug "Taking '" (:app-context env) "' as *app-context* from env")
                   (:app-context env)))]
-      (log/debug "Using '" *app-context* "' as *app-context*")
       (handler (assoc request :servlet-context *app-context*)))))
 
 

@@ -2,6 +2,7 @@
       :author "Simon Brooke"} youyesyet.routes.rest
   (:require [clojure.core.memoize :as memo]
             [clojure.java.io :as io]
+            [clojure.tools.logging :as log]
             [clojure.walk :refer [keywordize-keys]]
             [compojure.core :refer [defroutes GET POST]]
             [noir.response :as nresponse]
@@ -43,6 +44,7 @@
   work. So cache for only 90 seconds."
   (memo/ttl
     (fn [here]
+      (log/debug "Fetching local data for " here)
       (let [neighbourhood (l/neighbouring-localities here)
             addresses  (flatten
                          (map

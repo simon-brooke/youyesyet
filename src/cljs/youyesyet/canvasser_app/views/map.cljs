@@ -84,9 +84,9 @@
     (.on view "moveend"
          (fn [_] (let [c (.getCenter view)]
                    (js/console.log (str "Moving centre to " c))
-                   (dispatch :set-latitude (.-lat c))
-                   (dispatch :set-longitude (.-lon c))
-                   (dispatch :fetch-locality))))
+                   (dispatch-sync [:set-latitude (.-lat c)])
+                   (dispatch-sync [:set-longitude (.-lng c)])
+                   (dispatch [:fetch-locality]))))
     (refresh-map-pins)
     view))
 

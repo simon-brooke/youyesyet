@@ -138,22 +138,26 @@
 
 
 (reg-event-fx
-  :fetch-locality
-  (fn [{db :db} _]
-    (js/console.log "Fetching locality data")
-    ;; we return a map of (side) effects
-    {:http-xhrio {:method          :get
-                  :uri             (str source-host
-                                        "rest/get-local-data?latitude="
-                                        (:latitude db)
-                                        "&longitude="
-                                        (:longitude db))
-                  :format          (json-request-format)
-                  :response-format (json-response-format {:keywords? true})
-                  :on-success      [:process-locality]
-                  :on-failure      [:bad-locality]}
-     :db  (add-to-feedback db :fetch-locality)}))
+ :fetch-locality
+ (fn [{db :db} _]
+   (let [uri (str source-host
+                  "rest/get-local-data?latitude="
+                  (:latitude db)
+                  "&longitude="
+                  (or (:longitude db) -4))]
+     (js/console.log
+      (str
+       "Fetching locality data: " uri))
+     ;; we return a map of (side) effects
+     {:http-xhrio {:method          :get
+                   :uri             uri
+                   :format          (json-request-format)
+                   :response-format (json-response-format {:keywords? true})
+                   :on-success      [:process-locality]
+                   :on-failure      [:bad-locality]}
+      :db  (add-to-feedback db :fetch-locality)})))
 
+;; http://localhost:3000/rest/get-local-data?latitude=54.85131525968606&longitude=
 
 (reg-event-db
   :get-current-location
@@ -170,9 +174,9 @@
     ;; loop to do it again
     (dispatch [:dispatch-later [{:ms 5000 :dispatch [:fetch-locality]}
                                 {:ms 1000 :dispatch [:get-current-location]}]])
+    (refresh-map-pins)
     (assoc
       (remove-from-feedback db :fetch-locality)
-      (refresh-map-pins)
       :addresses (js->clj response))))
 
 

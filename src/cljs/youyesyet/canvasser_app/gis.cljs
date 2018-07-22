@@ -109,17 +109,20 @@
 (defn map-remove-pins
   "Remove all pins from this map `view`. Side-effecty; liable to be problematic."
   [view]
-
   (if
     view
-    (.eachLayer
+    (doall
+     (.eachLayer
       view
       (fn [layer]
         (try
           (if
             (instance? js/L.Marker layer)
             (.removeLayer view layer))
-          (catch js/Object any (js/console.log (str "Failed to remove pin '" layer "' from map: " any)))))))
+          (catch js/Object any
+            (js/console.log
+             (str "Failed to remove pin '"
+                  layer "' from map: " any))))))))
   view)
 
 
