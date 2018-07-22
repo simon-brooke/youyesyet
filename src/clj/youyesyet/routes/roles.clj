@@ -26,7 +26,6 @@
     (log/info (str "Roles routing page; user is " user "; roles are " roles))
     (cond
       roles (layout/render "roles.html"
-;;                        ;;    (:session request)
                            {:title (str "Welcome " (:fullname user) ", what do you want to do?")
                             :user user
                             :roles (map #(assoc % :link (safe-name (:name %) :sql)) roles)})
@@ -38,7 +37,6 @@
   [request]
   (layout/render
     (support/resolve-template "application-index.html")
-;;    (:session request)
     {:title "Administrative menu"}))
 
 
@@ -49,7 +47,6 @@
   [request]
   (layout/render
     (support/resolve-template "application-index.html")
-;;    (:session request)
     {:title "Administrative menu"}))
 
 
@@ -57,7 +54,6 @@
   [request]
   (layout/render
    "roles/canvasser.html"
-;;    (:session request)
    {}))
 
 
@@ -65,7 +61,6 @@
   [request]
   (layout/render
    "roles/team-orgenisers.html"
-;;   request
    {}))
 
 

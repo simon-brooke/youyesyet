@@ -50,7 +50,6 @@
   (let [record (-> request :session :user)]
   (layout/render
     "auto/form-canvassers-Canvasser.html"
-;;    (:session request)
     {:title (str "Profile for " (-> request :session :user :fullname))
      :record record
      :elector_id
@@ -116,7 +115,9 @@
 
 (defn handle-logout
   [request]
-  (dissoc (response/found "home") :user :roles))
+  (let [r (response/found "home")]
+    (assoc r :session (dissoc (:session r) :user))))
+
 
 
 (defroutes logged-in-routes

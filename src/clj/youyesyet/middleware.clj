@@ -70,18 +70,21 @@
   (fn [request]
     (if-let [user (-> request :session :user)]
       (binding [*user* user]
+        (log/debug "*user* bound as: " *user*)
         (handler request))
-      (handler request))))
+      (do
+        (log/debug "No user found in session")
+        (handler request)))))
 
 
 (defn wrap-base [handler]
   (-> ((:middleware defaults) handler)
+      wrap-user
       wrap-webjars
       (wrap-defaults
         (-> site-defaults
             (assoc-in [:security :anti-forgery] false)
             (assoc-in  [:session :store] (ttl-memory-store (* 60 30)))))
       wrap-context
-      wrap-internal-error
-      wrap-user))
+      wrap-internal-error))
 

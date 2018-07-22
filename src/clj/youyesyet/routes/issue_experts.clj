@@ -42,7 +42,6 @@
 (defn list-page [request]
   (layout/render
     "issue-expert/list.html"
-;;    (:session request)
     (let [user (:user (:session request))]
     {:title "Open requests"
      :user user
@@ -69,7 +68,6 @@
                  db/*db* {:id (:visit_id record)})))]
     (layout/render
       "issue-expert/request.html"
-  ;;    (:session request)
       {:title (str "Request from " (:name elector) " at " (:date visit))
        :user (:user (:session request))
        :visit visit
