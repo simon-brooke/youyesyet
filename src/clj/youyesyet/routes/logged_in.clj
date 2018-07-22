@@ -115,7 +115,7 @@
 
 (defn handle-logout
   [request]
-  (let [r (response/found "home")]
+  (let [r (response/found (str (:servlet-context request) "/home"))]
     (assoc r :session (dissoc (:session r) :user))))
 
 
@@ -123,5 +123,4 @@
 (defroutes logged-in-routes
   (GET "/logout" request (handle-logout request))
   (GET "/profile" request (route/restricted (profile-page request)))
-  (GET "/app" [request] (route/restricted (app-page request)))
-  )
+  (GET "/app" [request] (route/restricted (app-page request))))

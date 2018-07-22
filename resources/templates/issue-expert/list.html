@@ -1,7 +1,4 @@
 {% extends "base.html" %}
-<!-- File list-followuprequests-Followuprequests.html generated 2018-07-17T07:58:11.329Z by adl.to-selmer-templates.
-See [Application Description Language](https://github.com/simon-brooke/adl).-->
-
 
 {% block back-links %}
 <div>
@@ -31,7 +28,7 @@ Add a new Followuprequest
 
 {% endblock %}
 {% block content %}
-<form id='list-followuprequests-Followuprequests' class='list' action='{{servlet-context}}/list-followuprequests-Followuprequests' method='POST'>
+<form id='issue-expert-list' class='list' action='{{servlet-context}}/issue-expert/list' method='POST'>
 {% csrf-field %}
 <input id='offset' name='offset' type='hidden' value='{{params.offset|default:0}}'/>
 <input id='limit' name='limit' type='hidden' value='{{params.limit|default:50}}'/>

@@ -3,7 +3,7 @@
       <p>
         Use this form to request someone to phone you to discuss your concerns about independence.
       </p>
-      <form action="call-me" method="post">
+      <form action="{{servlet-context}}/call-me" method="post">
         {% csrf-field %}
         <p class="widget">
           <label for="name">Your name</label>

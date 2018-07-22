@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-      <form action="login" method="post">
+      <form action="{{servlet-context}}/login" method="post">
         {% csrf-field %}
         <h2>
           Or use a test username and password

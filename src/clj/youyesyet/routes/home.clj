@@ -49,9 +49,9 @@
 
 
 (defn about-page []
-  (layout/render "about.html" {:title
+  (layout/render "md.html" {:title
                                   (str "About " (:site-title env))
-                                  :motd (md-to-html-string (slurp (io/resource "about.md")))}))
+                                  :content (md-to-html-string (slurp (io/resource "about.md")))}))
 
 
 (defn call-me-page [request]
