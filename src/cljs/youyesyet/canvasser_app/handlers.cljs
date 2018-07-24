@@ -56,20 +56,33 @@
    })
 
 
+(defn add-to-key
+  "Return a copy of db with `x` added to the front of the list of items held
+  against the key `k`"
+  [db k x]
+  (assoc db k (cons x (db k))))
+
+
+(defn add-to-outqueue
+  [db message]
+  add-to-key db :outqueue message)
+
+
 (defn add-to-feedback
-  "Add the value of `k` in `feedback-messages` to the feedback in this `db`."
+  "Add `x` to the feedback in this `db`."
   [db k]
-  (assoc db :feedback (cons k (:feedback db))))
+  (add-to-key db :feedback x))
+
+
+(defn remove-from-key
+  [db k x]
+  (assoc db k (remove #(= x %) (db k))))
 
 
 (defn remove-from-feedback
-  "Remove the value of `k` in `feedback-messages` to the feedback in this `db`."
-  [db k]
-  (assoc db
-    :feedback
-    (remove
-      #(= % k)
-      (:feedback db))))
+  "Remove `x` from the feedback in this `db`."
+  [db x]
+  (remove-from-key db :feedback x))
 
 
 (defn coerce-to-number [v]
@@ -317,26 +330,26 @@
                          (:outqueue db))}))))))
 
 
- (reg-event-db
+(reg-event-db
   :send-request
   (fn [db [_ _]]
     (if (and (:elector db) (:issue db) (:telephone db))
       (do
         (js/console.log "Sending request")
-        (assoc (add-to-feedback db :send-request)
-          :outqueue (cons
-                     {:elector-id (:id (:elector db))
-                      :issue (:issue db)
-                      :action :add-request} (:outqueue db))))
+        (-> db
+            #(add-to-outqueue % {:elector-id (:id (:elector db))
+                                 :issue (:issue db)
+                                 :action :add-request})
+            #(add-to-feedback % :send-request)))
       (assoc db :error "Please supply a telephone number to call"))))
 
 
 (reg-event-db
- :set-active-page
- (fn [db [_ k]]
-   (if k
-     (assoc (clear-messages db) :page k)
-     db)))
+  :set-active-page
+  (fn [db [_ k]]
+    (if k
+      (assoc (clear-messages db) :page k)
+      db)))
 
 
 (reg-event-db

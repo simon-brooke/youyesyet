@@ -85,9 +85,62 @@
     (in-get-local-data here)))
 
 
+(defn last-visit-by-current-user
+  "Return the most recent visit by the currently logged in user"
+  [request]
+  (db/get-last-visit-by-canvasser
+    db/*db*
+    (-> request :session :user)))
+
+
+(defn current-visit-id
+  "Return the id of the current visit by the current user, creating it if necessary."
+  [request]
+  (let [last-visit (last-visit-by-current-user request)]
+    (if
+      (=
+        (:address_id (massage-params request))
+        (:address_id last-visit))
+      (:id last-visit)
+      (db/create-visit! db/*db* params))))
+
+
+(defn create-intention-and-visit!
+  "Doing visit creation logic server side; request params are expected to
+  include an `option`, an `elector_id` and an `address_id`, or an `option` and
+  a `location`. If no `address_id` is provided, we simply create an
+  `intention` record from the `option` and the `locality`; if a `address_id`
+  is provided, we need to check whether the last `visit` by the current `user`
+  was to the same address, if so use that as the `visit_id`, if not create
+  a new `visit` record."
+  [request]
+  (let [params (massage-params request)]
+    (if-let [address-id (-> params :address_id)]
+      (db/create-intention!
+        db/*db*
+        (assoc
+          params :visit_id (current-visit-id request))
+        (db/create-intention! db/*db* params)))))
+
+
+(defn create-request-and-visit!
+  "Doing visit creation logic server side; request params are expected to
+  include an `issue`, an `elector_id` and an `address_id` (and also a
+  `method_id` and `method_detail`). Ye cannae reasonably create a request
+  without having recorded the visit, so let's not muck about."
+  (let [params (massage-params request)]
+    (db/create-followuprequest!
+      db/*db*
+      (assoc
+        params
+        :visit-id (current-visit-id request)))))
+
+
 (defroutes rest-routes
-   (GET "/rest/get-local-data" request (route/restricted (get-local-data request)))
-;;   (GET "/rest/get-issues" request (route/restricted (get-issues request)))
-;;   (GET "/rest/set-intention" request (route/restricted (set-intention request)))
-;;   (GET "/rest/request-followup" request (route/restricted (request-followup request))))
-)
+  (GET "/rest/get-local-data" request (route/restricted (get-local-data request)))
+  (GET "/rest/create-intention" request (route/restricted (create-intention-and-visit! request)))
+  (GET "/rest/create-request" request (route/restricted (create-request-and-visit! request)))
+  ;;   (GET "/rest/get-issues" request (route/restricted (get-issues request)))
+  ;;   (GET "/rest/set-intention" request (route/restricted (set-intention request)))
+  ;;   (GET "/rest/request-followup" request (route/restricted (request-followup request))))
+  )

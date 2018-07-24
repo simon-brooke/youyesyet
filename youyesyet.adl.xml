@@ -704,6 +704,11 @@ version="0.1.1">
     column="method_id" entity="followupmethods" farkey="id">
       <prompt prompt="method_id" locale="en_GB.UTF-8"/>
     </property>
+    <property required="true" type="string" name="method-detail">
+      <documentation>
+        Phone number or email address for followup.
+      </documentation>
+    </property>
     <list properties="listed" name="Followuprequests">
       <field property="elector_id">
         <prompt prompt="elector" locale="en_GB.UTF-8"/>

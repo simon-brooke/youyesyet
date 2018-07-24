@@ -60,3 +60,10 @@ and request.issue_id = expertise.issue_id
 and expertise.canvasser_id = :expert
 ORDER BY visits.date desc
 
+--:name get-last-visit-by-canvasser :? :1
+--:doc returns the most recent visit record of the canvasser with the specified `:id`
+SELECT * FROM visits
+WHERE canvasser_id = :id
+ORDER BY date desc
+LIMIT 1
+
