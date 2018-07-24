@@ -3,7 +3,7 @@
   :description "Canvassing tool for referenda"
   :url "https://github.com/simon-brooke/youyesyet"
 
-  :dependencies [[adl-support "0.1.0-SNAPSHOT"]
+  :dependencies [[adl-support "0.1.3"]
                  [bouncer "1.0.1"]
                  [ch.qos.logback/logback-classic "1.2.2"]
                  [clj-oauth "1.5.5"]
