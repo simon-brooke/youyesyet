@@ -23,6 +23,9 @@
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;; Specified here:
+;;;; https://github.com/simon-brooke/youyesyet/blob/master/doc/specification/scaling.md#searching-the-database-for-localities
+
 ;;;; See also resources/sql/locality-trigger.sql
 
 (defn locality
@@ -35,6 +38,7 @@
     (-                  ;; invert the sign of the longitude component, since
       (int              ;; we're interested in localities West of Greenwich.
         (* longitude 100)))))
+
 
 (defn neighbouring-localities
   "Return this locality with the localities immediately
@@ -53,4 +57,4 @@
     (+ locality 100)
     (+ locality 101)))
 
-(neighbouring-localities 5482391)
+

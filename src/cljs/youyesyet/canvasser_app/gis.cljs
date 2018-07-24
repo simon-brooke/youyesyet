@@ -109,22 +109,17 @@
 (defn map-remove-pins
   "Remove all pins from this map `view`. Side-effecty; liable to be problematic."
   [view]
-  (if
-    view
-    (let [layers (.eachLayer view (fn [l] l))]
-      (doall
-        (map
-          #(if
-             (instance? js/L.Marker %)
-             (.removeLayer view %))
-          layers))))
+  (.eachLayer view
+              #(if
+                 (instance? js/L.Marker %)
+                 (.removeLayer view %)))
   view)
 
 
 (defn refresh-map-pins
   "Refresh the map pins on this map. Side-effecty; liable to be problematic."
   []
-  (let [view @(subscribe [:view]) ;; (map-remove-pins @(subscribe [:view]))
+  (let [view (map-remove-pins @(subscribe [:view]))
         addresses @(subscribe [:addresses])]
     (if
       view
