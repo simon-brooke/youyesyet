@@ -6,6 +6,7 @@
             [cemerick.url :refer (url url-encode)]
             [cljs.reader :refer [read-string]]
             [clojure.walk :refer [keywordize-keys]]
+            [re-frame.fx]
             [day8.re-frame.http-fx]
             [re-frame.core :refer [dispatch reg-event-db reg-event-fx subscribe]]
             [youyesyet.canvasser-app.gis :refer [refresh-map-pins get-current-location]]
@@ -50,6 +51,16 @@
                    :anchor nil))
 
 
+(defn compose-packet
+  [item]
+  "Convert this `item` into a URI which can be sent as a GET call"
+  (assoc
+    (url js/window.location)
+    :path (str "/rest/" (name (:action item)))
+    :query (dissoc item :action)
+    :fragment nil))
+
+
 (def feedback-messages
   {:fetch-locality "Fetching local data."
    :send-request "Request has been queued."
@@ -65,7 +76,8 @@
 
 (defn add-to-outqueue
   [db message]
-  add-to-key db :outqueue message)
+  (dispatch [:process-queue])
+  (add-to-key db :outqueue message))
 
 
 (defn add-to-feedback
@@ -83,6 +95,11 @@
   "Remove `x` from the feedback in this `db`."
   [db x]
   (remove-from-key db :feedback x))
+
+
+(defn remove-from-outqueue
+  [db x]
+  (remove-from-key db :outqueue x))
 
 
 (defn coerce-to-number [v]
@@ -190,7 +207,7 @@
   :process-locality
   (fn
     [db [_ response]]
-    (js/console.log (str "Updating locality data: " (count response) " addresses"))
+    (js/console.log (str "Updating locality data: " (count response) " addresses " ))
     ;; loop to do it again
     (dispatch [:dispatch-later [{:ms 60000 :dispatch [:fetch-locality]}
                                 {:ms 1000 :dispatch [:get-current-location]}]])
@@ -310,8 +327,9 @@
                 :address_id (-> db :address :id)
                 :locality (-> db :address :locality)
                 :elector_id (-> db :elector :id)
-                :action :set-intention))
-            :elector (assoc (:elector db) :intention intention)))))))
+                :action :create-intention))
+            :elector (assoc (:elector db) :intention intention)
+            :page :elector))))))
 
 
 (reg-event-db
@@ -328,7 +346,7 @@
                                  :address_id (-> db :address :id)
                                  :method_id "Phone"
                                  :method_detail (-> db :method_detail)
-                                 :action :add-request})
+                                 :action :create-request})
           :send-request))
       (assoc db :error "Please supply a telephone number to call"))))
 
@@ -336,6 +354,7 @@
 (reg-event-db
   :set-active-page
   (fn [db [_ k]]
+    (js/console.log (str "Setting page to " k))
     (if k
       (assoc (clear-messages db) :page k)
       db)))
@@ -346,9 +365,11 @@
   (fn [db [_ address-id]]
     (let [id (coerce-to-number  address-id)
           address (first (remove nil? (map #(if (= id (:id %)) %) (:addresses db))))]
+      (js/console.log (str "Set address to " address " "))
       (clear-messages
         (if
-          (assoc db (= (count (:dwellings address)) 1)
+          (= (count (:dwellings address)) 1)
+          (assoc db
             :address address
             :dwelling (first (:dwellings address))
             :electors (:electors (first (:dwellings address)))
@@ -374,6 +395,7 @@
 (reg-event-db
   :set-dwelling
   (fn [db [_ dwelling-id]]
+    (js/console.log (str "Setting dwelling to " dwelling-id " "))
     (let [id (coerce-to-number dwelling-id)
           dwelling (first
                      (remove
@@ -452,3 +474,47 @@
     (if (integer? zoom)
       (assoc db :zoom zoom)
       db)))
+
+
+(reg-event-fx
+  :process-queue
+  (fn [{db :db} _]
+    (if-let [item (first (:outqueue db))]
+      ;; if there's something in the queue, transmit it...
+      (let [uri (compose-packet item)]
+        (js/console.log (str "Transmitting item" uri))
+        {:http-xhrio {:method          :get
+                      :uri             uri
+                      :format          (json-request-format)
+                      :response-format (json-response-format {:keywords? true})
+                      :on-success      [:tx-success]
+                      :on-failure      [:tx-failure]}
+         :db (assoc
+               (add-to-feedback db :process-queue)
+               :tx-item item
+               :outqueue (remove #(= % item) (:outqueue db)))})
+      ;; else try again in a minute
+      (do
+        (js/console.log "Nothing to send to server")
+        (dispatch [:dispatch-later [{:ms 60000 :dispatch [:process-queue]}]])
+        {:db db}))))
+
+
+(reg-event-db
+  :tx-success
+  (fn
+    [db [_ response]]
+    (let [r (js->clj response)]
+      (js/console.log (str "Transmission success: " r))
+      ;; while we've got comms working, get as many items through as we can.
+      (dispatch [:process-queue])
+      db)))
+
+
+(reg-event-db
+  :tx-failure
+  (fn [db _]
+    (js/console.log (str "Transmission failed, requeueing" (:tx-item db)))
+    (assoc
+      (add-to-outqueue db (:tx-item db))
+      :error "Transmission failed, requeueing")))

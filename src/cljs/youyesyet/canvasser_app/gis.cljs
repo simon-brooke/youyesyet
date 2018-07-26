@@ -48,8 +48,8 @@
           (js/console.log (str "Current location is: "
                                (.-latitude (.-coords position)) ", "
                                (.-longitude (.-coords position))))
-          (dispatch-sync [:set-latitude (.-latitude (.-coords position))])
-          (dispatch-sync [:set-longitude (.-longitude (.-coords position))])
+          (dispatch [:set-latitude (.-latitude (.-coords position))])
+          (dispatch [:set-longitude (.-longitude (.-coords position))])
           (locality (.-latitude (.-coords position)) (.-longitude (.-coords position))))))
       (js/console.log "Geolocation not available")
     (catch js/Object any
@@ -113,11 +113,12 @@
 (defn map-remove-pins
   "Remove all pins from this map `view`. Side-effecty; liable to be problematic."
   [view]
-  (.eachLayer view
-              #(if
-                 (instance? js/L.Marker %)
-                 (.removeLayer view %)))
-  view)
+  (if view
+    (.eachLayer view
+                #(if
+                   (instance? js/L.Marker %)
+                   (.removeLayer view %)))
+    view))
 
 
 (defn refresh-map-pins

@@ -107,6 +107,8 @@
       (db/create-visit! db/*db* params))))
 
 
+;; http://localhost:3000/rest/create-intention?address_id=18&elector-id=62&elector_id=62&intention=Yes&locality=5482391
+
 (defn create-intention-and-visit!
   "Doing visit creation logic server side; request params are expected to
   include an `option`, an `elector_id` and an `address_id`, or an `option` and
@@ -117,6 +119,7 @@
   a new `visit` record."
   [request]
   (let [params (massage-params request)]
+    (log/debug "Creating intention with params: " params)
     (if-let [address-id (-> params :address_id)]
       (db/create-intention!
         db/*db*
