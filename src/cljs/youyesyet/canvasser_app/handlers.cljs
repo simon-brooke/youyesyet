@@ -70,7 +70,7 @@
 
 (defn add-to-feedback
   "Add `x` to the feedback in this `db`."
-  [db k]
+  [db x]
   (add-to-key db :feedback x))
 
 
@@ -179,7 +179,7 @@
    (let [locality (get-current-location)]
      (js/console.log "Updating current location")
      (if
-       (and (locality > 0) (not (= locality (:locality db))))
+       (and (> locality 0) (not (= locality (:locality db))))
        (do
          (dispatch :fetch-locality) ;; if the locality has changed, fetch it immediately
          (assoc db :locality locality))
@@ -212,11 +212,11 @@
       :error (cons :fetch-locality (:error db)))))
 
 
-(reg-event-fx
- :process-outqueue
- (fn [{db :db} _]
-   (if
-     (empty? (:outqueue db))
+;; (reg-event-fx
+;;  :process-outqueue
+;;  (fn [{db :db} _]
+;;    (if
+;;      (empty? (:outqueue db))
 
 
 (reg-event-fx
@@ -296,23 +296,22 @@
 (reg-event-db
   :send-intention
   (fn [db [_ args]]
-    (let [intention (:intention args)
-          elector-id (:elector-id args)]
+    (let [intention (:intention args)]
       (if
         (nil? (-> db :elector))
         (assoc db :error (cons "No elector found; not setting intention" (:error db)))
         (do
-          (js/console.log (str "Setting intention of elector " old-elector " to " intention))
-          (->
-           db
-           clear-messages
-           #(add-to-outqueue % (assoc
-                           args
-                           :address_id (-> db :address :id)
-                           :locality (-> db :address :locality)
-                           :elector_id (-> db :elector :id)
-                           :action :set-intention))
-           #(assoc % :elector (assoc (:elector db) :intention intention))))))))
+          (js/console.log (str "Setting intention of elector " (-> db :elector :id) " to " intention))
+          (assoc
+            (add-to-outqueue
+              (clear-messages db)
+              (assoc
+                args
+                :address_id (-> db :address :id)
+                :locality (-> db :address :locality)
+                :elector_id (-> db :elector :id)
+                :action :set-intention))
+            :elector (assoc (:elector db) :intention intention)))))))
 
 
 (reg-event-db
@@ -321,14 +320,16 @@
     (if (and (:elector db) (:issue db) (:telephone db))
       (do
         (js/console.log "Sending request")
-        (-> db
-            #(add-to-outqueue % {:elector_id (-> db :elector :id)
+        (add-to-feedback
+          (add-to-outqueue
+          db
+          {:elector_id (-> db :elector :id)
                                  :issue_id (-> db :issue :id)
                                  :address_id (-> db :address :id)
                                  :method_id "Phone"
                                  :method_detail (-> db :method_detail)
                                  :action :add-request})
-            #(add-to-feedback % :send-request)))
+          :send-request))
       (assoc db :error "Please supply a telephone number to call"))))
 
 
@@ -341,24 +342,22 @@
 
 
 (reg-event-db
- :set-address
- (fn [db [_ address-id]]
-   (let [id (coerce-to-number  address-id)
-         address (first (remove nil? (map #(if (= id (:id %)) %) (:addresses db))))]
-     (-> db
-         clear-messages
-         #(if
-            (= (count (:dwellings address)) 1)
-            (assoc %
-              :address address
-              :dwelling (first (:dwellings address))
-              :electors (:electors (first (:dwellings address)))
-              :page :dwelling)
-            (assoc %
-              :address address
-              :dwelling nil
-              :electors nil
-              :page :building))))))
+  :set-address
+  (fn [db [_ address-id]]
+    (let [id (coerce-to-number  address-id)
+          address (first (remove nil? (map #(if (= id (:id %)) %) (:addresses db))))]
+      (clear-messages
+        (if
+          (assoc db (= (count (:dwellings address)) 1)
+            :address address
+            :dwelling (first (:dwellings address))
+            :electors (:electors (first (:dwellings address)))
+            :page :dwelling)
+          (assoc db
+            :address address
+            :dwelling nil
+            :electors nil
+            :page :building))))))
 
 
 (reg-event-db

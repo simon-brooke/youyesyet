@@ -49,9 +49,9 @@
                                (.-latitude (.-coords position)) ", "
                                (.-longitude (.-coords position))))
           (dispatch-sync [:set-latitude (.-latitude (.-coords position))])
-          (dispatch-sync [:set-longitude (.-longitude (.-coords position))])))
+          (dispatch-sync [:set-longitude (.-longitude (.-coords position))])
+          (locality (.-latitude (.-coords position)) (.-longitude (.-coords position))))))
       (js/console.log "Geolocation not available")
-      (locality (.-latitude (.-coords position)) (.-longitude (.-coords position)))
     (catch js/Object any
       (js/console.log "Exception while trying to access location: " + any)
       0)))

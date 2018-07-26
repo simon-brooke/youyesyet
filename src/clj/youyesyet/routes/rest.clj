@@ -1,6 +1,7 @@
 (ns ^{:doc "Manually maintained routes which handle data transfer to/from the canvasser app."
       :author "Simon Brooke"} youyesyet.routes.rest
-  (:require [clojure.core.memoize :as memo]
+  (:require [adl-support.core :refer [massage-params]]
+            [clojure.core.memoize :as memo]
             [clojure.java.io :as io]
             [clojure.tools.logging :as log]
             [clojure.walk :refer [keywordize-keys]]
@@ -96,10 +97,11 @@
 (defn current-visit-id
   "Return the id of the current visit by the current user, creating it if necessary."
   [request]
-  (let [last-visit (last-visit-by-current-user request)]
+  (let [last-visit (last-visit-by-current-user request)
+        params (massage-params request)]
     (if
       (=
-        (:address_id (massage-params request))
+        (:address_id params)
         (:address_id last-visit))
       (:id last-visit)
       (db/create-visit! db/*db* params))))
@@ -128,6 +130,7 @@
   include an `issue`, an `elector_id` and an `address_id` (and also a
   `method_id` and `method_detail`). Ye cannae reasonably create a request
   without having recorded the visit, so let's not muck about."
+  [request]
   (let [params (massage-params request)]
     (db/create-followuprequest!
       db/*db*
