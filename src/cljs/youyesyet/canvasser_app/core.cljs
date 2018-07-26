@@ -192,7 +192,7 @@
 
 (defn init! []
   (rf/dispatch-sync [:initialize-db])
-  (get-current-location)
+  (rf/dispatch-sync [:get-current-location])
   (rf/dispatch [:fetch-locality])
   (rf/dispatch [:fetch-options])
   (rf/dispatch [:fetch-issues])

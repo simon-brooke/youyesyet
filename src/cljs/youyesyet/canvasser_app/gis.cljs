@@ -8,6 +8,7 @@
             [ajax.core :refer [GET]]
             [ajax.json :refer [json-request-format json-response-format]]
             [youyesyet.canvasser-app.state :as db]
+            [youyesyet.locality :refer [locality]]
             ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -37,7 +38,8 @@
 ;; references, so do it here.
 
 (defn get-current-location []
-  "Get the current location from the device."
+  "Get the current location from the device, setting it in the database and
+   returning the locality."
   (try
     (if (.-geolocation js/navigator)
       (.getCurrentPosition
@@ -46,11 +48,13 @@
           (js/console.log (str "Current location is: "
                                (.-latitude (.-coords position)) ", "
                                (.-longitude (.-coords position))))
-          (dispatch [:set-latitude (.-latitude (.-coords position))])
-          (dispatch [:set-longitude (.-longitude (.-coords position))])))
-      (js/console.log "Geolocation not available"))
+          (dispatch-sync [:set-latitude (.-latitude (.-coords position))])
+          (dispatch-sync [:set-longitude (.-longitude (.-coords position))])))
+      (js/console.log "Geolocation not available")
+      (locality (.-latitude (.-coords position)) (.-longitude (.-coords position)))
     (catch js/Object any
-      (js/console.log "Exception while trying to access location: " + any))))
+      (js/console.log "Exception while trying to access location: " + any)
+      0)))
 
 
 (defn pin-image

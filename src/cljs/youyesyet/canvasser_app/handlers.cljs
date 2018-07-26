@@ -155,27 +155,35 @@
  :fetch-locality
  (fn [{db :db} _]
    (let [locality (locality (:latitude db) (:longitude db))
-          uri (str source-host
+         uri (str source-host
                   "rest/get-local-data?locality="
                   locality)]
-     (js/console.log
-      (str
-       "Fetching locality data: " uri))
-     ;; we return a map of (side) effects
-     {:http-xhrio {:method          :get
-                   :uri             uri
-                   :format          (json-request-format)
-                   :response-format (json-response-format {:keywords? true})
-                   :on-success      [:process-locality]
-                   :on-failure      [:bad-locality]}
-      :db  (add-to-feedback db :fetch-locality)})))
+         (js/console.log
+          (str
+           "Fetching locality data: " uri))
+         ;; we return a map of (side) effects
+         {:http-xhrio {:method          :get
+                       :uri             uri
+                       :format          (json-request-format)
+                       :response-format (json-response-format {:keywords? true})
+                       :on-success      [:process-locality]
+                       :on-failure      [:bad-locality]}
+          :db  (assoc
+                 (add-to-feedback db :fetch-locality)
+                 :locality locality)})))
 
 
 (reg-event-db
-  :get-current-location
-  (fn [db _]
-    (js/console.log "Updating current location")
-    (assoc db :froboz (get-current-location))))
+ :get-current-location
+ (fn [db _]
+   (let [locality (get-current-location)]
+     (js/console.log "Updating current location")
+     (if
+       (and (locality > 0) (not (= locality (:locality db))))
+       (do
+         (dispatch :fetch-locality) ;; if the locality has changed, fetch it immediately
+         (assoc db :locality locality))
+       db))))
 
 
 (reg-event-db
@@ -184,7 +192,7 @@
     [db [_ response]]
     (js/console.log (str "Updating locality data: " (count response) " addresses"))
     ;; loop to do it again
-    (dispatch [:dispatch-later [{:ms 5000 :dispatch [:fetch-locality]}
+    (dispatch [:dispatch-later [{:ms 60000 :dispatch [:fetch-locality]}
                                 {:ms 1000 :dispatch [:get-current-location]}]])
     (refresh-map-pins)
     (assoc
@@ -198,11 +206,17 @@
     ;; TODO: signal something has failed? It doesn't matter very much, unless it keeps failing.
     (js/console.log "Failed to fetch locality data")
     ;; loop to do it again
-    (dispatch [:dispatch-later [{:ms 60000 :dispatch [:fetch-locality]}
-                                {:ms 1000 :dispatch [:get-current-location]}]])
+    (dispatch [:dispatch-later [{:ms 60000 :dispatch [:fetch-locality]}]])
     (assoc
       (remove-from-feedback db :fetch-locality)
       :error (cons :fetch-locality (:error db)))))
+
+
+(reg-event-fx
+ :process-outqueue
+ (fn [{db :db} _]
+   (if
+     (empty? (:outqueue db))
 
 
 (reg-event-fx
@@ -231,6 +245,7 @@
 
 
 (reg-event-db
+ ;; TODO: should try again
   :bad-options
   (fn [db _]
     (js/console.log "Failed to fetch options")
@@ -269,6 +284,7 @@
 
 
 (reg-event-db
+ ;; TODO: should try again
   :bad-issues
   (fn [db _]
     (js/console.log "Failed to fetch issues")
@@ -281,53 +297,22 @@
   :send-intention
   (fn [db [_ args]]
     (let [intention (:intention args)
-          elector-id (:elector-id args)
-          old-elector (first
-                        (remove nil?
-                                (map
-                                  #(if (= elector-id (:id %)) %)
-                                  (:electors (:dwelling db)))))
-          new-elector (assoc old-elector :intention intention)
-          old-dwelling (:dwelling db)
-          new-dwelling (assoc
-                         old-dwelling
-                         :electors
-                         (cons
-                           new-elector
-                           (remove
-                             #(= % old-elector)
-                             (:electors old-dwelling))))
-          old-address (:address db)
-          new-address (assoc
-                        old-address
-                        :dwellings
-                        (cons
-                          new-dwelling
-                          (remove
-                            #(= % old-dwelling)
-                            (:dwellings old-address))))]
-      (cond
-        (nil? old-elector)
-        (assoc db :error (cons "No elector found; not setting intention" (:error db))
-          (= intention (:intention old-elector))
-          (do
-            (js/console.log "Elector's intention hasn't changed; not setting intention")
-            db))
-        true
+          elector-id (:elector-id args)]
+      (if
+        (nil? (-> db :elector))
+        (assoc db :error (cons "No elector found; not setting intention" (:error db)))
         (do
           (js/console.log (str "Setting intention of elector " old-elector " to " intention))
-          (merge
-            (clear-messages db)
-            {:addresses
-             (cons
-               new-address
-               (remove #(= % old-address) (:addresses db)))
-             :address new-address
-             :dwelling new-dwelling
-             :elector new-elector
-             :outqueue (cons
-                         (assoc args :action :set-intention)
-                         (:outqueue db))}))))))
+          (->
+           db
+           clear-messages
+           #(add-to-outqueue % (assoc
+                           args
+                           :address_id (-> db :address :id)
+                           :locality (-> db :address :locality)
+                           :elector_id (-> db :elector :id)
+                           :action :set-intention))
+           #(assoc % :elector (assoc (:elector db) :intention intention))))))))
 
 
 (reg-event-db
@@ -337,8 +322,11 @@
       (do
         (js/console.log "Sending request")
         (-> db
-            #(add-to-outqueue % {:elector-id (:id (:elector db))
-                                 :issue (:issue db)
+            #(add-to-outqueue % {:elector_id (-> db :elector :id)
+                                 :issue_id (-> db :issue :id)
+                                 :address_id (-> db :address :id)
+                                 :method_id "Phone"
+                                 :method_detail (-> db :method_detail)
                                  :action :add-request})
             #(add-to-feedback % :send-request)))
       (assoc db :error "Please supply a telephone number to call"))))
@@ -357,18 +345,20 @@
  (fn [db [_ address-id]]
    (let [id (coerce-to-number  address-id)
          address (first (remove nil? (map #(if (= id (:id %)) %) (:addresses db))))]
-     (if
-       (= (count (:dwellings address)) 1)
-       (assoc (clear-messages db)
-         :address address
-         :dwelling (first (:dwellings address))
-         :electors (:electors (first (:dwellings address)))
-         :page :dwelling)
-       (assoc (clear-messages db)
-         :address address
-         :dwelling nil
-         :electors nil
-         :page :building)))))
+     (-> db
+         clear-messages
+         #(if
+            (= (count (:dwellings address)) 1)
+            (assoc %
+              :address address
+              :dwelling (first (:dwellings address))
+              :electors (:electors (first (:dwellings address)))
+              :page :dwelling)
+            (assoc %
+              :address address
+              :dwelling nil
+              :electors nil
+              :page :building))))))
 
 
 (reg-event-db
@@ -445,10 +435,10 @@
 
 
 (reg-event-db
- :set-telephone
- (fn [db [_ telephone]]
-   (js/console.log (str "Setting telephone to " telephone))
-   (assoc (clear-messages db) :telephone telephone)))
+ :set-method-detail
+ (fn [db [_ detail]]
+   (js/console.log (str "Setting method detail to " detail))
+   (assoc (clear-messages db) :method_detail detail)))
 
 
 (reg-event-db

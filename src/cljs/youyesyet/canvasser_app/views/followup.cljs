@@ -69,9 +69,9 @@
            #(let []
               [:option {:key % :value %} %]) (keys issues))]]
         [:p.widget
-         [:label {:for "telephone"} "Telephone number"]
-         [:input {:type "text" :id "telephone" :name "telephone"
-                  :on-change #(dispatch [:set-telephone (.-value (.-target %))])}]]
+         [:label {:for "method_detail"} "Telephone number"]
+         [:input {:type "text" :id "method_detail" :name "method_detail"
+                  :on-change #(dispatch [:set-method-detail (.-value (.-target %))])}]]
         [:p.widget
          [:label {:for "send"} "To request a call"]
          [:button {:id "send" :on-click #(dispatch [:send-request])} "Send this!"]]]
