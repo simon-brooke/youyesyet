@@ -8,6 +8,7 @@
             [markdown.core :refer [md->html]]
             [reagent.core :as r]
             [re-frame.core :as rf]
+            [re-frame.fx]
             [secretary.core :as secretary]
             [youyesyet.canvasser-app.ajax :refer [load-interceptors!]]
             [youyesyet.canvasser-app.gis :refer [get-current-location]]
@@ -196,6 +197,7 @@
   (rf/dispatch [:fetch-locality])
   (rf/dispatch [:fetch-options])
   (rf/dispatch [:fetch-issues])
+  (rf/dispatch [:dispatch-later [{:ms 60000 :dispatch [:process-queue]}]])
   (load-interceptors!)
   (hook-browser-navigation!)
   (mount-components))
