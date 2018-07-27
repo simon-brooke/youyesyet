@@ -203,23 +203,23 @@
        db))))
 
 
-(reg-event-db
-  :process-locality
-  (fn
-    [db [_ response]]
-    (js/console.log (str "Updating locality data: " (count response) " addresses " ))
-    ;; loop to do it again
-    (dispatch [:dispatch-later [{:ms 60000 :dispatch [:fetch-locality]}
-                                {:ms 1000 :dispatch [:get-current-location]}]])
-    (refresh-map-pins)
-    (assoc
-      (remove-from-feedback db :fetch-locality)
-      :addresses (js->clj response))))
+(reg-event-fx
+ :process-locality
+ (fn
+   [{db :db} [_ response]]
+   (js/console.log (str "Updating locality data: " (count response) " addresses " ))
+   (refresh-map-pins)
+   {:dispatch-later [{:ms 60000 :dispatch [:fetch-locality]}
+                     {:ms 1000 :dispatch [:get-current-location]}]
+    :db (assoc
+          (remove-from-feedback db :fetch-locality)
+          :addresses (js->clj response))}))
 
 
-(reg-event-db
+(reg-event-fx
   :bad-locality
-  (fn [db _]
+  (fn
+    [{db :db} [_ response]]
     ;; TODO: signal something has failed? It doesn't matter very much, unless it keeps failing.
     (js/console.log "Failed to fetch locality data")
     ;; loop to do it again
