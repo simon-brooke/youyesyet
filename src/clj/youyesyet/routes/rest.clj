@@ -2,6 +2,7 @@
       :author "Simon Brooke"} youyesyet.routes.rest
   (:require [adl-support.core :refer [massage-params do-or-log-error]]
             [clojure.core.memoize :as memo]
+            [clojure.data.json :as json]
             [clojure.java.io :as io]
             [clojure.string :as s]
             [clojure.tools.logging :as log]
@@ -191,11 +192,7 @@
           (if
             (:result r)
             {:status 201
-             :body (with-out-str
-                     (print
-                       (hash-map
-                         :id (:id (:result r))
-                         )))}
+             :body (json/write-str (:result r))}
             {:status 500
              :body (:error r)}))
         {:status 400

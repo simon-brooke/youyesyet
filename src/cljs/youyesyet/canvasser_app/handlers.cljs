@@ -512,8 +512,8 @@
 
 (reg-event-db
   :tx-failure
-  (fn [db _]
-    (js/console.log (str "Transmission failed, requeueing" (:tx-item db)))
+  (fn [db [_ response]]
+    (js/console.log (str "Transmission failed (" response "), requeueing" (:tx-item db)))
     (assoc
       (add-to-outqueue db (:tx-item db))
       :error "Transmission failed, requeueing")))
