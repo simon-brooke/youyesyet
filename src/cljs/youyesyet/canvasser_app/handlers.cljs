@@ -334,18 +334,18 @@
 (reg-event-db
   :send-request
   (fn [db [_ _]]
-    (if (and (:elector db) (:issue db) (:telephone db))
+    (if (and (:elector db) (:issue db) (:method_detail db))
       (do
         (js/console.log "Sending request")
         (add-to-feedback
           (add-to-outqueue
-          db
-          {:elector_id (-> db :elector :id)
-                                 :issue_id (-> db :issue :id)
-                                 :address_id (-> db :address :id)
-                                 :method_id "Phone"
-                                 :method_detail (-> db :method_detail)
-                                 :action :create-request})
+            db
+            {:address_id (-> db :address :id)
+             :elector_id (-> db :elector :id)
+             :issue_id (name (-> db :issue))
+             :method_id "Phone"
+             :method_detail (-> db :method_detail)
+             :action :create-request})
           :send-request))
       (assoc db :error "Please supply a telephone number to call"))))
 
@@ -457,7 +457,6 @@
 (reg-event-db
  :set-method-detail
  (fn [db [_ detail]]
-   (js/console.log (str "Setting method detail to " detail))
    (assoc (clear-messages db) :method_detail detail)))
 
 
@@ -513,7 +512,15 @@
 (reg-event-db
   :tx-failure
   (fn [db [_ response]]
-    (js/console.log (str "Transmission failed (" response "), requeueing" (:tx-item db)))
-    (assoc
-      (add-to-outqueue db (:tx-item db))
-      :error "Transmission failed, requeueing")))
+    (case
+      (:status response)
+      (400 403 500)
+      (do
+        (js/console.log "Server responded " (:status response) " - " (:response response) "; not requeueing")
+        (assoc db :error (:response response)))
+      ;; default
+      (do
+        (js/console.log (str "Transmission failed (" response "), requeueing" (:tx-item db)))
+        (assoc
+          (add-to-outqueue db (:tx-item db))
+          :error "Transmission failed, requeueing")))))
