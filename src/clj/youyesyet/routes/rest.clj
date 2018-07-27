@@ -1,6 +1,6 @@
 (ns ^{:doc "Manually maintained routes which handle data transfer to/from the canvasser app."
       :author "Simon Brooke"} youyesyet.routes.rest
-  (:require [adl-support.core :refer [massage-params]]
+  (:require [adl-support.core :refer [massage-params do-or-log-error]]
             [clojure.core.memoize :as memo]
             [clojure.java.io :as io]
             [clojure.tools.logging :as log]
@@ -118,14 +118,32 @@
   was to the same address, if so use that as the `visit_id`, if not create
   a new `visit` record."
   [request]
-  (let [params (massage-params request)]
+  (let [params (:params request)]
     (log/debug "Creating intention with params: " params)
-    (if-let [address-id (-> params :address_id)]
-      (db/create-intention!
-        db/*db*
-        (assoc
-          params :visit_id (current-visit-id request))
-        (db/create-intention! db/*db* params)))))
+    (if (-> request :session :user)
+      (if
+        (and
+         (or (:locality params)
+             (and (:elector-id params)
+                  (:address_id params)))
+         (:intention params))
+        (do-or-log-error
+         {:status 201
+          :body (with-out-str
+                  (print
+                   (hash-map
+                    :id
+                    (db/create-intention!
+                     db/*db*
+                     (assoc
+                       params :visit_id (current-visit-id request))
+                     (db/create-intention! db/*db* params)))))}
+         :error-return {:status 500
+                        :body "Failed to create intention record"})
+        {:status 400
+         :body "create-intention requires params: `intention` and either `locality` or both `address_id` and `elector_id`."})
+      {:status 403
+       :body "You must be logged in to do that"})))
 
 
 (defn create-request-and-visit!

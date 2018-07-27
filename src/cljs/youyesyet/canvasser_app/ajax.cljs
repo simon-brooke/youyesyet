@@ -28,7 +28,7 @@
 
 
 (defn local-uri? [{:keys [uri]}]
-  (not (re-find #"^\w+?://" uri)))
+  (not (re-find #"^\w+?://" (str uri))))
 
 (defn default-headers [request]
   (if (local-uri? request)

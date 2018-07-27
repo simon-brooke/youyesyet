@@ -482,7 +482,7 @@
     (if-let [item (first (:outqueue db))]
       ;; if there's something in the queue, transmit it...
       (let [uri (compose-packet item)]
-        (js/console.log (str "Transmitting item" uri))
+        (js/console.log (str "Transmitting item: " uri))
         {:http-xhrio {:method          :get
                       :uri             uri
                       :format          (json-request-format)

@@ -40,3 +40,4 @@ src/clj/youyesyet/routes/auto_json\.clj
 resources/sql/youyesyet\.postgres\.sql
 
 \.rebel_readline_history
+/dumps/
