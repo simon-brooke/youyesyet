@@ -322,12 +322,11 @@
           (assoc
             (add-to-outqueue
               (clear-messages db)
-              (assoc
-                args
-                :address_id (-> db :address :id)
-                :locality (-> db :address :locality)
-                :elector_id (-> db :elector :id)
-                :action :create-intention))
+              {:address_id (-> db :address :id)
+               :locality (-> db :address :locality)
+               :elector_id (-> db :elector :id)
+               :option_id (:intention args)
+               :action :create-intention})
             :elector (assoc (:elector db) :intention intention)
             :page :elector))))))
 

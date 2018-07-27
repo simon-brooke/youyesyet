@@ -9,6 +9,7 @@
                  [clj-oauth "1.5.5"]
                  [cljsjs/react-leaflet "1.6.5-0"]
                  [cljs-ajax "0.7.4"]
+                 [clojure.java-time "0.3.2"]
                  [com.cemerick/url "0.1.1"]
                  [compojure "1.6.1"]
                  [conman "0.8.2"]

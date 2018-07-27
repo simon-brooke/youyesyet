@@ -326,7 +326,7 @@ version="0.1.1">
       <prompt prompt="Canvasser" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="timestamp" name="date"
-    column="date" default="now()" distinct="user">
+    column="date" default="CURRENT_TIMESTAMP" distinct="user">
       <prompt prompt="Date" locale="en_GB.UTF-8"/>
     </property>
     <permission group="canvassers" permission="noedit">
@@ -704,7 +704,7 @@ version="0.1.1">
     column="method_id" entity="followupmethods" farkey="id">
       <prompt prompt="method_id" locale="en_GB.UTF-8"/>
     </property>
-    <property required="true" type="string" name="method-detail">
+    <property required="true" type="string" name="method-detail" size="128">
       <documentation>
         Phone number or email address for followup.
       </documentation>
@@ -983,7 +983,7 @@ version="0.1.1">
     column="actor" entity="canvassers" farkey="id">
       <prompt prompt="actor" locale="en_GB.UTF-8"/>
     </property>
-    <property required="true" default="now()" type="timestamp"
+    <property default="CURRENT_TIMESTAMP" type="timestamp"
     name="date" column="date" distinct="user">
       <prompt prompt="date" locale="en_GB.UTF-8"/>
     </property>

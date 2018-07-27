@@ -3,9 +3,12 @@
   (:require [adl-support.core :refer [massage-params do-or-log-error]]
             [clojure.core.memoize :as memo]
             [clojure.java.io :as io]
+            [clojure.string :as s]
             [clojure.tools.logging :as log]
             [clojure.walk :refer [keywordize-keys]]
             [compojure.core :refer [defroutes GET POST]]
+            [java-time :as jt]
+            [mount.core :as mount]
             [noir.response :as nresponse]
             [noir.util.route :as route]
             [ring.util.http-response :as response]
@@ -104,44 +107,99 @@
         (:address_id params)
         (:address_id last-visit))
       (:id last-visit)
-      (db/create-visit! db/*db* params))))
+      (db/create-visit!
+        db/*db*
+        (assoc
+          params
+          :canvasser_id (-> request :session :user :id)
+          :date (jt/to-sql-timestamp (jt/local-date-time)))))))
 
 
-;; http://localhost:3000/rest/create-intention?address_id=18&elector-id=62&elector_id=62&intention=Yes&locality=5482391
+;; (current-visit-id {:session {:user {:email "simon@journeyman.cc",
+;;                                               :phone "07768 130255",
+;;                                               :roles #{"analysts" "canvassers" "admin" "teamorganisers" "issueexperts" "issueeditors"},
+;;                                               :username "simon_brooke",
+;;                                               :fullname "Simon Brooke",
+;;                                               :bio "Sinister pagan",
+;;                                               :elector_id 2, :id 4, :address_id 2,
+;;                                               :authority_id "GitHub",
+;;                                               :authorised true}}
+;;                              :params {:address_id 79, :elector_id 238, :locality 5494393, :option_id "Yes"}})
+;; (current-visit-id {:session {:user {:email "simon@journeyman.cc",
+;;                                               :phone "07768 130255",
+;;                                               :roles #{"analysts" "canvassers" "admin" "teamorganisers" "issueexperts" "issueeditors"},
+;;                                               :username "simon_brooke",
+;;                                               :fullname "Simon Brooke",
+;;                                               :bio "Sinister pagan",
+;;                                               :elector_id 2, :id 4, :address_id 2,
+;;                                               :authority_id "GitHub",
+;;                                               :authorised true}}
+;;                              :params {:address_id 80, :elector_id 239, :locality 5494393, :option_id "Yes"}})
+
+
+(defmacro do-or-return-reason
+  "Clojure stacktraces are unreadable. We have to do better; evaluate
+  this `form` in a try-catch block; return a map. If the evaluation
+  succeeds, the map will have a key `:result` whose value is the result;
+  otherwise it will have a key `:error` which will be bound to the most
+  sensible error message we can construct."
+  ;; TODO: candidate for moving to adl-support.core
+  [form]
+  `(try
+     {:result ~form}
+     (catch Exception any#
+       (clojure.tools.logging/error
+         (str (.getName (.getClass any#))
+              ": "
+              (.getMessage any#)
+              (with-out-str
+                (-> any# .printStackTrace))))
+       {:error
+        s/join "\n\tcaused by: "
+        (reverse
+          (loop [ex# any# result# ()]
+            (if-not (nil? ex#)
+              (recur
+                (.getCause ex#)
+                (str (.getName (.getClass ex#)) ": " (.getMessage ex#)))
+              result#)))})))
+
 
 (defn create-intention-and-visit!
   "Doing visit creation logic server side; request params are expected to
-  include an `option`, an `elector_id` and an `address_id`, or an `option` and
+  include an `option_id`, an `elector_id` and an `address_id`, or an `option` and
   a `location`. If no `address_id` is provided, we simply create an
-  `intention` record from the `option` and the `locality`; if a `address_id`
+  `intention` record from the `option_id` and the `locality`; if an `address_id`
   is provided, we need to check whether the last `visit` by the current `user`
   was to the same address, if so use that as the `visit_id`, if not create
   a new `visit` record."
   [request]
-  (let [params (:params request)]
+  (let [params (massage-params request)]
     (log/debug "Creating intention with params: " params)
     (if (-> request :session :user)
       (if
         (and
-         (or (:locality params)
-             (and (:elector-id params)
-                  (:address_id params)))
-         (:intention params))
-        (do-or-log-error
-         {:status 201
-          :body (with-out-str
-                  (print
-                   (hash-map
-                    :id
-                    (db/create-intention!
-                     db/*db*
-                     (assoc
-                       params :visit_id (current-visit-id request))
-                     (db/create-intention! db/*db* params)))))}
-         :error-return {:status 500
-                        :body "Failed to create intention record"})
+          (or (:locality params)
+              (and (:elector_id params)
+                   (:address_id params)))
+          (:option_id params))
+        (let [r (do-or-return-reason
+                  (db/create-intention!
+                    db/*db*
+                    (assoc
+                      params :visit_id (current-visit-id request))))]
+          (if
+            (:result r)
+            {:status 201
+             :body (with-out-str
+                     (print
+                       (hash-map
+                         :id (:id (:result r))
+                         )))}
+            {:status 500
+             :body (:error r)}))
         {:status 400
-         :body "create-intention requires params: `intention` and either `locality` or both `address_id` and `elector_id`."})
+         :body "create-intention requires params: `option_id` and either `locality` or both `address_id` and `elector_id`."})
       {:status 403
        :body "You must be logged in to do that"})))
 
