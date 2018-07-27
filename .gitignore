@@ -41,3 +41,5 @@ resources/sql/youyesyet\.postgres\.sql
 
 \.rebel_readline_history
 /dumps/
+
+youyesyet\.canonical\.adl\.xml

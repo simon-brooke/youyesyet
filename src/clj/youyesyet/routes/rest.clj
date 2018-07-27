@@ -116,56 +116,6 @@
           :date (jt/to-sql-timestamp (jt/local-date-time)))))))
 
 
-;; (current-visit-id {:session {:user {:email "simon@journeyman.cc",
-;;                                               :phone "07768 130255",
-;;                                               :roles #{"analysts" "canvassers" "admin" "teamorganisers" "issueexperts" "issueeditors"},
-;;                                               :username "simon_brooke",
-;;                                               :fullname "Simon Brooke",
-;;                                               :bio "Sinister pagan",
-;;                                               :elector_id 2, :id 4, :address_id 2,
-;;                                               :authority_id "GitHub",
-;;                                               :authorised true}}
-;;                              :params {:address_id 79, :elector_id 238, :locality 5494393, :option_id "Yes"}})
-;; (current-visit-id {:session {:user {:email "simon@journeyman.cc",
-;;                                               :phone "07768 130255",
-;;                                               :roles #{"analysts" "canvassers" "admin" "teamorganisers" "issueexperts" "issueeditors"},
-;;                                               :username "simon_brooke",
-;;                                               :fullname "Simon Brooke",
-;;                                               :bio "Sinister pagan",
-;;                                               :elector_id 2, :id 4, :address_id 2,
-;;                                               :authority_id "GitHub",
-;;                                               :authorised true}}
-;;                              :params {:address_id 80, :elector_id 239, :locality 5494393, :option_id "Yes"}})
-
-
-(defmacro do-or-return-reason
-  "Clojure stacktraces are unreadable. We have to do better; evaluate
-  this `form` in a try-catch block; return a map. If the evaluation
-  succeeds, the map will have a key `:result` whose value is the result;
-  otherwise it will have a key `:error` which will be bound to the most
-  sensible error message we can construct."
-  ;; TODO: candidate for moving to adl-support.core
-  [form]
-  `(try
-     {:result ~form}
-     (catch Exception any#
-       (clojure.tools.logging/error
-         (str (.getName (.getClass any#))
-              ": "
-              (.getMessage any#)
-              (with-out-str
-                (-> any# .printStackTrace))))
-       {:error
-        s/join "\n\tcaused by: "
-        (reverse
-          (loop [ex# any# result# ()]
-            (if-not (nil? ex#)
-              (recur
-                (.getCause ex#)
-                (str (.getName (.getClass ex#)) ": " (.getMessage ex#)))
-              result#)))})))
-
-
 (defn create-intention-and-visit!
   "Doing visit creation logic server side; request params are expected to
   include an `option_id`, an `elector_id` and an `address_id`, or an `option` and
@@ -177,28 +127,23 @@
   [request]
   (let [params (massage-params request)]
     (log/debug "Creating intention with params: " params)
-    (if (-> request :session :user)
+    (valid-user-or-forbid
       (if
         (and
           (or (:locality params)
               (and (:elector_id params)
                    (:address_id params)))
           (:option_id params))
-        (let [r (do-or-return-reason
-                  (db/create-intention!
-                    db/*db*
-                    (assoc
-                      params :visit_id (current-visit-id request))))]
-          (if
-            (:result r)
-            {:status 201
-             :body (json/write-str (:result r))}
-            {:status 500
-             :body (:error r)}))
+        (do-or-server-fail
+          (db/create-intention!
+            db/*db*
+            (assoc
+              params :visit_id (current-visit-id request)))
+          201)
         {:status 400
-         :body "create-intention requires params: `option_id` and either `locality` or both `address_id` and `elector_id`."})
-      {:status 403
-       :body "You must be logged in to do that"})))
+         :body (json/write-str "create-intention requires params: `option_id`
+                               and either `locality` or both `address_id` and `elector_id`.")})
+      request)))
 
 
 (defn create-request-and-visit!
@@ -207,19 +152,20 @@
   `method_id` and `method_detail`). Ye cannae reasonably create a request
   without having recorded the visit, so let's not muck about."
   [request]
-  (let [params (massage-params request)]
-    (db/create-followuprequest!
-      db/*db*
-      (assoc
+  (let [params (assoc
+                 (massage-params request)
+                 :visit_id (current-visit-id request))]
+    (valid-user-or-forbid
+      (with-params-or-error
+        (do-or-server-fail
+          (db/create-followuprequest! db/*db* params)
+          201)
         params
-        :visit-id (current-visit-id request)))))
+        #{:elector_id :visit_id :issue_id :method_id :method_detail})
+      request)))
 
 
 (defroutes rest-routes
   (GET "/rest/get-local-data" request (route/restricted (get-local-data request)))
   (GET "/rest/create-intention" request (route/restricted (create-intention-and-visit! request)))
-  (GET "/rest/create-request" request (route/restricted (create-request-and-visit! request)))
-  ;;   (GET "/rest/get-issues" request (route/restricted (get-issues request)))
-  ;;   (GET "/rest/set-intention" request (route/restricted (set-intention request)))
-  ;;   (GET "/rest/request-followup" request (route/restricted (request-followup request))))
-  )
+  (GET "/rest/create-request" request (route/restricted (create-request-and-visit! request))))
