@@ -72,7 +72,7 @@ version="0.1.1">
     <key>
       <property required="true" type="integer" name="id"
       column="id" immutable="true" distinct="system">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+        <generator action="native"/>
       </property>
     </key>
     <property size="64" required="true" type="string" name="name"
@@ -107,9 +107,6 @@ version="0.1.1">
       </field>
     </list>
     <form properties="listed" name="Elector">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="name">
         <prompt prompt="Name" locale="en_GB.UTF-8"/>
       </field>
@@ -174,7 +171,7 @@ version="0.1.1">
     <key>
       <property required="true" type="integer" name="id"
       column="id" immutable="true" distinct="system">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+        <generator action="native"/>
       </property>
     </key>
     <property required="true" type="entity" name="address_id"
@@ -221,7 +218,7 @@ version="0.1.1">
     <key>
       <property required="true" type="integer" name="id"
       column="id" immutable="true" distinct="system">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+        <generator action="native"/>
       </property>
     </key>
     <property required="true" type="string" name="address"
@@ -257,6 +254,7 @@ version="0.1.1">
       don't think it will ever appear in the user interface; it's
       an implementation detail, not of interest to
       users.</documentation>
+      <generator action="native"/>
     </property>
     <list properties="listed" name="Addresses">
       <field property="address">
@@ -270,9 +268,6 @@ version="0.1.1">
       </field>
     </list>
     <form properties="listed" name="Address">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="address">
         <prompt prompt="Address" locale="en_GB.UTF-8"/>
       </field>
@@ -312,7 +307,7 @@ version="0.1.1">
     <key>
       <property required="true" type="integer" name="id"
       column="id" distinct="system">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+        <generator action="native"/>
       </property>
     </key>
     <!-- TODO: should visit be keyed against dwelling rather than address? -->
@@ -350,9 +345,6 @@ version="0.1.1">
       </field>
     </list>
     <form properties="listed" name="Visit">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="address_id">
         <prompt prompt="Address" locale="en_GB.UTF-8"/>
       </field>
@@ -381,7 +373,6 @@ version="0.1.1">
     <key>
       <property required="true" type="string" name="id" column="id"
       size="32" distinct="all" immutable="true">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
       </property>
     </key>
     <property name="request-token-uri" type="string" size="256"
@@ -556,7 +547,7 @@ version="0.1.1">
     <key>
       <property type="integer" name="id" column="id"
       distinct="system" immutable="true">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+        <generator action="native"/>
       </property>
     </key>
     <property required="true" type="string" name="username"
@@ -633,9 +624,6 @@ version="0.1.1">
       </field>
     </list>
     <form properties="listed" name="Canvasser">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="username">
         <prompt prompt="username" locale="en_GB.UTF-8"/>
       </field>
@@ -684,7 +672,7 @@ version="0.1.1">
     <key>
       <property required="true" type="integer" name="id"
       column="id" distinct="system" immutable="true">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+        <generator action="native"/>
       </property>
     </key>
     <property required="true" type="entity" name="elector_id"
@@ -724,9 +712,6 @@ version="0.1.1">
       </field>
     </list>
     <form properties="listed" name="Followuprequest">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="elector_id">
         <prompt prompt="elector_id" locale="en_GB.UTF-8"/>
       </field>
@@ -793,7 +778,7 @@ version="0.1.1">
     <key>
       <property type="integer" name="id" column="id"
       distinct="system" immutable="true">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+        <generator action="native"/>
       </property>
     </key>
     <property required="true" type="string" name="name"
@@ -835,9 +820,6 @@ version="0.1.1">
       </field>
     </list>
     <form properties="listed" name="Team">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="name">
         <prompt prompt="name" locale="en_GB.UTF-8"/>
       </field>
@@ -938,7 +920,7 @@ version="0.1.1">
     <key>
       <property required="true" type="integer" name="id"
       column="id" immutable="true" distinct="system">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+        <generator action="native"/>
       </property>
     </key>
     <property required="true" type="string" name="name"
@@ -972,7 +954,7 @@ version="0.1.1">
     <key>
       <property required="true" type="integer" name="id"
       column="id" distinct="system" immutable="true">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
+        <generator action="native"/>
       </property>
     </key>
     <property required="true" type="entity" name="request_id"
@@ -1010,9 +992,6 @@ version="0.1.1">
       </field>
     </list>
     <form properties="listed" name="Followupaction">
-      <field property="id">
-        <prompt prompt="id" locale="en_GB.UTF-8"/>
-      </field>
       <field property="request_id">
         <prompt prompt="request_id" locale="en_GB.UTF-8"/>
       </field>

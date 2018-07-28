@@ -264,11 +264,11 @@
 (reg-event-db
  ;; TODO: should try again
   :bad-options
-  (fn [db _]
+  (fn [db [_ response]]
     (js/console.log "Failed to fetch options")
     (assoc
       (remove-from-feedback db :fetch-options)
-      :error (cons :fetch-options (:error db)))))
+      :error (:response response))))
 
 
 (reg-event-fx
@@ -303,11 +303,11 @@
 (reg-event-db
  ;; TODO: should try again
   :bad-issues
-  (fn [db _]
+  (fn [db [_ response]]
     (js/console.log "Failed to fetch issues")
     (assoc
       (remove-from-feedback db :fetch-issues)
-      :error (cons :fetch-issues (:error db)))))
+      :error (:response response))))
 
 
 (reg-event-db

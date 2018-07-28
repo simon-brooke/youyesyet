@@ -82,14 +82,11 @@
   `longitude`, or `locality`. Returns a block of data for that locality"
   [request]
   (let
-    [{latitude :latitude longitude :longitude locality :locality}
-     (keywordize-keys (:params request))
-     here (if locality
-            (coerce-to-number locality)
-            (l/locality
-                       (coerce-to-number latitude)
-                       (coerce-to-number longitude)))]
-    (in-get-local-data here)))
+    [m (massage-params request)
+     here (or (:locality m) (l/locality (:latitude m) (:longitude m)))]
+    (valid-user-or-forbid
+     (in-get-local-data here)
+     request)))
 
 
 (defn last-visit-by-current-user
