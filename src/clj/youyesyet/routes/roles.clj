@@ -68,8 +68,8 @@
   (GET "/roles/admin" request (route/restricted (admins-page request)))
   (GET "/roles/analysts" request (route/restricted (analysts-page request)))
   (GET "/roles/canvassers" request (route/restricted (canvassers-page request)))
-  (GET "/roles/issueeditors" request (route/restricted (auto/list-issues-Issues request)))
+  (GET "/roles/issueeditors" request (route/restricted (auto/get-list-issues-Issues request)))
   (GET "/roles/issueexperts" request (route/restricted (expert/list-page request)))
-  (GET "/roles/team_organisers" request (route/restricted (auto/list-teams-Teams request)))
+  (GET "/roles/team_organisers" request (route/restricted (auto/get-list-teams-Teams request)))
   (GET "/roles" request (route/restricted (roles-page request))))
 
