@@ -67,3 +67,13 @@ WHERE canvasser_id = :id
 ORDER BY date desc
 LIMIT 1
 
+-- I don't know why this next one isn't autogenerating, but it isn't and it's critical.
+
+-- :name list-roles-by-canvasser :? :*
+-- :doc links all existing canvasser records related to a given role
+SELECT roles.*
+FROM roles, ln_canvassers_roles
+WHERE roles.id = ln_canvassers_roles.role_id
+	AND ln_canvassers_roles.canvasser_id = :id
+ORDER BY canvassers.name,
+	canvassers.id

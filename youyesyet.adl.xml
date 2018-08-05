@@ -242,7 +242,7 @@ version="0.1.1">
     <property type="real" name="longitude" column="longitude">
       <prompt prompt="Longitude" locale="en_GB.UTF-8"/>
     </property>
-    <!-- property name="dwellings" type="link" entity="dwelling"/ -->
+    <property type="list" name="dwellings" entity="dwellings"/>
     <property type="integer" name="locality" column="locality">
       <documentation>Locality indexing; see issue #44. Note that
       this property should be generated automatically from the
@@ -286,8 +286,12 @@ version="0.1.1">
       <field property="longitude">
         <prompt prompt="Longitude" locale="en_GB.UTF-8"/>
       </field>
-      <auxlist property="dwellings">
-        <field name="sub-address"/>
+      <auxlist property="dwellings"
+               onselect="form-dwellings-Dwelling"
+               canadd="true">
+        <field property="sub-address">
+          <prompt prompt="Sub-address" locale="en_GB.UTF-8"/>
+        </field>
       </auxlist>
     </form>
     <permission group="canvassers" permission="read"/>
@@ -591,13 +595,15 @@ version="0.1.1">
     <property type="boolean" name="authorised" column="authorised">
       <prompt prompt="authorised" locale="en_GB.UTF-8"/>
     </property>
-    <property type="link" name="roles" entity="roles"
-    farkey="role_id">
+    <property type="link" name="roles" entity="roles">
       <prompt prompt="Roles" locale="en_GB.UTF-8"/>
     </property>
     <property type="link" name="expertise" entity="issues">
       <documentation>Only relevant to issue experts.</documentation>
       <prompt prompt="Expertise" locale="en_GB.UTF-8"/>
+    </property>
+    <property type="link" name="teams" entity="teams" farkey="id">
+      <documentation>Teams this canvasser is a member of.</documentation>
     </property>
     <permission group="canvassers" permission="edit">
       <documentation>But only their own record</documentation>
@@ -697,6 +703,7 @@ version="0.1.1">
         Phone number or email address for followup.
       </documentation>
     </property>
+    <property type="list" name="actions" entity="followupactions" farkey="request_id"/>
     <list properties="listed" name="Followuprequests">
       <field property="elector_id">
         <prompt prompt="elector" locale="en_GB.UTF-8"/>
@@ -792,15 +799,16 @@ version="0.1.1">
     <property type="real" name="latitude" column="latitude">
       <prompt prompt="latitude" locale="en_GB.UTF-8"/>
     </property>
+    <property type="real" name="longitude" column="longitude">
+      <prompt prompt="longitude" locale="en_GB.UTF-8"/>
+    </property>
     <property type="link" entity="canvassers" name="members">
       <prompt prompt="Members" locale="en_GB.UTF-8"/>
     </property>
     <property type="link" entity="canvassers" name="organisers">
       <prompt prompt="Organisers" locale="en_GB.UTF-8"/>
     </property>
-    <property type="real" name="longitude" column="longitude">
-      <prompt prompt="longitude" locale="en_GB.UTF-8"/>
-    </property>
+    <property type="link" entity="events" name="events"/>
     <permission group="canvassers" permission="read"/>
     <permission group="teamorganisers" permission="edit">
       <documentation>But only their own group(s)</documentation>
@@ -838,7 +846,9 @@ version="0.1.1">
       <field property="longitude">
         <prompt prompt="longitude" locale="en_GB.UTF-8"/>
       </field>
-      <auxlist property="organisers">
+      <auxlist property="organisers"
+               canadd="true"
+               onselect="form-canvassers-Canvasser">
         <prompt prompt="Organisers" locale="en_GB.UTF-8"/>
         <field property="id">
         </field>
@@ -866,7 +876,18 @@ version="0.1.1">
           <prompt prompt="phone" locale="en_GB.UTF-8"/>
         </field>
       </auxlist>
-      <auxlist property="events">
+      <auxlist property="events"
+               onselect="form-events-Event"
+               canadd="true">
+        <field property="name">
+          <prompt prompt="Name" locale="en_GB.UTF-8"/>
+        </field>
+        <field property="date">
+          <prompt prompt="Date" locale="en_GB.UTF-8"/>
+        </field>
+        <field property="time">
+          <prompt prompt="Time" locale="en_GB.UTF-8"/>
+        </field>
       </auxlist>
     </form>
     <permission permission="none" group="public"/>
@@ -959,23 +980,23 @@ version="0.1.1">
     </key>
     <property required="true" type="entity" name="request_id"
     column="request_id" entity="followuprequests" farkey="id">
-      <prompt prompt="request_id" locale="en_GB.UTF-8"/>
+      <prompt prompt="Request" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="entity" name="actor"
     column="actor" entity="canvassers" farkey="id">
-      <prompt prompt="actor" locale="en_GB.UTF-8"/>
+      <prompt prompt="Actor" locale="en_GB.UTF-8"/>
     </property>
     <property default="CURRENT_TIMESTAMP" type="timestamp"
     name="date" column="date" distinct="user">
-      <prompt prompt="date" locale="en_GB.UTF-8"/>
+      <prompt prompt="Date" locale="en_GB.UTF-8"/>
     </property>
     <property type="text" name="notes" column="notes"
     distinct="user">
-      <prompt prompt="notes" locale="en_GB.UTF-8"/>
+      <prompt prompt="Notes" locale="en_GB.UTF-8"/>
     </property>
     <property type="boolean" name="closed" column="closed"
     default="false">
-      <prompt prompt="closed" locale="en_GB.UTF-8"/>
+      <prompt prompt="Closed?" locale="en_GB.UTF-8"/>
     </property>
     <list properties="listed" name="Followupactions">
       <field property="request_id">
@@ -988,7 +1009,7 @@ version="0.1.1">
         <prompt prompt="date" locale="en_GB.UTF-8"/>
       </field>
       <field property="closed">
-        <prompt prompt="closed" locale="en_GB.UTF-8"/>
+        <prompt prompt="Closed?" locale="en_GB.UTF-8"/>
       </field>
     </list>
     <form properties="listed" name="Followupaction">
@@ -1005,7 +1026,7 @@ version="0.1.1">
         <prompt prompt="notes" locale="en_GB.UTF-8"/>
       </field>
       <field property="closed">
-        <prompt prompt="closed" locale="en_GB.UTF-8"/>
+        <prompt prompt="Closed?" locale="en_GB.UTF-8"/>
       </field>
     </form>
     <permission group="issueexperts" permission="noedit"/>
