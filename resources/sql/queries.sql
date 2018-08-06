@@ -75,5 +75,5 @@ SELECT roles.*
 FROM roles, ln_canvassers_roles
 WHERE roles.id = ln_canvassers_roles.role_id
 	AND ln_canvassers_roles.canvasser_id = :id
-ORDER BY canvassers.name,
-	canvassers.id
+ORDER BY roles.name,
+	roles.id

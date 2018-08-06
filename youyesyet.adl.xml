@@ -782,6 +782,7 @@ version="0.1.1">
   </entity>
 
   <entity table="teams" name="teams" magnitude="4" volatility="4">
+    <documentation>Organised teams of canvassers who canvass together.</documentation>
     <key>
       <property type="integer" name="id" column="id"
       distinct="system" immutable="true">
