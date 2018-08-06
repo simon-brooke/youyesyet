@@ -37,12 +37,12 @@
         </menu>
       </div>
       <h1>{{title}}</h1>
-      {% if message|not-empty %}
+      {% if message %}
       <div class="message">
         {{ message }}
       </div>
       {% endif %}
-      {% if error|not-empty %}
+      {% if error %}
       <div class="error">
         {{ error }}
       </div>
