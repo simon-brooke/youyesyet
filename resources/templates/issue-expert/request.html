@@ -61,8 +61,8 @@
       </label>
       {% ifmemberof issueexperts admin %}
       <span id='method_id' name='method_id' class='pseudo-widget disabled'>
-        {% ifequal record.method_id "Phone" %}{{elector.phone}}{% endifequal %}
-        {% ifequal record.method_id "eMail" %}<a href="mailto:{{elector.email}}">{{elector.email}}</a>{% endifequal %}
+        {% ifequal record.method_id "Phone" %}{{record.method_detail|telephone}}{% endifequal %}
+        {% ifequal record.method_id "eMail" %}{{record.method_detail|email}}</a>{% endifequal %}
       </span>
       {% else %}
       <span id='method_id' name='method_id' class='pseudo-widget not-authorised'>
