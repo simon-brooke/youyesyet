@@ -11,7 +11,6 @@
             [youyesyet.db.core :as db-core]
             [youyesyet.routes.issue-experts :as expert]
             [youyesyet.layout :as layout]
-            [youyesyet.oauth :as oauth]
             [youyesyet.routes.auto :as auto]))
 
 

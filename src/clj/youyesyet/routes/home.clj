@@ -11,7 +11,7 @@
             [youyesyet.config :refer [env]]
             [youyesyet.db.core :as db-core]
             [youyesyet.layout :as layout]
-            [youyesyet.oauth :as oauth]
+            [youyesyet.authentication :as auth]
             [compojure.core :refer [defroutes GET POST]]
             ))
 
@@ -84,13 +84,13 @@
                      (str (:servlet-context request) "/roles"))]
     (cond
      (:authority params)
-     (let [auth (oauth/authority! (:authority params))]
-       (if auth
+     (let [authority (auth/authority! (:authority params))]
+       (if authority
          (do
            (log/info "Attempting to authorise with authority " (:authority params))
-           (oauth/fetch-request-token
-            (assoc request :session (assoc session :authority auth))
-            auth))
+           (auth/fetch-request-token
+            (assoc request :session (assoc session :authority authority))
+            authority))
          (throw (Exception. (str "No such authority: " (:authority params))))))
      ;; this is obviously, ABSURDLY, insecure. I don't want to put just-about-good-enough,
      ;; it-will-do-for-now security in place; instead, I want this to be test code only

@@ -12,7 +12,6 @@
              [youyesyet.config :refer [env]]
              [youyesyet.db.core :as db]
              [youyesyet.layout :as layout]
-             [youyesyet.oauth :as oauth]
              [compojure.core :refer [defroutes GET POST]]
              ))
 

@@ -1,5 +1,5 @@
 (ns ^{:doc "Handle oauth with multiple authenticating authorities."
-      :author "Simon Brooke"} youyesyet.oauth
+      :author "Simon Brooke"} youyesyet.authentication
   (:require [youyesyet.config :refer [env]]
             [youyesyet.db.core :as db]
             [oauth.client :as oauth]
@@ -8,7 +8,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.routes.home: routes and pages for unauthenticated users.
+;;;; youyesyet.authentication: Handle oauth with multiple authenticating
+;;;; authorities.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
@@ -48,6 +49,7 @@
             (:authorize_uri authority)
             :hmac-sha1)))
       (db/list-authorities db/*db* {}))))
+
 
 (def authority!
   ;; Closure to allow authorities map to be created once when the function is first

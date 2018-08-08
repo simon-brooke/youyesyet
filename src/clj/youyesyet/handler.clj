@@ -91,14 +91,18 @@
     (-> #'rest-routes
         (wrap-routes middleware/wrap-formats))
     (-> #'service-routes
-        (wrap-routes middleware/wrap-formats)) ;; TODO: and authentication, but let's not sweat the small stuff.
-    'oauth-routes
+        (wrap-routes middleware/wrap-formats))
+    (-> #'oauth-routes
+        (wrap-routes middleware/wrap-csrf)
+        (wrap-routes middleware/wrap-formats))
     (route/resources "/")
     (route/not-found
+      (fn [request]
+        (log/error "NOT-FOUND: " request)
       (:body
         (error-page {:status 404
                      :title "Page not found"
-                     :message "The page you requested has not yet been implemented"})))))
+                     :message (str "The page you requested has not yet been implemented: " (:uri request))}))))))
 
 
 (def app (middleware/wrap-base #'app-routes))

@@ -112,6 +112,7 @@
   returns a response map with the error page as the body
   and the status specified by the status key"
   [error-details]
+  (log/error "ERROR: " error-details)
   {:status  (:status error-details)
    :headers {"Content-Type" "text/html; charset=utf-8"}
-   :body    (render "error.html" {} error-details)})
+   :body    (render "error.html" error-details)})

@@ -12,13 +12,12 @@
             [youyesyet.config :refer [env]]
             [youyesyet.db.core :as db]
             [youyesyet.layout :as layout]
-            [youyesyet.oauth :as oauth]
             [compojure.core :refer [defroutes GET POST]]
             ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
-;;;; youyesyet.routes.home: routes and pages for issue experts.
+;;;; youyesyet.routes.issue-experts: routes and pages for issue experts.
 ;;;;
 ;;;; This program is free software; you can redistribute it and/or
 ;;;; modify it under the terms of the GNU General Public License
