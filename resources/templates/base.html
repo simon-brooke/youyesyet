@@ -37,14 +37,16 @@
         </menu>
       </div>
       <h1>{{title}}</h1>
-      {% if message|not-empty %}
+      {% if message %}
       <div class="message">
         {{ message }}
       </div>
       {% endif %}
+      {% if error %}
       <div class="error">
         {{ error }}
       </div>
+      {% if error %}
     </header>
     {% endblock %}
     <div id="main-container" class="container">
