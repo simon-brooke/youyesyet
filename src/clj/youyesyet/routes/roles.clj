@@ -22,7 +22,7 @@
      user (-> request :session :user)
      roles (if
              user
-             (db-core/list-roles-by-canvasser db-core/*db* {:id (:id user)}))]
+             (db-core/list-roles-by-canvasser db-core/*db* user))]
     (log/info (str "Roles routing page; user is " user "; roles are " roles))
     (cond
       roles (layout/render "roles.html"
