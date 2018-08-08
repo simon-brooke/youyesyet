@@ -2,7 +2,7 @@
 {% block big-links %}
      {% for authority in authorities %}
       <div class="big-link-container">
-        <a href="auth?authority={{authority.id}}" class="big-link" id="{{authority.id}}-link">
+        <a href="oauth/oauth-init?authority={{authority.id}}" class="big-link" id="{{authority.id}}-link">
           <img src="img/authorities/{{authority.id}}.png" width="32" height="32" alt="{{authority.id}}"/>
           {{authority.id}}
         </a>

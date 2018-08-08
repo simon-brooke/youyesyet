@@ -6,17 +6,25 @@
             [clojure.java.io :as io]
             [youyesyet.oauth :as oauth]))
 
+
 (defn oauth-init
   "Initiates the OAuth with the authority implied by this `request`"
   [request]
-;;   (-> (oauth/fetch-request-token request)
-;;       :oauth_token
-;;       oauth/auth-redirect-uri
-;;       found))
-  (found
-    (oauth/auth-redirect-uri
-      (:oauth_token (oauth/fetch-request-token request))
-      (:authority (:session request)))))
+  (let [authority (or
+                   (:authority (:session request))
+                   (oauth/authority! (:authority (massage-params :request))))]
+  (if
+    authority
+    (assoc-in
+     (found
+      (oauth/auth-redirect-uri
+       (:request-token
+        (oauth/fetch-request-token request authority))
+       authority))
+     [:session :authority]
+     authority))))
+     :session
+
 
 (defn oauth-callback
   "Handles the callback from the authority."
