@@ -388,7 +388,14 @@ version="0.1.1">
     <property name="consumer-key" type="string" size="32"
     required="true" default="youyesyet"/>
     <property name="consumer-secret" type="string" size="256"
-    required="true"/>
+              required="true">
+      <permission group="canvassers" permission="none"/>
+      <permission group="teamorganisers" permission="none"/>
+      <permission group="issueexperts" permission="none"/>
+      <permission group="analysts" permission="none"/>
+      <permission group="issueeditors" permission="none"/>
+      <permission group="admin" permission="all"/>
+    </property>
     <list name="Authorities" properties="listed">
       <field property="id">
         <prompt prompt="id" locale="en_GB.UTF-8"/>
