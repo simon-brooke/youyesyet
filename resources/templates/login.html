@@ -13,6 +13,7 @@
 {% block content %}
       <form action="login" method="post">
         {% csrf-field %}
+        <input type="hidden" name="redirect-to" value="/roles"/>
         <h2>
           Or use a test username and password
         </h2>
