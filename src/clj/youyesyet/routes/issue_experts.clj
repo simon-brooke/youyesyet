@@ -50,10 +50,7 @@
 
 (defn followup-request-page [request]
   (let
-    [params (support/massage-params
-              (keywordize-keys (:params request))
-              (keywordize-keys (:form-params request))
-              #{:id})
+    [params (support/massage-params request)
      id (:id (keywordize-keys params))
      record (db/get-followuprequest db/*db* {:id id})
      elector (if

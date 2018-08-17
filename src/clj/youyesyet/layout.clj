@@ -1,7 +1,8 @@
 (ns^{:doc "Render web pages using Selmer templating markup."
      :author "Simon Brooke"}
           youyesyet.layout
-          (:require [adl-support.tags :as tags]
+          (:require [adl-support.filters :refer :all]
+                    [adl-support.tags :as tags]
                     [clojure.string :refer [lower-case]]
                     [clojure.tools.logging :as log]
                     [markdown.core :refer [md-to-html-string]]
