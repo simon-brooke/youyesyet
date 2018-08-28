@@ -80,11 +80,16 @@
 (defn panel
   "Generate the electors panel."
   []
+  (js/console.log "dwelling.panel")
   (let [dwelling @(subscribe [:dwelling])
         address @(subscribe [:address])
         sub-address (:sub-address dwelling)
         electors (sort-by :id (:electors dwelling))
-        options @(subscribe [:options])]
+        options @(subscribe [:options])
+        back (if
+               (> (count (:dwellings address)) 1)
+               "#building"
+               "#map")]
     (if address
       [:div
        [:h1 (if sub-address
@@ -95,7 +100,7 @@
          [:tbody
           (genders-row electors)
           (names-row electors)]]
-        (ui/back-link)]]
+        (ui/back-link back)]]
       (ui/error-panel "No address selected"))))
 
 

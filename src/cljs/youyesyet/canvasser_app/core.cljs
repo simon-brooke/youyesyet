@@ -118,61 +118,57 @@
 ;; Routes
 (secretary/set-config! :prefix "#")
 
-(defn log-and-dispatch [arg]
-  (js/console.log (str "Dispatching " arg))
-  (rf/dispatch arg))
-
 (secretary/defroute "/" []
-  (log-and-dispatch [:set-active-page :map]))
+  (ui/log-and-dispatch [:set-active-page :map]))
 
 (secretary/defroute "/about" []
-  (log-and-dispatch [:set-active-page :about]))
+  (ui/log-and-dispatch [:set-active-page :about]))
 
 (secretary/defroute "/dwelling" []
-  (log-and-dispatch [:set-active-page :dwelling]))
+  (ui/log-and-dispatch [:set-active-page :dwelling]))
 
 (secretary/defroute "/dwelling/:dwelling" {dwelling-id :dwelling}
-  (log-and-dispatch [:set-dwelling dwelling-id])
-  (log-and-dispatch [:set-active-page :dwelling]))
+  (ui/log-and-dispatch [:set-dwelling dwelling-id])
+  (ui/log-and-dispatch [:set-active-page :dwelling]))
 
 (secretary/defroute "/building/:address" {address-id :address}
-  (log-and-dispatch [:set-address address-id]))
+  (ui/log-and-dispatch [:set-address address-id]))
 
 (secretary/defroute "/elector" []
-  (log-and-dispatch [:set-active-page :elector]))
+  (ui/log-and-dispatch [:set-active-page :elector]))
 
 (secretary/defroute "/elector/:elector" {elector-id :elector}
-  (log-and-dispatch [:set-elector-and-page {:elector-id elector-id :page :elector}]))
+  (ui/log-and-dispatch [:set-elector-and-page {:elector-id elector-id :page :elector}]))
 
 (secretary/defroute "/elector/:elector/:consent" {elector-id :elector consent :consent}
-  (log-and-dispatch [:set-consent-and-page {:elector-id elector-id :consent (and true consent) :page :elector}]))
+  (ui/log-and-dispatch [:set-active-page {:page :elector}]))
 
 (secretary/defroute "/elector" []
-  (log-and-dispatch [:set-active-page :elector]))
+  (ui/log-and-dispatch [:set-active-page :elector]))
 
 (secretary/defroute "/followup" []
-  (log-and-dispatch [:set-active-page :followup]))
+  (ui/log-and-dispatch [:set-active-page :followup]))
 
 (secretary/defroute "/gdpr" []
-  (log-and-dispatch [:set-active-page :gdpr]))
+  (ui/log-and-dispatch [:set-active-page :gdpr]))
 
 (secretary/defroute "/gdpr/:elector" {elector-id :elector}
-  (log-and-dispatch [:set-elector-and-page {:elector-id elector-id :page :gdpr}]))
+  (ui/log-and-dispatch [:set-elector-and-page {:elector-id elector-id :page :gdpr}]))
 
 (secretary/defroute "/issues" []
-  (log-and-dispatch [:set-active-page :issues]))
+  (ui/log-and-dispatch [:set-active-page :issues]))
 
 (secretary/defroute "/issues/:elector" {elector-id :elector}
-  (log-and-dispatch [:set-elector-and-page {:elector-id elector-id :page :issues}]))
+  (ui/log-and-dispatch [:set-elector-and-page {:elector-id elector-id :page :issues}]))
 
 (secretary/defroute "/issue/:issue" {issue :issue}
-  (log-and-dispatch [:set-and-go-to-issue issue]))
+  (ui/log-and-dispatch [:set-and-go-to-issue issue]))
 
 (secretary/defroute "/map" []
-  (log-and-dispatch [:set-active-page :map]))
+  (ui/log-and-dispatch [:set-active-page :map]))
 
 (secretary/defroute "/set-intention/:elector/:intention" {elector-id :elector intention :intention}
-  (log-and-dispatch [:set-intention {:elector-id elector-id :intention intention}]))
+  (ui/log-and-dispatch [:set-intention {:elector-id elector-id :intention intention}]))
 
 ;; -------------------------
 ;; History

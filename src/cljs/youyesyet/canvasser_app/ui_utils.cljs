@@ -28,6 +28,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+(defn log-and-dispatch [arg]
+  (js/console.log (str "Dispatching " arg))
+  (rf/dispatch arg))
+
+
 (defn back-link
   "Generate a back link to the preceding page, or, if `target` is specified,
   to a particular page."
@@ -40,8 +45,9 @@
 
 (defn big-link
   [text & {:keys [target handler]}]
+  (js/console.log (str "Big link with target '" target "'; handler '" handler "'"))
   [:div.big-link-container {:key (gensym "big-link")}
-   [:a.big-link (merge
+   [:a.big-link (merge {:href target :on-click handler}
                   (if target {:href target}{})
                   (if handler {:on-click handler}{}))
     text]])

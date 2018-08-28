@@ -209,8 +209,10 @@
    [{db :db} [_ response]]
    (js/console.log (str "Updating locality data: " (count response) " addresses " ))
    (refresh-map-pins)
-   {:dispatch-later [{:ms 60000 :dispatch [:fetch-locality]}
-                     {:ms 1000 :dispatch [:get-current-location]}]
+   {
+;;      :dispatch-later [{:ms 60000 :dispatch [:fetch-locality]}
+;;                      ;; {:ms 1000 :dispatch [:get-current-location]}
+;;                      ]
     :db (assoc
           (remove-from-feedback db :fetch-locality)
           :addresses (js->clj response))}))
@@ -381,14 +383,27 @@
 
 
 (reg-event-db
+  :update-elector
+  (fn [db [_ args]]
+    (if (:signature (:elector db))
+      (do
+        (js/console.log "Updating elector signature")
+        (add-to-feedback
+          (add-to-outqueue
+            db
+            {:elector (:elector db)
+             :action :update-elector-signature})
+          :send-request))
+      (assoc db :error "Please supply a telephone number to call"))))
+
+
+(reg-event-db
   :set-consent-and-page
   (fn [db [_ args]]
     (let [page (:page args)
-          consent (:consent args)
-          elector-id (coerce-to-number (:elector-id args))
-          elector (get-elector elector-id db)]
-      (js/console.log (str "Setting page to " page ", consent to " consent " for " (:name elector)))
-      (assoc (clear-messages db) :elector (assoc elector :consent true) :page page))))
+          elector (:elector args)]
+      (dispatch [:update-elector {:elector elector}])
+      (assoc (clear-messages db) :elector elector :page page))))
 
 
 (reg-event-db
