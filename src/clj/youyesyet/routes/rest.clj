@@ -140,7 +140,8 @@
               params :visit_id (current-visit-id request)))
           201)
         {:status 400
-         :body (json/write-str "create-intention requires params: `option_id`
+         :body (json/write-str
+                 "create-intention requires params: `option_id`
                                and either `locality` or both `address_id` and `elector_id`.")})
       request)))
 
@@ -164,7 +165,32 @@
       request)))
 
 
+(defn update-elector-signature!
+  "Set the `signature` in the params of this `request` as the signature for
+  the elector whose `id` is in the params of this `request`."
+  [request]
+  (let [params (massage-params request)]
+    (if (and (:elector_id request)(:signature request))
+        (valid-user-or-forbid
+      (with-params-or-error
+        (do-or-server-fail
+          (db/create-followuprequest! db/*db* params)
+          201)
+        params
+        #{:elector_id :signature})
+      request))
+    {:status 400
+     :body
+     (json/write-str
+       "update-elector-signature requires params `id` and `signature`.")}))
+
+
 (defroutes rest-routes
-  (GET "/rest/get-local-data" request (route/restricted (get-local-data request)))
-  (GET "/rest/create-intention" request (route/restricted (create-intention-and-visit! request)))
-  (GET "/rest/create-request" request (route/restricted (create-request-and-visit! request))))
+  (GET "/rest/get-local-data"
+       request (route/restricted (get-local-data request)))
+  (GET "/rest/create-intention"
+       request (route/restricted (create-intention-and-visit! request)))
+  (GET "/rest/create-request"
+       request (route/restricted (create-request-and-visit! request)))
+  (GET "/rest/update-elector-signature"
+       request (route/restricted (update-elector-signature! request))))

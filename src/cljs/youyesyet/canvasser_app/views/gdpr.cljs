@@ -56,20 +56,17 @@
           [:canvas {:id "signature-pad"}]]]]]]
      (ui/back-link "#dwelling")
      (ui/big-link "I consent"
-                  ;; :target (str "#elector/" (:id elector) "/true/")
-                  :handler #(fn
-                              []
-                              (ui/log-and-dispatch
+                  :handler #(dispatch
                                 [:set-consent-and-page
                                  {:elector-id (:id elector)
                                   :page :elector
-                                  :elector (merge
+                                  :elector (assoc
                                              elector
                                              :signature
                                              (.toDataURL
-                                               sig-pad
+                                               @sig-pad
                                                "image/svg+xml")
-                                             )}])))
+                                             )}]))
      (ui/big-link "I DO NOT consent"
                   :target (str "#elector/" (:id elector) "/false"))]))
 

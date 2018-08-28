@@ -384,26 +384,20 @@
 
 (reg-event-db
   :update-elector
-  (fn [db [_ args]]
-    (if (:signature (:elector db))
-      (do
-        (js/console.log "Updating elector signature")
-        (add-to-feedback
-          (add-to-outqueue
-            db
-            {:elector (:elector db)
-             :action :update-elector-signature})
-          :send-request))
-      (assoc db :error "Please supply a telephone number to call"))))
+  (fn [db [_ elector]]
+    (js/console.log (str "Elector is " elector))
+    db
+))
 
 
 (reg-event-db
   :set-consent-and-page
   (fn [db [_ args]]
     (let [page (:page args)
-          elector (:elector args)]
+          elector (:elector args)
+          new-db (assoc (clear-messages db) :elector elector :page page)]
       (dispatch [:update-elector {:elector elector}])
-      (assoc (clear-messages db) :elector elector :page page))))
+      new-db)))
 
 
 (reg-event-db
