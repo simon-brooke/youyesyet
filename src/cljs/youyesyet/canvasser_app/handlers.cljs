@@ -140,34 +140,6 @@
     db/default-db))
 
 
-;; (reg-event-fx
-;;   :feedback
-;;   (fn [x y]
-;;     (js/console.log (str "Feedback event called with x = " x "; y = " y))
-;;     (:db x)))
-
-
-;; (reg-event-fx
-;;   :issues
-;;   (fn [x y]
-;;     (js/console.log (str "Issues event called with x = " x "; y = " y))
-;;     (:db x)))
-
-
-;; (reg-event-fx
-;;   :options
-;;   (fn [x y]
-;;     (js/console.log (str "Options event called with x = " x "; y = " y))
-;;     (:db x)))
-
-
-;; (reg-event-fx
-;;   :event
-;;   (fn [x y]
-;;     (js/console.log (str "Event event called with x = " x "; y = " y))
-;;     (:db x)))
-
-
 (reg-event-fx
  :fetch-locality
  (fn [{db :db} _]
@@ -204,38 +176,29 @@
 
 
 (reg-event-fx
- :process-locality
- (fn
-   [{db :db} [_ response]]
-   (js/console.log (str "Updating locality data: " (count response) " addresses " ))
-   (refresh-map-pins)
-   {
-;;      :dispatch-later [{:ms 60000 :dispatch [:fetch-locality]}
-;;                      ;; {:ms 1000 :dispatch [:get-current-location]}
-;;                      ]
-    :db (assoc
-          (remove-from-feedback db :fetch-locality)
-          :addresses (js->clj response))}))
+  :process-locality
+  ;; TODO: why is this an `-fx`? Does it need to be?
+  (fn
+    [{db :db} [_ response]]
+    (js/console.log (str "Updating locality data: " (count response) " addresses " ))
+    (refresh-map-pins)
+    {:db (assoc
+           (remove-from-feedback db :fetch-locality)
+           :addresses (js->clj response))}))
 
 
 (reg-event-fx
   :bad-locality
+  ;; TODO: why is this an `-fx`? Does it need to be?
   (fn
     [{db :db} [_ response]]
     ;; TODO: signal something has failed? It doesn't matter very much, unless it keeps failing.
     (js/console.log "Failed to fetch locality data")
     ;; loop to do it again
     (dispatch [:dispatch-later [{:ms 60000 :dispatch [:fetch-locality]}]])
-    (assoc
+    {:db (assoc
       (remove-from-feedback db :fetch-locality)
-      :error (cons :fetch-locality (:error db)))))
-
-
-;; (reg-event-fx
-;;  :process-outqueue
-;;  (fn [{db :db} _]
-;;    (if
-;;      (empty? (:outqueue db))
+      :error (cons :fetch-locality (:error db)))}))
 
 
 (reg-event-fx
@@ -264,12 +227,12 @@
 
 
 (reg-event-db
- ;; TODO: should try again
   :bad-options
   (fn [db [_ response]]
     (js/console.log "Failed to fetch options")
+    (dispatch [:dispatch-later [{:ms 60000 :dispatch [:fetch-options]}]])
     (assoc
-      (remove-from-feedback db :fetch-options)
+      db
       :error (:response response))))
 
 
@@ -303,12 +266,12 @@
 
 
 (reg-event-db
- ;; TODO: should try again
   :bad-issues
   (fn [db [_ response]]
     (js/console.log "Failed to fetch issues")
+    (dispatch [:dispatch-later [{:ms 60000 :dispatch [:fetch-issues]}]])
     (assoc
-      (remove-from-feedback db :fetch-issues)
+      db
       :error (:response response))))
 
 
@@ -349,7 +312,7 @@
              :method_detail (-> db :method_detail)
              :action :create-request})
           :send-request))
-      (assoc db :error "Please supply a telephone number to call"))))
+      (assoc db :error "Please supply a telephone number/email address for elector"))))
 
 
 (reg-event-db
@@ -382,22 +345,34 @@
             :page :building))))))
 
 
+(defn do-update-elector
+  [db elector]
+  (if-not
+    ;; if the signature has changed
+    (= (:signature elector) (:signature (:elector db)))
+    (assoc
+      (add-to-outqueue
+        (clear-messages db)
+        (assoc elector
+          :action :update-elector-signature))
+      :elector elector)
+    (assoc db
+      :elector elector)))
+
+
 (reg-event-db
   :update-elector
   (fn [db [_ elector]]
     (js/console.log (str "Elector is " elector))
-    db
-))
+    (do-update-elector db elector)))
 
 
 (reg-event-db
   :set-consent-and-page
   (fn [db [_ args]]
-    (let [page (:page args)
-          elector (:elector args)
-          new-db (assoc (clear-messages db) :elector elector :page page)]
-      (dispatch [:update-elector {:elector elector}])
-      new-db)))
+    (assoc
+      (do-update-elector db (:elector args))
+      :page (:page args))))
 
 
 (reg-event-db

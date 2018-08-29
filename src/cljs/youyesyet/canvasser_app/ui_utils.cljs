@@ -45,16 +45,14 @@
 
 (defn big-link
   [text & {:keys [target handler]}]
-  (js/console.log (str "Big link with target '" target "'; onclick handler '" handler "'"))
   [:div.big-link-container {:key (gensym "big-link")}
-   [:a.big-link (merge {:alt "Hello"}
+   [:a.big-link (merge {}
                   (if target {:href target}{})
-                  (if handler {:title handler}{}))
+                  (if handler {:on-click handler}{}))
     text]])
 
 
 (defn nav-link [uri title page collapsed?]
-  (js/console.log (str "Adding nav-link with title '" title "'; target '" uri "'"))
   (let [selected-page @(rf/subscribe [:page])]
     [:li.nav-item
      {:class (when (= page selected-page) "active")

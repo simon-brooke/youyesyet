@@ -7,7 +7,6 @@
             [re-frame.core :refer [dispatch reg-event-db reg-event-fx subscribe]]
             [ajax.core :refer [GET]]
             [ajax.json :refer [json-request-format json-response-format]]
-            [youyesyet.canvasser-app.state :as db]
             [youyesyet.locality :refer [locality]]
             ))
 
@@ -39,19 +38,20 @@
 
 (defn get-current-location []
   "Get the current location from the device, setting it in the database and
-   returning the locality."
+  returning the locality."
   (try
     (if (.-geolocation js/navigator)
       (.getCurrentPosition
         (.-geolocation js/navigator)
         (fn [position]
-          (js/console.log (str "Current location is: "
-                               (.-latitude (.-coords position)) ", "
-                               (.-longitude (.-coords position))))
-          (dispatch [:set-latitude (.-latitude (.-coords position))])
-          (dispatch [:set-longitude (.-longitude (.-coords position))])
-          (locality (.-latitude (.-coords position)) (.-longitude (.-coords position))))))
-      (js/console.log "Geolocation not available")
+          (let [lat (.-latitude (.-coords position))
+                lng (.-longitude (.-coords position))]
+            (js/console.log (str "Current location is: " lat ", " lng))
+            (dispatch [:set-latitude lat])
+            (dispatch [:set-longitude lng])
+            ;; (.panTo @(subscribe [:view]) (.latLng js/L lat lng))
+            (locality lat lng))))
+      (js/console.log "Geolocation not available"))
     (catch js/Object any
       (js/console.log "Exception while trying to access location: " + any)
       0)))

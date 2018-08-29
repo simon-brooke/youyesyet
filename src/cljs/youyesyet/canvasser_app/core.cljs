@@ -137,7 +137,7 @@
 (secretary/defroute "/elector" []
   (ui/log-and-dispatch [:set-active-page :elector]))
 
-(secretary/defroute "/elector/:elector" {elector-id :elector}
+(secretary/defroute "/elector/:elector/:consent" {elector-id :elector}
   (ui/log-and-dispatch [:set-elector-and-page {:elector-id elector-id :page :elector}]))
 
 (secretary/defroute "/elector/:elector/:consent" {elector-id :elector consent :consent}
@@ -189,7 +189,7 @@
 
 (defn init! []
   (rf/dispatch-sync [:initialize-db])
-  (rf/dispatch-sync [:get-current-location])
+  (rf/dispatch [:get-current-location])
   (rf/dispatch [:fetch-locality])
   (rf/dispatch [:fetch-options])
   (rf/dispatch [:fetch-issues])

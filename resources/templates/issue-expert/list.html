@@ -39,7 +39,7 @@ Add a new Followuprequest
 Elector
 </th>
 <th>
-Visit
+Raised
 </th>
 <th>
 Issue
@@ -56,7 +56,7 @@ Method
 <input id='elector_id' type='text' name='elector_id' value='{{ params.elector_id }}'/>
 </th>
 <th>
-<input id='visit_id' type='text' name='visit_id' value='{{ params.visit_id }}'/>
+<input id='raised' type='text' name='raised' value='{{ params.raised }}'/>
 </th>
 <th>
 <input id='issue_id' type='text' name='issue_id' value='{{ params.issue_id }}'/>
@@ -78,9 +78,7 @@ Method
 </a>
 </td>
 <td>
-<a href='{{servlet-context}}/form-visits-Visit?id={{ record.visit_id }}'>
-{{ record.visit_id_expanded }}
-</a>
+{{ record.raised}}
 </td>
 <td>
 <a href='{{servlet-context}}/form-issues-Issue?id={{ record.issue_id }}'>

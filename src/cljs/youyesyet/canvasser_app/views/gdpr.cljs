@@ -35,6 +35,22 @@
   (atom nil))
 
 
+(defn send-consent
+  "Extract the signature from the signature pad, encode it, add it to this
+  `elector`, and dispatch the `elector`; move on to the page `elector`."
+  [elector]
+  (dispatch
+    [:set-consent-and-page
+     {:elector-id (:id elector)
+      :page :elector
+      :elector (assoc
+                 elector
+                 :signature
+                 (.toDataURL
+                   @sig-pad
+                   "image/svg+xml"))}])
+  nil)
+
 (defn gdpr-render
   []
   (let [elector @(subscribe [:elector])]
@@ -53,20 +69,11 @@
                only against your electoral district, and not link it to you"]]]]
         [:tr
          [:td
-          [:canvas {:id "signature-pad"}]]]]]]
+          [:canvas {:id "signature-pad" :on-mouse-out #(send-consent elector)}]]]]]]
      (ui/back-link "#dwelling")
      (ui/big-link "I consent"
-                  :handler #(dispatch
-                                [:set-consent-and-page
-                                 {:elector-id (:id elector)
-                                  :page :elector
-                                  :elector (assoc
-                                             elector
-                                             :signature
-                                             (.toDataURL
-                                               @sig-pad
-                                               "image/svg+xml")
-                                             )}]))
+                  :target (str "#elector")
+                  :handler #(send-consent elector))
      (ui/big-link "I DO NOT consent"
                   :target (str "#elector/" (:id elector) "/false"))]))
 

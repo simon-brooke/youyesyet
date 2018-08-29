@@ -170,19 +170,15 @@
   the elector whose `id` is in the params of this `request`."
   [request]
   (let [params (massage-params request)]
-    (if (and (:elector_id request)(:signature request))
+    (log/debug "Update elector signature with params: " params)
         (valid-user-or-forbid
       (with-params-or-error
         (do-or-server-fail
-          (db/create-followuprequest! db/*db* params)
+          (db/update-elector! db/*db* params)
           201)
         params
-        #{:elector_id :signature})
-      request))
-    {:status 400
-     :body
-     (json/write-str
-       "update-elector-signature requires params `id` and `signature`.")}))
+        #{:id :signature})
+      request)))
 
 
 (defroutes rest-routes
