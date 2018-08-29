@@ -5,6 +5,7 @@
     <!-- head: if you want entire custom head content, override this block. -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="referrer" content="same-origin">
     {% style "/css/yyy-common.css" %}
     {% style "/css/yyy-site.css" %}
     {% style "/css/spinner.css" %}
@@ -27,9 +28,13 @@
         <menu id="nav-menu" class="nav">
           <li class=""><a href="{{servlet-context}}/home">Home</a></li>
           <li class=""><a href="{{servlet-context}}/library">Library</a></li>
+          {% if user %}
+          <li class=""><a href="{{servlet-context}}/roles">Roles</a></li>
+          <li class=""><a href="{{servlet-context}}/logout">Logout</a></li>
+            {% else %}
           <li class=""><a href="{{servlet-context}}/register">Register</a></li>
-          <li class="">{% if user %}<a href="{{servlet-context}}/logout">Logout</a>
-            {% else %}<a href="{{servlet-context}}/login">Login</a>{% endif %}</li>
+          <li class=""><a href="{{servlet-context}}/login">Login</a></li>
+          {% endif %}
           <li class=""><a href="{{servlet-context}}/about">About</a></li>
           {% if user %}
           <li id="user"><a href="{{servlet-context}}/profile">Logged in as {{user.username}}</a></li>

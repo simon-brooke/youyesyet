@@ -36,19 +36,16 @@ Add a new Followuprequest
 <thead>
 <tr>
 <th>
-Id
+Elector
 </th>
 <th>
-Elector_id
+Raised
 </th>
 <th>
-Visit_id
+Issue
 </th>
 <th>
-Issue_id
-</th>
-<th>
-Method_id
+Method
 </th>
 <th>
 &nbsp;
@@ -56,13 +53,10 @@ Method_id
 </tr>
 <tr>
 <th>
-<input id='id' type='text' name='id' value='{{ params.id }}'/>
-</th>
-<th>
 <input id='elector_id' type='text' name='elector_id' value='{{ params.elector_id }}'/>
 </th>
 <th>
-<input id='visit_id' type='text' name='visit_id' value='{{ params.visit_id }}'/>
+<input id='raised' type='text' name='raised' value='{{ params.raised }}'/>
 </th>
 <th>
 <input id='issue_id' type='text' name='issue_id' value='{{ params.issue_id }}'/>
@@ -79,17 +73,12 @@ Method_id
 {% for record in records %}
 <tr>
 <td>
-{{ record.id }}
-</td>
-<td>
 <a href='{{servlet-context}}/form-electors-Elector?id={{ record.elector_id }}'>
 {{ record.elector_id_expanded }}
 </a>
 </td>
 <td>
-<a href='{{servlet-context}}/form-visits-Visit?id={{ record.visit_id }}'>
-{{ record.visit_id_expanded }}
-</a>
+{{ record.raised }}
 </td>
 <td>
 <a href='{{servlet-context}}/form-issues-Issue?id={{ record.issue_id }}'>

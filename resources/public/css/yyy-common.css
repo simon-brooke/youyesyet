@@ -362,7 +362,6 @@ th {
 
   /* content of the current page in the Wiki - editable, provided by users. Within main-container */
   #content {
-    border: thin solid silver;
     width: 80%;
     float: right;
     padding-bottom: 5em;
@@ -396,7 +395,6 @@ th {
 
   /* content of the current in the Wiki - editable, provided by users. Within main-container */
   #content {
-    border: thin solid silver;
     width: 100%;
     padding-bottom: 2em;
   }

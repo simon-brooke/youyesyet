@@ -28,6 +28,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+(defn log-and-dispatch [arg]
+  (js/console.log (str "Dispatching " arg))
+  (rf/dispatch arg))
+
+
 (defn back-link
   "Generate a back link to the preceding page, or, if `target` is specified,
   to a particular page."
@@ -41,7 +46,7 @@
 (defn big-link
   [text & {:keys [target handler]}]
   [:div.big-link-container {:key (gensym "big-link")}
-   [:a.big-link (merge
+   [:a.big-link (merge {}
                   (if target {:href target}{})
                   (if handler {:on-click handler}{}))
     text]])
@@ -75,4 +80,5 @@
       (nav-link "#/map" "Map" :map collapsed?)
       (nav-link "#/dwelling" "Electors" :dwelling collapsed?)
       (nav-link "#/issues" "Issues" :issues collapsed?)
-      (nav-link "#/about" "About" :about collapsed?)]]))
+      (nav-link "#/about" "About" :about collapsed?)
+      (nav-link "/logout" "Logout" :logout collapsed?)]]))

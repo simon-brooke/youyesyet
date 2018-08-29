@@ -43,7 +43,7 @@ SELECT DISTINCT request.*,
 	addresses.address ||', '|| addresses.postcode ||', '|| visits.date AS visit_id_expanded,
   request.issue_id as issue_id_expanded,
 	request.method_id AS method_id_expanded,
-  visits.date
+  visits.date AS raised
 FROM followuprequests as request,
   ln_experts_issues_canvassers as expertise,
   canvassers as experts,
@@ -58,7 +58,7 @@ and request.visit_id = visits.id
 and visits.address_id = addresses.id
 and request.issue_id = expertise.issue_id
 and expertise.canvasser_id = :expert
-ORDER BY visits.date desc
+ORDER BY raised
 
 --:name get-last-visit-by-canvasser :? :1
 --:doc returns the most recent visit record of the canvasser with the specified `:id`
