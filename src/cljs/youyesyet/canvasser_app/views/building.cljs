@@ -41,7 +41,7 @@
     [:div
      [:h1 (str "Flats at " (:address address))]
      [:div.container {:id "main-container"}
-      (ui/back-link)
+      (ui/back-link "#map")
       [:div {:id "dwelling-list"}
        (map
          (fn

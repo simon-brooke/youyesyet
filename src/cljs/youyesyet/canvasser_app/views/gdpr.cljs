@@ -30,6 +30,27 @@
 
 ;; OK, the idea here is a GDPR consent form to be signed by the elector
 
+(def sig-pad
+  ;; something the signature pad will be bound to
+  (atom nil))
+
+
+(defn send-consent
+  "Extract the signature from the signature pad, encode it, add it to this
+  `elector`, and dispatch the `elector`; move on to the page `elector`."
+  [elector]
+  (dispatch
+    [:set-consent-and-page
+     {:elector-id (:id elector)
+      :page :elector
+      :elector (assoc
+                 elector
+                 :signature
+                 (.toDataURL
+                   @sig-pad
+                   "image/svg+xml"))}])
+  nil)
+
 (defn gdpr-render
   []
   (let [elector @(subscribe [:elector])]
@@ -48,24 +69,23 @@
                only against your electoral district, and not link it to you"]]]]
         [:tr
          [:td
-          [:canvas {:id "signature-pad"}]]]]]]
+          [:canvas {:id "signature-pad" :on-mouse-out #(send-consent elector)}]]]]]]
      (ui/back-link "#dwelling")
      (ui/big-link "I consent"
-                  :target (str "#elector/" (:id elector) "/true")
-                  :handler #(fn [] (dispatch [:set-consent-and-page {:elector-id (:id elector) :page :elector}])))
-     ;; TODO: need to save the signature
+                  :target (str "#elector")
+                  :handler #(send-consent elector))
      (ui/big-link "I DO NOT consent"
-                  :target (str "#elector/" (:id elector) "/true"))]))
-                  ;; :handler #(fn [] (dispatch [:set-elector-and-page {:elector-id (:id elector) :page :elector}])))]))
+                  :target (str "#elector/" (:id elector) "/false"))]))
 
 
 (defn gdpr-did-mount
   []
-  (js/SignaturePad. (.getElementById js/document "signature-pad")))
+  (reset! sig-pad (js/SignaturePad. (.getElementById js/document "signature-pad"))))
 
 
 (defn panel
   "A reagent class for the GDPR consent form"
   []
+  (js/console.log "gdpr.panel")
   (reagent/create-class {:reagent-render gdpr-render
                          :component-did-mount gdpr-did-mount}))
