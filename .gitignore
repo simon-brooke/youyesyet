@@ -43,3 +43,5 @@ resources/sql/youyesyet\.postgres\.sql
 /dumps/
 
 youyesyet\.canonical\.adl\.xml
+
+youyesyet\.dump\.20180816

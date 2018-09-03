@@ -69,7 +69,7 @@
                only against your electoral district, and not link it to you"]]]]
         [:tr
          [:td
-          [:canvas {:id "signature-pad" :on-mouse-out #(send-consent elector)}]]]]]]
+          [:canvas {:id "signature-pad"}]]]]]]
      (ui/back-link "#dwelling")
      (ui/big-link "I consent"
                   :target (str "#elector")
