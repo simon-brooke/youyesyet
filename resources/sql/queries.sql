@@ -67,6 +67,13 @@ WHERE canvasser_id = :id
 ORDER BY date desc
 LIMIT 1
 
+--:name get-locality-for-visit :? :1
+--:doc returns the locality of the address of this visit
+SELECT addresses.locality
+FROM addresses, visits
+WHERE visits.address_id = addresses.id
+AND visits.id = :id
+
 -- I don't know why this next one isn't autogenerating, but it isn't and it's critical.
 
 -- :name list-roles-by-canvasser :? :*

@@ -13,16 +13,19 @@
   <form action='{{servlet-context}}/issue-expert/followup-action' method='POST'>
     {% csrf-field %}
     <input id='id' name='id' type='hidden' value='{{record.id}}'/>
+    <input id='request_id' name='request_id' type='hidden' value='{{record.id}}'/>
+    <input id='elector_id' name='elector_id' type='hidden' value='{{record.elector_id}}'/>
+    <input id='visit_id' name='visit_id' type='hidden' value='{{record.visit_id}}'/>
     <p class='widget'>
       <label for='elector_id'>
         Elector
       </label>
       {% ifmemberof canvassers teamorganisers issueexperts analysts issueeditors admin %}
-      <span id='elector_id' name='elector_id' class='pseudo-widget disabled'>
+      <span id='elector' name='elector' class='pseudo-widget disabled'>
         {{elector.name}} ({{elector.gender}})
       </span>
       {% else %}
-      <span id='elector_id' name='elector_id' class='pseudo-widget not-authorised'>
+      <span id='elector' name='elector' class='pseudo-widget not-authorised'>
         You are not permitted to view elector of followuprequests
       </span>
       {% endifmemberof %}
@@ -121,7 +124,21 @@
         <input id='closed' name='closed' type='checkbox' maxlength='' size='16'/>
       {% endifmemberof %}
     </p>
-
+    <p class='widget'>
+      <label for='intention'>
+        What is the elector's voting intention now?
+      </label>
+      {% ifmemberof admin issueexperts %}
+      <select id='option_id' name='option_id'>
+        <option value="">Not stated</option>
+        {% for option in options %}
+        <img src="{{servlet-context}}/img/option/{{option.id}}-{% ifequal record.option_id option.id %}selected{% else %}unselected{% endifequal %}.png" alt="{{option.id}}"/>
+        <option value='{{option.id}}' {% ifequal record.option_id option.id%}selected='selected'{% endifequal %} style="background-image: url('{{servlet-context}}/img/option/{{option.id}}-{% ifequal record.option_id option.id %}selected{% else %}unselected{% endifequal %}.png')">
+           {{option.id}}</option>
+        {% endfor %}
+      </select>
+      {% endifmemberof %}
+    </p>
     {% ifmemberof admin issueexperts %}
     <p class='widget action-safe'>
     <label for='save-button' class='action-safe'>
