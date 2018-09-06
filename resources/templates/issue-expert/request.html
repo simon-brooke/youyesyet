@@ -36,7 +36,7 @@
       </label>
       {% ifmemberof issueexperts analysts issueeditors admin %}
       <span id='visit' name='visit' class='pseudo-widget disabled'>
-        by {{visit.canvasser_id_expanded}} at {{visit.date}}
+        by {{visit.canvasser_id_expanded}} on {{visit.date}}
       </span>
       {% else %}
       <span id='visit_id' name='visit_id' class='pseudo-widget not-authorised'>
@@ -46,8 +46,17 @@
     </p>
     <p class='widget'>
       <label for='issue_id'>
-        {{issue.id}}
+        Issue
       </label>
+      {% ifmemberof issueexperts analysts issueeditors admin %}
+      <span id='visit' name='visit' class='pseudo-widget disabled'>
+        {{issue.id}}
+      </span>
+      {% else %}
+      <span id='visit_id' name='visit_id' class='pseudo-widget not-authorised'>
+        You are not permitted to view visit of followuprequests
+      </span>
+      {% endifmemberof %}
       {% ifmemberof issueexperts admin %}
       <div id="issue-brief">
         {{issue.brief|safe}}
