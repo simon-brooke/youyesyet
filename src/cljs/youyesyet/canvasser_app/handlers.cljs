@@ -540,10 +540,15 @@
   (fn [db [_ response]]
     (case
       (:status response)
-      (400 403 500)
-      (do
-        (js/console.log "Server responded " (:status response) " - " (:response response) "; not requeueing")
-        (assoc db :error (:response response)))
+      (400 403 404 500)
+      (let [error (str
+                   "Transmission failed "
+                   (:status response)
+                   " - "
+                   (:response response)
+                   "; not requeueing")]
+        (js/console.log error)
+        (assoc (clear-messages db) :error error))
       ;; default
       (do
         (js/console.log (str "Transmission failed (" response "), requeueing" (:tx-item db)))

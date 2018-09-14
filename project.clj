@@ -36,6 +36,7 @@
                  [org.webjars/bootstrap "4.1.2"]
                  [org.webjars/font-awesome "5.1.0"]
                  [org.webjars.bower/tether "1.4.4"]
+                 [postgre-types "0.0.4"]
                  [re-frame "0.10.5"]
                  [reagent "0.8.1"]
                  [reagent-utils "0.3.1"]

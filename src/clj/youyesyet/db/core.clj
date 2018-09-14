@@ -6,6 +6,7 @@
     [conman.core :as conman]
     [hugsql.core :as hugsql]
     [mount.core :refer [defstate]]
+   [postgre-types.json :refer [add-json-type add-jsonb-type]]
     [youyesyet.config :refer [env]])
   (:import org.postgresql.util.PGobject
            java.sql.Array
@@ -22,6 +23,10 @@
                                     :jdbc-url "jdbc:postgresql://127.0.0.1/youyesyet_dev?user=youyesyet&password=thisisnotsecure"
                                     :driver-class-name "org.postgresql.Driver"})
            :stop (conman/disconnect! *db*))
+
+(add-json-type generate-string parse-string)
+(add-jsonb-type generate-string parse-string)
+
 
 (conman/bind-connection *db* "sql/queries.auto.sql" "sql/queries.sql")
 (hugsql/def-sqlvec-fns "sql/queries.auto.sql")

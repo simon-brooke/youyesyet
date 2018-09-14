@@ -102,17 +102,17 @@
   [request]
   (let [last-visit (last-visit-by-current-user request)
         params (massage-params request)]
+    (log/debug "rest/current-visit-id: type of address_id is: " (type (:address_id params)))
     (if
       (=
-        (:address_id params)
-        (:address_id last-visit))
+       (:address_id params)
+       (:address_id last-visit))
       (:id last-visit)
       (db/create-visit!
-        db/*db*
-        (assoc
-          params
-          :canvasser_id (-> request :session :user :id)
-          :date (jt/to-sql-timestamp (jt/local-date-time)))))))
+       db/*db*
+       {:address_id (:address_id params)
+        :canvasser_id (-> request :session :user :id)
+        :date (jt/to-sql-timestamp (jt/local-date-time))}))))
 
 
 (defn create-intention-and-visit!
