@@ -193,6 +193,7 @@
   (rf/dispatch [:fetch-locality])
   (rf/dispatch [:fetch-options])
   (rf/dispatch [:fetch-issues])
+  (rf/dispatch [:fetch-followupmethods])
   (rf/dispatch [:dispatch-later [{:ms 60000 :dispatch [:process-queue]}]])
   (load-interceptors!)
   (hook-browser-navigation!)

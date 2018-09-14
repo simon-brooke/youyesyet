@@ -1,4 +1,23 @@
 ------------------------------------------------------------------------
+--	User `youyesyet` (the app, and less secure parts of the site)
+--  must have the permissions of `canvassers`.
+------------------------------------------------------------------------
+DO
+$do$
+BEGIN
+   IF NOT EXISTS (
+      SELECT                       -- SELECT list can stay empty for this
+      FROM   pg_catalog.pg_roles
+      WHERE  rolname = 'youyesyet') THEN
+
+      CREATE ROLE youyesyet LOGIN PASSWORD 'thisisnotsecure';
+   END IF;
+END
+$do$;
+
+grant canvassers to youyesyet;
+
+------------------------------------------------------------------------
 --	convenience view lv_followupactions of entity followupactions for
 --	lists, et cetera
 --  ADL is not yet correctly chaining tables when generating convenience
@@ -23,3 +42,4 @@ WHERE followupactions.request_id = followuprequests.id
   AND visits.address_id = addresses.id
 	AND followupactions.actor = canvassers.id
 ;
+GRANT SELECT ON lv_followupactions TO canvassers, issueexperts;

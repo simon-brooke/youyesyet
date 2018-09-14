@@ -237,6 +237,41 @@
 
 
 (reg-event-fx
+  :fetch-followupmethods
+  (fn [{db :db} _]
+    (js/console.log "Fetching options")
+    ;; we return a map of (side) effects
+    {:http-xhrio {:method          :get
+                  :uri             (str source-host "json/auto/list-followupmethods")
+                  :format          (json-request-format)
+                  :response-format (json-response-format {:keywords? true})
+                  :on-success      [:process-followupmethods]
+                  :on-failure      [:bad-followupmethods]}
+     :db  (add-to-feedback db :fetch-followupmethods)}))
+
+
+(reg-event-db
+  :process-followupmethods
+  (fn
+    [db [_ response]]
+    (let [followupmethods (js->clj response)]
+      (js/console.log (str "Updating followupmethods: " followupmethods))
+      (assoc
+        (remove-from-feedback db :fetch-followupmethods)
+        :followupmethods followupmethods))))
+
+
+(reg-event-db
+  :bad-followupmethods
+  (fn [db [_ response]]
+    (js/console.log "Failed to fetch followupmethods")
+    (dispatch [:dispatch-later [{:ms 60000 :dispatch [:fetch-followupmethods]}]])
+    (assoc
+      db
+      :error (:response response))))
+
+
+(reg-event-fx
   :fetch-issues
   (fn [{db :db} _]
     (js/console.log "Fetching issues")
@@ -417,6 +452,13 @@
    (let [elector (get-elector (coerce-to-number elector-id) db)]
      (js/console.log (str "Setting elector to " elector))
      (assoc (clear-messages db) :elector elector))))
+
+
+(reg-event-db
+  :set-followupmethod
+  (fn [db [_ method-id]]
+     (js/console.log (str "Setting followupmethod to " method-id))
+    (assoc db :followupmethod method-id)))
 
 
 (reg-event-db
