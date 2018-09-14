@@ -42,3 +42,4 @@ WHERE followupactions.request_id = followuprequests.id
   AND visits.address_id = addresses.id
 	AND followupactions.actor = canvassers.id
 ;
+GRANT SELECT ON lv_followupactions TO canvassers, issueexperts;

@@ -67,6 +67,16 @@
     (:feedback db)))
 
 (reg-sub
+  :followupmethod
+  (fn [db _]
+    (:followupmethod db)))
+
+(reg-sub
+  :followupmethods
+  (fn [db _]
+    (:followupmethods db)))
+
+(reg-sub
   :issue
   (fn [db _]
     (:issue db)))

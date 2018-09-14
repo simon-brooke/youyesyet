@@ -44,7 +44,7 @@ version="0.1.1">
   <group name="issueexperts" parent="public">
     <documentation>People expert on particular issues. Able to read
     followup requests, and the electors to which they relate; able
-    to access (read/write) the issues wiki; able to write followuop
+    to access (read/write) the issues wiki; able to write followup
     action records.</documentation>
   </group>
   <group name="analysts" parent="public">
@@ -693,6 +693,9 @@ version="0.1.1">
     <property required="true" type="entity" name="issue_id"
     column="issue_id" entity="issues" farkey="id" distinct="user">
       <prompt prompt="issue_id" locale="en_GB.UTF-8"/>
+    </property>
+    <property type="string" name="issue_detail">
+      <prompt prompt="Issue detail" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="entity" name="method_id"
     column="method_id" entity="followupmethods" farkey="id">
