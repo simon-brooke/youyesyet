@@ -50,7 +50,7 @@
 ;; which provider to use
 (def *map-provider* :osm)
 
-(def osm-url "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
+(def osm-url "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
 (def osm-attrib "Map data &copy; <a href='http://openstreetmap.org'>OpenStreetMap</a> contributors")
 
 ;; My gods mapbox is user-hostile!
