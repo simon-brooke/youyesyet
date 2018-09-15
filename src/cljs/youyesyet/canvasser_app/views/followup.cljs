@@ -43,7 +43,7 @@
         elector @(subscribe [:elector])
         dwelling @(subscribe [:dwelling])
         method @(subscribe [:followupmethod])]
-    (js/console.log (str "followup/panel; Issue is " issue "; elector is " elector "; method is " method))
+    (js/console.log (str "followup/panel; Issue is " issue "; elector is " elector "; method is " method " (" (type method) ")"))
     (cond
      (nil? dwelling)
      (ui/error-panel "No dwelling selected")
@@ -81,7 +81,7 @@
            #(let []
               [:option {:value (:id %) :key (:id %)} (:id %)]) @(subscribe [:followupmethods]))]]
         [:p.widget
-         [:label {:for "method_detail"} (if (= @(subscribe [:followupmethod]) "Phone") "Telephone number" "EMail Address")]
+         [:label {:for "method_detail"} (if (= (str @(subscribe [:followupmethod])) "Phone") "Telephone number" "EMail Address")]
          [:input {:type "text" :id "method_detail" :name "method_detail"
                   :on-change #(dispatch [:set-method-detail (.-value (.-target %))])}]]
         [:p.widget
