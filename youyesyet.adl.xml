@@ -64,6 +64,7 @@ version="0.1.1">
     generally.</documentation>
   </group>
 
+
   <entity table="electors" name="electors" magnitude="6"
   volatility="5">
     <documentation>All electors known to the system; electors are
@@ -130,9 +131,8 @@ version="0.1.1">
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
-    entity genders already has a key - not generating one
-    -->
+
+
   <entity table="genders" name="genders" magnitude="1"
   volatility="6">
     <documentation>All genders which may be assigned to
@@ -159,6 +159,7 @@ version="0.1.1">
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
+
 
   <entity table="dwellings" name="dwellings" magnitude="6"
   volatility="6">
@@ -210,6 +211,7 @@ version="0.1.1">
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
+
 
   <entity table="addresses" name="addresses" magnitude="6"
   volatility="6">
@@ -694,7 +696,7 @@ version="0.1.1">
     column="issue_id" entity="issues" farkey="id" distinct="user">
       <prompt prompt="issue_id" locale="en_GB.UTF-8"/>
     </property>
-    <property type="string" name="issue_detail">
+    <property type="string" name="issue_detail" size="128">
       <prompt prompt="Issue detail" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="entity" name="method_id"

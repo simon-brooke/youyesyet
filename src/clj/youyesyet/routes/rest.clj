@@ -103,16 +103,20 @@
   (let [last-visit (last-visit-by-current-user request)
         params (massage-params request)]
     (log/debug "rest/current-visit-id: type of address_id is: " (type (:address_id params)))
-    (if
-      (=
-       (:address_id params)
-       (:address_id last-visit))
-      (:id last-visit)
-      (db/create-visit!
-       db/*db*
-       {:address_id (:address_id params)
-        :canvasser_id (-> request :session :user :id)
-        :date (jt/to-sql-timestamp (jt/local-date-time))}))))
+    (let
+      [result (if
+                (=
+                  (:address_id params)
+                  (:address_id last-visit))
+                (:id last-visit)
+                (:id
+                  (db/create-visit!
+                    db/*db*
+                    {:address_id (:address_id params)
+                     :canvasser_id (-> request :session :user :id)
+                     :date (jt/to-sql-timestamp (jt/local-date-time))})))]
+      (log/debug "rest/current-visit-id returning " result "; type is " (type result))
+      result)))
 
 
 (defn create-intention-and-visit!
@@ -137,7 +141,7 @@
           (db/create-intention!
             db/*db*
             (assoc
-              params :visit_id (current-visit-id request)))
+              (merge {:actions nil, :issue_detail nil} params) :visit_id (current-visit-id request)))
           201)
         {:status 400
          :body (json/write-str
@@ -152,16 +156,21 @@
   `method_id` and `method_detail`). Ye cannae reasonably create a request
   without having recorded the visit, so let's not muck about."
   [request]
-  (let [params (assoc
+  (let [params (merge
+                 {:actions nil, :issue_detail ""}
+                 (assoc
                  (massage-params request)
-                 :visit_id (current-visit-id request))]
+                 :visit_id (current-visit-id request)))]
+    (log/debug "create-request-and-visit! params are " params)
     (valid-user-or-forbid
       (with-params-or-error
         (do-or-server-fail
-          (db/create-followuprequest! db/*db* params)
+          (db/create-followuprequest!
+            db/*db* params)
           201)
         params
-        #{:elector_id :visit_id :issue_id :method_id :method_detail})
+        #{:elector_id :visit_id :issue_id :method_id
+          :method_detail})
       request)))
 
 
@@ -174,7 +183,7 @@
         (valid-user-or-forbid
       (with-params-or-error
         (do-or-server-fail
-          (db/update-elector! db/*db* params)
+          (db/update-elector! db/*db* (merge {:email nil, :phone nil, :gender nil} params))
           201)
         params
         #{:id :signature})
