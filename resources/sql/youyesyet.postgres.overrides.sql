@@ -30,6 +30,7 @@ SELECT electors.name ||', '|| addresses.address ||', '|| addresses.postcode ||',
 	followupactions.request_id,
 	canvassers.username ||', '|| canvassers.fullname ||', '|| addresses.address ||', '|| addresses.postcode ||', '|| canvassers.phone ||', '|| canvassers.email AS actor_expanded,
 	followupactions.actor,
+	canvassers.fullname AS actor_name,
 	followupactions.date,
 	followupactions.notes,
 	followupactions.closed,
@@ -43,3 +44,10 @@ WHERE followupactions.request_id = followuprequests.id
 	AND followupactions.actor = canvassers.id
 ;
 GRANT SELECT ON lv_followupactions TO canvassers, issueexperts;
+
+
+------------------------------------------------------------------------
+-- request locking
+------------------------------------------------------------------------
+ALTER TABLE followuprequests ADD COLUMN locked_by INTEGER REFERENCES canvassers(id) ON DELETE SET NULL;
+ALTER TABLE followuprequests ADD COLUMN locked TIMESTAMP;

@@ -344,7 +344,8 @@
             {:address_id (-> db :address :id)
              :elector_id (-> db :elector :id)
              :issue_id (name (-> db :issue))
-             :method_id "Phone"
+             :issue_detail (-> db :issue-detail)
+             :method_id (-> db :followupmethod)
              :method_detail (-> db :method_detail)
              :action :create-request})
           :send-request))
@@ -467,6 +468,12 @@
  (fn [db [_ issue]]
    (js/console.log (str "Setting issue to " issue))
    (assoc (clear-messages db) :issue (keyword issue))))
+
+(reg-event-db
+ :set-issue-detail
+ (fn [db [_ issue-detail]]
+   (js/console.log (str "Setting issue-detail to " issue-detail))
+   (assoc (clear-messages db) :issue-detail issue-detail)))
 
 
 (reg-event-db

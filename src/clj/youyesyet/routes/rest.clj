@@ -157,7 +157,7 @@
   without having recorded the visit, so let's not muck about."
   [request]
   (let [params (merge
-                 {:actions nil, :issue_detail ""}
+                 {:actions nil, :issue_detail nil :locked_by nil :locked nil}
                  (assoc
                  (massage-params request)
                  :visit_id (current-visit-id request)))]

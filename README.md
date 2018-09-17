@@ -43,6 +43,20 @@ If you're thinking of joining in development on this I'd strongly recommend you 
 You should also read the [User-Oriented Specification](doc/specification/userspec.md) and any other documentation which appears under the *doc/specification* hierarchy.
 
 
+## Building this
+
+This application is built using [Application Description Language](); the intention is that soon Application Description Language will run as a Leiningen plugin, but that does not yet work.
+
+So first you must check out the Application Description Language repository as well as this repository, ideally within a a common directory;
+
+then:
+
+    cd adl
+    lein uberjar
+    java -jar target/adl-1.4.4-SNAPSHOT-standalone.jar --path ../youyesyet/ ../youyesyet/youyesyet.adl.xml
+
+This will generate a large number of the source files required by YouYesYet, **including** the database initialisation scripts.
+
 ## Getting the database up
 
 You'll need a file *profiles.clj*, with content similar to the following; it's not in the repository because it contains passwords.
@@ -62,8 +76,16 @@ Do get the database initialised, run
 I'm no longer using Migratus as I'm using [Application Description Language]()
 to generate the majority of the application, and, as changes are made to the application
 description, new database schemas are generated. The database initialisation script will
-be found at `resources/sql/youyesyet.postgres.sql`. Reference data initialisation scripts
-will in due course be stored in the same directory.
+be found at `resources/sql/youyesyet.postgres.sql`. Manually maintained overrides are found in
+`resources/sql/youyesyet.postgres.overrides.sql`. So to initialise the database, invoke
+
+    psql youyesyet_dev < resources/sql/youyesyet.postgres.sql
+
+followed by
+
+    psql youyesyet_dev < resources/sql/youyesyet.postgres.overrides.sql
+
+Reference data initialisation scripts will in due course be stored in the same directory.
 
 Once we have a more or less finished application it may be worth going back to
 [Migratus](https://github.com/yogthos/migratus); I might have a go at generating migrations from
@@ -75,19 +97,24 @@ To run in a dev environment, checkout the *develop* branch
 
 To download and install Javascript delendencies, run
 
+    cd youyesyet
     lein npm install
 
 To start a development web server for the application, run:
 
-    lein run
+Then
 
-If you're wanting to work on cljs development, you need two terminal sessions. In one run
+    lein repl
 
-    lein run
+Wait for the clojure `user=>` prompt to appear, and enter
 
-as above; in the other, run
+    (mount/start)
+
+This will get the application running for development; ideally, open a new terminal and invoke
 
     lein figwheel
+
+which will aid in work on the ClojureScript components.
 
 ## Running in a production environment
 

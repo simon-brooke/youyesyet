@@ -49,12 +49,12 @@
         Issue
       </label>
       {% ifmemberof issueexperts analysts issueeditors admin %}
-      <span id='visit' name='visit' class='pseudo-widget disabled'>
-        {{issue.id}}
+      <span id='issue_id' name='issue_id' class='pseudo-widget disabled'>
+        {{issue.id}} <em>{{record.issue_detail}}</em>
       </span>
       {% else %}
-      <span id='visit_id' name='visit_id' class='pseudo-widget not-authorised'>
-        You are not permitted to view visit of followuprequests
+      <span id='issue_id' name='issue_id' class='pseudo-widget not-authorised'>
+        You are not permitted to view issue of followuprequests
       </span>
       {% endifmemberof %}
       {% ifmemberof issueexperts admin %}
@@ -104,7 +104,7 @@
         <tbody>
           {% for action in actions %}
           <tr>
-            <td>{{action.actor}}</td>
+            <td><a href="{{servlet-context}}/form-canvassers-Canvasser?id={{action.actor}}">{{action.actor_name}}</a></td>
             <td>{{action.date}}</td>
             <td>{{action.closed}}</td>
           </tr>
@@ -116,13 +116,13 @@
       </table>
     </p>
     {% endif %}
+    {% if not closed %}
     <p class='widget'>
       <label for='notes'>
         Your notes
       </label>
       {% ifmemberof admin issueexperts %}
-      <textarea rows='8' cols='60' id='notes' name='notes'>
-      </textarea>
+      <textarea rows='8' cols='60' id='notes' name='notes'></textarea>
       {% endifmemberof %}
     </p>
     <p class='widget'>
@@ -156,6 +156,7 @@
     <input id='save-button' name='save-button' class='action-safe' type='submit' value='Save!'/>
     </p>
     {% endifmemberof %}
+    {% endif %}
   </form>
 </div>
 
