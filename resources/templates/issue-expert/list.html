@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block extra-head %}
+<meta http-equiv="refresh" content="60">
+{% endblock %}
+
 {% block back-links %}
 <div>
 <div class='back-link-container'>
@@ -81,9 +85,13 @@ Method
 {{ record.raised }}
 </td>
 <td>
-<a href='{{servlet-context}}/form-issues-Issue?id={{ record.issue_id }}'>
-{{ record.issue_id_expanded }}
-</a>
+  {% ifequal record.issue_id "Other" %}
+  {{ record.issue_detail }}
+  {% else %}
+  <a href='{{servlet-context}}/form-issues-Issue?id={{ record.issue_id }}'>
+    {{ record.issue_id }}
+  </a>
+  {% endifequal %}
 </td>
 <td>
 <a href='{{servlet-context}}/form-followupmethods-Followupmethod?id={{ record.method_id }}'>

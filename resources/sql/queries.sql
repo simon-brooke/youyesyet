@@ -53,6 +53,7 @@ FROM followuprequests as request,
 where not exists (select * from followupactions as action
                   where action.request_id = request.id
                   and action.closed = true)
+and request.locked_by is null
 and request.elector_id = electors.id
 and request.visit_id = visits.id
 and visits.address_id = addresses.id
