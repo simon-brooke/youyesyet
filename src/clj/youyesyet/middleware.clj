@@ -69,10 +69,8 @@
   (fn [request]
     (if-let [user (-> request :session :user)]
       (binding [*user* user]
-        (log/debug "*user* bound as: " *user*)
         (handler request))
       (do
-        (log/debug "No user found in session")
         (handler request)))))
 
 

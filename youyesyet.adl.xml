@@ -231,9 +231,6 @@ version="0.1.1">
     column="postcode" size="16" distinct="user">
       <prompt prompt="Postcode" locale="en_GB.UTF-8"/>
     </property>
-    <property type="string" name="phone" column="phone" size="16">
-      <prompt prompt="Phone" locale="en_GB.UTF-8"/>
-    </property>
     <property type="entity" name="district_id" column="district_id"
     entity="districts" farkey="id">
       <prompt prompt="District" locale="en_GB.UTF-8"/>
@@ -275,9 +272,6 @@ version="0.1.1">
       </field>
       <field property="postcode">
         <prompt prompt="Postcode" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="phone">
-        <prompt prompt="Phone" locale="en_GB.UTF-8"/>
       </field>
       <field property="district_id">
         <prompt prompt="District" locale="en_GB.UTF-8"/>
@@ -564,7 +558,7 @@ version="0.1.1">
     column="fullname" size="64" distinct="user">
       <prompt prompt="fullname" locale="en_GB.UTF-8"/>
     </property>
-    <property name="avatar" type="image">
+    <property name="avatar" type="image" size="256">
       <documentation>An image of the canvasser, so that other members of their
         team can recognise them.</documentation>
       <prompt prompt="Avatar" locale="en_GB.UTF-8"/>
@@ -584,6 +578,9 @@ version="0.1.1">
     </property>
     <property type="string" name="phone" column="phone" size="16"
     distinct="user">
+      <documentation>Does a canvasser record need a phone field? There is a phone
+        field on the elector record. I suppose, for under-16 canvassers, there may
+        be no elector record.</documentation>
       <prompt prompt="phone" locale="en_GB.UTF-8"/>
     </property>
     <property type="string" name="email" column="email" size="128"
