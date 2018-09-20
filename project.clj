@@ -68,7 +68,7 @@
             [lein-kibit "0.1.6"]
             [lein-less "1.7.5"]
             [lein-npm "0.6.2"]
-            [lein-release "1.1.3"]
+            [lein-release "1.0.5"]
             [lein-uberwar "0.2.0"]
             [migratus-lein "0.5.9"]
             [org.clojars.punkisdead/lein-cucumber "1.0.7"]]
