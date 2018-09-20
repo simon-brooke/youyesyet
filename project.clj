@@ -1,4 +1,4 @@
-(defproject youyesyet "0.2.0-SNAPSHOT"
+(defproject youyesyet "0.2.0"
 
   :description "Canvassing tool for referenda"
   :url "https://github.com/simon-brooke/youyesyet"
