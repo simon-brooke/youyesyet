@@ -3,12 +3,13 @@
   :description "Canvassing tool for referenda"
   :url "https://github.com/simon-brooke/youyesyet"
 
-  :dependencies [[adl-support "0.1.4-SNAPSHOT"]
+  :dependencies [[adl-support "0.1.4"]
                  [bouncer "1.0.1"]
                  [ch.qos.logback/logback-classic "1.2.3"]
                  [clj-oauth "1.5.5"]
                  [cljsjs/react-leaflet "1.6.5-0"]
                  [cljs-ajax "0.7.4"]
+                 [com.andrewmcveigh/cljs-time "0.5.2"]
                  [clojure.java-time "0.3.2"]
                  [com.cemerick/url "0.1.1"]
                  [compojure "1.6.1"]
@@ -47,6 +48,9 @@
                  [secretary "1.2.3"]
                  [selmer "1.11.8"]]
 
+  :deploy-repositories [["releases" :clojars]
+                        ["snapshots" :clojars]]
+
   :min-lein-version "2.0.0"
 
   :jvm-opts ["-server" "-Dconf=.lein-env"]
@@ -57,7 +61,7 @@
   :main ^:skip-aot youyesyet.core
   :migratus {:store :database :db ~(get (System/getenv) "DATABASE_URL")}
 
-  :plugins [;;[lein-adl ["0.1.2"]]
+  :plugins [[lein-adl "0.1.6"]
             [lein-cljsbuild "1.1.7"]
             [lein-codox "0.10.4"]
             [lein-cprop "1.0.3"]
@@ -113,9 +117,9 @@
 
 
   :profiles {:uberjar {:omit-source true
-                       :prep-tasks [;;"adl"
-                                     "compile"
-                                     ["cljsbuild" "once" "min"]]
+                       :prep-tasks ["adl"
+                                    "compile"
+                                    ["cljsbuild" "once" "min"]]
                        :cljsbuild
                        {:builds
                         {:min

@@ -45,3 +45,5 @@ resources/sql/youyesyet\.postgres\.sql
 youyesyet\.canonical\.adl\.xml
 
 youyesyet\.dump\.20180816
+
+*.tar
