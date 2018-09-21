@@ -1,6 +1,8 @@
 (defproject youyesyet "0.2.1-SNAPSHOT"
 
   :description "Canvassing tool for referenda"
+  :license {:name "GNU General Public License,version 2.0 or (at your option) any later version"
+            :url "https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html"}
   :url "https://github.com/simon-brooke/youyesyet"
 
   :dependencies [[adl-support "0.1.4"]
@@ -91,7 +93,6 @@
   :release-tasks [["vcs" "assert-committed"]
                   ["change" "version" "leiningen.release/bump-version" "release"]
                   ["vcs" "commit"]
-                  ;; ["vcs" "tag"] -- not working, problems with secret key
                   ["clean"]
                   ["uberjar"]
                   ["uberwar"]
