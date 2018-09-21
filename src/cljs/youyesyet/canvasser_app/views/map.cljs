@@ -112,5 +112,4 @@
   []
   (get-current-location)
   (reagent/create-class {:reagent-render map-render
-                         :component-did-mount map-did-mount})
-  (.panTo @(subscribe [:view]) (.latLng js/L @(subscribe [:latitude]) @(subscribe [:longitude]))))
+                         :component-did-mount map-did-mount}))

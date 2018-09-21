@@ -1,6 +1,8 @@
-(defproject youyesyet "0.2.0"
+(defproject youyesyet "0.2.1"
 
   :description "Canvassing tool for referenda"
+  :license {:name "GNU General Public License,version 2.0 or (at your option) any later version"
+            :url "https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html"}
   :url "https://github.com/simon-brooke/youyesyet"
 
   :dependencies [[adl-support "0.1.4"]
@@ -77,7 +79,8 @@
 
   :codox {:metadata {:doc "FIXME: write docs"}
           :languages [:clojure :clojurescript]
-          :source-paths ["src/clj" "src/cljc" "src/cljs"]}
+          :source-paths ["src/clj" "src/cljc" "src/cljs"]
+          :output-path "documentation"}
 
   :npm {:dependencies [[datatables.net "1.10.19"]
                        [datatables.net-dt "1.10.19"]
@@ -88,15 +91,15 @@
                        [simplemde "1.11.2"]]
         :root "resources/public/js/lib"}
 
+  ;; `lein release` doesn't play nice with `git flow release`. Run `lein release` in the
+  ;; `develop` branch, then reset the `master` branch to the release tag.
+
   :release-tasks [["vcs" "assert-committed"]
                   ["change" "version" "leiningen.release/bump-version" "release"]
-                  ["adl"]
                   ["vcs" "commit"]
-                  ;; ["vcs" "tag"] -- not working, problems with secret key
                   ["clean"]
-                  ["npm" "install"]
                   ["uberjar"]
-                  [uberwar]
+                  ["uberwar"]
                   ["docker" "build"]
                   ["docker" "push"]
                   ["change" "version" "leiningen.release/bump-version"]
@@ -119,6 +122,7 @@
   :profiles {:uberjar {:omit-source true
                        :prep-tasks ["adl"
                                     "compile"
+                                    ["npm" "install"]
                                     ["cljsbuild" "once" "min"]]
                        :cljsbuild
                        {:builds
