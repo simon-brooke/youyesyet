@@ -4,8 +4,6 @@
   :license {:name "GNU General Public License,version 2.0 or (at your option) any later version"
             :url "https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html"}
   :url "https://github.com/simon-brooke/youyesyet"
-  :license {:name "GNU General Public License,version 2.0 or (at your option) any later version"
-            :url "https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html"}
 
   :dependencies [[adl-support "0.1.4"]
                  [bouncer "1.0.1"]
