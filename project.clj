@@ -90,13 +90,11 @@
 
   :release-tasks [["vcs" "assert-committed"]
                   ["change" "version" "leiningen.release/bump-version" "release"]
-                  ["adl"]
                   ["vcs" "commit"]
                   ;; ["vcs" "tag"] -- not working, problems with secret key
                   ["clean"]
-                  ["npm" "install"]
                   ["uberjar"]
-                  [uberwar]
+                  ["uberwar"]
                   ["docker" "build"]
                   ["docker" "push"]
                   ["change" "version" "leiningen.release/bump-version"]
@@ -119,6 +117,7 @@
   :profiles {:uberjar {:omit-source true
                        :prep-tasks ["adl"
                                     "compile"
+                                    ["npm" "install"]
                                     ["cljsbuild" "once" "min"]]
                        :cljsbuild
                        {:builds
