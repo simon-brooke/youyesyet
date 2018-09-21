@@ -49,9 +49,11 @@
             (js/console.log (str "Current location is: " lat ", " lng))
             (dispatch [:set-latitude lat])
             (dispatch [:set-longitude lng])
-            ;; (.panTo @(subscribe [:view]) (.latLng js/L lat lng))
+            (.panTo @(subscribe [:view]) (.latLng js/L lat lng))
             (locality lat lng))))
-      (js/console.log "Geolocation not available"))
+      (do
+        (js/console.log "Geolocation not available")
+        0))
     (catch js/Object any
       (js/console.log "Exception while trying to access location: " + any)
       0)))
