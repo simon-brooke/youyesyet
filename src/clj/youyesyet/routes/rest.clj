@@ -69,7 +69,7 @@
                       (fn [e]
                         (assoc e
                           :intentions
-                          (db/list-intentions-by-elector db/*db* {:id (:id e)})))
+                          (db/list-elector-intentions db/*db* {:id (:id e)})))
                       (db/list-electors-by-dwelling db/*db* {:id (:id d)}))))
                 (db/list-dwellings-by-address db/*db* {:id (:id a)}))))
           addresses)))

@@ -181,6 +181,7 @@
   ;; TODO: why is this an `-fx`? Does it need to be?
   (fn
     [{db :db} [_ response]]
+    (js/console.log (str ":process-locality: " response))
     (js/console.log (str "Updating locality data: " (count response) " addresses " ))
     (refresh-map-pins)
     {:db (assoc
@@ -194,7 +195,7 @@
   (fn
     [{db :db} [_ response]]
     ;; TODO: signal something has failed? It doesn't matter very much, unless it keeps failing.
-    (js/console.log "Failed to fetch locality data")
+    (js/console.log (str "Failed to fetch locality data" response))
     ;; loop to do it again
     (dispatch [:dispatch-later [{:ms 60000 :dispatch [:fetch-locality]}]])
     {:db (assoc
