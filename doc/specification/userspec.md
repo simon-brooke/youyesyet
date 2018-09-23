@@ -75,18 +75,26 @@ Note that:
 
 The map view shows a map of the streets immediately around their current location, overlaid, on dwellings where canvas has already been done, with icons indicating the voting preference expressed, and with the dwellings where canvassing is still required marked with an icon indicating this:
 
-![Map View](https://raw.githubusercontent.com/simon-brooke/youyesyet/master/dummies/mapview_800.png)
+![Map View](https://raw.githubusercontent.com/simon-brooke/youyesyet/master/dummies/mapview.png)
 
 Selecting a building on the map leads to
 
-1. On buildings with multiple flats, a schematic view of the flats in the building (I haven't yet really got a good idea how to do this; it may be just a list). Selecting a flat from this view leads to the *Electors View*;
+1. On buildings with multiple flats, the *Building View*;
 2. On buildings with only one dwelling, the *Electors View*.
+
+## Building View
+
+A list of dwellings in a building.
+
+![Building View](https://raw.githubusercontent.com/simon-brooke/youyesyet/master/dummies/building.png)
+
+Selecting a flat from this view leads to the *Electors View*.
 
 ## Electors View
 
 The *Electors View* shows a schematic of the registered electors in a dwelling:
 
-![Electors View](https://raw.githubusercontent.com/simon-brooke/youyesyet/master/dummies/occupants_800.png)
+![Electors View](https://raw.githubusercontent.com/simon-brooke/youyesyet/master/dummies/occupants.png)
 
 One figure is shown for each elector, labelled with their name. In the dummy pages I've shown gendered stick figures, because I believe that in many casesthis will help the canvasser identify the person who has answered the door; but this may be seen as excluding electors with non-binary gender, and, in any case, I believe we don't actually get gender data (other than salutation) in the electoral roll data. So this may have to be reconsidered.
 
@@ -112,9 +120,18 @@ The *Issues View* is a simple list of issues:
     | Other                                          |
     +------------------------------------------------+
 
+![Issues View](https://raw.githubusercontent.com/simon-brooke/youyesyet/master/dummies/issues.png)
+
+
 This list will not be hard-coded but will be dynamic; thus, if we find an issue we didn't predict is regularly coming up on the doorstep an *Administrator* can add it to the list.
 
-Selecting the back button from the *Issues View* returns to the *Electors View*. Selecting any option from the Issues view leads to a single page giving top level points the canvasser can make to the elector on the doorstep, and a link to a *Followup Request* form. There is also a 'back' button allowing the user to return to the *Issues View*
+Selecting the back button from the *Issues View* returns to the *Electors View*. Selecting any option from the Issues view leads to the *Issue View*.
+
+## Issue View
+
+A single page giving top level points the canvasser can make to the elector on the doorstep, regarding the selected issue; and a link to a *Followup Request* form. There is also a 'back' button allowing the user to return to the *Issues View*.
+
+![Issue View](https://raw.githubusercontent.com/simon-brooke/youyesyet/master/dummies/issue.png)
 
 ## Followup Request form
 
@@ -131,6 +148,8 @@ The *Followup Request* form is a simple form which allows the canvasser to recor
     |                     [ Request Followup!  ]     |
     |                                                |
     +------------------------------------------------+
+
+![Followup Request Form](https://raw.githubusercontent.com/simon-brooke/youyesyet/master/dummies/followup.png)
 
 ## How Street Canvassers will use the system
 

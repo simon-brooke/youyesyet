@@ -115,7 +115,7 @@
 
 (defn handle-logout
   [request]
-  (let [r (response/found (str (:servlet-context request) "/home"))]
+  (let [r (response/found "/home")]
     (assoc r :session (dissoc (:session r) :user))))
 
 
