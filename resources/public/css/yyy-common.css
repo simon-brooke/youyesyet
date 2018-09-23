@@ -212,7 +212,7 @@ th {
 	width: 30%;
 	float: right;
   position: fixed;
-  bottom: 3.5em;
+  bottom: 2em;
   right: 0;
 	z-index: 175;
   background: transparent;
@@ -397,6 +397,10 @@ th {
   #content {
     width: 100%;
     padding-bottom: 2em;
+  }
+
+  #issue-text {
+    font-size: 200%;
   }
 
   #main-container {

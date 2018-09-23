@@ -85,3 +85,13 @@ WHERE roles.id = ln_canvassers_roles.role_id
 	AND ln_canvassers_roles.canvasser_id = :id
 ORDER BY roles.name,
 	roles.id
+
+-- :name list-elector-intentions :? :*
+-- :doc short form of `list-intentions-by-elector`, returning far less data, for use in `youyesyet.routes.rest/get-local-data`, q.v.
+-- TODO: should be limited to visits in the past 24 hours, to prevent the app being
+-- used to harrass NO voters. See https://github.com/simon-brooke/youyesyet/issues/58
+SELECT intentions.id, intentions.option_id, visits.date
+FROM intentions, visits
+WHERE intentions.visit_id = visits.id
+AND intentions.elector_id = :id
+ORDER BY visits.date DESC

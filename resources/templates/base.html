@@ -27,7 +27,7 @@
         <img id="nav-icon" src="{{servlet-context}}/img/threelines.png" alt="Menu"/>
         <menu id="nav-menu" class="nav">
           <li class=""><a href="{{servlet-context}}/home">Home</a></li>
-          <li class=""><a href="{{servlet-context}}/library">Library</a></li>
+          <li class=""><a href="https://library.projecthope.scot/">Library</a></li>
           {% if user %}
           <li class=""><a href="{{servlet-context}}/roles">Roles</a></li>
           <li class=""><a href="{{servlet-context}}/logout">Logout</a></li>
@@ -68,18 +68,31 @@
         <!-- content: put your main page content into this block -->
         {% endblock %}
       </div>
+      <div id="cookies">
+        <div id="more-about-cookies">
+          This website stores session information as a 'cookie' on your browser.
+          This helps us show you the content you want to see. This cookie does
+          not identify you, and cannot be read by other websites. It is deleted
+          by your browser as soon as you leave this site. This website does not
+          use any third party cookies, so your visit here cannot be tracked by
+          other websites.
+        </div>
+        <div id="about-cookies">
+          About cookies
+        </div>
+      </div>
       <br clear="both"/>
     </div>
     {% block foot %}
     <!-- foot: override this block if you don't want the standard footer -->
     <footer>
       <div id="credits">
-        <div>
+        <!-- div>
           <img src="{{servlet-context}}/img/credits/ric-logo.png" width="24" height="24"/>
           A project of the
           <a href="https://radical.scot/">Radical Independence Campaign</a> ||
           Version {{version}}
-        </div>
+        </div -->
         <div>
           <img height="16" width="16" alt="Clojure" src="{{servlet-context}}/img/credits/luminus-logo.png"/>Built with <a href="http://www.luminusweb.net/">LuminusWeb</a> ||
           <img height="16" width="16" alt="Clojure" src="{{servlet-context}}/img/credits/clojure-icon.gif"/> Powered by <a href="http://clojure.org">Clojure</a> ||

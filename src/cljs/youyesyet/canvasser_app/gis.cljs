@@ -2,6 +2,7 @@
       :author "Simon Brooke"}
   youyesyet.canvasser-app.gis
   (:require [cljs.reader :refer [read-string]]
+            [clojure.string :refer [lower-case]]
             [cemerick.url :refer (url url-encode)]
             [day8.re-frame.http-fx]
             [re-frame.core :refer [dispatch reg-event-db reg-event-fx subscribe]]
@@ -66,13 +67,14 @@
         (set
           (remove
             nil?
-            (map
-              :intention
-              (mapcat :electors
-                      (:dwellings address)))))]
+            (map :option_id
+                 (mapcat
+                   :intentions
+                   (mapcat :electors
+                           (:dwellings address))))))]
     (case (count intentions)
       0 "unknown-pin"
-      1 (str (name (first intentions)) "-pin")
+      1 (lower-case (str (name (first intentions)) "-pin"))
       "mixed-pin")))
 
 

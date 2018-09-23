@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- a page which can be served as static (by nginx) if Tomcat has crashed -->
+    <!-- head: if you want entire custom head content, override this block. -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="referrer" content="same-origin">
+    <link href="../css/yyy-common.css" rel="stylesheet" type="text/css" />
+    <link href="../css/yyy-site.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
+    <title>Project Hope: 502 Bad Gateway</title>
+
+
+    <!-- extra-head: put any additional markup to go into the head of your document into this block -->
+    <!-- e.g. script tags, link tags -->
+
+  </head>
+  <body>
+
+    <!-- whole-page: if you want an entire custom page layout, override this block. -->
+
+    <header>
+      <h1>Sorry, we have a problem</h1>
+    </header>
+
+    <div id="main-container" class="container">
+      <h2><span class="text-danger">Error: 502 Bad Gateway</span></h2>
+      <p>
+        We are suffering an intermittent problem causing an occasional crash of
+        the Project Hope canvassing application. We apologise for this, and are
+        working on a permanent fix.
+      </p>
+      <p>
+        The application will restart automatically
+        within five minutes, please take a short break.
+      </p>
+
+      </div>
+      <br clear="both"/>
+    </div>
+
+    <!-- foot: override this block if you don't want the standard footer -->
+    <footer>
+      <div id="credits">
+        <div>
+          <img height="16" width="16" alt="Clojure" src="/img/credits/luminus-logo.png"/>Built with <a href="http://www.luminusweb.net/">LuminusWeb</a> ||
+          <img height="16" width="16" alt="Clojure" src="/img/credits/clojure-icon.gif"/> Powered by <a href="http://clojure.org">Clojure</a> ||
+          <img height="16" width="16" alt="GitHub" src="/img/credits/github-logo-transparent.png"/>Find me/fork me on <a href="https://github.com/simon-brooke/youyesyet">Github</a> ||
+          <img height="16" width="16" alt="Free Software Foundation" src="/img/credits/gnu.small.png"/>Licensed under the <a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License version 2.0</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+
+
+
