@@ -89,19 +89,19 @@
   "renders the HTML `template` located relative to resources/templates in
   the context of this session and with these parameters."
   [template & [params]]
-    (log/debug (str "layout/render: template: '" template "'"))
-    (content-type
-      (ok
-        (parser/render-file
-          template
-          (merge params
+  (log/debug (str "layout/render: template: '" template "'"))
+  (content-type
+   (ok
+    (parser/render-file
+     template
+     (merge params
             {:page template
-            :csrf-token *anti-forgery-token*
-            :user *user*
-            :user-roles (get-user-roles *user*)
-            :site-title (:site-title env)
-            :version (System/getProperty "youyesyet.version")})))
-      "text/html; charset=utf-8"))
+             :csrf-token *anti-forgery-token*
+             :user *user*
+             :user-roles (get-user-roles *user*)
+             :site-title (:site-title env)
+             :version (System/getProperty "youyesyet.version")})))
+   "text/html; charset=utf-8"))
 
 
 
@@ -113,6 +113,16 @@
   returns a response map with the error page as the body
   and the status specified by the status key"
   [error-details]
+  (log/debug "Showing error page: " error-details)
   {:status  (:status error-details)
    :headers {"Content-Type" "text/html; charset=utf-8"}
-   :body    (render "error.html" {} error-details)})
+   :body    (parser/render-file
+             "error.html"
+             (assoc
+               error-details
+               :site-title (:site-title env)
+               :title
+               (str "Apologies, we have a problem: "
+                    (:title error-details))
+               :error (:message error-details)
+               :message nil))})
