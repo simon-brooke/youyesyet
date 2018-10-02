@@ -5,7 +5,7 @@
             :url "https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html"}
   :url "https://github.com/simon-brooke/youyesyet"
 
-  :dependencies [[adl-support "0.1.4"]
+  :dependencies [[adl-support "0.1.6-SNAPSHOT"]
                  [bouncer "1.0.1"]
                  [ch.qos.logback/logback-classic "1.2.3"]
                  [clj-oauth "1.5.5"]
