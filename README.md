@@ -45,17 +45,27 @@ You should also read the [User-Oriented Specification](doc/specification/userspe
 
 ## Building this
 
-This application is built using [Application Description Language](); the intention is that soon Application Description Language will run as a Leiningen plugin, but that does not yet work.
+This application is built using [Application Description Language](https://github.com/simon-brooke/adl/). The `adl` pre-processor is run as a prep task to building the `uberjar`, which in turn is preparatory to building the `uberwar`.
 
-So first you must check out the Application Description Language repository as well as this repository, ideally within a a common directory;
+This will generate a large number of the source files required by YouYesYet, **including** the database initialisation scripts. These generated source files are not, as a matter of policy, held in the repository.
 
-then:
+### What is auto-generated, and how to override it
 
-    cd adl
-    lein uberjar
-    java -jar target/adl-1.4.4-SNAPSHOT-standalone.jar --path ../youyesyet/ ../youyesyet/youyesyet.adl.xml
+The following files are generated from the master file `youyesyet.adl.xml`:
 
-This will generate a large number of the source files required by YouYesYet, **including** the database initialisation scripts.
+* `resources/sql/queries.auto.sql` - [HugSQL](https://www.hugsql.org/) queries for selection, insertion, modification and deletion of records of all entities described in the ADL file.
+* `resources/sql/[application-name].postgres.sql` - [Postgres](https://www.postgresql.org/) database initialisation script including tables for all entities, convenience views for all entities, all necessary link tables and referential integrity constraints.
+* `resources/templates/auto/*.html` - [Selmer](https://github.com/yogthos/Selmer) templates for each form or list list specified in the ADL file (pages are not yet handled).
+* `src/clj/[application-name]/routes/auto.clj` - [Compojure]() routes for each form or list list specified in the ADL file (pages are not yet handled).
+* `src/clj/[application-name]/routes/auto-json.clj` - [Compojure]() routes returning JSON responses for each query generated in `resources/sql/queries.auto.sql`.
+
+*You are strongly advised never to edit any of these files*.
+
+* To override any query, add that query to a file `resources/sql/queries.sql`
+* To add additional material (for example reference data) to the database initialisation, add it to a separate file or a family of separate files.
+* To override any template, copy the template file from `resources/templates/auto/` to `resources/templates/` and edit it there.
+* To override any route, write a function of the same name in the namespace `[application-name].routes.manual`.
+
 
 ## Getting the database up
 
@@ -73,7 +83,7 @@ Do get the database initialised, run
 
     createdb youyesyet_dev
 
-I'm no longer using Migratus as I'm using [Application Description Language]()
+I'm no longer using Migratus as I'm using [Application Description Language](https://github.com/simon-brooke/adl/)
 to generate the majority of the application, and, as changes are made to the application
 description, new database schemas are generated. The database initialisation script will
 be found at `resources/sql/youyesyet.postgres.sql`. Manually maintained overrides are found in
@@ -118,7 +128,12 @@ which will aid in work on the ClojureScript components.
 
 ## Running in a production environment
 
-Doesn't really work yet; if you want to try it, see [Bug #36](https://github.com/simon-brooke/youyesyet/issues/36) and check out the associated feature branch.
+Either
+
+1. run `lein uberjar` and execute the resulting jar file directly; or
+2. run `lein uberwar` and serve the resulting war file from a servlet container.
+
+The [beta production server](https://www.projecthope.scot/) currently runs an uberwar build in Tomcat behind Nginx.
 
 ## Working on this project
 
@@ -149,7 +164,7 @@ Note that all tools recommended in this document are free for non-commercial use
 
 ### Editors/IDEs
 
-I (Simon) use, like and recommend [LightTable](http://lighttable.com/) as my editor; I used to use Emacs, and there is excellent Clojure tooling for Emacs, but these days Emacs ways of working seem just too far from everything else to be comfortable to me. [NightCode](https://sekao.net/nightcode/) is a lighter-weight Clojure IDE which you may like. There's also [Cursive](https://cursive-ide.com/) but it isn't free and I haven't tried it.
+I (Simon) use, like and recommend [LightTable](http://lighttable.com/) as my editor; I used to use Emacs, and there is excellent Clojure tooling for Emacs, but these days Emacs ways of working seem just too far from everything else to be comfortable to me. [NightCode](https://sekao.net/nightcode/) is a lighter-weight Clojure IDE which you may like. There's also [Cursive](https://cursive-ide.com/) but it isn't free and I have so far found it more annoying than helpful; or [Counterclockwise](https://github.com/ccw-ide/ccw) which I don't have recent experience of.
 
 ### Git
 
