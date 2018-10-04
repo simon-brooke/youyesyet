@@ -79,7 +79,7 @@ AND visits.id = :id
 
 -- :name list-roles-by-canvasser :? :*
 -- :doc links all existing canvasser records related to a given role
-SELECT roles.*
+SELECT DISTINCT roles.*
 FROM roles, ln_canvassers_roles
 WHERE roles.id = ln_canvassers_roles.role_id
 	AND ln_canvassers_roles.canvasser_id = :id
