@@ -188,6 +188,7 @@ version="0.1.1">
         building.
       </documentation>
     </property>
+    <property type="list" name="electors" entity="electors"/>
     <list properties="listed" name="Dwellings">
       <field property="address_id">
         <prompt prompt="Building Address" locale="en_GB.UTF-8"/>
@@ -297,9 +298,7 @@ version="0.1.1">
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
-  <!--
-    entity visits already has a key - not generating one
-    -->
+
   <entity table="visits" name="visits" magnitude="7"
   volatility="2">
     <documentation>All visits made by canvassers to dwellings in
@@ -363,9 +362,7 @@ version="0.1.1">
     <permission permission="read" group="issueeditors"/>
     <permission permission="all" group="admin"/>
   </entity>
-  <!--
-    entity authorities already has a key - not generating one
-    -->
+
   <entity table="authorities" name="authorities" magnitude="2"
   volatility="7">
     <documentation>Authorities which may authenticate canvassers to
@@ -413,6 +410,7 @@ version="0.1.1">
     <permission group="issueeditors" permission="read"/>
     <permission group="admin" permission="all"/>
   </entity>
+
   <entity table="issues" name="issues" magnitude="1"
   volatility="3">
     <documentation>Issues believed to be of interest to electors,
@@ -776,9 +774,22 @@ version="0.1.1">
       <field property="name">
         <prompt prompt="name" locale="en_GB.UTF-8"/>
       </field>
-      <field property="members">
-        <prompt prompt="Members" locale="en_GB.UTF-8"/>
-      </field>
+      <auxlist property="members"
+               canadd="false"
+               onselect="form-canvassers-Canvasser">
+        <prompt prompt="Organisers" locale="en_GB.UTF-8"/>
+        <field property="id">
+        </field>
+        <field property="fullname">
+          <prompt prompt="name" locale="en_GB.UTF-8"/>
+        </field>
+        <field property="email">
+          <prompt prompt="email" locale="en_GB.UTF-8"/>
+        </field>
+        <field property="phone">
+          <prompt prompt="phone" locale="en_GB.UTF-8"/>
+        </field>
+      </auxlist>
     </form>
     <permission group="canvassers" permission="read"/>
     <permission group="teamorganisers" permission="read"/>

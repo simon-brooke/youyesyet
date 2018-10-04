@@ -72,7 +72,8 @@
                           (db/list-elector-intentions db/*db* {:id (:id e)})))
                       (db/list-electors-by-dwelling db/*db* {:id (:id d)}))))
                 (db/list-dwellings-by-address db/*db* {:id (:id a)}))))
-          addresses)))
+          addresses)
+        ))
     :ttl/threshold
     90000))
 
