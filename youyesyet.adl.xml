@@ -777,7 +777,7 @@ version="0.1.1">
       <auxlist property="members"
                canadd="false"
                onselect="form-canvassers-Canvasser">
-        <prompt prompt="Organisers" locale="en_GB.UTF-8"/>
+        <prompt prompt="Members" locale="en_GB.UTF-8"/>
         <field property="id">
         </field>
         <field property="fullname">
@@ -855,12 +855,6 @@ version="0.1.1">
       <field property="latitude">
         <prompt prompt="latitude" locale="en_GB.UTF-8"/>
       </field>
-      <field property="members">
-        <prompt prompt="Members" locale="en_GB.UTF-8"/>
-      </field>
-      <field property="organisers">
-        <prompt prompt="Organisers" locale="en_GB.UTF-8"/>
-      </field>
       <field property="longitude">
         <prompt prompt="longitude" locale="en_GB.UTF-8"/>
       </field>
@@ -880,7 +874,9 @@ version="0.1.1">
           <prompt prompt="phone" locale="en_GB.UTF-8"/>
         </field>
       </auxlist>
-      <auxlist property="members">
+      <auxlist property="members"
+               canadd="true"
+               onselect="form-canvassers-Canvasser">
         <prompt prompt="Members" locale="en_GB.UTF-8"/>
         <field property="id">
         </field>
