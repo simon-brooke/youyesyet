@@ -1,7 +1,8 @@
 (ns ^{:doc "Canvasser app single elector panel."
       :author "Simon Brooke"}
   youyesyet.canvasser-app.views.elector
-  (:require [reagent.core :refer [atom]]
+  (:require [clojure.string :refer [capitalize]]
+            [reagent.core :refer [atom]]
             [re-frame.core :refer [reg-sub subscribe dispatch]]
             [youyesyet.canvasser-app.ui-utils :as ui]))
 
@@ -51,7 +52,7 @@
   "Generate a row showing this `option` for this elector."
   [elector option]
   (let [optid (:id option)
-        optname (name optid)]
+        optname (capitalize (name optid))]
     [:tr {:key (str "options-" optname)}
      (let [selected (= optid (:intention elector))
            image (if selected (str "img/option/" optname "-selected.png")
