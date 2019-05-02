@@ -24,13 +24,14 @@
              user
              (db-core/list-roles-by-canvasser db-core/*db* {:id (:id user)}))]
     (log/info (str "Roles routing page; user is " user "; roles are " roles))
-    (cond
-      roles (layout/render "roles.html"
-                           {:title (str "Welcome " (:fullname user) ", what do you want to do?")
-                            :user user
-                            :roles (map #(assoc % :link (safe-name (:name %) :sql)) roles)})
-      (empty? roles)(response/found "/app")
-      true (assoc (response/found "/login") :session (dissoc session :user)))))
+    (if
+      roles
+      (layout/render
+        "roles.html"
+        {:title (str "Welcome " (:fullname user) ", what do you want to do?")
+         :user user
+         :roles (map #(assoc % :link (safe-name (:name %) :sql)) roles)})
+      (assoc (response/found "/login") :session (dissoc session :user)))))
 
 
 (defn admins-page

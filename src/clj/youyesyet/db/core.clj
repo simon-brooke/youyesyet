@@ -19,10 +19,12 @@
             PreparedStatement]))
 
 (defstate ^:dynamic *db*
-           :start (conman/connect! {:jdbc-url-env (env :database-url)
-                                    :jdbc-url "jdbc:postgresql://127.0.0.1/youyesyet_dev?user=youyesyet&password=thisisnotsecure"
-                                    :driver-class-name "org.postgresql.Driver"})
-           :stop (conman/disconnect! *db*))
+  "Primary connection to the main database. TODO: this does not yet enable
+  sharding."
+  :start (conman/connect! {:jdbc-url-env (env :database-url)
+                           :jdbc-url "jdbc:postgresql://127.0.0.1/youyesyet_dev?user=youyesyet&password=thisisnotsecure"
+                           :driver-class-name "org.postgresql.Driver"})
+  :stop (conman/disconnect! *db*))
 
 (add-json-type generate-string parse-string)
 (add-jsonb-type generate-string parse-string)
@@ -31,7 +33,9 @@
 (conman/bind-connection *db* "sql/queries.auto.sql" "sql/queries.sql")
 (hugsql/def-sqlvec-fns "sql/queries.auto.sql")
 
-(defn to-date [^java.sql.Date sql-date]
+(defn to-date
+  "Return the SQL date `sql-date` as a Java date."
+  [^java.sql.Date sql-date]
   (-> sql-date (.getTime) (java.util.Date.)))
 
 (extend-protocol jdbc/IResultSetReadColumn
@@ -59,10 +63,12 @@
   (set-parameter [v ^PreparedStatement stmt ^long idx]
     (.setTimestamp stmt idx (Timestamp. (.getTime v)))))
 
-(defn to-pg-json [value]
-      (doto (PGobject.)
-            (.setType "jsonb")
-            (.setValue (generate-string value))))
+(defn to-pg-json
+  "Render this `value` as JavaScript Object Notation."
+  [value]
+  (doto (PGobject.)
+    (.setType "jsonb")
+    (.setValue (generate-string value))))
 
 (extend-type clojure.lang.IPersistentVector
   jdbc/ISQLParameter

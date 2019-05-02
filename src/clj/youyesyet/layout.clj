@@ -40,7 +40,15 @@
 
 
 (declare ^:dynamic *app-context*)
-(def ^:dynamic *user* nil)
+;;          "Bound to the servlet context, if we're running as a servlet; otherwise
+;;          from configuration. See [[youyesyet.middleware/wrap-context]]."
+
+(def ^:dynamic *user*
+  "The current user, in circumstances in which we do not have a session.
+  Normally the user is held on a key in the session.
+
+  TODO: is this necessary? Is it *safe*?"
+  nil)
 
 (parser/set-resource-path!  (clojure.java.io/resource "templates"))
 (parser/add-tag! :csrf-field (fn [_ _] (anti-forgery-field)))

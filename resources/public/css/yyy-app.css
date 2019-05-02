@@ -45,7 +45,6 @@ h1 {
     width: 100%;
     _position: absolute;
     _top: expression(document.documentElement.scrollTop);
-    z-index: 149;
     background:rgba(7,27,51,0.8);
   }
 
@@ -57,6 +56,7 @@ h1 {
   #nav-menu {
     margin: 0;
     padding: 0;
+    z-index: 02110-1301;
   }
 
   #nav menu li {
@@ -103,6 +103,7 @@ h1 {
   #nav:hover #nav-menu {
     display: block;
     list-style-type: none;
+    z-index: 148;
     width: 100%;
   }
 
@@ -141,7 +142,7 @@ h1 {
     margin: 0;
     padding: 0;
     position: fixed;
-    z-index: 149;
+    z-index: 600;
     color: silver;
     background:rgba(40,40,40,0.9);
   }
@@ -149,6 +150,7 @@ h1 {
   #nav:hover #nav-menu {
     display: block;
     list-style-type: none;
+    z-index: 500;
     width: 100%;
   }
 

@@ -26,11 +26,10 @@
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; This is the constructor for the atom in which the state of the user interface is held.
-;;; The atom gets updated by 'events' registered in handler.cljs, q.v.
-
-
 (def default-db
+  "The default configuration state of the app, when first loaded.
+  This is the constructor for the atom in which the state of the user interface
+  is held. The atom gets updated by 'events' registered in handler.cljs, q.v."
   { ;;; any confirmation message to display
     :feedback '("Welcome to the canvasser app!")
     ;;; message of the day

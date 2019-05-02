@@ -53,33 +53,48 @@
 (enable-console-print!)
 
 (defn about-page []
+    "Return the content for the 'about' page."
   (about/panel))
 
 (defn building-page []
+    "Return the content for the single building page, for the current address."
   (building/panel))
 
 (defn dwelling-page []
+    "Return the content for the single dwelling page, for the current
+    dwelling."
   (dwelling/panel))
 
 (defn elector-page []
+    "Return the content for the elector page, for the current dwelling."
   (elector/panel))
 
 (defn gdpr-page []
+    "Return the content for the general data protection regulation consent
+    page."
   (gdpr/panel))
 
 (defn followup-page []
+    "Return the content for the followup-request page, for the current elector
+    and selected issue."
   (followup/panel))
 
 (defn issues-page []
+    "Return the content for the current issues page - list of currently
+    prompted for issues."
   (issues/panel))
 
 (defn issue-page []
+    "Return the content for the current issue page: canned text prompt for the
+    canvasser to say to the elector on this issue."
   (issue/panel))
 
 (defn map-page []
+    "Return the content for the main map page. Map showing current location."
   (maps/panel))
 
 (def pages
+    "Dispatcher table for pages."
   {:about #'about-page
    :building #'building-page
    :dwelling #'dwelling-page
@@ -173,7 +188,9 @@
 ;; -------------------------
 ;; History
 ;; must be called after routes have been defined
-(defn hook-browser-navigation! []
+(defn hook-browser-navigation!
+    "Interceptor for the browser back button."
+    []
   (doto (History.)
     (events/listen
       HistoryEventType/NAVIGATE
@@ -187,7 +204,9 @@
 (defn mount-components []
   (r/render [#'page] (.getElementById js/document "app")))
 
-(defn init! []
+(defn init!
+    "Initialise the app."
+    []
   (rf/dispatch-sync [:initialize-db])
   (rf/dispatch [:get-current-location])
   (rf/dispatch [:fetch-locality])

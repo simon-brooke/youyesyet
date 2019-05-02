@@ -44,12 +44,24 @@
   (merge state {:error '() :feedback '()}))
 
 
-(def source-host (assoc
-                   (url js/window.location)
-                   :path "/"
-                   :query nil
-                   :anchor nil))
+(def source-host
+  "The base URL of the host from which the app was loaded."
+  (assoc
+    (url js/window.location)
+    :path "/"
+    :query nil
+    :anchor nil))
 
+
+(defn handle-forbidden
+  "If response has status 403 (forbidden) redirect to the login page."
+  [response & forms]
+  (if
+     (= (str (:status response)) "403")
+     (do
+       (js/console.log "Forbidden! redirecting")
+       (set! (.-location js/document) "/login"))
+     (apply 'do forms)))
 
 (defn compose-packet
   [item]
@@ -76,6 +88,7 @@
 
 
 (defn add-to-outqueue
+  "Add the supplied `message` to the output queue in this `db`."
   [db message]
   (dispatch [:process-queue])
   (add-to-key db :outqueue message))
@@ -88,6 +101,7 @@
 
 
 (defn remove-from-key
+  "Remove `x` from the values of key `k` in map `db`."
   [db k x]
   (assoc db k (remove #(= x %) (db k))))
 
@@ -99,6 +113,7 @@
 
 
 (defn remove-from-outqueue
+  "Remove `x` from the output queue in this `db`."
   [db x]
   (remove-from-key db :outqueue x))
 
@@ -181,6 +196,7 @@
   ;; TODO: why is this an `-fx`? Does it need to be?
   (fn
     [{db :db} [_ response]]
+    (js/console.log (str ":process-locality: " response))
     (js/console.log (str "Updating locality data: " (count response) " addresses " ))
     (refresh-map-pins)
     {:db (assoc
@@ -194,12 +210,14 @@
   (fn
     [{db :db} [_ response]]
     ;; TODO: signal something has failed? It doesn't matter very much, unless it keeps failing.
-    (js/console.log "Failed to fetch locality data")
+    (js/console.log (str "Failed to fetch locality data" response))
     ;; loop to do it again
-    (dispatch [:dispatch-later [{:ms 60000 :dispatch [:fetch-locality]}]])
-    {:db (assoc
-      (remove-from-feedback db :fetch-locality)
-      :error (cons :fetch-locality (:error db)))}))
+    (handle-forbidden
+      response
+      (dispatch [:dispatch-later [{:ms 60000 :dispatch [:fetch-locality]}]])
+      {:db (assoc
+             (remove-from-feedback db :fetch-locality)
+             :error (cons :fetch-locality (:error db)))})))
 
 
 (reg-event-fx

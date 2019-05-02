@@ -48,7 +48,7 @@
 ;;; thought.
 
 ;; which provider to use
-(def *map-provider* :osm)
+(def ^dynamic *map-provider* :osm)
 
 (def osm-url "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
 (def osm-attrib "Map data &copy; <a href='http://openstreetmap.org'>OpenStreetMap</a> contributors")

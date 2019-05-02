@@ -44,8 +44,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (mount/defstate init-app
-                :start ((or (:init defaults) identity))
-                :stop  ((or (:stop defaults) identity)))
+  :start ((or (:init defaults) identity))
+  :stop  ((or (:stop defaults) identity)))
 
 (defn init
   "init will be called once when
@@ -67,6 +67,8 @@
 
 
 (def app-routes
+  "All routes served as part of the `youyesyet` (server-side) web-app (not
+  to be confused with the client-side `canvasser-app`, q.v.)."
   (routes
     (-> #'home-routes
         (wrap-routes middleware/wrap-csrf)
@@ -101,4 +103,7 @@
                      :message "The page you requested has not yet been implemented"})))))
 
 
-(def app (middleware/wrap-base #'app-routes))
+(def app
+  "The `youyesyet` server-side web-app (not to be confused with the client-
+  side `canvasser-app`, q.v.)"
+  (middleware/wrap-base #'app-routes))

@@ -1,4 +1,5 @@
-(ns ^{:doc "Canvasser app electors in household panel."
+(ns ^{:doc "The General Data Protection Regulations consent panel,
+      incorporating a signature widget."
       :author "Simon Brooke"}
   youyesyet.canvasser-app.views.gdpr
   (:require [re-frame.core :refer [reg-sub subscribe dispatch]]
@@ -31,7 +32,7 @@
 ;; OK, the idea here is a GDPR consent form to be signed by the elector
 
 (def sig-pad
-  ;; something the signature pad will be bound to
+  "An atom that the signature pad will be bound to, when instantiated."
   (atom nil))
 
 
@@ -52,6 +53,8 @@
   nil)
 
 (defn gdpr-render
+  "Return a renderer for the GDPR consent form, incorporating the signature
+  widget."
   []
   (let [elector @(subscribe [:elector])]
     [:div
@@ -79,12 +82,13 @@
 
 
 (defn gdpr-did-mount
+  "Instantiate the `sig-pad` atom, q.v."
   []
   (reset! sig-pad (js/SignaturePad. (.getElementById js/document "signature-pad"))))
 
 
 (defn panel
-  "A reagent class for the GDPR consent form"
+  "Return the GDPR consent form."
   []
   (js/console.log "gdpr.panel")
   (reagent/create-class {:reagent-render gdpr-render
