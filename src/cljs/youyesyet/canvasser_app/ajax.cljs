@@ -28,9 +28,12 @@
 
 
 (defn local-uri? [{:keys [uri]}]
+    "Return `true` if the supplied `uri` has no protocol part."
   (not (re-find #"^\w+?://" (str uri))))
 
 (defn default-headers [request]
+    "Copy the current uri and cross site request forgery token into the headers
+    of this request."
   (if (local-uri? request)
     (-> request
         (update :uri #(str js/context %))

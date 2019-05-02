@@ -44,11 +44,13 @@
   (merge state {:error '() :feedback '()}))
 
 
-(def source-host (assoc
-                   (url js/window.location)
-                   :path "/"
-                   :query nil
-                   :anchor nil))
+(def source-host
+  "The base URL of the host from which the app was loaded."
+  (assoc
+    (url js/window.location)
+    :path "/"
+    :query nil
+    :anchor nil))
 
 
 (defn handle-forbidden
@@ -86,6 +88,7 @@
 
 
 (defn add-to-outqueue
+  "Add the supplied `message` to the output queue in this `db`."
   [db message]
   (dispatch [:process-queue])
   (add-to-key db :outqueue message))
@@ -98,6 +101,7 @@
 
 
 (defn remove-from-key
+  "Remove `x` from the values of key `k` in map `db`."
   [db k x]
   (assoc db k (remove #(= x %) (db k))))
 
@@ -109,6 +113,7 @@
 
 
 (defn remove-from-outqueue
+  "Remove `x` from the output queue in this `db`."
   [db x]
   (remove-from-key db :outqueue x))
 

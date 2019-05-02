@@ -47,7 +47,7 @@
                                     :page :gdpr}]))
 
 
-(defn gender-cell
+(defn- gender-cell
   [elector]
   (let [gender (:gender elector)
         image (if gender (name gender) "Unknown")]
@@ -56,21 +56,21 @@
        [:img {:src (str "img/gender/" image ".png") :alt image}]]]))
 
 
-(defn genders-row
+(defn- genders-row
   [electors]
   [:tr
    (map
      #(gender-cell %) electors)])
 
 
-(defn name-cell
+(defn- name-cell
   [elector]
   [:td {:key (str "name-" (:id elector))
         :on-click  #(go-to-gdpr-for-elector elector)}
    (:name elector)])
 
 
-(defn names-row
+(defn- names-row
   [electors]
   [:tr
    (map

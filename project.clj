@@ -63,7 +63,7 @@
   :main ^:skip-aot youyesyet.core
   :migratus {:store :database :db ~(get (System/getenv) "DATABASE_URL")}
 
-  :plugins [[lein-adl "0.1.6"]
+  :plugins [[lein-adl "0.1.7-SNAPSHOT"]
             [lein-cljsbuild "1.1.7"]
             [lein-codox "0.10.7-multilang"]
             [lein-cprop "1.0.3"]
@@ -81,7 +81,7 @@
                      :doc/format :markdown}
           :languages [:clojure :clojurescript]
           :source-paths ["src/clj" "src/cljc" "src/cljs"]
-          :source-uri "https://github.com/simon-brooke/html-to-md/blob/master/{filepath}#L{line}"
+          :source-uri "https://github.com/simon-brooke/youyesyet/blob/master/{filepath}#L{line}"
           :output-path "docs"}
 
 

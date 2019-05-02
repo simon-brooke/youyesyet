@@ -38,7 +38,7 @@
 ;; references, so do it here.
 
 (defn get-current-location []
-  "Get the current location from the device, setting it in the database and
+  "Return the current location from the device, setting it in the database and
   returning the locality."
   (try
     (if (.-geolocation js/navigator)
@@ -61,7 +61,7 @@
 
 
 (defn pin-image
-  "select the name of a suitable pin image for this address"
+  "Return the name of a suitable pin image for this `address`."
   [address]
   (let [intentions
         (set
@@ -93,7 +93,7 @@
 
 
 (defn add-map-pin
-  "Add a map-pin at this address in this map view"
+  "Add an appropriate map-pin at this `address` in this map `view`."
   [address view]
   (let [lat (:latitude address)
         lng (:longitude address)
@@ -110,12 +110,16 @@
                         (.latLng js/L lat lng)
                         (clj->js {:icon pin
                                   :title (:address address)}))]
-    (.on (.addTo marker view) "click" (fn [_] (map-pin-click-handler (str (:id address)))))
+    (.on
+        (.addTo marker view)
+        "click"
+        (fn [_] (map-pin-click-handler (str (:id address)))))
     marker))
 
 
 (defn map-remove-pins
-  "Remove all pins from this map `view`. Side-effecty; liable to be problematic."
+  "Remove all pins from this map `view`. Side-effecty; liable to be
+    problematic."
   [view]
   (if view
     (.eachLayer view
@@ -126,7 +130,8 @@
 
 
 (defn refresh-map-pins
-  "Refresh the map pins on this map. Side-effecty; liable to be problematic."
+  "Refresh the map pins on the current map. Side-effecty; liable to be
+    problematic."
   []
   (let [view (map-remove-pins @(subscribe [:view]))
         addresses @(subscribe [:addresses])]

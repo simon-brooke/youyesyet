@@ -27,7 +27,7 @@
 
 (defn coerce-to-number [v]
   "If it is possible to do so, coerce `v` to a number"
-  ;; TODO: this doesn't work in cljs.
+  ;; TODO: this doesn't work in cljs. Fix if possible.
   (if (number? v) v
     (try
       (read-string (str v))

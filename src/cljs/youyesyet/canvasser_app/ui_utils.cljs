@@ -28,9 +28,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defn log-and-dispatch [arg]
-  (js/console.log (str "Dispatching " arg))
-  (rf/dispatch arg))
+(defn log-and-dispatch [event]
+  "Log this `event` and dispatch it."
+  (js/console.log (str "Dispatching " event))
+  (rf/dispatch event))
 
 
 (defn back-link
@@ -44,6 +45,8 @@
 
 
 (defn big-link
+  "Generate a big link with this `text` which, when selected, either opens
+  the url which is this `target` if supplied, or else invokes this `handler`."
   [text & {:keys [target handler]}]
   [:div.big-link-container {:key (gensym "big-link")}
    [:a.big-link (merge {}
@@ -53,6 +56,10 @@
 
 
 (defn nav-link [uri title page collapsed?]
+  "Generate and return a navigaton link for this `uri` with the text which is
+  this `title`; the `uri` is expected to be the uri of this `page`, and if
+  this `page` is the currently selected page, the lin should be highlighted to
+  indicate this."
   (let [selected-page @(rf/subscribe [:page])]
     [:li.nav-item
      {:class (when (= page selected-page) "active")
@@ -63,6 +70,7 @@
 
 
 (defn error-panel
+  "Generate and return an error panel with this `message`."
   [message]
   [:div
    [:h1.error message]
@@ -70,7 +78,10 @@
     (back-link)]])
 
 
-(defn navbar []
+(defn navbar
+  "Generate and return a navigation bar representing the current state of the
+  app."
+  []
   (r/with-let [collapsed? (r/atom true)]
     [:div {:id "nav"}
      [:img {:id "nav-icon"

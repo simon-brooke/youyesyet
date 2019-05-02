@@ -45,7 +45,7 @@
 
 
 (defn add!
-  "Add this item to the queue."
+  "Add this `item` to the queue `q`."
   [q item]
   (swap! q
          (fn [a]
@@ -54,7 +54,7 @@
 
 
 (defn queue?
-  "True if x is a queue, else false."
+  "True if `x` is a queue, else false."
   [x]
   (try
     (let [q (deref x)
@@ -68,17 +68,20 @@
 
 
 (defn peek
-  "Look at the next item which could be removed from the queue."
+  "Look at the next item which could be removed from the queue `q`."
   [q]
   (last (:items (deref q))))
 
 
 (defn locked?
+  "True if this queue `q` is locked, else false."
   [q]
   (:locked (deref q)))
 
 
 (defn unlock!
+  "Unlock the queue `q` if not `value` is supplied; if a `value` is
+  supplied, unlock only if that value is `true`, otherwise lock."
   ([q ]
    (unlock! q true))
   ([q value]
@@ -86,18 +89,19 @@
 
 
 (defn lock!
+  "Lock the queue `q`."
   [q]
   (unlock! q false))
 
 
 (defn count
-  "Return the count of items currently in the queue."
+  "Return the count of items currently in the queue `q`."
   [q]
   (count (deref q)))
 
 
 (defn take!
-  "Return the first item from the queue, rebind the queue to the remaining
+  "Return the first item from the queue `q`, rebind the queue to the remaining
   items. If the queue is empty return nil."
   [q]
   (swap! q (fn [a]
@@ -109,8 +113,8 @@
 
 
 (defn maybe-process-next
-  "Apply this process, assumed to be a function of one argument, to the next
-  item in the queue, if the queue is not currently locked; return the value
+  "Apply this `process`, assumed to be a function of one argument, to the next
+  item in the queue `q`, if the queue is not currently locked; return the value
   returned by process."
   [q process]
   (if (and (queue? q)(not (locked? q)))
@@ -122,5 +126,4 @@
       (catch #?(:clj Exception :cljs js/Object) any
         #?(:clj (print (.getMessage any))
                 :cljs (js/console.log (str any))))
-      (finally (unlock! q)))
-    ))
+      (finally (unlock! q)))))
