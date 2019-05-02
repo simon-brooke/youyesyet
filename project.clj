@@ -65,7 +65,7 @@
 
   :plugins [[lein-adl "0.1.6"]
             [lein-cljsbuild "1.1.7"]
-            [lein-codox "0.10.4"]
+            [lein-codox "0.10.7-multilang"]
             [lein-cprop "1.0.3"]
             [lein-kibit "0.1.6"]
             [lein-less "1.7.5"]
@@ -77,10 +77,13 @@
 
   :cucumber-feature-paths ["test/clj/features"]
 
-  :codox {:metadata {:doc "FIXME: write docs"}
+  :codox {:metadata {:doc "**TODO**: write docs"
+                     :doc/format :markdown}
           :languages [:clojure :clojurescript]
           :source-paths ["src/clj" "src/cljc" "src/cljs"]
-          :output-path "documentation"}
+          :source-uri "https://github.com/simon-brooke/html-to-md/blob/master/{filepath}#L{line}"
+          :output-path "docs"}
+
 
   :npm {:dependencies [[datatables.net "1.10.19"]
                        [datatables.net-dt "1.10.19"]
