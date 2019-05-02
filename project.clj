@@ -1,4 +1,4 @@
-(defproject youyesyet "0.2.2-SNAPSHOT"
+(defproject youyesyet "0.2.2"
 
   :description "Canvassing tool for referenda"
   :license {:name "GNU General Public License,version 2.0 or (at your option) any later version"
