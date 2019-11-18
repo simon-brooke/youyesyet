@@ -45,13 +45,23 @@
       (.getCurrentPosition
         (.-geolocation js/navigator)
         (fn [position]
-          (let [lat (.-latitude (.-coords position))
+          (let [view @(subscribe [:view])
+                lat (.-latitude (.-coords position))
                 lng (.-longitude (.-coords position))]
             (js/console.log (str "Current location is: " lat ", " lng))
-            (dispatch [:set-latitude lat])
-            (dispatch [:set-longitude lng])
-            (.panTo @(subscribe [:view]) (.latLng js/L lat lng))
-            (locality lat lng))))
+            (if
+              (and view (float? lat) (float? lng))
+              (do
+                (dispatch [:set-latitude lat])
+                (dispatch [:set-longitude lng])
+                (.panTo view (.latLng js/L lat lng))
+                (locality lat lng))
+              (do
+                (js/console.log
+                  (if view
+                    (str "Geolocation failed lat: '" lat "'; lng '" lng "'")
+                    "No value for subscription to [:view]"))
+                0)))))
       (do
         (js/console.log "Geolocation not available")
         0))

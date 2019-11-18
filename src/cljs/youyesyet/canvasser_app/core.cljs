@@ -9,6 +9,7 @@
             [reagent.core :as r]
             [re-frame.core :as rf]
             [re-frame.fx]
+            [recalcitrant.core :refer [error-boundary]] ;; may not be needed here
             [secretary.core :as secretary]
             [youyesyet.canvasser-app.ajax :refer [load-interceptors!]]
             [youyesyet.canvasser-app.gis :refer [get-current-location]]
@@ -118,7 +119,7 @@
     [:div
      [:header
       [ui/navbar]]
-     (if content [content]
+     (if content [error-boundary [content]]
        [:div.error (str "No content in page " @(rf/subscribe [:page]))])
      [:footer
       [:div.error {:style [:display (if (empty? error) :none :block)]} (apply str error)]

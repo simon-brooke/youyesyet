@@ -4,6 +4,7 @@
   (:require [cljsjs.leaflet]
             [re-frame.core :refer [reg-sub subscribe dispatch dispatch-sync]]
             [reagent.core :as reagent]
+            [recalcitrant.core :refer [error-boundary]]
             [youyesyet.canvasser-app.gis :refer [refresh-map-pins get-current-location]]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -49,7 +50,7 @@
 ;;; thought.
 
 ;; which provider to use
-(def ^dynamic *map-provider* :osm)
+(def ^:dynamic *map-provider* :osm)
 
 (def osm-url "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
 (def osm-attrib "Map data &copy; <a href='http://openstreetmap.org'>OpenStreetMap</a> contributors")
@@ -71,7 +72,7 @@
 (defn map-did-mount-osm
   "Did-mount function loading map tile data from Open Street Map."
   []
-  (get-current-location)
+  (get-current-location) ;; - [Violation] Only request geolocation information in response to a user gesture.
   (let [view (.setView
                (.map js/L
                      "map"
@@ -112,6 +113,6 @@
 (defn panel
   "A reagent class for the map object."
   []
-  (get-current-location)
+  ;; (get-current-location)
   (reagent/create-class {:reagent-render map-render
                          :component-did-mount map-did-mount}))

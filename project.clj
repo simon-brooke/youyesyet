@@ -45,6 +45,7 @@
                  [re-frame "0.10.9"]
                  [reagent "0.8.1"]
                  [reagent-utils "0.3.3"]
+                 [recalcitrant "0.1.2"]
                  [ring-middleware-format "0.7.4"]
                  [ring/ring-defaults "0.3.2"]
                  [ring/ring-servlet "1.7.1"]
