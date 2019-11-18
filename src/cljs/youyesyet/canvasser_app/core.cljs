@@ -1,8 +1,8 @@
 (ns ^{:doc "Canvasser app navigation and routing."
       :author "Simon Brooke"}
   youyesyet.canvasser-app.core
-  (:require cljsjs.react-leaflet
-            [ajax.core :refer [GET POST]]
+  (:require [ajax.core :refer [GET POST]]
+            [cljsjs.leaflet]
             [goog.events :as events]
             [goog.history.EventType :as HistoryEventType]
             [markdown.core :refer [md->html]]

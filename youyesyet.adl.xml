@@ -242,7 +242,7 @@ version="0.1.1">
     <property type="real" name="longitude" column="longitude">
       <prompt prompt="Longitude" locale="en_GB.UTF-8"/>
     </property>
-    <property type="list" name="dwellings" entity="dwellings"/>
+    <property type="list" name="dwellings" entity="dwellings" farkey="address_id"/>
     <property type="integer" name="locality" column="locality">
       <documentation>Locality indexing; see issue #44. Note that
       this property should be generated automatically from the
@@ -320,7 +320,7 @@ version="0.1.1">
       <prompt prompt="Canvasser" locale="en_GB.UTF-8"/>
     </property>
     <property required="true" type="timestamp" name="date"
-    column="date" default="CURRENT_TIMESTAMP" distinct="user">
+    column="date" default="now()" distinct="user">
       <prompt prompt="Date" locale="en_GB.UTF-8"/>
     </property>
     <permission group="canvassers" permission="noedit">
@@ -1000,7 +1000,7 @@ version="0.1.1">
     column="actor" entity="canvassers" farkey="id">
       <prompt prompt="Actor" locale="en_GB.UTF-8"/>
     </property>
-    <property default="CURRENT_TIMESTAMP" type="timestamp"
+    <property default="now()" type="timestamp"
     name="date" column="date" distinct="user">
       <prompt prompt="Date" locale="en_GB.UTF-8"/>
     </property>

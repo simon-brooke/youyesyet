@@ -1,7 +1,8 @@
 (ns ^{:doc "Canvasser app map view panel."
       :author "Simon Brooke"}
   youyesyet.canvasser-app.views.map
-  (:require [re-frame.core :refer [reg-sub subscribe dispatch dispatch-sync]]
+  (:require [cljsjs.leaflet]
+            [re-frame.core :refer [reg-sub subscribe dispatch dispatch-sync]]
             [reagent.core :as reagent]
             [youyesyet.canvasser-app.gis :refer [refresh-map-pins get-current-location]]))
 
@@ -58,7 +59,8 @@
   "Did-mount function loading map tile data from MapBox (proprietary)."
   []
   (get-current-location)
-  (let [view (.setView (.map js/L "map" (clj->js {:zoomControl "false"})) #js [55.82 -4.25] 40)]
+  (let [view (.setView
+               (.map js/L "map" (clj->js {:zoomControl "false"})))]
     ;; NEED TO REPLACE FIXME with your mapID!
     (.addTo (.tileLayer js/L "http://{s}.tiles.mapbox.com/v3/FIXME/{z}/{x}/{y}.png"
                         (clj->js {:attribution "Map data &copy; [...]"
