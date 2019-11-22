@@ -94,12 +94,14 @@
   so back links work."
   [id]
   (js/console.log (str "Click handler for address #" id))
-  (let [view @(subscribe [:view])
-        centre (.getCenter view)]
-    (dispatch [:set-zoom (.getZoom view)])
-    (dispatch [:set-latitude (.-lat centre)])
-    (dispatch [:set-longitude (.-lng centre)]))
-  (set! window.location.href (str "#building/" id)))
+;;   (let [view @(subscribe [:view])
+;;         centre (.getCenter view)]
+;;     (dispatch [:set-zoom (.getZoom view)])
+;;     (dispatch [:set-latitude (.-lat centre)])
+;;     (dispatch [:set-longitude (.-lng centre)]))
+  (js/console.log (str "Navigating to " "#building/" id))
+  (set! window.location.href (str "#building/" id))
+  )
 
 
 (defn add-map-pin

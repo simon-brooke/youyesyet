@@ -119,23 +119,25 @@
     [:div
      [:header
       [ui/navbar]]
-     (if content [error-boundary [content]]
+     (if content [content]
        [:div.error (str "No content in page " @(rf/subscribe [:page]))])
      [:footer
-      [:div.error {:style [:display (if (empty? error) :none :block)]} (apply str error)]
-      [:div.feedback
-       {:style [:display (if (empty? feedback) :none :block)]}
-       (apply str (map #(h/feedback-messages %) (distinct feedback)))]
-      [:div.queue (if
-                    (nil? outqueue) ""
-                    (str (count outqueue) " items queued to send"))]]]))
+      (if-not (empty? error)
+        [:div.error
+         error])
+      (if-not (empty? feedback)
+        [:div.feedback
+         (apply str (map #(h/feedback-messages %) (distinct feedback)))])
+;;       (if-not (empty? outqueue)
+;;         [:div.queue (str (count outqueue) " items queued to send")])
+       ]]))
 
 ;; -------------------------
 ;; Routes
 (secretary/set-config! :prefix "#")
 
 (secretary/defroute "/" []
-  (ui/log-and-dispatch [:set-active-page :map]))
+  (ui/log-and-dispatch [:set-active-page :about]))
 
 (secretary/defroute "/about" []
   (ui/log-and-dispatch [:set-active-page :about]))
@@ -214,7 +216,7 @@
   (rf/dispatch [:fetch-options])
   (rf/dispatch [:fetch-issues])
   (rf/dispatch [:fetch-followupmethods])
-  (rf/dispatch [:dispatch-later [{:ms 60000 :dispatch [:process-queue]}]])
+;;  (rf/dispatch [:dispatch-later [{:ms 60000 :dispatch [:process-queue]}]])
   (load-interceptors!)
   (hook-browser-navigation!)
   (mount-components))
