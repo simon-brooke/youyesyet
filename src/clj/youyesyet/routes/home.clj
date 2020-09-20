@@ -112,7 +112,7 @@
         :redirect-to redirect-to
         :warnings ["Your user name was not recognised or your password did not match"]})
      ;; if we've no username, just invite the user to log in
-     true
+     :else
       (layout/render
        "login.html"
        {:title "Please log in"

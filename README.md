@@ -187,5 +187,4 @@ Copyright © 2016 Simon Brooke for the Radical Independence Campaign.
 Licensed under the GNU General Public License, version 2.0 or (at your option) any later version.
 
 **NOTE THAT** files which are directly created by the Luminus template do not currently have a GPL header
-at the top; files which are new in this project or which have been substantially modified for this project
-do have a GPL header at the top.
+at the top; files which are new in this project or which have been substantially modified for this project should have a GPL header at the top.

@@ -30,6 +30,6 @@
   (.bind "java:comp/env/jdbc/testdb"
          (doto (org.postgresql.ds.PGSimpleDataSource.)
            (.setServerName "localhost")
-           (.setDatabaseName "youyesyet_dev")
+           (.setDatabaseName "loriner") ;; "youyesyet_dev")
            (.setUser "youyesyet")
            (.setPassword "thisisnotsecure"))))

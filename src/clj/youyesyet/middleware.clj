@@ -2,6 +2,7 @@
   youyesyet.middleware
   (:require [clojure.tools.logging :as log]
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
+            [ring.middleware.content-type :refer [wrap-content-type]]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
             [ring.middleware.format :refer [wrap-restful-format]]
             [ring.middleware.webjars :refer [wrap-webjars]]
@@ -83,5 +84,6 @@
             (assoc-in [:security :anti-forgery] false)
             (assoc-in  [:session :store] (ttl-memory-store (* 60 30)))))
       wrap-context
+      wrap-content-type
       wrap-internal-error))
 
