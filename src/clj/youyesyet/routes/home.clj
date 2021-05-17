@@ -1,17 +1,15 @@
 (ns ^{:doc "Routes/pages available to unauthenticated users."
       :author "Simon Brooke"} youyesyet.routes.home
-  (:require [adl-support.utils :refer [safe-name]]
-            [clojure.java.io :as io]
-            [clojure.string :as s]
+  (:require [clojure.java.io :as io]
             [clojure.tools.logging :as log]
             [clojure.walk :refer [keywordize-keys]]
             [markdown.core :refer [md-to-html-string]]
-            [noir.util.route :as route]
             [ring.util.http-response :as response]
             [youyesyet.config :refer [env]]
             [youyesyet.db.core :as db-core]
             [youyesyet.layout :as layout]
             [youyesyet.oauth :as oauth]
+            [youyesyet.routes.utils :refer [with-servlet-context]]
             [compojure.core :refer [defroutes GET POST]]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -47,30 +45,41 @@
     (if (.exists motd) (slurp motd) "")))
 
 
-(defn about-page [request]
+(defn about-page
+  "Render a page describing the app and its purpose."
+  [request]
   (layout/render "md.html" {:title
                             (str "About " (:site-title env))
                             :servlet-context (:servlet-context request)
                             :content (md-to-html-string (slurp (io/resource "about.md")))}))
 
 
-(defn call-me-page [request]
+(defn call-me-page
+  "Render a page requesting a call to a particular elector from a member of the
+   telephone canvassing team."
+  [request]
   (if
    request
     (do
       ;; do something to store it in the database
-      (layout/render "call-me-accepted.html" (:session request) (:params request)))
-    (layout/render "call-me.html" (:session request)
-                   {:title "Please call me!"
-                    :servlet-context (:servlet-context request)
+      (layout/render
+       "call-me-accepted.html"
+       (:session request)
+       (assoc (:params request) :servlet-context (:servlet-context request)))
+      (layout/render "call-me.html" (:session request)
+                     (with-servlet-context {:title "Please call me!"
                     ;; TODO: Issues need to be fetched from the database
-                    :concerns (db-core/list-issues db-core/*db* {})})))
+                                            :concerns (db-core/list-issues db-core/*db* {})}
+                       request)))))
 
 
-(defn home-page [request]
-  (layout/render "home.html" {:title "You yes yet?"
-                              :servlet-context (:servlet-context request)
-                              :motd (md-to-html-string (motd))}))
+(defn home-page
+  "Render the default page."
+  [request]
+  (layout/render "home.html" (with-servlet-context
+                               {:title "You yes yet?"
+                                :motd (md-to-html-string (motd))}
+                               request)))
 
 
 (defn login-page
@@ -110,18 +119,20 @@
       username
       (layout/render
        "login.html"
-       {:title (str "User " username " is unknown")
-        :servlet-context (:servlet-context request)
-        :redirect-to redirect-to
-        :warnings ["Your user name was not recognised or your password did not match"]})
+       (with-servlet-context
+         {:title (str "User " username " is unknown")
+          :redirect-to redirect-to
+          :warnings ["Your user name was not recognised or your password did not match"]}
+         request))
      ;; if we've no username, just invite the user to log in
       :else
       (layout/render
        "login.html"
-       {:title "Please log in"
-        :servlet-context (:servlet-context request)
-        :redirect-to redirect-to
-        :authorities (db-core/list-authorities db-core/*db*)}))))
+       (with-servlet-context
+         {:title "Please log in"
+          :redirect-to redirect-to
+          :authorities (db-core/list-authorities db-core/*db*)}
+         request)))))
 
 
 (defroutes home-routes
@@ -132,9 +143,13 @@
   (POST "/call-me" request (call-me-page request))
   (GET "/login" request (login-page request))
   (POST "/login" request (login-page request))
-  (GET "/notyet" [request] (layout/render "notyet.html"
-                                          {:title "Can we persuade you?"
-                                           :servlet-context (:servlet-context request)}))
-  (GET "/supporter" [request] (layout/render "supporter.html"
-                                      {:title "Have you signed up as a canvasser yet?"
-                                       :servlet-context (:servlet-context request)})))
+  (GET "/notyet" [request] (layout/render
+                            "notyet.html"
+                            (with-servlet-context 
+                              {:title "Can we persuade you?"} 
+                              request)))
+  (GET "/supporter" [request] (layout/render
+                               "supporter.html"
+                               (with-servlet-context
+                                 {:title "Have you signed up as a canvasser yet?"}
+                                 request))))

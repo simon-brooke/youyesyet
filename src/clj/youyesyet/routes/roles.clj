@@ -3,16 +3,15 @@
   (:require [adl-support.core :as support]
             [adl-support.utils :refer [safe-name]]
             [clojure.tools.logging :as log]
-            [clojure.walk :refer [keywordize-keys]]
             [compojure.core :refer [defroutes GET POST]]
             [noir.util.route :as route]
             [ring.util.http-response :as response]
-            [youyesyet.config :refer [env]]
             [youyesyet.db.core :as db-core]
             [youyesyet.routes.issue-experts :as expert]
             [youyesyet.layout :as layout]
             [youyesyet.oauth :as oauth]
-            [youyesyet.routes.auto :as auto]))
+            [youyesyet.routes.auto :as auto]
+            [youyesyet.routes.utils :refer [with-servlet-context]]))
 
 
 (defn roles-page
@@ -40,8 +39,7 @@
   [request]
   (layout/render
    (support/resolve-template "application-index.html")
-   {:title "Administrative menu"
-    :servlet-context (:servlet-context request)}))
+   (with-servlet-context {:title "Administrative menu"} request)))
 
 
 (defn analysts-page
@@ -51,22 +49,21 @@
   [request]
   (layout/render
    (support/resolve-template "application-index.html")
-   {:title "Administrative menu" 
-    :servlet-context (:servlet-context request)}))
+   (with-servlet-context {:title "Administrative menu"} request)))
 
 
 (defn canvassers-page
   [request]
   (layout/render
    "roles/canvasser.html"
-   {:servlet-context (:servlet-context request)}))
+   (with-servlet-context {} request)))
 
 
 (defn team-organisers-page
   [request]
   (layout/render
    "roles/team-orgenisers.html"
-   {:servlet-context (:servlet-context request)}))
+   (with-servlet-context {} request)))
 
 
 (defroutes roles-routes

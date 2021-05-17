@@ -1,23 +1,15 @@
 (ns ^{:doc "Manually maintained routes which handle data transfer to/from the canvasser app."
       :author "Simon Brooke"} youyesyet.routes.rest
-  (:require [adl-support.rest-support :refer :all]
-            [adl-support.core :refer [massage-params do-or-log-error
-                                      do-or-return-reason]]
+  (:require [adl-support.core :refer [massage-params]]
+            [adl-support.rest-support :refer [do-or-server-fail valid-user-or-forbid with-params-or-error]]
             [clojure.core.memoize :as memo]
             [clojure.data.json :as json]
-            [clojure.java.io :as io]
-            [clojure.string :as s]
             [clojure.tools.logging :as log]
-            [clojure.walk :refer [keywordize-keys]]
-            [compojure.core :refer [defroutes GET POST]]
+            [compojure.core :refer [defroutes GET]]
             [java-time :as jt]
-            [mount.core :as mount]
-            [noir.response :as nresponse]
             [noir.util.route :as route]
-            [ring.util.http-response :as response]
             [youyesyet.locality :as l]
             [youyesyet.db.core :as db]
-            [youyesyet.utils :refer :all]
             ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
