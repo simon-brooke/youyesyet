@@ -15,30 +15,33 @@
             [youyesyet.routes.auto :as auto]))
 
 
-(defn roles-page [request]
+(defn roles-page
   "Render the routing page for the roles the currently logged in user is member of."
+  [request]
   (let
-    [session (:session request)
-     user (-> request :session :user)
-     roles (if
-             user
-             (db-core/list-roles-by-canvasser db-core/*db* {:id (:id user)}))]
+   [session (:session request)
+    user (-> request :session :user)
+    roles (if
+           user
+            (db-core/list-roles-by-canvasser db-core/*db* {:id (:id user)}))]
     (log/info (str "Roles routing page; user is " user "; roles are " roles))
     (if
-      roles
+     roles
       (layout/render
-        "roles.html"
-        {:title (str "Welcome " (:fullname user) ", what do you want to do?")
-         :user user
-         :roles (map #(assoc % :link (safe-name (:name %) :sql)) roles)})
+       "roles.html"
+       {:title (str "Welcome " (:fullname user) ", what do you want to do?")
+        :servlet-context (:servlet-context request)
+        :user user
+        :roles (map #(assoc % :link (safe-name (:name %) :sql)) roles)})
       (assoc (response/found "/login") :session (dissoc session :user)))))
 
 
 (defn admins-page
   [request]
   (layout/render
-    (support/resolve-template "application-index.html")
-    {:title "Administrative menu"}))
+   (support/resolve-template "application-index.html")
+   {:title "Administrative menu"
+    :servlet-context (:servlet-context request)}))
 
 
 (defn analysts-page
@@ -47,22 +50,23 @@
   anything sophisticated here."
   [request]
   (layout/render
-    (support/resolve-template "application-index.html")
-    {:title "Administrative menu"}))
+   (support/resolve-template "application-index.html")
+   {:title "Administrative menu" 
+    :servlet-context (:servlet-context request)}))
 
 
 (defn canvassers-page
   [request]
   (layout/render
    "roles/canvasser.html"
-   {}))
+   {:servlet-context (:servlet-context request)}))
 
 
 (defn team-organisers-page
   [request]
   (layout/render
    "roles/team-orgenisers.html"
-   {}))
+   {:servlet-context (:servlet-context request)}))
 
 
 (defroutes roles-routes

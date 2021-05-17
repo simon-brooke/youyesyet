@@ -49,3 +49,11 @@ youyesyet\.dump\.20180816
 *.tar
 
 src/clj/youyesyet/cache\.clj
+
+.lsp/sqlite.db
+
+.settings/
+
+.classpath
+
+.project

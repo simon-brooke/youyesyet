@@ -6,17 +6,20 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="referrer" content="same-origin">
-    {% style "/css/yyy-common.css" %}
-    {% style "/css/yyy-site.css" %}
-    {% style "/css/spinner.css" %}
+    <link rel="stylesheet" type="text/css" href="{{servlet-context}}/css/yyy-common.css" />
+    <link rel="stylesheet" type="text/css" href="{{servlet-context}}/css/yyy-site.css" />
+    <link rel="stylesheet" type="text/css" href="{{servlet-context}}/css/spinner.css" />
     <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
-    {% script "/js/lib/node_modules/jquery/dist/jquery.min.js" %}
+    <script src="{{servlet-context}}/js/lib/node_modules/jquery/dist/jquery.min.js"></script>
     <title>{{site-title}}: {{title}}</title>
     {% endblock %}
     {% block extra-head %}
     <!-- extra-head: put any additional markup to go into the head of your document into this block -->
     <!-- e.g. script tags, link tags -->
     {% endblock %}
+    {% if servlet-context %}
+    <!-- Servlet context is {{servlet-context}} -->
+    {% endif %}
   </head>
   <body>
     {% block whole-page %}
@@ -87,12 +90,12 @@
     <!-- foot: override this block if you don't want the standard footer -->
     <footer>
       <div id="credits">
-        <!-- div>
+        <div>
           <img src="{{servlet-context}}/img/credits/ric-logo.png" width="24" height="24"/>
           A project of the
           <a href="https://radical.scot/">Radical Independence Campaign</a> ||
           Version {{version}}
-        </div -->
+        </div>
         <div>
           <img height="16" width="16" alt="Clojure" src="{{servlet-context}}/img/credits/luminus-logo.png"/>Built with <a href="http://www.luminusweb.net/">LuminusWeb</a> ||
           <img height="16" width="16" alt="Clojure" src="{{servlet-context}}/img/credits/clojure-icon.gif"/> Powered by <a href="http://clojure.org">Clojure</a> ||

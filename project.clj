@@ -51,7 +51,7 @@
                  [ring/ring-servlet "1.7.1"]
                  [ring-webjars "0.2.0"]
                  [secretary "1.2.3"]
-                 [selmer "1.12.17"]]
+                 [selmer "1.12.40"]]
 
   :deploy-repositories [["releases" :clojars]
                         ["snapshots" :clojars]]
