@@ -59,7 +59,7 @@
 (reg-sub
  :error
   (fn [db _]
-    (:error db)))
+    (apply str (:error db))))
 
 (reg-sub
  :feedback

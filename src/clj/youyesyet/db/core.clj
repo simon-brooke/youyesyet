@@ -22,7 +22,8 @@
   "Primary connection to the main database. TODO: this does not yet enable
   sharding."
   :start (conman/connect! {:jdbc-url-env (env :database-url)
-                           :jdbc-url "jdbc:postgresql://127.0.0.1/youyesyet_dev?user=youyesyet&password=thisisnotsecure"
+                           ;; :jdbc-url "jdbc:postgresql://127.0.0.1/youyesyet_dev?user=youyesyet&password=thisisnotsecure"
+                           :jdbc-url "jdbc:postgresql://127.0.0.1/loriner?user=youyesyet&password=thisisnotsecure"
                            :driver-class-name "org.postgresql.Driver"})
   :stop (conman/disconnect! *db*))
 

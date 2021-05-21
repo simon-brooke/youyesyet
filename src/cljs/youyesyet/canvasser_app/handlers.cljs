@@ -77,6 +77,7 @@
   {:fetch-locality "Fetching local data."
    :send-request "Request has been queued."
    :send-intention-and-visit "Voting intention has been sent"
+   :bad-address "No valid address has been selected"
    })
 
 

@@ -38,17 +38,19 @@
   []
   (let [address @(subscribe [:address])
         dwellings (:dwellings address)]
-    [:div
-     [:h1 (str "Flats at " (:address address))]
-     [:div.container {:id "main-container"}
-      (ui/back-link "#map")
-      [:div {:id "dwelling-list"}
-       (map
-         (fn
-           [dwelling]
-           (ui/big-link
-             (:sub_address dwelling)
-             :target (str "#/dwelling/" (:id dwelling))) )
-         (sort-by
-           :sub_address
-           (:dwellings address)))]]]))
+      (js/console.log (str "Address: address"))
+    (if address
+      [:div
+       [:h1 (str "Flats at " (:address address))]
+       [:div.container {:id "main-container"}
+        (ui/back-link "#map")
+        [:div {:id "dwelling-list"}
+         (map
+           (fn
+             [dwelling]
+             (ui/big-link
+               (:sub_address dwelling)
+               :target (str "#/dwelling/" (:id dwelling))) )
+           (sort-by
+             :sub_address
+             (:dwellings address)))]]])))

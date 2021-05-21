@@ -1,8 +1,10 @@
 (ns ^{:doc "Canvasser app map view panel."
       :author "Simon Brooke"}
   youyesyet.canvasser-app.views.map
-  (:require [re-frame.core :refer [reg-sub subscribe dispatch dispatch-sync]]
+  (:require [cljsjs.leaflet]
+            [re-frame.core :refer [reg-sub subscribe dispatch dispatch-sync]]
             [reagent.core :as reagent]
+            [recalcitrant.core :refer [error-boundary]]
             [youyesyet.canvasser-app.gis :refer [refresh-map-pins get-current-location]]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -48,7 +50,7 @@
 ;;; thought.
 
 ;; which provider to use
-(def ^dynamic *map-provider* :osm)
+(def ^:dynamic *map-provider* :osm)
 
 (def osm-url "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
 (def osm-attrib "Map data &copy; <a href='http://openstreetmap.org'>OpenStreetMap</a> contributors")
@@ -58,7 +60,8 @@
   "Did-mount function loading map tile data from MapBox (proprietary)."
   []
   (get-current-location)
-  (let [view (.setView (.map js/L "map" (clj->js {:zoomControl "false"})) #js [55.82 -4.25] 40)]
+  (let [view (.setView
+               (.map js/L "map" (clj->js {:zoomControl "false"})))]
     ;; NEED TO REPLACE FIXME with your mapID!
     (.addTo (.tileLayer js/L "http://{s}.tiles.mapbox.com/v3/FIXME/{z}/{x}/{y}.png"
                         (clj->js {:attribution "Map data &copy; [...]"
@@ -69,7 +72,7 @@
 (defn map-did-mount-osm
   "Did-mount function loading map tile data from Open Street Map."
   []
-  (get-current-location)
+  (get-current-location) ;; - [Violation] Only request geolocation information in response to a user gesture.
   (let [view (.setView
                (.map js/L
                      "map"
@@ -110,6 +113,6 @@
 (defn panel
   "A reagent class for the map object."
   []
-  (get-current-location)
+  ;; (get-current-location)
   (reagent/create-class {:reagent-render map-render
                          :component-did-mount map-did-mount}))

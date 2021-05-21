@@ -1,14 +1,16 @@
 (ns ^{:doc "Canvasser app navigation and routing."
       :author "Simon Brooke"}
   youyesyet.canvasser-app.core
-  (:require cljsjs.react-leaflet
-            [ajax.core :refer [GET POST]]
+  (:require [ajax.core :refer [GET POST]]
+            [cljsjs.leaflet]
+            [devtools.core :as devtools]
             [goog.events :as events]
             [goog.history.EventType :as HistoryEventType]
             [markdown.core :refer [md->html]]
             [reagent.core :as r]
             [re-frame.core :as rf]
             [re-frame.fx]
+            [recalcitrant.core :refer [error-boundary]] ;; may not be needed here
             [secretary.core :as secretary]
             [youyesyet.canvasser-app.ajax :refer [load-interceptors!]]
             [youyesyet.canvasser-app.gis :refer [get-current-location]]
@@ -48,6 +50,11 @@
 ;;;; Copyright (C) 2016 Simon Brooke for Radical Independence Campaign
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; install tools to aid debugging in Chrome/Chromium.
+(devtools/install!)
+
 
 ;;; So that we can do debug logging!
 (enable-console-print!)
@@ -121,20 +128,22 @@
      (if content [content]
        [:div.error (str "No content in page " @(rf/subscribe [:page]))])
      [:footer
-      [:div.error {:style [:display (if (empty? error) :none :block)]} (apply str error)]
-      [:div.feedback
-       {:style [:display (if (empty? feedback) :none :block)]}
-       (apply str (map #(h/feedback-messages %) (distinct feedback)))]
-      [:div.queue (if
-                    (nil? outqueue) ""
-                    (str (count outqueue) " items queued to send"))]]]))
+      (if-not (empty? error)
+        [:div.error
+         error])
+      (if-not (empty? feedback)
+        [:div.feedback
+         (apply str (map #(h/feedback-messages %) (distinct feedback)))])
+;;       (if-not (empty? outqueue)
+;;         [:div.queue (str (count outqueue) " items queued to send")])
+       ]]))
 
 ;; -------------------------
 ;; Routes
 (secretary/set-config! :prefix "#")
 
 (secretary/defroute "/" []
-  (ui/log-and-dispatch [:set-active-page :map]))
+  (ui/log-and-dispatch [:set-active-page :about]))
 
 (secretary/defroute "/about" []
   (ui/log-and-dispatch [:set-active-page :about]))
@@ -213,7 +222,7 @@
   (rf/dispatch [:fetch-options])
   (rf/dispatch [:fetch-issues])
   (rf/dispatch [:fetch-followupmethods])
-  (rf/dispatch [:dispatch-later [{:ms 60000 :dispatch [:process-queue]}]])
+;;  (rf/dispatch [:dispatch-later [{:ms 60000 :dispatch [:process-queue]}]])
   (load-interceptors!)
   (hook-browser-navigation!)
   (mount-components))

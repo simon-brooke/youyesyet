@@ -2,6 +2,7 @@
   youyesyet.middleware
   (:require [clojure.tools.logging :as log]
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
+            [ring.middleware.content-type :refer [wrap-content-type]]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
             [ring.middleware.format :refer [wrap-restful-format]]
             [ring.middleware.webjars :refer [wrap-webjars]]
@@ -29,7 +30,11 @@
                 (do
                   (log/debug "Taking '" (:app-context env) "' as *app-context* from env")
                   (:app-context env)))]
-      (handler (assoc request :servlet-context *app-context*)))))
+      (handler (assoc 
+                 request 
+                ;; bind both possible keys just to save grief
+                :selmer/context *app-context* 
+                :servlet-context *app-context*)))))
 
 
 (defn wrap-internal-error [handler]
@@ -83,5 +88,6 @@
             (assoc-in [:security :anti-forgery] false)
             (assoc-in  [:session :store] (ttl-memory-store (* 60 30)))))
       wrap-context
+      wrap-content-type
       wrap-internal-error))
 
