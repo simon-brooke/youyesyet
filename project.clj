@@ -6,6 +6,7 @@
   :url "https://github.com/simon-brooke/youyesyet"
 
   :dependencies [[adl-support "0.1.6"]
+                 [binaryage/devtools "1.0.3"]
                  [bouncer "1.0.1"]
                  [ch.qos.logback/logback-classic "1.2.3"]
                  [clj-oauth "1.5.5"]

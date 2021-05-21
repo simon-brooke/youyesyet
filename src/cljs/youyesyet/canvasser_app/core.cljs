@@ -3,6 +3,7 @@
   youyesyet.canvasser-app.core
   (:require [ajax.core :refer [GET POST]]
             [cljsjs.leaflet]
+            [devtools.core :as devtools]
             [goog.events :as events]
             [goog.history.EventType :as HistoryEventType]
             [markdown.core :refer [md->html]]
@@ -49,6 +50,11 @@
 ;;;; Copyright (C) 2016 Simon Brooke for Radical Independence Campaign
 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; install tools to aid debugging in Chrome/Chromium.
+(devtools/install!)
+
 
 ;;; So that we can do debug logging!
 (enable-console-print!)

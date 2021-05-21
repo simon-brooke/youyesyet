@@ -30,7 +30,11 @@
                 (do
                   (log/debug "Taking '" (:app-context env) "' as *app-context* from env")
                   (:app-context env)))]
-      (handler (assoc request :servlet-context *app-context*)))))
+      (handler (assoc 
+                 request 
+                ;; bind both possible keys just to save grief
+                :selmer/context *app-context* 
+                :servlet-context *app-context*)))))
 
 
 (defn wrap-internal-error [handler]

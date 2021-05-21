@@ -6,11 +6,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="referrer" content="same-origin">
-    <link rel="stylesheet" type="text/css" href="{{servlet-context}}/css/yyy-common.css" />
-    <link rel="stylesheet" type="text/css" href="{{servlet-context}}/css/yyy-site.css" />
-    <link rel="stylesheet" type="text/css" href="{{servlet-context}}/css/spinner.css" />
+    {% style "/css/yyy-common.css" %}
+    {% style "/css/yyy-site.css" %}
+    {% style "/css/spinner.css" %}
     <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
-    <script src="{{servlet-context}}/js/lib/node_modules/jquery/dist/jquery.min.js"></script>
+    {% script "/js/lib/node_modules/jquery/dist/jquery.min.js" %}
     <title>{{site-title}}: {{title}}</title>
     {% endblock %}
     {% block extra-head %}
