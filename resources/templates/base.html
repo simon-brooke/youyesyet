@@ -27,20 +27,20 @@
     {% block top %}
     <header>
       <div id="nav">
-        <img id="nav-icon" src="{{servlet-context}}/img/threelines.png" alt="Menu"/>
+        <img id="nav-icon" src="/img/threelines.png" alt="Menu"/>
         <menu id="nav-menu" class="nav">
-          <li class=""><a href="{{servlet-context}}/">Home</a></li>
+          <li class=""><a href="/">Home</a></li>
           <li class=""><a href="https://library.projecthope.scot/">Library</a></li>
           {% if user %}
-          <li class=""><a href="{{servlet-context}}/roles">Roles</a></li>
-          <li class=""><a href="{{servlet-context}}/logout">Logout</a></li>
+          <li class=""><a href="roles">Roles</a></li>
+          <li class=""><a href="logout">Logout</a></li>
             {% else %}
-          <li class=""><a href="{{servlet-context}}/register">Register</a></li>
-          <li class=""><a href="{{servlet-context}}/login">Login</a></li>
+          <li class=""><a href="register">Register</a></li>
+          <li class=""><a href="login">Login</a></li>
           {% endif %}
-          <li class=""><a href="{{servlet-context}}/about">About</a></li>
+          <li class=""><a href="about">About</a></li>
           {% if user %}
-          <li id="user"><a href="{{servlet-context}}/profile">Logged in as {{user.username}}</a></li>
+          <li id="user"><a href="profile">Logged in as {{user.username}}</a></li>
           {% endif %}
         </menu>
       </div>
@@ -91,16 +91,16 @@
     <footer>
       <div id="credits">
         <div>
-          <img src="{{servlet-context}}/img/credits/ric-logo.png" width="24" height="24"/>
+          <img src="/img/credits/ric-logo.png" width="24" height="24"/>
           A project of the
           <a href="https://radical.scot/">Radical Independence Campaign</a> ||
           Version {{version}}
         </div>
         <div>
-          <img height="16" width="16" alt="Clojure" src="{{servlet-context}}/img/credits/luminus-logo.png"/>Built with <a href="http://www.luminusweb.net/">LuminusWeb</a> ||
-          <img height="16" width="16" alt="Clojure" src="{{servlet-context}}/img/credits/clojure-icon.gif"/> Powered by <a href="http://clojure.org">Clojure</a> ||
-          <img height="16" width="16" alt="GitHub" src="{{servlet-context}}/img/credits/github-logo-transparent.png"/>Find me/fork me on <a href="https://github.com/simon-brooke/youyesyet">Github</a> ||
-          <img height="16" width="16" alt="Free Software Foundation" src="{{servlet-context}}/img/credits/gnu.small.png"/>Licensed under the <a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License version 2.0</a>
+          <img height="16" width="16" alt="Clojure" src="/img/credits/luminus-logo.png"/>Built with <a href="http://www.luminusweb.net/">LuminusWeb</a> ||
+          <img height="16" width="16" alt="Clojure" src="/img/credits/clojure-icon.gif"/> Powered by <a href="http://clojure.org">Clojure</a> ||
+          <img height="16" width="16" alt="GitHub" src="/img/credits/github-logo-transparent.png"/>Find me/fork me on <a href="https://github.com/simon-brooke/youyesyet">Github</a> ||
+          <img height="16" width="16" alt="Free Software Foundation" src="/img/credits/gnu.small.png"/>Licensed under the <a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License version 2.0</a>
         </div>
       </div>
     </footer>
