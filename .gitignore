@@ -11,11 +11,13 @@ pom.xml.asc
 /resources/public/vendor
 /bower_components/
 /resources/public/js/lib/
+.clj-kondo/
 .lein-deps-sum
 .lein-repl-history
 .lein-plugins/
 .lein-failures
 .lein-env
+.lsp/
 .nrepl-port
 /node_modules/
 .DS_Store
