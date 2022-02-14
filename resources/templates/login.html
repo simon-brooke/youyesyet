@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-      <form action="{{servlet-context}}/login" method="post">
+      <form action="login" method="post">
         {% csrf-field %}
         <input type="hidden" name="redirect-to" value="{{servlet-context}}/roles"/>
         <h2>

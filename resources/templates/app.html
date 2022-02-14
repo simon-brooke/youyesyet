@@ -2,9 +2,9 @@
 {% block head %}
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" type="text/css" href="css/yyy-common.css" />
-    <link rel="stylesheet" type="text/css" href="css/yyy-app.css" />
-    <link rel="stylesheet" type="text/css" href="css/spinner.css" />
+    <link rel="stylesheet" type="text/css" href="/css/yyy-common.css" />
+    <link rel="stylesheet" type="text/css" href="/css/yyy-app.css" />
+    <link rel="stylesheet" type="text/css" href="/css/spinner.css" />
     <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Archivo+Narrow" rel="stylesheet"/>
     <title>{{site-title}}: {{title}}</title>
 {% endblock %}
@@ -43,12 +43,12 @@
 {% block extra-tail %}
 <!-- scripts and styles -->
 <!-- Leaflet -->
-<link rel="stylesheet" href="{{servlet-context}}/js/lib/node_modules/leaflet/dist/leaflet.css" />
-<script src="{{servlet-context}}/js/lib/node_modules/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="js/lib/node_modules/leaflet/dist/leaflet.css" />
+<script src="js/lib/node_modules/leaflet/dist/leaflet.js"></script>
 <!-- Signature pad -->
-<script src="{{servlet-context}}/js/lib/node_modules/signature_pad/dist/signature_pad.min.js"></script>
+<script src="js/lib/node_modules/signature_pad/dist/signature_pad.min.js"></script>
 <!-- our actual app -->
-<script src="{{servlet-context}}/js/app.js"></script>
+<script src="js/app.js"></script>
 {% endblock %}
 
 

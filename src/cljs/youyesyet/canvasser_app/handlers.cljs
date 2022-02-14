@@ -64,8 +64,8 @@
      (apply 'do forms)))
 
 (defn compose-packet
-  [item]
   "Convert this `item` into a URI which can be sent as a GET call"
+  [item]
   (assoc
     (url js/window.location)
     :path (str "/rest/" (name (:action item)))
@@ -74,6 +74,7 @@
 
 
 (def feedback-messages
+  "Messages used as feedback to the user"
   {:fetch-locality "Fetching local data."
    :send-request "Request has been queued."
    :send-intention-and-visit "Voting intention has been sent"
@@ -119,9 +120,10 @@
   (remove-from-key db :outqueue x))
 
 
-(defn coerce-to-number [v]
+(defn coerce-to-number 
   "If it is possible to do so, coerce `v` to a number.
   NOTE: I tried to do this in *cljc*, but it did not work. Leave it alone."
+  [v]
   (if (number? v) v
     (try
       (read-string (str v))
