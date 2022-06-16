@@ -99,8 +99,9 @@
 ;;     (dispatch [:set-zoom (.getZoom view)])
 ;;     (dispatch [:set-latitude (.-lat centre)])
 ;;     (dispatch [:set-longitude (.-lng centre)]))
-  (js/console.log (str "Navigating to " "#building/" id))
-  (set! window.location.href (str "#building/" id))
+  (js/console.log (str "Navigating to " "#/building/" id))
+  ;; (set! window.location.href (str "#/building/" id))
+  (dispatch [:set-address 262])
   )
 
 

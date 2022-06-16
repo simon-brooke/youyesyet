@@ -45,9 +45,10 @@ Consequently, to get a build running:
 1. clone the repository, if you have not already done so;
 2. within your cloned repository, check out a branch (usually `develop` or `master`);
 3. if you have previously built the project within your cloned repository, run `lein clean`;
-4. **this is the important bit** run `lein adl` to generate much of the application code;
-5. run `lein run` to start your development server;
-6. if you want to do client debugging, you'll want to run `figwheel` in a separate process, but also from the same cloned repository directory; I normally do this by opening a second terminal and invoking `lein figwheel`.
+4. run `lein npm install`; 
+5. **this is the important bit** run `lein adl` to generate much of the application code;
+6. run `lein run` to start your development server;
+7. if you want to do client debugging, you'll want to run `figwheel` in a separate process, but also from the same cloned repository directory; I normally do this by opening a second terminal and invoking `lein figwheel`.
 
 ## Further Reading
 

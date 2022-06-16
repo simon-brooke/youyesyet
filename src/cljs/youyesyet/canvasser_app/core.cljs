@@ -198,14 +198,22 @@
 ;; History
 ;; must be called after routes have been defined
 (defn hook-browser-navigation!
-    "Interceptor for the browser back button."
-    []
-  (doto (History.)
+  "Interceptor for the browser back button."
+  []
+  (try
+    (js/console.log "Entering `hook-browser-navigation!`")
+    (doto (History.)
     (events/listen
-      HistoryEventType/NAVIGATE
-      (fn [event]
-        (secretary/dispatch! (.-token event))))
-    (.setEnabled true)))
+     HistoryEventType/NAVIGATE
+     (fn [event]
+       (js/console.log "Entering anonymous history update handler")
+       (try 
+         (secretary/dispatch! (.-token event))
+         (catch js/Error e (js/console.warn e)))
+       (js/console.log "Exiting anonymous history update handler")))
+    (.setEnabled true))
+    (catch js/Error e (js/console.warn e)))
+  (js/console.log "Exiting `hook-browser-navigation!`"))
 
 ;; -------------------------
 ;; Initialize app
@@ -224,6 +232,7 @@
   (rf/dispatch [:fetch-followupmethods])
 ;;  (rf/dispatch [:dispatch-later [{:ms 60000 :dispatch [:process-queue]}]])
   (load-interceptors!)
+  ;; TEMP: the browser navigation hook is breaking the loading of the building page, and I don't at this moment understand why.
   (hook-browser-navigation!)
   (mount-components))
 
