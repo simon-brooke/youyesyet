@@ -161,7 +161,7 @@
 (secretary/defroute "/elector" []
   (ui/log-and-dispatch [:set-active-page :elector]))
 
-(secretary/defroute "/elector/:elector/:consent" {elector-id :elector}
+(secretary/defroute "/elector/:elector" {elector-id :elector}
   (ui/log-and-dispatch [:set-elector-and-page {:elector-id elector-id :page :elector}]))
 
 (secretary/defroute "/elector/:elector/:consent" {elector-id :elector consent :consent}

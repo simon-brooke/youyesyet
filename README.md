@@ -10,7 +10,7 @@ generated using Luminus version "2.9.11.05"
 
 ## Status
 
-Very early pre-alpha; user interface mostly works (enough to demonstrate), back end is hardly started.
+Alpha level code. Most of it works, but it's a bit fragile.
 
 ## What is it supposed to do?
 
@@ -35,6 +35,19 @@ You'll also need to create your own local copy of *profiles.clj*, which should c
 Where *username* is the username required to access the database, and *thisisnotsecure* is the password which authenticates that username.
 
 It will be helpful for you to have the [Zenhub](https://www.zenhub.com/) plugin in your browser, either Firefox or Chrome, as I'm using it for project planning.
+
+## Build procedure
+
+YouYesYet is build on the [Application Description Language](https://github.com/simon-brooke/adl) framework, which is also mine and not widely used. Application Description Language is a very high level descriptor language for applications, which allows a huge amount of code to be automatically generated. This generated code is **not** checked into the repository; instead, you must regenerate it before you can build. 
+
+Consequently, to get a build running:
+
+1. clone the repository, if you have not already done so;
+2. within your cloned repository, check out a branch (usually `develop` or `master`);
+3. if you have previously built the project within your cloned repository, run `lein clean`;
+4. **this is the important bit** run `lein adl` to generate much of the application code;
+5. run `lein run` to start your development server;
+6. if you want to do client debugging, you'll want to run `figwheel` in a separate process, but also from the same cloned repository directory; I normally do this by opening a second terminal and invoking `lein figwheel`.
 
 ## Further Reading
 

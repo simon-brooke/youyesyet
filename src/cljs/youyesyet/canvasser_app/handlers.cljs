@@ -381,7 +381,7 @@
       (assoc (clear-messages db) :page k)
       db)))
 
-
+;; TEMP: this is what doesn't seem to be being called
 (reg-event-db
   :set-address
   (fn [db [_ address-id]]

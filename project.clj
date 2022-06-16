@@ -5,6 +5,9 @@
             :url "https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html"}
   :url "https://github.com/simon-brooke/youyesyet"
 
+  ;; NOTE: lein-ancient failed on 20220616; it will have to be done soon if the project is to
+  ;; procede, but I need to fix regressions first.
+
   :dependencies [[adl-support "0.1.6"]
                  [binaryage/devtools "1.0.3"]
                  [bouncer "1.0.1"]
